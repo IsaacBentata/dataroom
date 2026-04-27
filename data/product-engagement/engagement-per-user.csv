@@ -1,0 +1,15 @@
+Avg Engagement per User per Week - Series A
+
+Formula,(TOTALS(A)+TOTALS(B)+TOTALS(C)+TOTALS(D)+TOTALS(E)+TOTALS(F)+TOTALS(G)+TOTALS(H))/UNIQUES(I)
+A:,Chat MessageSent
+B:,Friends ProfileAdded
+C:,Friends MatchMade
+D:,Feed Voted
+E:,Quiz QuizStarted
+F:,Feed MusicPostLiked
+G:,Feed MusicPostReplied
+H:,Home HomeCardSeen
+I:,[Amplitude] Any Active Event
+
+Segment,2025-10-01,2025-11-01,2025-12-01,2026-01-01,2026-02-01,2026-03-01
+Verify Successful >= 1,282.6135442011354,252.09409828356453,324.6782372687665,415.28113548387097,640.0741308297161,636.3296736843253

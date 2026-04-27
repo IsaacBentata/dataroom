@@ -1,65 +1,49 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+
+const navCards = [
+  { href: "/product", label: "Product", description: "How the app works and why it matters", color: "border-accent-blue/30 hover:border-accent-blue/60" },
+  { href: "/growth", label: "Growth", description: "MAU, DAU, and install metrics", color: "border-accent-green/30 hover:border-accent-green/60" },
+  { href: "/retention", label: "Retention", description: "Retention curves and engagement data", color: "border-accent-purple/30 hover:border-accent-purple/60" },
+  { href: "/demographics", label: "Demographics", description: "Gender, age, and geography data", color: "border-accent-green/30 hover:border-accent-green/60" },
+  { href: "/music-industry", label: "Music Industry", description: "Label partnerships and strategy", color: "border-accent-orange/30 hover:border-accent-orange/60" },
+  { href: "/monetisation", label: "Monetisation", description: "Revenue model and A/B test results", color: "border-accent-blue/30 hover:border-accent-blue/60" },
+  { href: "/ai", label: "AI Adoption", description: "How AI multiplies a team of 9", color: "border-accent-purple/30 hover:border-accent-purple/60" },
+  { href: "/team", label: "Team", description: "The people building Equals", color: "border-accent-green/30 hover:border-accent-green/60" },
+  { href: "/roadmap", label: "Roadmap", description: "Where we are going", color: "border-accent-purple/30 hover:border-accent-purple/60" },
+  { href: "/legal", label: "Legal", description: "Corporate structure and cap table", color: "border-accent-orange/30 hover:border-accent-orange/60" },
+  { href: "/financials", label: "Financials", description: "Revenue and financial position", color: "border-accent-blue/30 hover:border-accent-blue/60" },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <section className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-6">
+      <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/10 via-accent-purple/5 to-accent-orange/5 animate-gradient" />
+      <div className="relative z-10 text-center max-w-3xl mx-auto">
+        <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-4">
+          EQUALS
+        </h1>
+        <p className="text-lg md:text-xl text-foreground-secondary mb-2">
+          Data Room
+        </p>
+        <p className="text-foreground-secondary text-sm max-w-md mx-auto mb-16">
+          The music social network uniting the world through its most universal language.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-3xl mx-auto text-left">
+          {navCards.map((card) => (
+            <Link
+              key={card.href}
+              href={card.href}
+              className={`bg-surface/60 backdrop-blur-sm rounded-xl border ${card.color} p-4 transition-all hover:bg-surface group`}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <div className="text-sm font-medium mb-1 group-hover:text-foreground transition-colors">{card.label}</div>
+              <div className="text-xs text-foreground-secondary">{card.description}</div>
+            </Link>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+    </section>
   );
 }
