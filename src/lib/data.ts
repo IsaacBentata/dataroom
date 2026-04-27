@@ -16,11 +16,11 @@ export function parseMAUDataExcludingCurrent() {
 
 export function parseDAUData() {
   const dates = [
-    "2025-10-26","2025-11-09","2025-11-23","2025-12-07","2025-12-21",
-    "2026-01-04","2026-01-18","2026-02-01","2026-02-15","2026-03-01",
-    "2026-03-15","2026-03-29","2026-04-12","2026-04-25",
+    "2025-10-26","2025-10-29","2025-11-12","2025-11-26","2025-12-10",
+    "2025-12-24","2026-01-07","2026-01-21","2026-02-04","2026-02-18",
+    "2026-03-04","2026-03-18","2026-04-01","2026-04-15","2026-04-25",
   ];
-  const values = [3691, 4809, 5612, 6951, 6886, 9259, 11549, 18157, 31123, 38969, 43052, 44814, 55846, 69845];
+  const values = [3691, 3938, 5003, 5887, 7180, 6717, 9697, 12959, 19477, 30150, 38357, 43116, 47634, 61793, 69911];
   return dates.map((d, i) => ({
     date: new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
     DAU: Math.round(values[i]),
@@ -93,6 +93,58 @@ export function parseOnboardingFunnel() {
 
 export function parseOnboardingFunnelExcludingCurrent() {
   return parseOnboardingFunnel();
+}
+
+export function parseMessagesPerUser() {
+  const dates = [
+    "2025-10-29","2025-11-12","2025-11-26","2025-12-10","2025-12-24",
+    "2026-01-07","2026-01-21","2026-02-04","2026-02-18","2026-03-04",
+    "2026-03-18","2026-04-01","2026-04-15","2026-04-26",
+  ];
+  const values = [35.9, 35.0, 36.7, 38.6, 32.4, 34.1, 36.4, 37.5, 44.7, 42.5, 38.0, 37.1, 36.6, 35.6];
+  return dates.map((d, i) => ({
+    date: new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    "Messages / User": values[i],
+  }));
+}
+
+export function parseTimeSpentPerUser() {
+  const dates = [
+    "2025-10-29","2025-11-12","2025-11-26","2025-12-10","2025-12-24",
+    "2026-01-07","2026-01-21","2026-02-04","2026-02-18","2026-03-04",
+    "2026-03-18","2026-04-01","2026-04-15","2026-04-26",
+  ];
+  const values = [22.5, 19.8, 22.1, 24.8, 21.1, 22.6, 27.8, 32.4, 38.1, 36.3, 33.0, 32.6, 34.5, 34.7];
+  return dates.map((d, i) => ({
+    date: new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    "Minutes / User": values[i],
+  }));
+}
+
+export function parseSessionsPerUser() {
+  const dates = [
+    "2025-10-29","2025-11-12","2025-11-26","2025-12-10","2025-12-24",
+    "2026-01-07","2026-01-21","2026-02-04","2026-02-18","2026-03-04",
+    "2026-03-18","2026-04-01","2026-04-15","2026-04-26",
+  ];
+  const values = [3.2, 3.1, 3.4, 4.1, 4.1, 4.2, 4.8, 5.3, 5.7, 5.9, 5.8, 5.6, 5.5, 5.5];
+  return dates.map((d, i) => ({
+    date: new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    "Sessions / User": values[i],
+  }));
+}
+
+export function parseAppOpensPerUser() {
+  const dates = [
+    "2025-10-29","2025-11-12","2025-11-26","2025-12-10","2025-12-24",
+    "2026-01-07","2026-01-21","2026-02-04","2026-02-18","2026-03-04",
+    "2026-03-18","2026-04-01","2026-04-15","2026-04-26",
+  ];
+  const values = [8.9, 8.4, 9.5, 11.3, 9.9, 10.6, 13.4, 15.8, 18.0, 17.4, 16.2, 15.8, 16.3, 16.2];
+  return dates.map((d, i) => ({
+    date: new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    "App Opens / User": values[i],
+  }));
 }
 
 export function parseRetentionOverTime() {

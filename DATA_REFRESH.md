@@ -4,11 +4,30 @@ All charts are in the **Equa.ls Prod** Amplitude project (App ID: `598644`). Thi
 
 ## General Process
 
-1. Query each Amplitude chart using the chart IDs and date ranges below
-2. Update the corresponding CSV files in `/data/`
-3. **CRITICAL: The site does NOT read from the CSVs at runtime.** The chart data is hardcoded in `src/lib/data.ts`. After updating CSVs, you MUST also update the inline arrays in `src/lib/data.ts` to match the new CSV values. The CSVs are the canonical source of truth; `data.ts` is the rendering layer that must stay in sync.
-4. Update any stat callouts in the page components (e.g. `src/app/growth/page.tsx`) if the headline numbers have changed (MAU count, DAU count, etc.)
-5. Run `npm run build` to verify no errors
+For each chart:
+
+1. **Query Amplitude** using the chart ID, query definition, and date range rules below
+2. **Update `src/lib/data.ts`** — this is where ALL chart data lives. Find the corresponding `parse*()` function and update its inline arrays with the new values. For daily data (charts 9-12), compute a 30-day rolling average from the raw daily values, then sample every 14 days plus the last available day.
+3. **Update CSVs in `/data/`** (charts 1-8 only) — these are reference copies for download/export. The site does NOT read from them at runtime.
+4. **Update stat callouts** in page components (e.g. `src/app/growth/page.tsx`) if headline numbers changed (MAU count, DAU, etc.)
+5. **Run `npm run build`** to verify no errors
+
+### Where data lives
+
+| What | Where | Function |
+|---|---|---|
+| MAU & Installs | `src/lib/data.ts` | `parseMAUData()` |
+| DAU Rolling Avg | `src/lib/data.ts` | `parseDAUData()` |
+| Retention Over Time | `src/lib/data.ts` | `parseRetentionOverTime()` |
+| Retention by Friends | `src/lib/data.ts` | `parseRetentionByFriends()` |
+| Weekly Retention | `src/lib/data.ts` | `parseWeeklyRetention()` |
+| Power Curve | `src/lib/data.ts` | `parsePowerCurve()` |
+| Engagement per User | `src/lib/data.ts` | `parseEngagement()` |
+| Users Who Verify | `src/lib/data.ts` | `parseOnboardingFunnel()` |
+| Messages per User | `src/lib/data.ts` | `parseMessagesPerUser()` |
+| Time Spent per User | `src/lib/data.ts` | `parseTimeSpentPerUser()` |
+| Sessions per User | `src/lib/data.ts` | `parseSessionsPerUser()` |
+| App Opens per User | `src/lib/data.ts` | `parseAppOpensPerUser()` |
 
 ## Chart Refresh Rules
 
@@ -106,6 +125,66 @@ Each chart has fixed start dates and relative end dates. "Today" means the day t
 
 ---
 
+### 9. Messages per Verified Active User (30d Rolling Avg)
+
+- **Chart ID:** `fd50nvge`
+- **Type:** Events Segmentation — `Chat MessageSent`, metric `average`, `rollingAverage: 30`, segment: Verify Successful >= 1 (rolling 365d)
+- **CSV:** N/A (inline in `src/lib/data.ts` → `parseMessagesPerUser`)
+- **Start date:** October 26, 2025 (always fixed)
+- **End date:** Yesterday (T-1)
+- **Sampling:** Every 14 days from the daily data, plus the last available day
+- **Amplitude query definition:**
+  ```json
+  {"type": "eventsSegmentation", "app": "598644", "params": {"range": "Last 180 Days", "events": [{"event_type": "Chat MessageSent", "filters": [], "group_by": []}], "metric": "average", "rollingAverage": 30, "interval": 1, "segments": [{"conditions": [{"op": ">=", "type": "event", "value": 1, "filters": [], "time_type": "rolling", "event_type": "Verify Successful", "time_value": 365}]}], "timezone": "UTC", "countGroup": "User"}}
+  ```
+
+---
+
+### 10. Time Spent per Verified User (30d Rolling Avg)
+
+- **Chart ID:** `hjcyzzzi`
+- **Type:** Sessions — `sessionType: "averageTimePerUser"`, segment: Verify Successful >= 1 (rolling 365d). Returns seconds — compute 30d rolling avg manually, then convert to minutes.
+- **CSV:** N/A (inline in `src/lib/data.ts` → `parseTimeSpentPerUser`)
+- **Start date:** October 26, 2025 (always fixed)
+- **End date:** Yesterday (T-1)
+- **Sampling:** Every 14 days from the daily data, plus the last available day
+- **Amplitude query definition:**
+  ```json
+  {"type": "sessions", "app": "598644", "params": {"range": "Last 180 Days", "sessionType": "averageTimePerUser", "sessions": [{"filters": [], "group_by": []}], "useNewSessionSemantics": true, "interval": 1, "segments": [{"conditions": [{"op": ">=", "type": "event", "value": 1, "filters": [], "time_type": "rolling", "event_type": "Verify Successful", "time_value": 365}]}], "timezone": "UTC", "countGroup": "User"}}
+  ```
+
+---
+
+### 11. Sessions per Verified User (30d Rolling Avg)
+
+- **Chart ID:** `eixd4by7`
+- **Type:** Sessions — `sessionType: "peruser"`, segment: Verify Successful >= 1 (rolling 365d). Returns daily sessions per user — compute 30d rolling avg manually.
+- **CSV:** N/A (inline in `src/lib/data.ts` → `parseSessionsPerUser`)
+- **Start date:** October 26, 2025 (always fixed)
+- **End date:** Yesterday (T-1)
+- **Sampling:** Every 14 days from the daily data, plus the last available day
+- **Amplitude query definition:**
+  ```json
+  {"type": "sessions", "app": "598644", "params": {"range": "Last 180 Days", "sessionType": "peruser", "sessions": [{"filters": [], "group_by": []}], "useNewSessionSemantics": true, "interval": 1, "segments": [{"conditions": [{"op": ">=", "type": "event", "value": 1, "filters": [], "time_type": "rolling", "event_type": "Verify Successful", "time_value": 365}]}], "timezone": "UTC", "countGroup": "User"}}
+  ```
+
+---
+
+### 12. App Opens per Verified DAU (30d Rolling Avg)
+
+- **Chart ID:** `vvmn2y01`
+- **Type:** Events Segmentation — formula `TOTALS(Application Opened) / UNIQUES(Any Active Event)`, segment: Verify Successful >= 1 (rolling 365d). Returns raw daily values — compute 30d rolling avg manually before sampling. Note: `rollingAverage` param does NOT work with formula metrics.
+- **CSV:** N/A (inline in `src/lib/data.ts` → `parseAppOpensPerUser`)
+- **Start date:** October 26, 2025 (always fixed)
+- **End date:** Yesterday (T-1)
+- **Sampling:** Every 14 days from the daily data, plus the last available day
+- **Amplitude query definition:**
+  ```json
+  {"type": "eventsSegmentation", "app": "598644", "name": "Avg App Opens per Verified DAU", "params": {"range": "Last 180 Days", "events": [{"event_type": "Application Opened", "filters": [], "group_by": []}, {"event_type": "_active", "filters": [], "group_by": []}], "metric": "formula", "formula": "TOTALS(A)/UNIQUES(B)", "groupBy": [], "interval": 1, "rollingAverage": 30, "segments": [{"conditions": [{"op": ">=", "type": "event", "value": 1, "filters": [], "time_type": "rolling", "event_type": "Verify Successful", "time_value": 365}]}], "timezone": "UTC", "countGroup": "User"}}
+  ```
+
+---
+
 ## Quick Reference
 
 | # | Chart | Chart ID | Fixed Start | End Date Rule | Confirm? |
@@ -118,3 +197,7 @@ Each chart has fixed start dates and relative end dates. "Today" means the day t
 | 6 | Power Curve / Stickiness | `cg9l2f2e` | T-36 days | T-3 days | YES |
 | 7 | Avg Engagement per User | `yn25sa7b` | Oct 1, 2025 | End of prior month | No |
 | 8 | Users Who Verify | `s3xv7z2k` | Nov 1, 2025 | End of prior month | No |
+| 9 | Messages per User | `fd50nvge` | Oct 26, 2025 | Yesterday (T-1) | No |
+| 10 | Time Spent per User | `hjcyzzzi` | Oct 26, 2025 | Yesterday (T-1) | No |
+| 11 | Sessions per User | `eixd4by7` | Oct 26, 2025 | Yesterday (T-1) | No |
+| 12 | App Opens per User | `vvmn2y01` | Oct 26, 2025 | Yesterday (T-1) | No |
