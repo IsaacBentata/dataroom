@@ -1,5 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
+
 interface DataSet {
   name: string;
   data: Record<string, string | number>[];
@@ -25,7 +28,6 @@ function datasetToCSV(data: Record<string, string | number>[]): string {
 
 export default function DownloadAllButton({ datasets, filename = "data-export" }: DownloadAllButtonProps) {
   const handleDownload = () => {
-    // Combine all datasets into one CSV with section headers
     const sections = datasets.map((ds) => {
       return `# ${ds.name}\n${datasetToCSV(ds.data)}`;
     });
@@ -40,14 +42,9 @@ export default function DownloadAllButton({ datasets, filename = "data-export" }
   };
 
   return (
-    <button
-      onClick={handleDownload}
-      className="inline-flex items-center gap-2 px-4 py-2 text-sm text-foreground-secondary hover:text-foreground border border-border rounded-lg hover:bg-surface transition-colors cursor-pointer"
-    >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-      </svg>
+    <Button variant="outline" size="sm" onClick={handleDownload}>
+      <Download className="size-4" data-icon="inline-start" />
       Download all raw data
-    </button>
+    </Button>
   );
 }

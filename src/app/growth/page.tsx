@@ -6,6 +6,7 @@ import PageHeader from "@/components/PageHeader";
 import StatCallout from "@/components/StatCallout";
 import DataChart from "@/components/DataChart";
 import DownloadAllButton from "@/components/DownloadAllButton";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   parseMAUData,
   parseMAUDataExcludingCurrent,
@@ -40,7 +41,7 @@ export default function GrowthPage() {
       <DataChart
         data={mauDataFiltered}
         series={[
-          { key: "MAU", name: "Monthly Active Users", color: "#0000FF" },
+          { key: "MAU", name: "Monthly Active Users", color: "#0066FF" },
           { key: "Installs", name: "App Installs", color: "rgba(0, 204, 120, 1)" },
         ]}
         xKey="date"
@@ -71,8 +72,8 @@ export default function GrowthPage() {
       />
 
       <div className="mt-10">
-        <div className="bg-surface rounded-2xl border border-border p-5 mb-4">
-          <p className="text-foreground-secondary text-sm leading-relaxed">
+        <div className="bg-secondary rounded-2xl px-6 py-5 mb-4">
+          <p className="text-muted-foreground text-sm leading-relaxed">
             Equals is a human-only social network. Every user must complete identity verification to participate.
             The chart below shows the percentage of onboarded users who successfully verify their identity.
             Verification rates have improved significantly as the onboarding flow has been refined - from 20% in late 2025 to over 50% in early 2026.

@@ -3,6 +3,7 @@
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface FeatureSection {
   title: string;
@@ -95,22 +96,30 @@ export default function ProductPage() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-        <div className="bg-surface rounded-xl border border-border p-4 text-center">
-          <div className="text-xl font-bold text-accent-green mb-1">4.5+</div>
-          <div className="text-xs text-foreground-secondary">App Store Rating</div>
-        </div>
-        <div className="bg-surface rounded-xl border border-border p-4 text-center">
-          <div className="text-xl font-bold text-accent-blue mb-1">1:1</div>
-          <div className="text-xs text-foreground-secondary">Male / Female Ratio</div>
-        </div>
-        <div className="bg-surface rounded-xl border border-border p-4 text-center">
-          <div className="text-xl font-bold text-accent-purple mb-1">37 min</div>
-          <div className="text-xs text-foreground-secondary">Daily Time Spent</div>
-        </div>
-        <div className="bg-surface rounded-xl border border-border p-4 text-center">
-          <div className="text-xl font-bold text-accent-orange mb-1">100%</div>
-          <div className="text-xs text-foreground-secondary">Verified Humans</div>
-        </div>
+        <Card className="bg-card text-center">
+          <CardContent className="p-4">
+            <div className="text-3xl font-bold text-accent-green mb-1">4.5+</div>
+            <div className="text-xs text-muted-foreground">App Store Rating</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-card text-center">
+          <CardContent className="p-4">
+            <div className="text-3xl font-bold text-accent-blue mb-1">1:1</div>
+            <div className="text-xs text-muted-foreground">Male / Female Ratio</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-card text-center">
+          <CardContent className="p-4">
+            <div className="text-3xl font-bold text-accent-purple mb-1">37 min</div>
+            <div className="text-xs text-muted-foreground">Daily Time Spent</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-card text-center">
+          <CardContent className="p-4">
+            <div className="text-3xl font-bold text-accent-orange mb-1">100%</div>
+            <div className="text-xs text-muted-foreground">Verified Humans</div>
+          </CardContent>
+        </Card>
       </div>
 
       <div className="space-y-20">
@@ -121,7 +130,7 @@ export default function ProductPage() {
                 {String(idx + 1).padStart(2, "0")}
               </div>
               <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-              <p className="text-foreground-secondary text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 {feature.description}
               </p>
             </div>

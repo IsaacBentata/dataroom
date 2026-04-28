@@ -5,6 +5,7 @@ import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import DataChart from "@/components/DataChart";
 import DownloadAllButton from "@/components/DownloadAllButton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { revenueData, parseEngagementExcludingCurrent } from "@/lib/data";
 
 export default function MonetisationPage() {
@@ -26,23 +27,27 @@ export default function MonetisationPage() {
         />
       </div>
 
-      <div className="max-w-3xl space-y-4 text-foreground-secondary text-sm leading-relaxed mb-10">
-        <div className="bg-surface rounded-2xl border border-border p-6">
-          <h3 className="text-lg font-semibold text-foreground mb-3">The A/B test that proved monetisation</h3>
-          <p className="mb-3">
-            Between November 2025 and January 2026, we ran an extended A/B test. The results were strong:
-          </p>
-          <div className="grid grid-cols-2 gap-4 my-4">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-accent-green">4.5-5%</div>
-              <div className="text-xs text-foreground-secondary mt-1">Paywall conversion rate</div>
+      <div className="space-y-4 text-muted-foreground text-sm leading-relaxed mb-10">
+        <Card className="bg-card">
+          <CardHeader>
+            <CardTitle>The A/B test that proved monetisation</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-3">
+              Between November 2025 and January 2026, we ran an extended A/B test. The results were strong:
+            </p>
+            <div className="grid grid-cols-2 gap-4 my-4">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-accent-green">4.5-5%</div>
+                <div className="text-xs text-muted-foreground mt-1">Paywall conversion rate</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-accent-blue">$3M+</div>
+                <div className="text-xs text-muted-foreground mt-1">Projected ARR at current MAU base</div>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-accent-blue">$3M+</div>
-              <div className="text-xs text-foreground-secondary mt-1">Projected ARR at current MAU base</div>
-            </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         <h3 className="text-lg font-semibold text-foreground">The trade-off we made</h3>
         <p>
@@ -71,52 +76,62 @@ export default function MonetisationPage() {
         tooltipFormatter={(v: number) => `$${v.toLocaleString()}`}
       />
 
-      <div className="mt-10 bg-surface rounded-2xl border border-border p-6">
-        <h3 className="text-base font-semibold mb-2">Engagement spike after pulling back monetisation</h3>
-        <p className="text-foreground-secondary text-xs mb-4">
-          This chart shows how average engagement per user spiked in February 2026 after monetisation was reduced.
-          Removing friction from the core experience let users engage more deeply with the product.
-        </p>
-        <DataChart
-          data={engagement}
-          series={[
-            { key: "Avg Actions", name: "Avg Actions per User", color: "#FF4D00" },
-          ]}
-          xKey="month"
-          title="Engagement per User"
-          subtitle="Average engagement actions per user per month (excluding current month)"
-          type="bar"
-          height={260}
-          showDateFilter={false}
-          className="border-0 p-0"
-        />
-      </div>
+      <Card className="bg-card mt-10">
+        <CardHeader>
+          <CardTitle className="text-base">Engagement spike after pulling back monetisation</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground text-xs mb-4">
+            This chart shows how average engagement per user spiked in February 2026 after monetisation was reduced.
+            Removing friction from the core experience let users engage more deeply with the product.
+          </p>
+          <DataChart
+            data={engagement}
+            series={[
+              { key: "Avg Actions", name: "Avg Actions per User", color: "#FF4D00" },
+            ]}
+            xKey="month"
+            title="Engagement per User"
+            subtitle="Average engagement actions per user per month (excluding current month)"
+            type="bar"
+            height={260}
+            showDateFilter={false}
+            className="border-0 p-0 shadow-none ring-0"
+          />
+        </CardContent>
+      </Card>
 
       <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-surface rounded-2xl border border-border p-5">
-          <h4 className="font-semibold text-accent-green text-sm mb-2">Today (proven)</h4>
-          <ul className="space-y-1.5 text-foreground-secondary text-xs">
-            <li>In-app subscriptions ($6.99/wk, $9.99/mo, $19.99/qtr)</li>
-            <li>Premium features (profile viewers, filters)</li>
-          </ul>
-        </div>
-        <div className="bg-surface rounded-2xl border border-border p-5">
-          <h4 className="font-semibold text-accent-blue text-sm mb-2">Near-term (6-12 months)</h4>
-          <ul className="space-y-1.5 text-foreground-secondary text-xs">
-            <li>Label-funded artist activations</li>
-            <li>Digital Vinyl sales</li>
-            <li>Live event ticketing</li>
-            <li>Branded content & advertising</li>
-          </ul>
-        </div>
-        <div className="bg-surface rounded-2xl border border-border p-5">
-          <h4 className="font-semibold text-accent-purple text-sm mb-2">Medium-term (12-18 months)</h4>
-          <ul className="space-y-1.5 text-foreground-secondary text-xs">
-            <li>Label marketing spend via Equals</li>
-            <li>Social streaming revenue share</li>
-            <li>Premium creator tools for artists</li>
-          </ul>
-        </div>
+        <Card className="bg-card">
+          <CardContent className="pt-5">
+            <h4 className="font-semibold text-accent-green text-sm mb-2">Today (proven)</h4>
+            <ul className="space-y-1.5 text-muted-foreground text-xs">
+              <li>In-app subscriptions ($6.99/wk, $9.99/mo, $19.99/qtr)</li>
+              <li>Premium features (profile viewers, filters)</li>
+            </ul>
+          </CardContent>
+        </Card>
+        <Card className="bg-card">
+          <CardContent className="pt-5">
+            <h4 className="font-semibold text-accent-blue text-sm mb-2">Near-term (6-12 months)</h4>
+            <ul className="space-y-1.5 text-muted-foreground text-xs">
+              <li>Label-funded artist activations</li>
+              <li>Digital Vinyl sales</li>
+              <li>Live event ticketing</li>
+              <li>Branded content & advertising</li>
+            </ul>
+          </CardContent>
+        </Card>
+        <Card className="bg-card">
+          <CardContent className="pt-5">
+            <h4 className="font-semibold text-accent-purple text-sm mb-2">Medium-term (12-18 months)</h4>
+            <ul className="space-y-1.5 text-muted-foreground text-xs">
+              <li>Label marketing spend via Equals</li>
+              <li>Social streaming revenue share</li>
+              <li>Premium creator tools for artists</li>
+            </ul>
+          </CardContent>
+        </Card>
       </div>
     </Section>
   );

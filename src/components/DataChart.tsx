@@ -9,12 +9,27 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
   Area,
   AreaChart,
 } from "recharts";
+import { Download } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
 
 type DateRange = "30d" | "90d" | "6m" | "12m" | "all";
 
@@ -44,13 +59,13 @@ interface DataChartProps {
   hero?: boolean;
 }
 
-const dateRangeLabels: Record<DateRange, string> = {
-  "30d": "Last 30 days",
-  "90d": "Last 90 days",
-  "6m": "Last 6 months",
-  "12m": "Last 12 months",
-  all: "All time",
-};
+const dateRangeOptions: { value: DateRange; label: string }[] = [
+  { value: "30d", label: "Last 30 days" },
+  { value: "90d", label: "Last 90 days" },
+  { value: "6m", label: "Last 6 months" },
+  { value: "12m", label: "Last 12 months" },
+  { value: "all", label: "All time" },
+];
 
 function filterByDateRange(data: DataPoint[], range: DateRange, xKey: string): DataPoint[] {
   if (range === "all") return data;
@@ -102,6 +117,14 @@ export default function DataChart({
     [data, dateRange, xKey, showDateFilter]
   );
 
+  const chartConfig = useMemo<ChartConfig>(() => {
+    const config: ChartConfig = {};
+    for (const s of series) {
+      config[s.key] = { label: s.name, color: s.color };
+    }
+    return config;
+  }, [series]);
+
   const exportCSV = useCallback(() => {
     if (!filteredData.length) return;
     const keys = Object.keys(filteredData[0]);
@@ -122,78 +145,75 @@ export default function DataChart({
     URL.revokeObjectURL(url);
   }, [filteredData, title]);
 
-  const formatTooltipValue = (value: number) => {
-    if (tooltipFormatter) return tooltipFormatter(value);
-    if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
-    if (value >= 1000) return `${(value / 1000).toFixed(1)}K`;
-    return value.toLocaleString();
-  };
-
   const renderChart = () => {
     const commonProps = {
       data: filteredData,
       margin: { top: 10, right: 10, left: 0, bottom: 0 },
     };
 
-    const commonAxisProps = {
-      xAxis: (
-        <XAxis
-          dataKey={xKey}
-          stroke="rgba(255,255,255,0.3)"
-          tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11 }}
-          tickLine={false}
-          axisLine={false}
-        />
-      ),
-      yAxis: (
-        <YAxis
-          stroke="rgba(255,255,255,0.3)"
-          tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11 }}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={yAxisFormatter || ((v: number) => {
-            if (v >= 1000000) return `${(v / 1000000).toFixed(1)}M`;
-            if (v >= 1000) return `${(v / 1000).toFixed(0)}K`;
-            return String(v);
-          })}
-          width={50}
-        />
-      ),
-      grid: (
-        <CartesianGrid
-          strokeDasharray="3 3"
-          stroke="rgba(255,255,255,0.06)"
-          vertical={false}
-        />
-      ),
-      tooltip: (
-        <Tooltip
-          contentStyle={{
-            backgroundColor: "#2C2C2E",
-            border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: 8,
-            color: "#fff",
-            fontSize: 13,
-          }}
-          labelStyle={{ color: "rgba(255,255,255,0.6)" }}
-          formatter={(value: unknown, name: unknown) => [formatTooltipValue(Number(value)), String(name)]}
-        />
-      ),
-      legend: series.length > 1 ? (
-        <Legend
-          wrapperStyle={{ fontSize: 12, color: "rgba(255,255,255,0.6)" }}
-        />
-      ) : null,
-    };
+    const xAxis = (
+      <XAxis
+        dataKey={xKey}
+        stroke="rgba(255,255,255,0.15)"
+        tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 11 }}
+        tickLine={false}
+        axisLine={false}
+      />
+    );
+
+    const yAxis = (
+      <YAxis
+        stroke="rgba(255,255,255,0.15)"
+        tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 11 }}
+        tickLine={false}
+        axisLine={false}
+        tickFormatter={yAxisFormatter || ((v: number) => {
+          if (v >= 1000000) return `${(v / 1000000).toFixed(1)}M`;
+          if (v >= 1000) return `${(v / 1000).toFixed(0)}K`;
+          return String(v);
+        })}
+        width={50}
+      />
+    );
+
+    const grid = (
+      <CartesianGrid
+        strokeDasharray="3 3"
+        stroke="rgba(255,255,255,0.05)"
+        vertical={false}
+      />
+    );
+
+    const tooltip = (
+      <ChartTooltip
+        content={
+          <ChartTooltipContent
+            formatter={tooltipFormatter ? (value, name) => {
+              const formatted = tooltipFormatter(Number(value));
+              return (
+                <div className="flex items-center justify-between gap-4">
+                  <span className="text-muted-foreground">{String(name)}</span>
+                  <span className="font-mono font-medium text-foreground">{formatted}</span>
+                </div>
+              );
+            } : undefined}
+          />
+        }
+      />
+    );
+
+    const legend = series.length > 1 ? (
+      <ChartLegend content={<ChartLegendContent />} />
+    ) : null;
 
     if (type === "area") {
       return (
         <AreaChart {...commonProps}>
-          {commonAxisProps.grid}
-          {commonAxisProps.xAxis}
-          {commonAxisProps.yAxis}
-          {commonAxisProps.tooltip}
-          {commonAxisProps.legend}
+          {grid}
+          {xAxis}
+          {yAxis}
+          {tooltip}
+          {legend}
           {series.map((s) => (
             <Area
               key={s.key}
@@ -214,11 +234,11 @@ export default function DataChart({
     if (type === "bar") {
       return (
         <BarChart {...commonProps}>
-          {commonAxisProps.grid}
-          {commonAxisProps.xAxis}
-          {commonAxisProps.yAxis}
-          {commonAxisProps.tooltip}
-          {commonAxisProps.legend}
+          {grid}
+          {xAxis}
+          {yAxis}
+          {tooltip}
+          {legend}
           {series.map((s) => (
             <Bar
               key={s.key}
@@ -234,11 +254,11 @@ export default function DataChart({
 
     return (
       <LineChart {...commonProps}>
-        {commonAxisProps.grid}
-        {commonAxisProps.xAxis}
-        {commonAxisProps.yAxis}
-        {commonAxisProps.tooltip}
-        {commonAxisProps.legend}
+        {grid}
+        {xAxis}
+        {yAxis}
+        {tooltip}
+        {legend}
         {series.map((s) => (
           <Line
             key={s.key}
@@ -256,54 +276,48 @@ export default function DataChart({
   };
 
   return (
-    <div
-      className={`bg-surface rounded-2xl border border-border p-5 ${hero ? "p-6" : ""} ${className}`}
-    >
+    <Card className={`bg-card ${className}`}>
       {(title || showDateFilter || showExport) && (
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             {title && (
-              <h3 className={`font-semibold ${hero ? "text-xl" : "text-base"}`}>
+              <CardTitle className={hero ? "text-2xl" : "text-xl"}>
                 {title}
-              </h3>
+              </CardTitle>
             )}
             {subtitle && (
-              <p className="text-foreground-secondary text-xs mt-1">{subtitle}</p>
+              <CardDescription className="text-xs mt-1">{subtitle}</CardDescription>
             )}
           </div>
           <div className="flex items-center gap-2">
             {showDateFilter && (
-              <select
-                value={dateRange}
-                onChange={(e) => setDateRange(e.target.value as DateRange)}
-                className="bg-surface-elevated text-xs text-foreground border border-border rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-accent-blue cursor-pointer"
-              >
-                {Object.entries(dateRangeLabels).map(([value, label]) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-              </select>
+              <Select value={dateRange} onValueChange={(v) => setDateRange(v as DateRange)}>
+                <SelectTrigger size="sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {dateRangeOptions.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             )}
             {showExport && (
-              <button
-                onClick={exportCSV}
-                className="text-foreground-secondary hover:text-foreground text-xs flex items-center gap-1.5 px-2.5 py-1.5 border border-border rounded-lg hover:bg-surface-elevated transition-colors cursor-pointer"
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-                </svg>
+              <Button variant="outline" size="sm" onClick={exportCSV}>
+                <Download className="size-3" data-icon="inline-start" />
                 CSV
-              </button>
+              </Button>
             )}
           </div>
-        </div>
+        </CardHeader>
       )}
-      <div style={{ height }}>
-        <ResponsiveContainer width="100%" height="100%">
+      <CardContent>
+        <ChartContainer config={chartConfig} className="w-full" style={{ height }}>
           {renderChart()}
-        </ResponsiveContainer>
-      </div>
-    </div>
+        </ChartContainer>
+      </CardContent>
+    </Card>
   );
 }

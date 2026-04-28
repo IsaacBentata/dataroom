@@ -1,11 +1,27 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const fairFavoritBody = localFont({
+  src: [
+    { path: "../../public/fonts/FAIRFavorit-Regular.otf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/FAIRFavorit-Bold.otf", weight: "700", style: "normal" },
+  ],
+  variable: "--font-fair-favorit-body",
+  display: "swap",
+});
+
+const fairFavoritHeading = localFont({
+  src: "../../public/fonts/FAIRFavoritExtended-Ultra.otf",
+  variable: "--font-fair-favorit-heading",
+  display: "swap",
+});
+
+const fairFavoritMono = localFont({
+  src: "../../public/fonts/FAIRFavoritMono-Book.otf",
+  variable: "--font-fair-favorit-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -19,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+    <html lang="en" className={`${fairFavoritBody.variable} ${fairFavoritHeading.variable} ${fairFavoritMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ClientLayout>{children}</ClientLayout>
       </body>

@@ -4,7 +4,14 @@ import { useMemo } from "react";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import StatCallout from "@/components/StatCallout";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Legend } from "recharts";
 
 // All historic active users (onboarded users who set demographics)
 const genderRaw = [
@@ -58,13 +65,28 @@ const countryRaw = [
   { name: "Spain", value: 13316 },
 ];
 
-const GENDER_COLORS = ["#0000FF", "#8627FF", "#FF4D00"];
+const GENDER_COLORS = ["#0066FF", "#8627FF", "#FF4D00"];
 const COUNTRY_COLORS = [
-  "#0000FF", "#8627FF", "#FF4D00", "#00CC78", "#FF1E55",
-  "#0077FF", "#FFDC10", "#FF9D01", "#7B61A8", "#1ED660",
-  "#00CC78", "#FF4D00", "#0000FF", "#8627FF", "#FF1E55",
-  "#0077FF", "#FFDC10", "#FF9D01", "#7B61A8", "#1ED660",
+  "#0066FF", "#8627FF", "#FF4D00", "rgba(0, 204, 120, 1)", "#FF4D00",
+  "#00CC78", "#0066FF", "#FF4D00", "#8627FF", "rgba(0, 204, 120, 1)",
+  "#FF4D00", "#00CC78", "#0066FF", "#8627FF", "#FF4D00",
+  "rgba(0, 204, 120, 1)", "#FF4D00", "#00CC78", "#0066FF", "#8627FF",
 ];
+
+const genderChartConfig: ChartConfig = {
+  Male: { label: "Male", color: GENDER_COLORS[0] },
+  Female: { label: "Female", color: GENDER_COLORS[1] },
+  "Non-Binary": { label: "Non-Binary", color: GENDER_COLORS[2] },
+};
+
+const ageChartConfig: ChartConfig = {
+  "%": { label: "Share", color: "#8627FF" },
+};
+
+const countryChartConfig: ChartConfig = {};
+countryRaw.forEach((c, i) => {
+  countryChartConfig[c.name] = { label: c.name, color: COUNTRY_COLORS[i % COUNTRY_COLORS.length] };
+});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const renderPieLabel = (props: any) => {
@@ -120,130 +142,144 @@ export default function DemographicsPage() {
       </div>
 
       {/* Gender Distribution - Pie Chart */}
-      <div className="bg-surface rounded-2xl border border-border p-5 mb-6">
-        <h3 className="font-semibold text-base mb-1">Gender Distribution</h3>
-        <p className="text-foreground-secondary text-xs mb-5">All onboarded users - source: Amplitude</p>
-        <div className="h-[320px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={genderRaw}
-                cx="50%"
-                cy="50%"
-                outerRadius={110}
-                innerRadius={60}
-                dataKey="value"
-                label={renderPieLabel}
-                labelLine={false}
-                strokeWidth={0}
-              >
-                {genderRaw.map((_, i) => (
-                  <Cell key={i} fill={GENDER_COLORS[i]} />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{ backgroundColor: "#1C1C1E", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "8px" }}
-                itemStyle={{ color: "#fff" }}
-                formatter={(value: any) => {
-                  const pct = ((value / totalGender) * 100).toFixed(1);
-                  return [`${value.toLocaleString()} (${pct}%)`, "Users"];
-                }}
-              />
-              <Legend
-                wrapperStyle={{ color: "rgba(255,255,255,0.6)", fontSize: "12px" }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="mt-4 bg-surface-elevated rounded-xl p-4">
-          <p className="text-foreground-secondary text-sm leading-relaxed">
-            Equals has an unusually balanced gender split for a social app - {malePct}% male to {femalePct}% female.
-            Most social platforms skew heavily male (Reddit, Discord) or female (Pinterest). Music appeals
-            universally across gender, and Equals reflects that.
-          </p>
-        </div>
-      </div>
+      <Card className="bg-card mb-6">
+        <CardHeader>
+          <CardTitle>Gender Distribution</CardTitle>
+          <CardDescription>All onboarded users - source: Amplitude</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[320px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={genderRaw}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={110}
+                  innerRadius={60}
+                  dataKey="value"
+                  label={renderPieLabel}
+                  labelLine={false}
+                  strokeWidth={0}
+                >
+                  {genderRaw.map((_, i) => (
+                    <Cell key={i} fill={GENDER_COLORS[i]} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }}
+                  itemStyle={{ color: "var(--foreground)" }}
+                  formatter={(value: unknown) => {
+                    const v = Number(value);
+                    const pct = ((v / totalGender) * 100).toFixed(1);
+                    return [`${v.toLocaleString()} (${pct}%)`, "Users"];
+                  }}
+                />
+                <Legend wrapperStyle={{ color: "var(--muted-foreground)", fontSize: "12px" }} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
+            <p className="text-muted-foreground text-sm leading-relaxed">
+                Equals has an unusually balanced gender split for a social app - {malePct}% male to {femalePct}% female.
+                Most social platforms skew heavily male (Reddit, Discord) or female (Pinterest). Music appeals
+                universally across gender, and Equals reflects that.
+              </p>
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Age Distribution - Bar Chart with percentages */}
-      <div className="bg-surface rounded-2xl border border-border p-5 mb-6">
-        <h3 className="font-semibold text-base mb-1">Age Distribution</h3>
-        <p className="text-foreground-secondary text-xs mb-5">All onboarded users - source: Amplitude</p>
-        <div className="h-[320px]">
-          <ResponsiveContainer width="100%" height="100%">
+      {/* Age Distribution - Bar Chart */}
+      <Card className="bg-card mb-6">
+        <CardHeader>
+          <CardTitle>Age Distribution</CardTitle>
+          <CardDescription>All onboarded users - source: Amplitude</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ChartContainer config={ageChartConfig} className="h-[320px] w-full">
             <BarChart data={ageChartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-              <XAxis dataKey="age" tick={{ fill: "rgba(255,255,255,0.6)", fontSize: 11 }} />
-              <YAxis tick={{ fill: "rgba(255,255,255,0.6)", fontSize: 11 }} tickFormatter={(v) => `${v}%`} />
-              <Tooltip
-                contentStyle={{ backgroundColor: "#1C1C1E", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "8px" }}
-                itemStyle={{ color: "#fff" }}
-                formatter={(value: any) => [`${value}%`, "Share"]}
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="age" tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 11 }} />
+              <YAxis tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 11 }} tickFormatter={(v) => `${v}%`} />
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    formatter={(value) => `${value}%`}
+                  />
+                }
               />
               <Bar dataKey="%" fill="#8627FF" radius={[4, 4, 0, 0]} />
             </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="mt-4 bg-surface-elevated rounded-xl p-4">
-          <p className="text-foreground-secondary text-sm leading-relaxed">
-            {genZPct}% of users are Gen Z (14-29), with the single largest cohort being 18-year-olds.
-            The peak at 18 aligns with the age when music fandom is most intense and identity-forming. This is the demographic
-            every music label, streaming service, and brand wants to reach.
-          </p>
-        </div>
-      </div>
+          </ChartContainer>
+          <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
+            <p className="text-muted-foreground text-sm leading-relaxed">
+                {genZPct}% of users are Gen Z (14-29), with the single largest cohort being 18-year-olds.
+                The peak at 18 aligns with the age when music fandom is most intense and identity-forming. This is the demographic
+                every music label, streaming service, and brand wants to reach.
+              </p>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Country Distribution - Pie Chart */}
-      <div className="bg-surface rounded-2xl border border-border p-5 mb-6">
-        <h3 className="font-semibold text-base mb-1">Top Countries</h3>
-        <p className="text-foreground-secondary text-xs mb-5">All historic active users, user-stated location - source: Amplitude</p>
-        <div className="h-[400px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={countryRaw}
-                cx="50%"
-                cy="50%"
-                outerRadius={140}
-                innerRadius={70}
-                dataKey="value"
-                label={renderCountryLabel}
-                labelLine={true}
-                strokeWidth={0}
-              >
-                {countryRaw.map((_, i) => (
-                  <Cell key={i} fill={COUNTRY_COLORS[i % COUNTRY_COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{ backgroundColor: "#1C1C1E", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "8px" }}
-                itemStyle={{ color: "#fff" }}
-                formatter={(value: any) => {
-                  const pct = ((value / totalCountry) * 100).toFixed(1);
-                  return [`${value.toLocaleString()} (${pct}%)`, "Users"];
-                }}
-              />
-              <Legend
-                wrapperStyle={{ color: "rgba(255,255,255,0.6)", fontSize: "10px" }}
-                layout="vertical"
-                align="right"
-                verticalAlign="middle"
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="mt-4 bg-surface-elevated rounded-xl p-4">
-          <p className="text-foreground-secondary text-sm leading-relaxed">
-            Equals has a genuinely global user base spanning 6 continents. The US and UK lead, but Mexico, Philippines, India,
-            Egypt, and Morocco all feature prominently - reflecting the universal appeal of music as a social connector.
-            This diversity is achieved with content moderation across 40+ languages and identity verification working internationally.
-          </p>
-        </div>
-      </div>
+      <Card className="bg-card mb-6">
+        <CardHeader>
+          <CardTitle>Top Countries</CardTitle>
+          <CardDescription>All historic active users, user-stated location - source: Amplitude</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[400px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={countryRaw}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={140}
+                  innerRadius={70}
+                  dataKey="value"
+                  label={renderCountryLabel}
+                  labelLine={true}
+                  strokeWidth={0}
+                >
+                  {countryRaw.map((_, i) => (
+                    <Cell key={i} fill={COUNTRY_COLORS[i % COUNTRY_COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }}
+                  itemStyle={{ color: "var(--foreground)" }}
+                  formatter={(value: unknown) => {
+                    const v = Number(value);
+                    const pct = ((v / totalCountry) * 100).toFixed(1);
+                    return [`${v.toLocaleString()} (${pct}%)`, "Users"];
+                  }}
+                />
+                <Legend
+                  wrapperStyle={{ color: "var(--muted-foreground)", fontSize: "10px" }}
+                  layout="vertical"
+                  align="right"
+                  verticalAlign="middle"
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
+            <p className="text-muted-foreground text-sm leading-relaxed">
+                Equals has a genuinely global user base spanning 6 continents. The US and UK lead, but Mexico, Philippines, India,
+                Egypt, and Morocco all feature prominently - reflecting the universal appeal of music as a social connector.
+                This diversity is achieved with content moderation across 40+ languages and identity verification working internationally.
+              </p>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Summary */}
-      <div className="bg-surface rounded-2xl border border-accent-blue/30 p-5">
-        <h3 className="font-semibold text-base mb-3">Why This Matters</h3>
-        <div className="space-y-3 text-foreground-secondary text-sm leading-relaxed">
+      <Card className="bg-card border-accent-blue/30">
+        <CardHeader>
+          <CardTitle>Why This Matters</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3 text-muted-foreground text-sm leading-relaxed">
           <p>
             Most consumer social apps struggle with demographic imbalance. Dating apps skew male. Gaming platforms skew young male.
             Lifestyle apps skew female. Equals is one of the rare social platforms with near-parity gender distribution ({malePct}/{femalePct})
@@ -254,8 +290,8 @@ export default function DemographicsPage() {
             has inherent geographic diversification. This reduces market concentration risk and opens multiple monetisation
             paths. Every user is identity-verified, so the demographic data is real, not estimated or inferred.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </Section>
   );
 }
