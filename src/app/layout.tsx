@@ -5,23 +5,25 @@ import ClientLayout from "@/components/ClientLayout";
 
 const fairFavoritBody = localFont({
   src: [
-    { path: "../../public/fonts/FAIRFavorit-Regular.otf", weight: "400", style: "normal" },
-    { path: "../../public/fonts/FAIRFavorit-Bold.otf", weight: "700", style: "normal" },
+    { path: "../../public/fonts/FAIRFavorit-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../../public/fonts/FAIRFavorit-Bold.woff2", weight: "700", style: "normal" },
   ],
   variable: "--font-fair-favorit-body",
   display: "swap",
 });
 
 const fairFavoritHeading = localFont({
-  src: "../../public/fonts/FAIRFavoritExtended-Ultra.otf",
+  src: "../../public/fonts/FAIRFavoritExtended-Ultra.woff2",
   variable: "--font-fair-favorit-heading",
   display: "swap",
+  preload: false,
 });
 
 const fairFavoritMono = localFont({
-  src: "../../public/fonts/FAIRFavoritMono-Book.otf",
+  src: "../../public/fonts/FAIRFavoritMono-Book.woff2",
   variable: "--font-fair-favorit-mono",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {

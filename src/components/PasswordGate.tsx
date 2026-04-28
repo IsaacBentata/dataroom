@@ -16,10 +16,9 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === "true") {
-      setAuthenticated(true);
-    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setAuthenticated(localStorage.getItem(STORAGE_KEY) === "true");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setChecking(false);
   }, []);
 
