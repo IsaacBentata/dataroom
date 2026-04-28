@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import VinylPlayer from "@/components/VinylPlayer";
 import AnimateText from "@/components/AnimateText";
@@ -21,26 +20,32 @@ const items = [
   { href: "/financials", label: "Financials" },
 ];
 
-const pageComponents: Record<string, React.ComponentType> = {
-  "/product": dynamic(() => import("./product/page"), { ssr: false }),
-  "/growth": dynamic(() => import("./growth/page"), { ssr: false }),
-  "/retention": dynamic(() => import("./retention/page"), { ssr: false }),
-  "/demographics": dynamic(() => import("./demographics/page"), { ssr: false }),
-  "/music-industry": dynamic(() => import("./music-industry/page"), { ssr: false }),
-  "/monetisation": dynamic(() => import("./monetisation/page"), { ssr: false }),
-  "/ai": dynamic(() => import("./ai/page"), { ssr: false }),
-  "/team": dynamic(() => import("./team/page"), { ssr: false }),
-  "/roadmap": dynamic(() => import("./roadmap/page"), { ssr: false }),
-  "/legal": dynamic(() => import("./legal/page"), { ssr: false }),
-  "/financials": dynamic(() => import("./financials/page"), { ssr: false }),
+const pageLoaders: Record<string, () => Promise<{ default: React.ComponentType }>> = {
+  "/product": () => import("./product/page"),
+  "/growth": () => import("./growth/page"),
+  "/retention": () => import("./retention/page"),
+  "/demographics": () => import("./demographics/page"),
+  "/music-industry": () => import("./music-industry/page"),
+  "/monetisation": () => import("./monetisation/page"),
+  "/ai": () => import("./ai/page"),
+  "/team": () => import("./team/page"),
+  "/roadmap": () => import("./roadmap/page"),
+  "/legal": () => import("./legal/page"),
+  "/financials": () => import("./financials/page"),
 };
+
+const pageComponents: Record<string, React.ComponentType> = Object.fromEntries(
+  Object.entries(pageLoaders).map(([href, load]) => [
+    href,
+    dynamic(load, { ssr: false }),
+  ]),
+);
 
 const ROW_H = 22;
 
 export default function Home() {
   const [index, setIndex] = useState(0);
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
-  const router = useRouter();
   const wheelAccum = useRef(0);
 
   useEffect(() => {
@@ -102,13 +107,13 @@ export default function Home() {
     };
   }, [previewIndex]);
 
-  // Prefetch a route only when the user hovers its menu item — avoids loading
-  // chart-heavy chunks on home before the user signals interest.
+  // Warm the inline-preview chunk on hover so the soft-blur entrance feels
+  // instant; chart-heavy modules are only fetched after the user signals interest.
   const prefetched = useRef(new Set<string>());
   const prefetchOnHover = (href: string) => {
     if (prefetched.current.has(href)) return;
     prefetched.current.add(href);
-    router.prefetch(href);
+    pageLoaders[href]?.();
   };
 
   useEffect(() => {
@@ -120,18 +125,14 @@ export default function Home() {
         e.preventDefault();
         setIndex((i) => Math.max(0, i - 1));
       } else if (e.key === "Enter") {
-        if (previewIndex === index) {
-          router.push(items[index].href);
-        } else {
-          setPreviewIndex(index);
-        }
+        setPreviewIndex(index);
       } else if (e.key === "Escape") {
         setPreviewIndex(null);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [index, previewIndex, router]);
+  }, [index, previewIndex]);
 
   const offset = (items.length - 1 - 2 * index) * (ROW_H / 2);
   const isPreviewing = previewIndex !== null;
@@ -179,12 +180,8 @@ export default function Home() {
                   key={it.href}
                   onMouseEnter={() => prefetchOnHover(it.href)}
                   onClick={() => {
-                    if (previewIndex === i) {
-                      router.push(it.href);
-                    } else {
-                      setIndex(i);
-                      setPreviewIndex(i);
-                    }
+                    setIndex(i);
+                    setPreviewIndex(i);
                   }}
                   style={{
                     height: ROW_H,
