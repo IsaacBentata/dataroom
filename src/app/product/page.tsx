@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import dynamic from "next/dynamic";
@@ -100,65 +100,76 @@ const features: FeatureSection[] = [
 
 export default function ProductPage() {
   return (
-    <Section>
+    <>
+      {/* Sticky page header — pins to top of scroll container in both direct
+          route and inline preview. Out of normal flow concerns thanks to
+          sticky semantics. */}
       <div
-        className="sticky top-0 z-20 bg-background py-6 mb-8"
+        className="sticky top-0 z-30 bg-background pt-6 pb-4 px-6 md:px-12"
+        data-product-fixed-header
         style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.06)" }}
       >
-        <PageHeader
-          label="The Product"
-          title="A music social network built for real connection"
-          subtitle="Every feature is connected by the same thread: music as the foundation for human connection. Here is how the app works, feature by feature."
-        />
+        <div className="max-w-5xl mx-auto">
+          <PageHeader
+            label="The Product"
+            title="A music social network built for real connection"
+            subtitle="Every feature is connected by the same thread: music as the foundation for human connection. Here is how the app works, feature by feature."
+          />
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            <Card className="bg-card text-center py-0 gap-0">
+              <CardContent className="px-3 py-2">
+                <div className="text-xl font-bold text-accent-green mb-0.5">4.5+</div>
+                <div className="text-xs text-muted-foreground">App Store Rating</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-card text-center py-0 gap-0">
+              <CardContent className="px-3 py-2">
+                <div className="text-xl font-bold text-accent-blue mb-0.5">1:1</div>
+                <div className="text-xs text-muted-foreground">Male / Female Ratio</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-card text-center py-0 gap-0">
+              <CardContent className="px-3 py-2">
+                <div className="text-xl font-bold text-accent-purple mb-0.5">37 min</div>
+                <div className="text-xs text-muted-foreground">Daily Time Spent</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-card text-center py-0 gap-0">
+              <CardContent className="px-3 py-2">
+                <div className="text-xl font-bold text-accent-orange mb-0.5">100%</div>
+                <div className="text-xs text-muted-foreground">Verified Humans</div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-        <Card className="bg-card text-center">
-          <CardContent className="p-4">
-            <div className="text-3xl font-bold text-accent-green mb-1">4.5+</div>
-            <div className="text-xs text-muted-foreground">App Store Rating</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-card text-center">
-          <CardContent className="p-4">
-            <div className="text-3xl font-bold text-accent-blue mb-1">1:1</div>
-            <div className="text-xs text-muted-foreground">Male / Female Ratio</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-card text-center">
-          <CardContent className="p-4">
-            <div className="text-3xl font-bold text-accent-purple mb-1">37 min</div>
-            <div className="text-xs text-muted-foreground">Daily Time Spent</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-card text-center">
-          <CardContent className="p-4">
-            <div className="text-3xl font-bold text-accent-orange mb-1">100%</div>
-            <div className="text-xs text-muted-foreground">Verified Humans</div>
-          </CardContent>
-        </Card>
+      <div className="px-6 md:px-12">
+        <div className="max-w-5xl mx-auto">
+          <FeaturesScrollStory features={features} />
+        </div>
       </div>
-
-      <FeaturesScrollStory features={features} />
-    </Section>
+    </>
   );
 }
 
 function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [stickyOffset, setStickyOffset] = useState(0);
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
-  // Measure the sticky page header and publish its height as a CSS var on the
-  // scrolling element. Used as scroll-padding-top so CSS scroll-snap centers
-  // each section in the visible area below the sticky header.
-  useEffect(() => {
+  // Measure the sticky page header. Result is held in state and used directly
+  // on each section's inline height style + the phone's top/height. Also
+  // mirrored to a CSS var so the scroll-snap padding-top can use it.
+  useLayoutEffect(() => {
     const stickyHeader =
-      document.querySelector<HTMLElement>(".minimal-preview .sticky.bg-background") ??
-      document.querySelector<HTMLElement>(".sticky.bg-background");
+      document.querySelector<HTMLElement>("[data-product-fixed-header]");
 
     const update = () => {
-      const h = stickyHeader?.getBoundingClientRect().height ?? 0;
-      const value = `${Math.round(h)}px`;
+      const h = Math.round(stickyHeader?.getBoundingClientRect().height ?? 0);
+      setStickyOffset(h);
+      const value = `${h}px`;
       document.documentElement.style.setProperty("--feature-sticky-offset", value);
       const preview = document.querySelector<HTMLElement>(".minimal-preview");
       if (preview) preview.style.setProperty("--feature-sticky-offset", value);
@@ -241,7 +252,10 @@ function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
             ref={(el) => {
               sectionRefs.current[idx] = el;
             }}
-            className="feature-snap min-h-screen flex flex-col justify-center"
+            className="feature-snap flex flex-col justify-center"
+            style={{
+              height: `calc(100vh - ${stickyOffset}px)`,
+            }}
           >
             <div
               className="max-w-xl transition-opacity duration-500 ease-out"
@@ -261,8 +275,12 @@ function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
 
       {/* Sticky phone — stays put, screen content swaps with the active feature */}
       <div
-        className="hidden lg:flex sticky top-0 self-start items-center justify-center"
-        style={{ height: "100vh", width: 400 }}
+        className="hidden lg:flex sticky self-start items-center justify-center"
+        style={{
+          top: `${stickyOffset}px`,
+          height: `calc(100vh - ${stickyOffset}px)`,
+          width: 400,
+        }}
       >
         <PhoneVideo3D
           src={active?.video}

@@ -214,7 +214,7 @@ html:has(.feature-snap),
   scroll-behavior: smooth;
 }
 .feature-snap {
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   scroll-snap-stop: normal;
 }
 /* Don't snap inside the sticky phone column — only the text feature sections. */

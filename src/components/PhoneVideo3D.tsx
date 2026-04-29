@@ -57,7 +57,7 @@ export default function PhoneVideo3D({
           <ambientLight intensity={0.45} />
           <directionalLight position={[3, 5, 4]} intensity={1.0} />
           <directionalLight position={[-3, -1, 2]} intensity={0.4} />
-          <Suspense fallback={<ProceduralPhone {...{ src, imageSrc, active: inView, baseTilt, staticTilt }} />}>
+          <Suspense fallback={null}>
             <ModelOrFallbackPhone
               modelUrl={modelUrl}
               src={src}
@@ -184,9 +184,26 @@ function useScreenTexture(displayedSrc?: string, displayedImage?: string, active
     v.crossOrigin = "anonymous";
     v.preload = "auto";
     v.autoplay = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    v.setAttribute("autoplay", "");
+    // Off-DOM videos get inconsistent autoplay treatment in some browsers.
+    // Park it in DOM, hidden, so the browser treats it as a normal media
+    // element for autoplay-policy purposes.
+    v.style.cssText =
+      "position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;";
+    document.body.appendChild(v);
     v.load();
     return v;
   }, [displayedSrc]);
+
+  // Remove the hidden DOM node when the video instance changes / unmounts.
+  useEffect(() => {
+    if (!video) return;
+    return () => {
+      if (video.parentNode) video.parentNode.removeChild(video);
+    };
+  }, [video]);
 
   // Robust autoplay: try to play on mount, on metadata load, and on canplay.
   // Some browsers reject play() before the metadata is ready; some need the
@@ -205,16 +222,23 @@ function useScreenTexture(displayedSrc?: string, displayedImage?: string, active
       window.removeEventListener("pointerdown", onUserGesture);
       window.removeEventListener("touchstart", onUserGesture);
       window.removeEventListener("keydown", onUserGesture);
+      window.removeEventListener("wheel", onUserGesture);
+      window.removeEventListener("scroll", onUserGesture, true);
     };
     window.addEventListener("pointerdown", onUserGesture, { once: true });
     window.addEventListener("touchstart", onUserGesture, { once: true });
     window.addEventListener("keydown", onUserGesture, { once: true });
+    window.addEventListener("wheel", onUserGesture, { once: true, passive: true });
+    // Scroll listener uses capture so it fires for any scrollable ancestor.
+    window.addEventListener("scroll", onUserGesture, { once: true, capture: true, passive: true });
     return () => {
       video.removeEventListener("loadedmetadata", tryPlay);
       video.removeEventListener("canplay", tryPlay);
       window.removeEventListener("pointerdown", onUserGesture);
       window.removeEventListener("touchstart", onUserGesture);
       window.removeEventListener("keydown", onUserGesture);
+      window.removeEventListener("wheel", onUserGesture);
+      window.removeEventListener("scroll", onUserGesture, true);
     };
   }, [video, active]);
 
