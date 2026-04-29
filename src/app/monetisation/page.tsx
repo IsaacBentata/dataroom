@@ -37,11 +37,11 @@ export default function MonetisationPage() {
               Between November 2025 and January 2026, we ran an extended A/B test. The results were strong:
             </p>
             <div className="grid grid-cols-2 gap-4 my-4">
-              <div className="text-center">
+              <div data-slot="stat" className="text-center">
                 <div className="text-3xl font-bold text-accent-green">4.5-5%</div>
                 <div className="text-xs text-muted-foreground mt-1">Paywall conversion rate</div>
               </div>
-              <div className="text-center">
+              <div data-slot="stat" className="text-center">
                 <div className="text-3xl font-bold text-accent-blue">$3M+</div>
                 <div className="text-xs text-muted-foreground mt-1">Projected ARR at current MAU base</div>
               </div>

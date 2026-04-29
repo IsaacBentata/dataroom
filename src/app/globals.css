@@ -292,22 +292,31 @@ body {
 
 /* Stat grids — render as a connected 1px hairline grid (top + left on container,
    right + bottom on each cell) so cells share edges with no gaps.
-   Only applies to "stat-shaped" cards (CardContent only, no CardHeader). */
-.minimal-preview .grid:has(> [data-slot="card"]:not(:has([data-slot="card-header"]))),
+   Targets 3+ column grids of cards, or any grid of [data-slot="stat"]. */
+.minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]),
+.minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]),
+.minimal-preview [class*="grid-cols-5"]:has(> [data-slot="card"]),
+.minimal-preview [class*="grid-cols-6"]:has(> [data-slot="card"]),
 .minimal-preview .grid:has(> [data-slot="stat"]) {
   gap: 0 !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-left: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
-.minimal-preview .grid:has(> [data-slot="card"]:not(:has([data-slot="card-header"]))) > [data-slot="card"],
+.minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"],
+.minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"],
+.minimal-preview [class*="grid-cols-5"]:has(> [data-slot="card"]) > [data-slot="card"],
+.minimal-preview [class*="grid-cols-6"]:has(> [data-slot="card"]) > [data-slot="card"],
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] {
   border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
   border-radius: 0 !important;
 }
 
-.minimal-preview .grid:has(> [data-slot="card"]:not(:has([data-slot="card-header"]))) > [data-slot="card"] [data-slot="card-content"] {
+.minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] [data-slot="card-content"],
+.minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] [data-slot="card-content"],
+.minimal-preview [class*="grid-cols-5"]:has(> [data-slot="card"]) > [data-slot="card"] [data-slot="card-content"],
+.minimal-preview [class*="grid-cols-6"]:has(> [data-slot="card"]) > [data-slot="card"] [data-slot="card-content"] {
   padding: 24px 16px !important;
 }
 
