@@ -155,7 +155,7 @@ export default function DataChart({
       <XAxis
         dataKey={xKey}
         stroke="rgba(0,0,0,0.2)"
-        tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11 }}
+        tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11, fontFamily: "var(--font-fair-favorit-book), sans-serif", fontWeight: 400 }}
         tickLine={false}
         axisLine={false}
       />
@@ -164,7 +164,7 @@ export default function DataChart({
     const yAxis = (
       <YAxis
         stroke="rgba(0,0,0,0.2)"
-        tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11 }}
+        tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11, fontFamily: "var(--font-fair-favorit-book), sans-serif", fontWeight: 400 }}
         tickLine={false}
         axisLine={false}
         tickFormatter={yAxisFormatter || ((v: number) => {

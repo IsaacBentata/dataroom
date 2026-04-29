@@ -41,7 +41,7 @@ const pageComponents: Record<string, React.ComponentType> = Object.fromEntries(
   ]),
 );
 
-const ROW_H = 22;
+const ROW_H = 24; // 18px font × 130% line-height
 
 export default function Home() {
   const [index, setIndex] = useState(0);
@@ -134,7 +134,7 @@ export default function Home() {
     return () => window.removeEventListener("keydown", onKey);
   }, [index, previewIndex]);
 
-  const offset = (items.length - 1 - 2 * index) * (ROW_H / 2);
+  const offset = Math.round((items.length - 1 - 2 * index) * (ROW_H / 2));
   const isPreviewing = previewIndex !== null;
   const PreviewComponent = isPreviewing
     ? pageComponents[items[previewIndex!].href]
@@ -146,7 +146,7 @@ export default function Home() {
       <div
         className="absolute top-1/2 z-30"
         style={{
-          left: isPreviewing ? "48px" : "50%",
+          left: isPreviewing ? "64px" : "50%",
           transform: isPreviewing
             ? "translate(0, -50%)"
             : "translate(-50%, -50%)",
@@ -157,9 +157,9 @@ export default function Home() {
         <div className="relative">
           <span
             aria-hidden
-            className="absolute right-full top-1/2 -translate-y-1/2 mr-5 flex items-center text-foreground pointer-events-none"
+            className="absolute right-full top-1/2 -translate-y-1/2 mr-4 flex items-center text-foreground pointer-events-none"
           >
-            <svg width="16" height="10" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="32" height="20" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="30" height="6" fill="currentColor" />
               <rect y="12" width="30" height="6" fill="currentColor" />
             </svg>
@@ -169,7 +169,6 @@ export default function Home() {
             style={{
               transform: `translateY(${offset}px)`,
               transition: "transform 180ms cubic-bezier(0.22, 1, 0.36, 1)",
-              willChange: "transform",
             }}
           >
             {items.map((it, i) => {
@@ -184,11 +183,10 @@ export default function Home() {
                     setPreviewIndex(i);
                   }}
                   style={{
-                    height: ROW_H,
-                    fontFamily: "var(--font-fair-favorit-body), sans-serif",
-                    fontWeight: previewing || (selected && !isPreviewing) ? 700 : 400,
-                    fontSize: 12,
-                    lineHeight: 1.2,
+                    fontFamily: "var(--font-fair-favorit-book), sans-serif",
+                    fontWeight: 400,
+                    fontSize: 18,
+                    lineHeight: "130%",
                     letterSpacing: "0.24px",
                   }}
                   className={`flex items-center cursor-pointer transition-colors duration-200 ${

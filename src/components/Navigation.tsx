@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -29,19 +30,20 @@ export default function Navigation() {
     <>
       {/* Desktop nav - fixed left sidebar */}
       <nav className="hidden lg:flex fixed left-0 top-0 h-full w-56 bg-background/90 backdrop-blur-xl border-r border-border/50 z-50 flex-col py-8 px-4">
-        <Link href="/" className="text-lg font-bold tracking-[-0.04em] mb-10 px-3">
-          EQUALS
+        <Link href="/" className="mb-10 px-3">
+          <img src="/equals-icon.svg" alt="Equals" className="h-[20px] w-auto" />
         </Link>
         <div className="flex flex-col gap-0.5 flex-1">
           {sections.slice(1).map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className={`text-left px-3 py-2 rounded-xl text-[13px] transition-all ${
+              className={`text-left px-3 py-2 rounded-xl transition-all ${
                 pathname === href
-                  ? "bg-secondary text-foreground font-medium"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"
+                  ? "text-foreground font-bold"
+                  : "text-black/20 hover:text-foreground"
               }`}
+              style={{ fontSize: "20px" }}
             >
               {label}
             </Link>
@@ -55,8 +57,8 @@ export default function Navigation() {
       {/* Mobile nav - top bar */}
       <nav className="lg:hidden fixed top-0 left-0 right-0 bg-background/90 backdrop-blur-xl border-b border-border/50 z-50">
         <div className="flex items-center justify-between px-4 py-3">
-          <Link href="/" className="text-lg font-bold tracking-[-0.04em]">
-            EQUALS
+          <Link href="/">
+            <img src="/equals-icon.svg" alt="Equals" className="h-[20px] w-auto" />
           </Link>
           <Button
             variant="ghost"
@@ -73,11 +75,12 @@ export default function Navigation() {
                 key={href}
                 href={href}
                 onClick={() => setIsOpen(false)}
-                className={`text-left px-3 py-2 rounded-xl text-[13px] transition-all ${
+                className={`text-left px-3 py-2 rounded-xl transition-all ${
                   pathname === href
-                    ? "bg-secondary text-foreground font-medium"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "text-foreground font-bold"
+                    : "text-black/20 hover:text-foreground"
                 }`}
+                style={{ fontSize: "20px" }}
               >
                 {label}
               </Link>
