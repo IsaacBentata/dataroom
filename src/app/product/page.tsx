@@ -1,14 +1,21 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import { Card, CardContent } from "@/components/ui/card";
+
+const PhoneVideo3D = dynamic(() => import("@/components/PhoneVideo3D"), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface FeatureSection {
   title: string;
   description: string;
   screenshots: { src: string; alt: string }[];
+  video?: string;
 }
 
 const features: FeatureSection[] = [
@@ -17,12 +24,14 @@ const features: FeatureSection[] = [
     description:
       "The Feed is where music becomes conversation. Users post hot takes, album reviews, and music opinions that spark real debate. Unlike algorithmic content feeds, every post on Equals comes from a verified human. This is the core social loop - music as the starting point for genuine connection. The Feed drives daily return behavior and sets the tone for the entire experience.",
     screenshots: [{ src: "/screenshots/feed.png", alt: "The Feed" }],
+    video: "/videos/feature-3.mp4",
   },
   {
     title: "Meet - Friend Recommendations Based on Music Taste",
     description:
       "Meet is how users discover each other. Rather than following celebrities or influencers, Equals recommends real people based on shared music taste. The algorithm analyses listening preferences, reviews, and engagement patterns to surface people you would actually want to be friends with. This is the engine behind the social graph - and it is why users with more friends retain dramatically better.",
     screenshots: [{ src: "/screenshots/meet-card.png", alt: "Meet card" }],
+    video: "/videos/feature-2.mp4",
   },
   {
     title: "Artist Profiles - Deep Fan Engagement Pages",
@@ -33,6 +42,7 @@ const features: FeatureSection[] = [
       { src: "/screenshots/artist-profile-reviews.png", alt: "Artist profile reviews" },
       { src: "/screenshots/artist-profile-music.png", alt: "Artist profile music" },
     ],
+    video: "/videos/feature-3.mp4",
   },
   {
     title: "Album Pages and Digital Vinyls",
@@ -42,12 +52,14 @@ const features: FeatureSection[] = [
       { src: "/screenshots/album-page.png", alt: "Album page" },
       { src: "/screenshots/track-detail.png", alt: "Track detail" },
     ],
+    video: "/videos/feature-4.mp4",
   },
   {
     title: "Music Quizzes - Test Your Knowledge",
     description:
       "Quizzes turn music fandom into a game. Users compete on artist-specific trivia, testing their superfan credentials. This feature drives engagement and time-on-app while reinforcing music identity - one of the core emotional hooks that keeps users coming back. Quizzes also create shareable moments that drive organic acquisition.",
     screenshots: [{ src: "/screenshots/music-quiz.png", alt: "Music quiz" }],
+    video: "/videos/feature-4.mp4",
   },
   {
     title: "Chat Rooms - Live Fan Conversations",
@@ -57,6 +69,7 @@ const features: FeatureSection[] = [
       { src: "/screenshots/chats-with-rooms.png", alt: "Chat rooms overview" },
       { src: "/screenshots/chat-room-inside.png", alt: "Inside a chat room" },
     ],
+    video: "/videos/feature-5.mp4",
   },
   {
     title: "DMs - Personal Connections with Music Match %",
@@ -75,6 +88,7 @@ const features: FeatureSection[] = [
       { src: "/screenshots/user-profile.png", alt: "User profile" },
       { src: "/screenshots/user-profile-public.png", alt: "Public profile" },
     ],
+    video: "/videos/feature-1.mp4",
   },
   {
     title: "Activity and Viewers - See Who is Looking",
@@ -87,7 +101,10 @@ const features: FeatureSection[] = [
 export default function ProductPage() {
   return (
     <Section>
-      <div className="mb-12">
+      <div
+        className="sticky top-0 z-20 bg-background py-6 mb-8"
+        style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.06)" }}
+      >
         <PageHeader
           label="The Product"
           title="A music social network built for real connection"
@@ -122,11 +139,115 @@ export default function ProductPage() {
         </Card>
       </div>
 
-      <div className="space-y-20">
+      <FeaturesScrollStory features={features} />
+    </Section>
+  );
+}
+
+function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+
+  // Measure the sticky page header and publish its height as a CSS var on the
+  // scrolling element. Used as scroll-padding-top so CSS scroll-snap centers
+  // each section in the visible area below the sticky header.
+  useEffect(() => {
+    const stickyHeader =
+      document.querySelector<HTMLElement>(".minimal-preview .sticky.bg-background") ??
+      document.querySelector<HTMLElement>(".sticky.bg-background");
+
+    const update = () => {
+      const h = stickyHeader?.getBoundingClientRect().height ?? 0;
+      const value = `${Math.round(h)}px`;
+      document.documentElement.style.setProperty("--feature-sticky-offset", value);
+      const preview = document.querySelector<HTMLElement>(".minimal-preview");
+      if (preview) preview.style.setProperty("--feature-sticky-offset", value);
+    };
+    update();
+    const ro = stickyHeader ? new ResizeObserver(update) : null;
+    if (ro && stickyHeader) ro.observe(stickyHeader);
+    window.addEventListener("resize", update);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", update);
+      document.documentElement.style.removeProperty("--feature-sticky-offset");
+    };
+  }, []);
+
+  // Active feature = the section closest to viewport center as you scroll.
+  // Text scrolls naturally; only the phone stays sticky.
+  useEffect(() => {
+    const sections = sectionRefs.current.filter(Boolean) as HTMLElement[];
+    if (sections.length === 0) return;
+
+    let scrollEl: HTMLElement | null = null;
+    let cursor: HTMLElement | null = sections[0].parentElement;
+    while (cursor) {
+      const cs = getComputedStyle(cursor);
+      if (/(auto|scroll)/.test(cs.overflowY)) {
+        scrollEl = cursor;
+        break;
+      }
+      cursor = cursor.parentElement;
+    }
+    const target: EventTarget = scrollEl ?? window;
+
+    let raf: number | null = null;
+    const update = () => {
+      raf = null;
+      const containerTop = scrollEl
+        ? scrollEl.getBoundingClientRect().top
+        : 0;
+      const containerH = scrollEl ? scrollEl.clientHeight : window.innerHeight;
+      const visibleCenter = containerTop + containerH / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i < sections.length; i++) {
+        const r = sections[i].getBoundingClientRect();
+        const c = r.top + r.height / 2;
+        const d = Math.abs(c - visibleCenter);
+        if (d < bestDist) {
+          bestDist = d;
+          best = i;
+        }
+      }
+      setActiveIdx(best);
+    };
+
+    const onScroll = () => {
+      if (raf !== null) return;
+      raf = requestAnimationFrame(update);
+    };
+
+    update();
+    target.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      target.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf !== null) cancelAnimationFrame(raf);
+    };
+  }, [features.length]);
+
+  const active = features[activeIdx] ?? features[0];
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] lg:gap-16 items-start">
+      {/* Scrolling text column */}
+      <div>
         {features.map((feature, idx) => (
-          <div key={idx} className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <div className={`${idx % 2 === 1 ? "lg:order-2" : ""}`}>
-              <div className="text-xs text-accent-blue font-medium uppercase tracking-wider mb-2">
+          <section
+            key={idx}
+            ref={(el) => {
+              sectionRefs.current[idx] = el;
+            }}
+            className="feature-snap min-h-screen flex flex-col justify-center"
+          >
+            <div
+              className="max-w-xl transition-opacity duration-500 ease-out"
+              style={{ opacity: activeIdx === idx ? 1 : 0.25 }}
+            >
+              <div className="text-xs text-accent-blue font-medium uppercase tracking-wider mb-2 font-mono">
                 {String(idx + 1).padStart(2, "0")}
               </div>
               <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
@@ -134,32 +255,22 @@ export default function ProductPage() {
                 {feature.description}
               </p>
             </div>
-            <div className={`flex gap-3 justify-center ${idx % 2 === 1 ? "lg:order-1" : ""}`}>
-              {feature.screenshots.map((ss, i) => (
-                <div
-                  key={i}
-                  className={`relative rounded-xl overflow-hidden border border-border ${
-                    feature.screenshots.length === 1
-                      ? "w-48 md:w-56"
-                      : feature.screenshots.length === 2
-                      ? "w-36 md:w-44"
-                      : "w-28 md:w-36"
-                  }`}
-                  style={{ aspectRatio: "9/19.5" }}
-                >
-                  <Image
-                    src={ss.src}
-                    alt={ss.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 40vw, 20vw"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+          </section>
         ))}
       </div>
-    </Section>
+
+      {/* Sticky phone — stays put, screen content swaps with the active feature */}
+      <div
+        className="hidden lg:flex sticky top-0 self-start items-center justify-center"
+        style={{ height: "100vh", width: 400 }}
+      >
+        <PhoneVideo3D
+          src={active?.video}
+          imageSrc={active?.screenshots[0]?.src}
+          baseTilt={{ x: -0.04, y: 0.12 }}
+          height={720}
+        />
+      </div>
+    </div>
   );
 }

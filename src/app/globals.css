@@ -186,6 +186,42 @@ body {
   to { opacity: 1; }
 }
 
+@keyframes feature-text-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.feature-text-fade {
+  animation: feature-text-fade 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform, filter;
+}
+
+/* Scroll-snap when feature sections exist. Proximity mode = the browser only
+   snaps when the user stops near a snap point, never traps mid-scroll. Applied
+   to the actual scrolling element: <html> for direct route, .minimal-preview
+   inside the inline page preview. */
+html:has(.feature-snap),
+.minimal-preview:has(.feature-snap) {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: var(--feature-sticky-offset, 0px);
+  scroll-behavior: smooth;
+}
+.feature-snap {
+  scroll-snap-align: center;
+  scroll-snap-stop: normal;
+}
+/* Don't snap inside the sticky phone column — only the text feature sections. */
+.feature-snap-phone {
+  scroll-snap-align: none;
+}
+
 /* Minimal preview — strip heavy styling so inline pages match the menu aesthetic */
 .minimal-preview {
   --foreground-mute: rgba(0, 0, 0, 0.4);

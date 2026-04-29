@@ -155,15 +155,18 @@ export default function Home() {
         }}
       >
         <div className="relative">
-          <span
-            aria-hidden
-            className="absolute right-full top-1/2 -translate-y-1/2 mr-5 flex items-center text-foreground pointer-events-none"
+          <button
+            type="button"
+            aria-label={isPreviewing ? "Back to menu" : "EQUALS"}
+            disabled={!isPreviewing}
+            onClick={() => setPreviewIndex(null)}
+            className="absolute right-full top-1/2 -translate-y-1/2 mr-5 flex items-center text-foreground bg-transparent border-0 p-0 enabled:cursor-pointer disabled:cursor-default"
           >
             <svg width="16" height="10" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="30" height="6" fill="currentColor" />
               <rect y="12" width="30" height="6" fill="currentColor" />
             </svg>
-          </span>
+          </button>
           <ul
             className="flex flex-col items-start"
             style={{

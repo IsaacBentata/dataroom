@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ElementType, type CSSProperties } from "react";
+import { createElement, useEffect, useRef, useState, type ElementType, type CSSProperties } from "react";
 
 type AnimateTextProps = {
   text: string;
@@ -58,28 +58,28 @@ export default function AnimateText({
 
   const lines = text.split("\n");
 
-  return (
-    <Tag
-      ref={ref}
-      className={className}
-      style={style}
-      aria-label={text}
-      data-animate-text
-    >
-      {lines.map((line, i) => (
-        <span
-          key={i}
-          aria-hidden
-          className="anim-line"
-          data-active={animate ? "1" : "0"}
-          style={{
-            animationDelay: `${delay + i * staggerMs}ms`,
-            animationDuration: `${durationMs}ms`,
-          }}
-        >
-          {line === "" ? " " : line}
-        </span>
-      ))}
-    </Tag>
+  return createElement(
+    Tag,
+    {
+      ref,
+      className,
+      style,
+      "aria-label": text,
+      "data-animate-text": true,
+    },
+    lines.map((line, i) => (
+      <span
+        key={i}
+        aria-hidden
+        className="anim-line"
+        data-active={animate ? "1" : "0"}
+        style={{
+          animationDelay: `${delay + i * staggerMs}ms`,
+          animationDuration: `${durationMs}ms`,
+        }}
+      >
+        {line === "" ? " " : line}
+      </span>
+    )),
   );
 }
