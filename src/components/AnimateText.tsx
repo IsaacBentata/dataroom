@@ -60,6 +60,7 @@ export default function AnimateText({
 
   return createElement(
     Tag,
+    // eslint-disable-next-line react-hooks/refs
     {
       ref,
       className,

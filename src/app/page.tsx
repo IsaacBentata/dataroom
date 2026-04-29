@@ -43,10 +43,71 @@ const pageComponents: Record<string, React.ComponentType> = Object.fromEntries(
 
 const ROW_H = 19; // 12px font × 160% line-height
 
+// Browser autoplay policy: even muted videos can be blocked when our R3F
+// video element is created inside a dynamically-imported chunk that mounts
+// AFTER the click gesture window has expired. The fix: create the real
+// feature video elements synchronously inside the click handler, start them
+// playing under the live user gesture, and stash them on window so
+// PhoneVideo3D's useScreenTexture can reuse them instead of creating new
+// (unprimed) elements later.
+const FEATURE_VIDEO_SRCS = [
+  "/videos/feature-1.mp4",
+  "/videos/feature-2.mp4",
+  "/videos/feature-3.mp4",
+  "/videos/feature-4.mp4",
+  "/videos/feature-5.mp4",
+];
+let mediaPrimed = false;
+function primeMediaAutoplay(href: string) {
+  if (mediaPrimed) return;
+  if (typeof document === "undefined") return;
+  void href;
+  const store: Record<string, HTMLVideoElement> = {};
+  for (const src of FEATURE_VIDEO_SRCS) {
+    const v = document.createElement("video");
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    v.setAttribute("autoplay", "");
+    v.setAttribute("loop", "");
+    v.muted = true;
+    v.defaultMuted = true;
+    v.playsInline = true;
+    v.autoplay = true;
+    v.loop = true;
+    v.preload = "auto";
+    // Keep videos in viewport (top-left corner, 1x1, invisible) — Safari
+    // and some Chrome versions block autoplay for off-viewport videos
+    // even when muted. opacity:0 + 1x1 keeps them visually invisible.
+    v.style.cssText =
+      "position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none;z-index:-1;";
+    document.body.appendChild(v);
+    v.src = src;
+    // play() inside the click handler captures the user gesture for ALL
+    // feature videos — they all stay primed and will be reused by
+    // PhoneVideo3D's useScreenTexture when the texture for that src is needed.
+    void v.play().catch(() => {});
+    // Retry on metadata/canplay in case the initial play() raced the load.
+    const retry = () => void v.play().catch(() => {});
+    v.addEventListener("loadedmetadata", retry, { once: true });
+    v.addEventListener("canplay", retry, { once: true });
+    store[src] = v;
+  }
+  (window as unknown as { __primedFeatureVideos?: Record<string, HTMLVideoElement> }).__primedFeatureVideos = store;
+  mediaPrimed = true;
+}
+
 export default function Home() {
   const [index, setIndex] = useState(0);
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const wheelAccum = useRef(0);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     if (previewIndex !== null) return;
@@ -140,6 +201,27 @@ export default function Home() {
     ? pageComponents[items[previewIndex!].href]
     : null;
 
+  if (isMobile) {
+    return (
+      <section className="fixed inset-0 overflow-hidden bg-background select-none flex items-center justify-center px-8">
+        <p
+          className="text-center text-foreground"
+          style={{
+            fontFamily: "var(--font-fair-favorit-mono), monospace",
+            fontWeight: 400,
+            fontSize: 12,
+            lineHeight: "160%",
+            letterSpacing: "0.24px",
+            textTransform: "uppercase",
+          }}
+        >
+          Please visit on your laptop
+        </p>
+        <VinylPlayer pinnedBottomCenter />
+      </section>
+    );
+  }
+
   return (
     <section className="fixed inset-0 overflow-hidden bg-background select-none">
       {/* Menu — animates between centered and pinned-left */}
@@ -182,6 +264,12 @@ export default function Home() {
                   key={it.href}
                   onMouseEnter={() => prefetchOnHover(it.href)}
                   onClick={() => {
+                    // Warm up media autoplay using the live click gesture.
+                    // We synchronously start a hidden muted video so the
+                    // document is marked as having user-initiated media,
+                    // making subsequent muted plays in PhoneVideo3D pass
+                    // browser autoplay policy without a scroll/click.
+                    primeMediaAutoplay(it.href);
                     setIndex(i);
                     setPreviewIndex(i);
                   }}

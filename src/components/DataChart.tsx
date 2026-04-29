@@ -11,6 +11,7 @@ import {
   CartesianGrid,
   Area,
   AreaChart,
+  ReferenceLine,
 } from "recharts";
 import { Download } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -43,6 +44,12 @@ interface SeriesConfig {
   color: string;
 }
 
+interface ReferenceLineConfig {
+  y: number;
+  label?: string;
+  color?: string;
+}
+
 interface DataChartProps {
   data: DataPoint[];
   series: SeriesConfig[];
@@ -58,6 +65,7 @@ interface DataChartProps {
   className?: string;
   hero?: boolean;
   headerChildren?: React.ReactNode;
+  referenceLines?: ReferenceLineConfig[];
 }
 
 const dateRangeOptions: { value: DateRange; label: string }[] = [
@@ -111,6 +119,7 @@ export default function DataChart({
   className = "",
   hero = false,
   headerChildren,
+  referenceLines,
 }: DataChartProps) {
   const [dateRange, setDateRange] = useState<DateRange>("all");
 
@@ -208,6 +217,29 @@ export default function DataChart({
       <ChartLegend content={<ChartLegendContent />} />
     ) : null;
 
+    const refLines = referenceLines?.map((r, i) => (
+      <ReferenceLine
+        key={`ref-${i}`}
+        y={r.y}
+        stroke={r.color ?? "#FF4D00"}
+        strokeDasharray="4 4"
+        strokeWidth={1.5}
+        ifOverflow="extendDomain"
+        label={
+          r.label
+            ? {
+                value: r.label,
+                position: "insideTopRight",
+                fill: r.color ?? "#FF4D00",
+                fontSize: 11,
+                fontWeight: 500,
+                offset: 6,
+              }
+            : undefined
+        }
+      />
+    ));
+
     if (type === "area") {
       return (
         <AreaChart {...commonProps}>
@@ -216,6 +248,7 @@ export default function DataChart({
           {yAxis}
           {tooltip}
           {legend}
+          {refLines}
           {series.map((s) => (
             <Area
               key={s.key}
@@ -241,6 +274,7 @@ export default function DataChart({
           {yAxis}
           {tooltip}
           {legend}
+          {refLines}
           {series.map((s) => (
             <Bar
               key={s.key}
@@ -261,6 +295,7 @@ export default function DataChart({
         {yAxis}
         {tooltip}
         {legend}
+        {refLines}
         {series.map((s) => (
           <Line
             key={s.key}

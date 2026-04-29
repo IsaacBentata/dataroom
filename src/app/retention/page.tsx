@@ -88,7 +88,7 @@ export default function RetentionPage() {
         </CardHeader>
         <CardContent>
           <DataChart
-            className="mt-4 pt-3"
+            className="mt-4 pt-3 border-0 p-0 shadow-none ring-0"
             data={retentionByFriends}
             series={[
               { key: "All Users", name: "All Users", color: "rgba(0,0,0,0.35)" },
@@ -103,7 +103,6 @@ export default function RetentionPage() {
             height={380}
             yAxisFormatter={(v: number) => `${v}%`}
             tooltipFormatter={(v: number) => `${v}%`}
-            className="border-0 p-0 shadow-none ring-0"
             showDateFilter={false}
           />
         </CardContent>

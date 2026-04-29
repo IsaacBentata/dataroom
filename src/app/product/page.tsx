@@ -3,8 +3,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
+import StatCallout from "@/components/StatCallout";
 import dynamic from "next/dynamic";
-import { Card, CardContent } from "@/components/ui/card";
 
 const PhoneVideo3D = dynamic(() => import("@/components/PhoneVideo3D"), {
   ssr: false,
@@ -49,10 +49,8 @@ const features: FeatureSection[] = [
     description:
       "Every album has its own page where users can rate, review, and discuss the music. The Digital Vinyl feature lets users collect branded digital downloads and pin them to their profile. For labels, Digital Vinyl sales count toward chart positioning - creating net-new revenue that does not cannibalise streaming. For fans, it is a way to express identity through the music they love.",
     screenshots: [
-      { src: "/screenshots/album-page.png", alt: "Album page" },
-      { src: "/screenshots/track-detail.png", alt: "Track detail" },
+      { src: "/screenshots/album-page-vinyl.png", alt: "Album page with digital vinyl" },
     ],
-    video: "/videos/feature-4.mp4",
   },
   {
     title: "Music Quizzes - Test Your Knowledge",
@@ -117,30 +115,10 @@ export default function ProductPage() {
           />
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-            <Card className="bg-card text-center py-0 gap-0">
-              <CardContent className="px-3 py-2">
-                <div className="text-xl font-bold text-accent-green mb-0.5">4.5+</div>
-                <div className="text-xs text-muted-foreground">App Store Rating</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-card text-center py-0 gap-0">
-              <CardContent className="px-3 py-2">
-                <div className="text-xl font-bold text-accent-blue mb-0.5">1:1</div>
-                <div className="text-xs text-muted-foreground">Male / Female Ratio</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-card text-center py-0 gap-0">
-              <CardContent className="px-3 py-2">
-                <div className="text-xl font-bold text-accent-purple mb-0.5">37 min</div>
-                <div className="text-xs text-muted-foreground">Daily Time Spent</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-card text-center py-0 gap-0">
-              <CardContent className="px-3 py-2">
-                <div className="text-xl font-bold text-accent-orange mb-0.5">100%</div>
-                <div className="text-xs text-muted-foreground">Verified Humans</div>
-              </CardContent>
-            </Card>
+            <StatCallout value="4.5+" label="App Store Rating" />
+            <StatCallout value="1:1" label="Male / Female Ratio" color="text-accent-blue" />
+            <StatCallout value="36 min" label="Daily Time Spent" color="text-accent-purple" />
+            <StatCallout value="100%" label="Verified Humans" color="text-accent-orange" />
           </div>
         </div>
       </div>

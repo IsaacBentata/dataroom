@@ -30,7 +30,6 @@ const fairFavoritMono = localFont({
   src: "../../public/fonts/FAIRFavoritMono-Book.woff2",
   variable: "--font-fair-favorit-mono",
   display: "swap",
-  preload: false,
 });
 
 const pitchSans = localFont({
