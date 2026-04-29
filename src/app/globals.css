@@ -448,7 +448,9 @@ html:has(.feature-snap),
 
 /* Stat grid — white text */
 .minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] .text-3xl,
+.minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] .text-2xl,
 .minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] .text-3xl,
+.minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] .text-2xl,
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] div[data-animate-text],
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] div[data-animate-text] span {
   color: #FFFFFF !important;

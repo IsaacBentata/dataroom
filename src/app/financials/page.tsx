@@ -4,6 +4,7 @@ import Link from "next/link";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import DataChart from "@/components/DataChart";
+import StatCallout from "@/components/StatCallout";
 import DownloadAllButton from "@/components/DownloadAllButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -86,24 +87,9 @@ export default function FinancialsPage() {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-        <Card className="bg-card text-center">
-          <CardContent className="pt-5">
-            <div className="text-2xl font-bold text-accent-green mb-1">$208K</div>
-            <div className="text-muted-foreground text-xs">Total Revenue to Date</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-card text-center">
-          <CardContent className="pt-5">
-            <div className="text-2xl font-bold text-accent-blue mb-1">$3.7M</div>
-            <div className="text-muted-foreground text-xs">SAFE Investment Raised</div>
-          </CardContent>
-        </Card>
-        <Card className="bg-card text-center">
-          <CardContent className="pt-5">
-            <div className="text-2xl font-bold text-accent-purple mb-1">$45M</div>
-            <div className="text-muted-foreground text-xs">SAFE Valuation Cap</div>
-          </CardContent>
-        </Card>
+        <StatCallout value="$208K" label="Total Revenue to Date" color="text-accent-green" />
+        <StatCallout value="$3.7M" label="SAFE Investment Raised" color="text-accent-blue" />
+        <StatCallout value="$45M" label="SAFE Valuation Cap" color="text-accent-purple" />
       </div>
 
       <Card className="bg-card mt-8">

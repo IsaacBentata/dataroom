@@ -9,7 +9,7 @@ interface PageHeaderProps {
 export default function PageHeader({ label, title, subtitle }: PageHeaderProps) {
   return (
     <div data-page-header className="flex gap-8">
-      <div style={{ flex: "0 0 50%" }}>
+      <div style={{ flex: subtitle ? "0 0 40%" : "1 1 auto" }}>
         <span className="inline-flex items-center gap-1 font-normal uppercase tracking-[0] mb-2 text-black" style={{ fontSize: "12px", fontFamily: "var(--font-fair-favorit-mono), monospace" }}>
           <span className="inline-block w-[10px] h-[10px] rounded-full bg-black" />
           {label}
@@ -21,7 +21,7 @@ export default function PageHeader({ label, title, subtitle }: PageHeaderProps) 
         />
       </div>
       {subtitle && (
-        <div style={{ flex: "0 0 50%" }} className="flex items-start pt-[22px]">
+        <div style={{ flex: "1 1 0%" }} className="flex items-start pt-[22px]">
           <AnimateText
             as="p"
             text={subtitle}
