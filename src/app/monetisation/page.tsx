@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import DataChart from "@/components/DataChart";
+import StatCallout from "@/components/StatCallout";
 import DownloadAllButton from "@/components/DownloadAllButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { revenueData, parseEngagementExcludingCurrent } from "@/lib/data";
@@ -37,14 +38,8 @@ export default function MonetisationPage() {
               Between November 2025 and January 2026, we ran an extended A/B test. The results were strong:
             </p>
             <div className="grid grid-cols-2 gap-4 my-4">
-              <div data-slot="stat" className="text-center">
-                <div className="text-3xl font-bold text-accent-green">4.5-5%</div>
-                <div className="text-xs text-muted-foreground mt-1">Paywall conversion rate</div>
-              </div>
-              <div data-slot="stat" className="text-center">
-                <div className="text-3xl font-bold text-accent-blue">$3M+</div>
-                <div className="text-xs text-muted-foreground mt-1">Projected ARR at current MAU base</div>
-              </div>
+              <StatCallout value="4.5-5%" label="Paywall conversion rate" color="text-accent-green" />
+              <StatCallout value="$3M+" label="Projected ARR at current MAU base" color="text-accent-blue" />
             </div>
           </CardContent>
         </Card>
@@ -106,8 +101,8 @@ export default function MonetisationPage() {
           <CardContent className="pt-5">
             <h4 className="font-semibold text-accent-green text-sm mb-2">Today (proven)</h4>
             <ul className="space-y-1.5 text-muted-foreground text-xs">
-              <li>In-app subscriptions ($6.99/wk, $9.99/mo, $19.99/qtr)</li>
-              <li>Premium features (profile viewers, filters)</li>
+              <li>&rarr; In-app subscriptions ($6.99/wk, $9.99/mo, $19.99/qtr)</li>
+              <li>&rarr; Premium features (profile viewers, filters)</li>
             </ul>
           </CardContent>
         </Card>
@@ -115,10 +110,10 @@ export default function MonetisationPage() {
           <CardContent className="pt-5">
             <h4 className="font-semibold text-accent-blue text-sm mb-2">Near-term (6-12 months)</h4>
             <ul className="space-y-1.5 text-muted-foreground text-xs">
-              <li>Label-funded artist activations</li>
-              <li>Digital Vinyl sales</li>
-              <li>Live event ticketing</li>
-              <li>Branded content & advertising</li>
+              <li>&rarr; Label-funded artist activations</li>
+              <li>&rarr; Digital Vinyl sales</li>
+              <li>&rarr; Live event ticketing</li>
+              <li>&rarr; Branded content & advertising</li>
             </ul>
           </CardContent>
         </Card>
@@ -126,9 +121,9 @@ export default function MonetisationPage() {
           <CardContent className="pt-5">
             <h4 className="font-semibold text-accent-purple text-sm mb-2">Medium-term (12-18 months)</h4>
             <ul className="space-y-1.5 text-muted-foreground text-xs">
-              <li>Label marketing spend via Equals</li>
-              <li>Social streaming revenue share</li>
-              <li>Premium creator tools for artists</li>
+              <li>&rarr; Label marketing spend via Equals</li>
+              <li>&rarr; Social streaming revenue share</li>
+              <li>&rarr; Premium creator tools for artists</li>
             </ul>
           </CardContent>
         </Card>
