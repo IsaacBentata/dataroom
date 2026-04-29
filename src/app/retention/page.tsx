@@ -73,15 +73,22 @@ export default function RetentionPage() {
 
       <Card className="bg-card my-10">
         <CardHeader>
-          <CardTitle className="font-mono">The network effect chart</CardTitle>
+          <div className="flex gap-6">
+            <div style={{ flex: "0 0 30%" }}>
+              <CardTitle className="font-mono">The network effect chart</CardTitle>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm text-black">
+                This is the most important chart in the data room. Retention by number of friends added
+                shows a clear, consistent pattern: the more friends a user adds, the higher their retention
+                at every time horizon. Users with 50+ friends retain at 36% on D30 - nearly 3x the baseline. This proves the network effect is working.
+              </p>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-sm mb-5">
-            This is the most important chart in the data room. Retention by number of friends added
-            shows a clear, consistent pattern: the more friends a user adds, the higher their retention
-            at every time horizon. Users with 50+ friends retain at 36% on D30 - nearly 3x the baseline. This proves the network effect is working.
-          </p>
           <DataChart
+            className="mt-4 pt-3"
             data={retentionByFriends}
             series={[
               { key: "All Users", name: "All Users", color: "rgba(0,0,0,0.35)" },

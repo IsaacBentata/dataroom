@@ -9,8 +9,8 @@ interface PageHeaderProps {
 export default function PageHeader({ label, title, subtitle }: PageHeaderProps) {
   return (
     <div data-page-header className="flex gap-8">
-      <div style={{ flex: "0 0 40%" }}>
-        <span className="inline-flex items-center gap-1 font-mono font-normal uppercase tracking-[0] mb-2 text-black" style={{ fontSize: "12px" }}>
+      <div style={{ flex: "0 0 50%" }}>
+        <span className="inline-flex items-center gap-1 font-normal uppercase tracking-[0] mb-2 text-black" style={{ fontSize: "12px", fontFamily: "var(--font-fair-favorit-mono), monospace" }}>
           <span className="inline-block w-[10px] h-[10px] rounded-full bg-black" />
           {label}
         </span>

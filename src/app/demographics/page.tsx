@@ -277,20 +277,24 @@ export default function DemographicsPage() {
       {/* Summary */}
       <Card className="bg-card border-accent-blue/30">
         <CardHeader>
-          <CardTitle>Why This Matters</CardTitle>
+          <div className="flex gap-6">
+            <div style={{ flex: "0 0 30%" }}>
+              <CardTitle>Why This Matters</CardTitle>
+            </div>
+            <div className="flex-1 space-y-3 text-muted-foreground text-sm leading-relaxed">
+              <p>
+                Most consumer social apps struggle with demographic imbalance. Dating apps skew male. Gaming platforms skew young male.
+                Lifestyle apps skew female. Equals is one of the rare social platforms with near-parity gender distribution ({malePct}/{femalePct})
+                and a core Gen Z audience ({genZPct}% aged 14-29).
+              </p>
+              <p>
+                The global distribution across 20+ countries with meaningful user counts means Equals
+                has inherent geographic diversification. This reduces market concentration risk and opens multiple monetisation
+                paths. Every user is identity-verified, so the demographic data is real, not estimated or inferred.
+              </p>
+            </div>
+          </div>
         </CardHeader>
-        <CardContent className="space-y-3 text-muted-foreground text-sm leading-relaxed">
-          <p>
-            Most consumer social apps struggle with demographic imbalance. Dating apps skew male. Gaming platforms skew young male.
-            Lifestyle apps skew female. Equals is one of the rare social platforms with near-parity gender distribution ({malePct}/{femalePct})
-            and a core Gen Z audience ({genZPct}% aged 14-29).
-          </p>
-          <p>
-            The global distribution across 20+ countries with meaningful user counts means Equals
-            has inherent geographic diversification. This reduces market concentration risk and opens multiple monetisation
-            paths. Every user is identity-verified, so the demographic data is real, not estimated or inferred.
-          </p>
-        </CardContent>
       </Card>
     </Section>
   );

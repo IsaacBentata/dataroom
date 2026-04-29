@@ -284,7 +284,7 @@ export default function DataChart({
           <div>
             {title && (
               <CardTitle className={hero ? "text-2xl" : "text-xl"}>
-                <span style={{ marginRight: 6 }}>⏺</span>{title}
+{title}
               </CardTitle>
             )}
             {subtitle && (
