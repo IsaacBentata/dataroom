@@ -94,7 +94,7 @@ export default function FinancialsPage() {
 
       <Card className="bg-card mt-8">
         <CardContent className="pt-5">
-          <p className="text-muted-foreground text-xs px-5">
+          <p className="text-muted-foreground text-xs">
             For the full cap table and ownership breakdown, see the{" "}
             <Link href="/legal" className="text-accent-blue hover:underline">
               Legal & Corporate
