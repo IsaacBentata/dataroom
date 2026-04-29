@@ -72,14 +72,16 @@ export default function GrowthPage() {
       />
 
       <div className="mt-10">
-        <div className="bg-secondary rounded-2xl px-6 py-5 mb-4">
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            Equals is a human-only social network. Every user must complete identity verification to participate.
-            The chart below shows the percentage of onboarded users who successfully verify their identity.
-            Verification rates have improved significantly as the onboarding flow has been refined - from 20% in late 2025 to over 50% in early 2026.
-          </p>
-        </div>
         <DataChart
+          headerChildren={
+            <div className="bg-secondary rounded-md px-4 py-3 mb-2">
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Equals is a human-only social network. Every user must complete identity verification to participate.
+                The chart below shows the percentage of onboarded users who successfully verify their identity.
+                Verification rates have improved significantly as the onboarding flow has been refined - from 20% in late 2025 to over 50% in early 2026.
+              </p>
+            </div>
+          }
           data={onboardingFunnel}
           series={[
             { key: "Verification Rate", name: "Verification Rate (%)", color: "rgba(0, 204, 120, 1)" },

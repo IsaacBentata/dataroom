@@ -41,7 +41,7 @@ const pageComponents: Record<string, React.ComponentType> = Object.fromEntries(
   ]),
 );
 
-const ROW_H = 24; // 18px font × 130% line-height
+const ROW_H = 19; // 12px font × 160% line-height
 
 export default function Home() {
   const [index, setIndex] = useState(0);
@@ -183,11 +183,12 @@ export default function Home() {
                     setPreviewIndex(i);
                   }}
                   style={{
-                    fontFamily: "var(--font-fair-favorit-book), sans-serif",
+                    fontFamily: "var(--font-fair-favorit-mono), monospace",
                     fontWeight: 400,
-                    fontSize: 18,
-                    lineHeight: "130%",
+                    fontSize: 12,
+                    lineHeight: "160%",
                     letterSpacing: "0.24px",
+                    textTransform: "uppercase" as const,
                   }}
                   className={`flex items-center cursor-pointer transition-colors duration-200 ${
                     previewing || (selected && !isPreviewing)
@@ -195,6 +196,7 @@ export default function Home() {
                       : "text-foreground/15 hover:text-foreground/40"
                   }`}
                 >
+                  {previewing && <span style={{ marginRight: 6 }}>→</span>}
                   <AnimateText
                     text={it.label}
                     triggerOnView={false}

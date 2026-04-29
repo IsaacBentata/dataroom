@@ -33,6 +33,13 @@ const fairFavoritMono = localFont({
   preload: false,
 });
 
+const pitchSans = localFont({
+  src: "../../public/fonts/TestPitchSans-Regular.otf",
+  variable: "--font-pitch-sans",
+  display: "swap",
+  preload: false,
+});
+
 export const metadata: Metadata = {
   title: "Equals - Series A Data Room",
   description: "Equals Series A investor data room. The music social network uniting the world through music.",
@@ -44,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fairFavoritBody.variable} ${fairFavoritHeading.variable} ${fairFavoritBook.variable} ${fairFavoritMono.variable} h-full antialiased`}>
+    <html lang="en" className={`${fairFavoritBody.variable} ${fairFavoritHeading.variable} ${fairFavoritBook.variable} ${fairFavoritMono.variable} ${pitchSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ClientLayout>{children}</ClientLayout>
       </body>
