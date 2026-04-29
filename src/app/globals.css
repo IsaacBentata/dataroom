@@ -167,6 +167,40 @@ body {
   to { transform: rotate(360deg); }
 }
 
+/* TikTok carousel — left-to-left infinite marquee. The track contains the
+ * video tiles duplicated, so a -50% translate loops back to the start with
+ * no visible jump. */
+@keyframes tiktok-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Metric swap — caption beneath each TikTok tile fades up when the active
+ * metric (views → likes → shares → comments) cycles. */
+@keyframes metric-swap {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tile ticker — engagement strip beneath each TikTok tile scrolls right-to-left.
+ * Track contains the metrics string twice so a -50% translate loops cleanly. */
+@keyframes tile-ticker {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Force the ticker text to render as white FAIR Favorit Mono regardless of
+ * any cascading colour/font overrides from .minimal-preview wrappers. */
+.tile-ticker-text,
+.tile-ticker-text * {
+  color: #FFFFFF !important;
+  font-family: var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase !important;
+  font-size: 12px !important;
+}
+
 /* Content fade-in for inline page preview */
 @keyframes content-fade-in {
   from {

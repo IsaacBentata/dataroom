@@ -28,7 +28,9 @@ export default function PhoneVideo3D({
   modelUrl = DEFAULT_MODEL_URL,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(true);
+  const { displayedSrc, displayedImage, targetOpacity } = useScreenContent(src, imageSrc);
+  const screenTexture = useScreenTexture(displayedSrc, displayedImage, inView);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -47,36 +49,32 @@ export default function PhoneVideo3D({
       className={className}
       style={{ height, width: "100%" }}
     >
-      {inView && (
-        <Canvas
-          camera={{ position: [0, 0, 5], fov: 30 }}
-          dpr={[1, 1.75]}
-          gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-          style={{ background: "transparent" }}
-        >
-          <ambientLight intensity={0.45} />
-          <directionalLight position={[3, 5, 4]} intensity={1.0} />
-          <directionalLight position={[-3, -1, 2]} intensity={0.4} />
-          <Suspense fallback={null}>
-            <ModelOrFallbackPhone
-              modelUrl={modelUrl}
-              src={src}
-              imageSrc={imageSrc}
-              active={inView}
-              baseTilt={baseTilt}
-              staticTilt={staticTilt}
-            />
-          </Suspense>
-        </Canvas>
-      )}
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 30 }}
+        dpr={[1, 1.75]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        style={{ background: "transparent" }}
+      >
+        <ambientLight intensity={0.45} />
+        <directionalLight position={[3, 5, 4]} intensity={1.0} />
+        <directionalLight position={[-3, -1, 2]} intensity={0.4} />
+        <Suspense fallback={null}>
+          <ModelOrFallbackPhone
+            modelUrl={modelUrl}
+            screenTexture={screenTexture}
+            targetOpacity={targetOpacity}
+            baseTilt={baseTilt}
+            staticTilt={staticTilt}
+          />
+        </Suspense>
+      </Canvas>
     </div>
   );
 }
 
 type PhoneInternals = {
-  src?: string;
-  imageSrc?: string;
-  active: boolean;
+  screenTexture: THREE.Texture | null;
+  targetOpacity: React.RefObject<number>;
   baseTilt: { x?: number; y?: number };
   staticTilt: boolean;
 };
@@ -102,7 +100,7 @@ function ModelOrFallbackPhone({
   }, [modelUrl]);
 
   if (loaded === false) return <ProceduralPhone {...rest} />;
-  if (loaded === null) return null;
+  if (loaded === null) return <ProceduralPhone {...rest} />;
   return <ModelPhone modelUrl={modelUrl} {...rest} />;
 }
 
@@ -175,32 +173,54 @@ function useScreenTexture(displayedSrc?: string, displayedImage?: string, active
   const video = useMemo(() => {
     if (!displayedSrc) return null;
     if (typeof document === "undefined") return null;
+    // Reuse a primed video element if one exists for this src — these were
+    // created synchronously inside the click gesture on the home page, so
+    // they already have valid autoplay activation.
+    const primed = (window as unknown as { __primedFeatureVideos?: Record<string, HTMLVideoElement> })
+      .__primedFeatureVideos?.[displayedSrc];
+    if (primed) return primed;
     const v = document.createElement("video");
-    v.src = displayedSrc;
-    v.loop = true;
-    v.muted = true;
-    v.defaultMuted = true;
-    v.playsInline = true;
-    v.crossOrigin = "anonymous";
-    v.preload = "auto";
-    v.autoplay = true;
+    // Set all autoplay-relevant attributes BEFORE src so the browser knows
+    // this is muted autoplay when it starts the load.
     v.setAttribute("muted", "");
     v.setAttribute("playsinline", "");
     v.setAttribute("autoplay", "");
+    v.setAttribute("loop", "");
+    v.muted = true;
+    v.defaultMuted = true;
+    v.playsInline = true;
+    v.autoplay = true;
+    v.loop = true;
+    v.crossOrigin = "anonymous";
+    v.preload = "auto";
     // Off-DOM videos get inconsistent autoplay treatment in some browsers.
     // Park it in DOM, hidden, so the browser treats it as a normal media
     // element for autoplay-policy purposes.
     v.style.cssText =
       "position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;";
     document.body.appendChild(v);
+    // src LAST so the load-start check sees the autoplay flags already set.
+    v.src = displayedSrc;
     v.load();
     return v;
   }, [displayedSrc]);
 
-  // Remove the hidden DOM node when the video instance changes / unmounts.
+  // Track whether this video was created here (vs reused from primed pool)
+  // so cleanup only removes nodes we own.
+  const isPrimedRef = useRef(false);
+  useEffect(() => {
+    if (!video || typeof window === "undefined") return;
+    const primed = (window as unknown as { __primedFeatureVideos?: Record<string, HTMLVideoElement> })
+      .__primedFeatureVideos;
+    isPrimedRef.current = !!primed && Object.values(primed).includes(video);
+  }, [video]);
+
+  // Remove the hidden DOM node when the video instance changes / unmounts —
+  // but only if we created it. Primed videos persist on window for reuse.
   useEffect(() => {
     if (!video) return;
     return () => {
+      if (isPrimedRef.current) return;
       if (video.parentNode) video.parentNode.removeChild(video);
     };
   }, [video]);
@@ -244,7 +264,7 @@ function useScreenTexture(displayedSrc?: string, displayedImage?: string, active
 
   useEffect(() => {
     return () => {
-      if (video) {
+      if (video && !isPrimedRef.current) {
         video.pause();
         video.removeAttribute("src");
         video.load();
@@ -319,12 +339,15 @@ function useTiltAndScreenFade(
 /* Procedural fallback (no model file present)                                 */
 /* ------------------------------------------------------------------------- */
 
-function ProceduralPhone({ src, imageSrc, active, baseTilt, staticTilt }: PhoneInternals) {
+function ProceduralPhone({
+  screenTexture,
+  targetOpacity,
+  baseTilt,
+  staticTilt,
+}: PhoneInternals) {
   const groupRef = useRef<THREE.Group>(null);
   const screenMatRef = useRef<THREE.MeshBasicMaterial>(null);
 
-  const { displayedSrc, displayedImage, targetOpacity } = useScreenContent(src, imageSrc);
-  const screenTexture = useScreenTexture(displayedSrc, displayedImage, active);
   useTiltAndScreenFade(groupRef, screenMatRef, baseTilt, staticTilt, targetOpacity);
 
   const W = 1.0;
@@ -369,17 +392,14 @@ function ProceduralPhone({ src, imageSrc, active, baseTilt, staticTilt }: PhoneI
 
 function ModelPhone({
   modelUrl,
-  src,
-  imageSrc,
-  active,
+  screenTexture,
+  targetOpacity,
   baseTilt,
   staticTilt,
 }: PhoneInternals & { modelUrl: string }) {
   const groupRef = useRef<THREE.Group>(null);
   const screenMatRef = useRef<THREE.MeshBasicMaterial>(null);
 
-  const { displayedSrc, displayedImage, targetOpacity } = useScreenContent(src, imageSrc);
-  const screenTexture = useScreenTexture(displayedSrc, displayedImage, active);
   useTiltAndScreenFade(groupRef, screenMatRef, baseTilt, staticTilt, targetOpacity);
 
   const { scene } = useGLTF(modelUrl) as unknown as { scene: THREE.Group };
@@ -434,7 +454,7 @@ function ModelPhone({
     const sCenter = new THREE.Vector3();
     sourceBox.getCenter(sCenter);
 
-    const sorted = (["x", "y", "z"] as const).sort((a, b) => sSize[b] - sSize[a]);
+    const sorted = (["x", "y", "z"] as Array<"x" | "y" | "z">).sort((a, b) => sSize[b] - sSize[a]);
     const heightAxis = sorted[0];
     const widthAxis = sorted[1];
     const depthAxis = sorted[2];
@@ -464,6 +484,7 @@ function ModelPhone({
   }, [scene]);
 
   if (typeof window !== "undefined" && !(window as unknown as { __phone3d_logged?: boolean }).__phone3d_logged) {
+    // eslint-disable-next-line react-hooks/immutability
     (window as unknown as { __phone3d_logged?: boolean }).__phone3d_logged = true;
     console.log("[PhoneVideo3D] screenMesh found:", screenMesh?.name ?? null, "overlay:", overlay);
   }
@@ -473,8 +494,10 @@ function ModelPhone({
     if (!screenMesh) return;
     const mesh = screenMesh as THREE.Mesh;
     const previous = mesh.visible;
+    // eslint-disable-next-line react-hooks/immutability
     mesh.visible = false;
     return () => {
+      // eslint-disable-next-line react-hooks/immutability
       mesh.visible = previous;
     };
   }, [screenMesh]);

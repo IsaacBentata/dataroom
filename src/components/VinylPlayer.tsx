@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 const PLAYER_W = 393;
 const PLAYER_H = 60;
 
-export default function VinylPlayer() {
+export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBottomCenter?: boolean } = {}) {
   const [playing, setPlaying] = useState(false);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -74,6 +74,95 @@ export default function VinylPlayer() {
       setDragging(false);
     }
   };
+
+  if (pinnedBottomCenter) {
+    return (
+      <div
+        className="fixed z-50 flex flex-col items-start px-2"
+        style={{
+          width: `min(${PLAYER_W}px, calc(100vw - 32px))`,
+          left: "50%",
+          bottom: 24,
+          transform: "translateX(-50%)",
+          userSelect: "none",
+        }}
+      >
+        <audio
+          ref={audioRef}
+          src="/player/one-more-time.m4a"
+          preload="metadata"
+          loop
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+        />
+        <div
+          className="flex w-full items-center justify-between rounded-[32px] bg-white pl-1 pr-3 py-1"
+          style={{ filter: "drop-shadow(0px 4px 6px rgba(0,0,0,0.1))" }}
+        >
+          <div className="flex flex-1 items-center gap-2 min-w-0">
+            <div
+              className="relative shrink-0 animate-[spin_3s_linear_infinite]"
+              style={{
+                width: 44,
+                height: 44,
+                transformOrigin: "50% 50%",
+                willChange: "transform",
+                animationPlayState: playing ? "running" : "paused",
+              }}
+            >
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                <circle cx="22" cy="22" r="22" fill="black" />
+                <rect x="20" y="4" width="4" height="4" fill="white" />
+                <rect x="20" y="36" width="4" height="4" fill="white" />
+              </svg>
+            </div>
+            <img
+              src="/player/discovery.jpg"
+              alt="Daft Punk — Discovery"
+              width={44}
+              height={44}
+              draggable={false}
+              className="shrink-0 rounded-[4px] object-cover"
+              style={{ width: 44, height: 44, border: "0.5px solid rgba(0,0,0,0.05)" }}
+            />
+            <div
+              className="flex flex-1 flex-col gap-[2px] min-w-0"
+              style={{
+                fontFamily: "var(--font-fair-favorit-body), sans-serif",
+                fontWeight: 700,
+                fontSize: 12,
+                lineHeight: 1.2,
+                letterSpacing: "0.24px",
+              }}
+            >
+              <p className="text-black truncate">One More Time</p>
+              <p className="truncate" style={{ color: "rgba(0,0,0,0.4)" }}>
+                Daft Punk
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={togglePlay}
+            aria-label={playing ? "Pause" : "Play"}
+            className="relative shrink-0 overflow-hidden flex items-center justify-center cursor-pointer"
+            style={{ width: 32, height: 32, background: "transparent", border: "none" }}
+          >
+            {playing ? (
+              <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden>
+                <rect x="11.33" y="9" width="3.34" height="14" rx="0.7" fill="#000" />
+                <rect x="17.33" y="9" width="3.34" height="14" rx="0.7" fill="#000" />
+              </svg>
+            ) : (
+              <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden>
+                <path d="M11 9.2 L23 16 L11 22.8 Z" fill="#000" />
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
