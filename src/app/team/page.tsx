@@ -40,7 +40,7 @@ export default function TeamPage() {
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-1.5">
                 <div>
-                  <h4 className="font-semibold text-sm">{member.name}</h4>
+                  <h4 className="text-[18px]" style={{ fontFamily: 'var(--font-fair-favorit-book), sans-serif', fontWeight: 400 }}>{member.name}</h4>
                   <p className="text-accent-blue text-xs">{member.role}</p>
                 </div>
                 {member.linkedin && (

@@ -482,19 +482,34 @@ html:has(.feature-snap),
 
 /* Stat grid — white text */
 .minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] .text-3xl,
+.minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] .text-2xl,
 .minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] .text-3xl,
+.minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] .text-2xl,
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] div[data-animate-text],
-.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] div[data-animate-text] span {
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] div[data-animate-text] span,
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] .text-3xl,
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] .text-2xl {
   color: #FFFFFF !important;
 }
 .minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] .text-xs,
 .minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] .text-xs,
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] > div:not([data-animate-text]) {
   color: rgba(255, 255, 255, 0.6) !important;
-  font-family: var(--font-fair-favorit-mono), monospace !important;
-  font-size: 12px !important;
-  text-transform: uppercase !important;
+}
+
+/* Team member names: white on black stat-grid cards */
+.minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] h4,
+.minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] h4 {
+  color: #FFFFFF !important;
+  font-family: var(--font-fair-favorit-book), sans-serif !important;
+  font-size: 18px !important;
   font-weight: 400 !important;
+}
+
+/* List items inside black stat-grid cards */
+.minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] li,
+.minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] li {
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 
 .minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] [data-slot="card-content"],

@@ -35,20 +35,16 @@ export default function LegalPage() {
             </div>
             <div className="w-px h-6 bg-border" />
             <div className="flex flex-col md:flex-row gap-3 md:gap-6">
-              <Card className="bg-secondary border-border text-center">
-                <CardContent className="px-5 py-3">
-                  <div className="font-semibold text-sm">Equals Collective Limited</div>
-                  <div className="text-xs text-muted-foreground">IP Holder & Operating Entity</div>
-                  <div className="text-xs text-accent-green mt-1">100% owned</div>
-                </CardContent>
-              </Card>
-              <Card className="bg-secondary border-border text-center opacity-50">
-                <CardContent className="px-5 py-3">
-                  <div className="font-semibold text-sm">Fair.xyz Limited</div>
-                  <div className="text-xs text-muted-foreground">Shell - Inactive</div>
-                  <div className="text-xs text-muted-foreground mt-1">100% owned</div>
-                </CardContent>
-              </Card>
+              <div className="bg-muted/60 border border-border rounded-xl px-5 py-3 text-center">
+                <div className="font-semibold text-sm">Equals Collective Limited</div>
+                <div className="text-xs text-muted-foreground">IP Holder & Operating Entity</div>
+                <div className="text-xs text-accent-green mt-1">100% owned</div>
+              </div>
+              <div className="bg-muted/60 border border-border rounded-xl px-5 py-3 text-center opacity-50">
+                <div className="font-semibold text-sm">Fair.xyz Limited</div>
+                <div className="text-xs text-muted-foreground">Shell - Inactive</div>
+                <div className="text-xs text-muted-foreground mt-1">100% owned</div>
+              </div>
             </div>
           </div>
         </CardContent>
