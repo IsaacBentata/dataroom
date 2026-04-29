@@ -13,8 +13,15 @@ const fairFavoritBody = localFont({
 });
 
 const fairFavoritHeading = localFont({
-  src: "../../public/fonts/FAIRFavoritExtended-Ultra.woff2",
+  src: "../../public/fonts/FAIRFavorit-Regular.woff2",
   variable: "--font-fair-favorit-heading",
+  display: "swap",
+  preload: false,
+});
+
+const fairFavoritBook = localFont({
+  src: "../../public/fonts/FAIRFavorit-Book.otf",
+  variable: "--font-fair-favorit-book",
   display: "swap",
   preload: false,
 });
@@ -22,6 +29,13 @@ const fairFavoritHeading = localFont({
 const fairFavoritMono = localFont({
   src: "../../public/fonts/FAIRFavoritMono-Book.woff2",
   variable: "--font-fair-favorit-mono",
+  display: "swap",
+  preload: false,
+});
+
+const pitchSans = localFont({
+  src: "../../public/fonts/TestPitchSans-Regular.otf",
+  variable: "--font-pitch-sans",
   display: "swap",
   preload: false,
 });
@@ -37,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fairFavoritBody.variable} ${fairFavoritHeading.variable} ${fairFavoritMono.variable} h-full antialiased`}>
+    <html lang="en" className={`${fairFavoritBody.variable} ${fairFavoritHeading.variable} ${fairFavoritBook.variable} ${fairFavoritMono.variable} ${pitchSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ClientLayout>{children}</ClientLayout>
       </body>

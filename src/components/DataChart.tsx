@@ -57,6 +57,7 @@ interface DataChartProps {
   tooltipFormatter?: (value: number) => string;
   className?: string;
   hero?: boolean;
+  headerChildren?: React.ReactNode;
 }
 
 const dateRangeOptions: { value: DateRange; label: string }[] = [
@@ -109,6 +110,7 @@ export default function DataChart({
   tooltipFormatter,
   className = "",
   hero = false,
+  headerChildren,
 }: DataChartProps) {
   const [dateRange, setDateRange] = useState<DateRange>("all");
 
@@ -155,7 +157,7 @@ export default function DataChart({
       <XAxis
         dataKey={xKey}
         stroke="rgba(0,0,0,0.2)"
-        tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11 }}
+        tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11, fontFamily: "var(--font-fair-favorit-book), sans-serif", fontWeight: 400 }}
         tickLine={false}
         axisLine={false}
       />
@@ -164,7 +166,7 @@ export default function DataChart({
     const yAxis = (
       <YAxis
         stroke="rgba(0,0,0,0.2)"
-        tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11 }}
+        tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11, fontFamily: "var(--font-fair-favorit-book), sans-serif", fontWeight: 400 }}
         tickLine={false}
         axisLine={false}
         tickFormatter={yAxisFormatter || ((v: number) => {
@@ -282,7 +284,7 @@ export default function DataChart({
           <div>
             {title && (
               <CardTitle className={hero ? "text-2xl" : "text-xl"}>
-                {title}
+                <span style={{ marginRight: 6 }}>⏺</span>{title}
               </CardTitle>
             )}
             {subtitle && (
@@ -313,6 +315,7 @@ export default function DataChart({
           </div>
         </CardHeader>
       )}
+      {headerChildren && <div className="px-5">{headerChildren}</div>}
       <CardContent>
         <ChartContainer config={chartConfig} className="w-full" style={{ height }}>
           {renderChart()}

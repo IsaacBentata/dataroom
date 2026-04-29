@@ -231,6 +231,17 @@ html:has(.feature-snap),
   color: #000;
 }
 
+/* Unify gaps between major sections only */
+.minimal-preview > div > [class*="mb-1"],
+.minimal-preview > div > [class*="my-1"] { margin-bottom: 24px !important; margin-top: 24px !important; }
+.minimal-preview > div > [class*="mb-8"],
+.minimal-preview > div > [class*="mb-10"],
+.minimal-preview > div > [class*="mb-12"],
+.minimal-preview > div > [class*="mb-16"] { margin-bottom: 24px !important; }
+.minimal-preview > div > [class*="my-8"],
+.minimal-preview > div > [class*="my-10"],
+.minimal-preview > div > [class*="my-12"],
+.minimal-preview > div > [class*="my-16"] { margin-top: 24px !important; margin-bottom: 24px !important; }
 
 /* Headings: collapse the big extended-ultra heading font into a single bold body weight */
 .minimal-preview h1,
@@ -243,14 +254,17 @@ html:has(.feature-snap),
 .minimal-preview .text-xl.font-bold,
 .minimal-preview .text-2xl.font-bold,
 .minimal-preview .text-3xl.font-bold {
-  font-family: var(--font-fair-favorit-body), sans-serif !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.24px !important;
+  font-family: var(--font-fair-favorit-heading) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.03em !important;
   color: #000 !important;
 }
 
-.minimal-preview h1 { font-size: 14px !important; line-height: 1.2 !important; margin-bottom: 8px !important; }
+.minimal-preview h1, .minimal-preview h1[data-animate-text] { font-size: 22px !important; line-height: 1.05 !important; margin-bottom: 16px !important; letter-spacing: -0.03em !important; }
 .minimal-preview h2 { font-size: 13px !important; line-height: 1.2 !important; }
+.minimal-preview [data-slot="card-title"],
+.minimal-preview [data-slot="card-title"] span { font-size: 18px !important; line-height: 1.2 !important; letter-spacing: -0.02em !important; }.minimal-preview [data-slot="card-description"],
+.minimal-preview [data-slot="card-description"] span { font-size: 14px !important; font-family: var(--font-fair-favorit-book), sans-serif !important; font-weight: 400 !important; }
 .minimal-preview h3 { font-size: 12px !important; line-height: 1.2 !important; }
 .minimal-preview h4 { font-size: 12px !important; line-height: 1.2 !important; }
 
@@ -266,6 +280,40 @@ html:has(.feature-snap),
   letter-spacing: 0.24px;
 }
 
+/* PageHeader overrides */
+.minimal-preview [data-page-header] h1,
+.minimal-preview [data-page-header] h1 span {
+  font-size: 22px !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.03em !important;
+  font-weight: 400 !important;
+  margin-bottom: 4px !important;
+}
+
+/* Stat callout overrides — key metric */
+.minimal-preview [data-slot="stat"] div[data-animate-text],
+.minimal-preview [data-slot="stat"] div[data-animate-text] span {
+  font-size: 32px !important;
+  font-family: var(--font-fair-favorit-heading) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.03em !important;
+}
+/* Stat callout overrides — label */
+.minimal-preview [data-slot="stat"] > div:not([data-animate-text]) {
+  font-size: 14px !important;
+  font-family: var(--font-fair-favorit-book), sans-serif !important;
+  font-weight: 400 !important;
+}
+
+.minimal-preview [data-page-header] p,
+.minimal-preview [data-page-header] p span {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0 !important;
+  font-family: var(--font-fair-favorit-book), sans-serif !important;
+  font-weight: 400 !important;
+}
+
 .minimal-preview .text-muted-foreground,
 .minimal-preview [class*="text-foreground-secondary"] {
   color: rgba(0, 0, 0, 0.4) !important;
@@ -277,7 +325,7 @@ html:has(.feature-snap),
   color: #000 !important;
 }
 
-/* Strip large colored stat numbers — keep them small and black */
+/* Stat values — larger and bold */
 .minimal-preview .text-3xl,
 .minimal-preview .text-4xl,
 .minimal-preview .text-5xl,
@@ -286,29 +334,48 @@ html:has(.feature-snap),
 .minimal-preview [class*="text-[2"],
 .minimal-preview [class*="text-[3"],
 .minimal-preview [class*="text-[4"] {
-  font-size: 14px !important;
+  font-size: 28px !important;
   line-height: 1.2 !important;
-  font-weight: 700 !important;
+  font-weight: 400 !important;
+  font-family: var(--font-fair-favorit-heading) !important;
+  letter-spacing: -0.03em !important;
   color: #000 !important;
 }
 
-/* Cards: remove backgrounds, borders, shadows, rounded corners */
+/* Stat labels in cards — Book font, no bold */
+.minimal-preview .text-center .text-xs.text-muted-foreground {
+  font-size: 14px !important;
+  font-family: var(--font-fair-favorit-book), sans-serif !important;
+  font-weight: 400 !important;
+}
+
+/* Cards: white background with rounded corners */
 .minimal-preview [data-slot="card"],
 .minimal-preview .bg-card,
 .minimal-preview .bg-muted,
 .minimal-preview .bg-popover {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-}
-
-/* `.bg-secondary` blocks (intro paragraphs, callouts) keep a soft card look */
-.minimal-preview .bg-secondary,
-.minimal-preview .bg-secondary\/60 {
-  background: rgba(0, 0, 0, 0.03) !important;
+  background: #FFFFFF !important;
   border: 1px solid rgba(0, 0, 0, 0.05) !important;
   box-shadow: none !important;
+  border-radius: 4px !important;
+}
+
+/* `.bg-secondary` blocks (intro paragraphs, callouts) */
+.minimal-preview .bg-secondary,
+.minimal-preview .bg-secondary\/60 {
+  background: rgba(0, 204, 120, 0.2) !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 4px !important;
+  font-family: var(--font-fair-favorit-book), sans-serif !important;
+  font-weight: 400 !important;
+  color: #00CC78 !important;
+}
+.minimal-preview .bg-secondary *,
+.minimal-preview .bg-secondary\/60 * {
+  font-family: var(--font-fair-favorit-book), sans-serif !important;
+  font-weight: 400 !important;
+  color: #00CC78 !important;
 }
 
 .minimal-preview [data-slot="card-content"],
@@ -335,8 +402,10 @@ html:has(.feature-snap),
 .minimal-preview [class*="grid-cols-6"]:has(> [data-slot="card"]),
 .minimal-preview .grid:has(> [data-slot="stat"]) {
   gap: 0 !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
-  border-left: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-top: 1px solid rgba(0, 0, 0, 1) !important;
+  border-left: 1px solid rgba(0, 0, 0, 1) !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
 }
 
 .minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"],
@@ -344,9 +413,27 @@ html:has(.feature-snap),
 .minimal-preview [class*="grid-cols-5"]:has(> [data-slot="card"]) > [data-slot="card"],
 .minimal-preview [class*="grid-cols-6"]:has(> [data-slot="card"]) > [data-slot="card"],
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] {
-  border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-right: 1px solid rgba(0, 0, 0, 1) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 1) !important;
   border-radius: 0 !important;
+  background: #000000 !important;
+}
+
+/* Stat grid — white text */
+.minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] .text-3xl,
+.minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] .text-3xl,
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] div[data-animate-text],
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] div[data-animate-text] span {
+  color: #FFFFFF !important;
+}
+.minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] .text-xs,
+.minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] .text-xs,
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] > div:not([data-animate-text]) {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-family: var(--font-fair-favorit-mono), monospace !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  font-weight: 400 !important;
 }
 
 .minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] [data-slot="card-content"],
@@ -370,7 +457,7 @@ html:has(.feature-snap),
 }
 
 .minimal-preview [data-slot="card"]:has([data-slot="card-header"]) [data-slot="card-header"] {
-  padding-top: 20px !important;
+  padding-top: 4px !important;
 }
 
 .minimal-preview [data-slot="card"]:has([data-slot="card-header"]) [data-slot="card-content"]:last-child {
@@ -414,7 +501,7 @@ html:has(.feature-snap),
   border: none;
 }
 .minimal-preview thead {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 1);
 }
 .minimal-preview tr {
   border-bottom: 1px solid rgba(0, 0, 0, 0.04);
