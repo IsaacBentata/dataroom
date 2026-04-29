@@ -226,19 +226,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* Close button when previewing */}
-      {isPreviewing && (
-        <button
-          type="button"
-          onClick={() => setPreviewIndex(null)}
-          aria-label="Close"
-          className="fixed top-6 right-6 z-40 size-9 rounded-full bg-white shadow-md flex items-center justify-center hover:scale-105 transition-transform cursor-pointer"
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M1 1L13 13M13 1L1 13" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </button>
-      )}
 
       <VinylPlayer />
     </section>

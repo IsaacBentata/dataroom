@@ -154,8 +154,8 @@ export default function DataChart({
     const xAxis = (
       <XAxis
         dataKey={xKey}
-        stroke="rgba(255,255,255,0.15)"
-        tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 11 }}
+        stroke="rgba(0,0,0,0.2)"
+        tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11 }}
         tickLine={false}
         axisLine={false}
       />
@@ -163,8 +163,8 @@ export default function DataChart({
 
     const yAxis = (
       <YAxis
-        stroke="rgba(255,255,255,0.15)"
-        tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 11 }}
+        stroke="rgba(0,0,0,0.2)"
+        tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11 }}
         tickLine={false}
         axisLine={false}
         tickFormatter={yAxisFormatter || ((v: number) => {
@@ -179,7 +179,7 @@ export default function DataChart({
     const grid = (
       <CartesianGrid
         strokeDasharray="3 3"
-        stroke="rgba(255,255,255,0.05)"
+        stroke="rgba(0,0,0,0.08)"
         vertical={false}
       />
     );

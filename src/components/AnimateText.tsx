@@ -19,8 +19,8 @@ export default function AnimateText({
   className,
   style,
   delay = 0,
-  staggerMs = 90,
-  durationMs = 760,
+  staggerMs = 0,
+  durationMs = 600,
   triggerOnView = true,
 }: AnimateTextProps) {
   const ref = useRef<HTMLElement | null>(null);

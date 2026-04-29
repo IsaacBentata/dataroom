@@ -84,7 +84,7 @@ export default function RetentionPage() {
           <DataChart
             data={retentionByFriends}
             series={[
-              { key: "All Users", name: "All Users", color: "rgba(255,255,255,0.25)" },
+              { key: "All Users", name: "All Users", color: "rgba(0,0,0,0.35)" },
               { key: "1+ Friends", name: "1+ Friends", color: "rgba(0, 204, 120, 1)" },
               { key: "10+ Friends", name: "10+ Friends", color: "#0066FF" },
               { key: "50+ Friends", name: "50+ Friends", color: "#8627FF" },
@@ -183,7 +183,7 @@ export default function RetentionPage() {
         <DataChart
           data={powerCurve}
           series={[
-            { key: "All Users", name: "All Users", color: "rgba(255,255,255,0.25)" },
+            { key: "All Users", name: "All Users", color: "rgba(0,0,0,0.35)" },
             { key: "1+ Friends", name: "1+ Friends", color: "rgba(0, 204, 120, 1)" },
             { key: "10+ Friends", name: "10+ Friends", color: "#0066FF" },
             { key: "50+ Friends", name: "50+ Friends", color: "#8627FF" },

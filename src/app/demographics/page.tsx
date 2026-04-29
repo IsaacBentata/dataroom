@@ -198,9 +198,9 @@ export default function DemographicsPage() {
         <CardContent>
           <ChartContainer config={ageChartConfig} className="h-[320px] w-full">
             <BarChart data={ageChartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-              <XAxis dataKey="age" tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 11 }} />
-              <YAxis tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 11 }} tickFormatter={(v) => `${v}%`} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.08)" />
+              <XAxis dataKey="age" tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11 }} />
+              <YAxis tick={{ fill: "rgba(0,0,0,0.55)", fontSize: 11 }} tickFormatter={(v) => `${v}%`} />
               <ChartTooltip
                 content={
                   <ChartTooltipContent

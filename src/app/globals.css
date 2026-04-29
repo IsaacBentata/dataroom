@@ -259,8 +259,6 @@ body {
 /* Cards: remove backgrounds, borders, shadows, rounded corners */
 .minimal-preview [data-slot="card"],
 .minimal-preview .bg-card,
-.minimal-preview .bg-secondary,
-.minimal-preview .bg-secondary\/60,
 .minimal-preview .bg-muted,
 .minimal-preview .bg-popover {
   background: transparent !important;
@@ -269,10 +267,69 @@ body {
   border-radius: 0 !important;
 }
 
+/* `.bg-secondary` blocks (intro paragraphs, callouts) keep a soft card look */
+.minimal-preview .bg-secondary,
+.minimal-preview .bg-secondary\/60 {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  box-shadow: none !important;
+}
+
 .minimal-preview [data-slot="card-content"],
 .minimal-preview [data-slot="card-header"],
 .minimal-preview [data-slot="card-footer"] {
   padding: 0 !important;
+}
+
+/* Chart cards: separate the title block from the chart body */
+.minimal-preview [data-slot="card"] [data-slot="card-header"] {
+  margin-bottom: 20px !important;
+}
+
+.minimal-preview [data-slot="card"] [data-slot="card-footer"] {
+  margin-top: 16px !important;
+}
+
+/* Stat grids — render as a connected 1px hairline grid (top + left on container,
+   right + bottom on each cell) so cells share edges with no gaps.
+   Only applies to "stat-shaped" cards (CardContent only, no CardHeader). */
+.minimal-preview .grid:has(> [data-slot="card"]:not(:has([data-slot="card-header"]))),
+.minimal-preview .grid:has(> [data-slot="stat"]) {
+  gap: 0 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.minimal-preview .grid:has(> [data-slot="card"]:not(:has([data-slot="card-header"]))) > [data-slot="card"],
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] {
+  border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 0 !important;
+}
+
+.minimal-preview .grid:has(> [data-slot="card"]:not(:has([data-slot="card-header"]))) > [data-slot="card"] [data-slot="card-content"] {
+  padding: 24px 16px !important;
+}
+
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] {
+  padding: 24px 16px !important;
+}
+
+/* Chart cards (those with a CardHeader) get internal horizontal padding so
+   the title and chart body breathe instead of touching the card edges. */
+.minimal-preview [data-slot="card"]:has([data-slot="card-header"]) [data-slot="card-header"],
+.minimal-preview [data-slot="card"]:has([data-slot="card-header"]) [data-slot="card-content"],
+.minimal-preview [data-slot="card"]:has([data-slot="card-header"]) [data-slot="card-footer"] {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.minimal-preview [data-slot="card"]:has([data-slot="card-header"]) [data-slot="card-header"] {
+  padding-top: 20px !important;
+}
+
+.minimal-preview [data-slot="card"]:has([data-slot="card-header"]) [data-slot="card-content"]:last-child {
+  padding-bottom: 20px !important;
 }
 
 /* Remove ring/border on misc elements */
@@ -318,17 +375,15 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }
 
-/* AnimateText — mask-reveal-up (Apple multi-line title reveal) */
-@keyframes mask-reveal-up {
+/* AnimateText — micro-scale-fade (calm subtle pop) */
+@keyframes micro-scale-fade {
   from {
     opacity: 0;
-    transform: translateY(30px);
-    filter: blur(6px);
+    transform: scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
+    transform: scale(1);
   }
 }
 
@@ -339,15 +394,15 @@ body {
 .anim-line {
   display: block;
   opacity: 0;
-  transform: translateY(30px);
-  filter: blur(6px);
-  will-change: opacity, transform, filter;
+  transform: scale(0.96);
+  transform-origin: 50% 55%;
+  will-change: opacity, transform;
 }
 
 .anim-line[data-active="1"] {
-  animation-name: mask-reveal-up;
-  animation-duration: 760ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-name: micro-scale-fade;
+  animation-duration: 600ms;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   animation-fill-mode: forwards;
 }
 
@@ -356,20 +411,19 @@ body {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
-    filter: none !important;
   }
 }
 
-/* ScrollReveal — applies the same mask-reveal-up entrance to any block as it scrolls into view */
+/* ScrollReveal — applies the same micro-scale-fade entrance to any block as it scrolls into view */
 .reveal-block {
   opacity: 0;
-  transform: translateY(30px);
-  filter: blur(6px);
-  will-change: opacity, transform, filter;
+  transform: scale(0.96);
+  transform-origin: 50% 55%;
+  will-change: opacity, transform;
 }
 
 .reveal-block.is-visible {
-  animation: mask-reveal-up 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: micro-scale-fade 600ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {

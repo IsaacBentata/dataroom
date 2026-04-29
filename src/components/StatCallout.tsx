@@ -8,7 +8,7 @@ interface StatCalloutProps {
 
 export default function StatCallout({ value, label, color = "text-accent-green" }: StatCalloutProps) {
   return (
-    <div className="text-center py-4">
+    <div data-slot="stat" className="text-center py-4">
       <AnimateText
         as="div"
         text={value}

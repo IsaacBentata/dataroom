@@ -7,7 +7,7 @@ export default function VinylPlayer() {
 
   return (
     <div
-      className="fixed bottom-6 right-6 z-50 flex flex-col items-start px-2"
+      className="fixed bottom-6 left-6 z-50 flex flex-col items-start px-2"
       style={{ width: 393 }}
     >
       <div
