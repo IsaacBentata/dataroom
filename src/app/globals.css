@@ -207,6 +207,25 @@ body {
 .minimal-preview > div > [class*="my-12"],
 .minimal-preview > div > [class*="my-16"] { margin-top: 24px !important; margin-bottom: 24px !important; }
 
+/* Chart grids: ensure consistent gap and equal height */
+.minimal-preview .grid:has(> [data-slot="card"]):not(:has(> [data-slot="stat"])) {
+  gap: 24px !important;
+
+  align-items: stretch !important;
+}
+
+/* Consecutive charts: add gap between stacked elements (not inside grids) */
+.minimal-preview [data-slot="card"] + [data-slot="card"],
+.minimal-preview .grid + [data-slot="card"],
+.minimal-preview [data-slot="card"] + .grid,
+.minimal-preview .grid + .grid {
+  margin-top: 24px !important;
+}
+/* Remove margin inside grids — gap handles spacing */
+.minimal-preview .grid > [data-slot="card"] {
+  margin-top: 0 !important;
+}
+
 /* Headings: collapse the big extended-ultra heading font into a single bold body weight */
 .minimal-preview h1,
 .minimal-preview h2,
@@ -225,9 +244,11 @@ body {
 }
 
 .minimal-preview h1, .minimal-preview h1[data-animate-text] { font-size: 22px !important; line-height: 1.05 !important; margin-bottom: 16px !important; letter-spacing: -0.03em !important; }
-.minimal-preview h2 { font-size: 13px !important; line-height: 1.2 !important; }
+.minimal-preview h2 { font-size: 13px !important; line-height: 1.2 !important; margin-bottom: 4px !important; }
 .minimal-preview [data-slot="card-title"],
-.minimal-preview [data-slot="card-title"] span { font-size: 18px !important; line-height: 1.2 !important; letter-spacing: -0.02em !important; }.minimal-preview [data-slot="card-description"],
+.minimal-preview [data-slot="card-title"] span { font-size: 18px !important; line-height: 1.2 !important; letter-spacing: -0.02em !important; }
+.minimal-preview [data-slot="card-title"]::before { content: "⏺ "; }
+.minimal-preview [data-slot="card-description"],
 .minimal-preview [data-slot="card-description"] span { font-size: 14px !important; font-family: var(--font-fair-favorit-book), sans-serif !important; font-weight: 400 !important; }
 .minimal-preview h3 { font-size: 12px !important; line-height: 1.2 !important; }
 .minimal-preview h4 { font-size: 12px !important; line-height: 1.2 !important; }
@@ -239,9 +260,12 @@ body {
 .minimal-preview td,
 .minimal-preview th,
 .minimal-preview div {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.4;
   letter-spacing: 0.24px;
+  font-family: var(--font-fair-favorit-book), sans-serif;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
 }
 
 /* PageHeader overrides */
@@ -281,6 +305,11 @@ body {
 .minimal-preview .text-muted-foreground,
 .minimal-preview [class*="text-foreground-secondary"] {
   color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Body text inside card content (not descriptions) should be black */
+.minimal-preview [data-slot="card-content"] > p.text-muted-foreground {
+  color: rgba(0, 0, 0, 1) !important;
 }
 
 /* Section labels: tiny mono in black not blue */
@@ -327,19 +356,19 @@ body {
 /* `.bg-secondary` blocks (intro paragraphs, callouts) */
 .minimal-preview .bg-secondary,
 .minimal-preview .bg-secondary\/60 {
-  background: rgba(0, 204, 120, 0.2) !important;
+  background: rgba(0, 0, 0, 0.03) !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 4px !important;
   font-family: var(--font-fair-favorit-book), sans-serif !important;
   font-weight: 400 !important;
-  color: #00CC78 !important;
+  color: rgba(0, 0, 0, 0.5) !important;
 }
 .minimal-preview .bg-secondary *,
 .minimal-preview .bg-secondary\/60 * {
   font-family: var(--font-fair-favorit-book), sans-serif !important;
   font-weight: 400 !important;
-  color: #00CC78 !important;
+  color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .minimal-preview [data-slot="card-content"],
@@ -350,7 +379,7 @@ body {
 
 /* Chart cards: separate the title block from the chart body */
 .minimal-preview [data-slot="card"] [data-slot="card-header"] {
-  margin-bottom: 20px !important;
+  margin-bottom: 16px !important;
 }
 
 .minimal-preview [data-slot="card"] [data-slot="card-footer"] {
@@ -366,8 +395,7 @@ body {
 .minimal-preview [class*="grid-cols-6"]:has(> [data-slot="card"]),
 .minimal-preview .grid:has(> [data-slot="stat"]) {
   gap: 0 !important;
-  border-top: 1px solid rgba(0, 0, 0, 1) !important;
-  border-left: 1px solid rgba(0, 0, 0, 1) !important;
+  border: none !important;
   border-radius: 4px !important;
   overflow: hidden !important;
 }
@@ -377,8 +405,7 @@ body {
 .minimal-preview [class*="grid-cols-5"]:has(> [data-slot="card"]) > [data-slot="card"],
 .minimal-preview [class*="grid-cols-6"]:has(> [data-slot="card"]) > [data-slot="card"],
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] {
-  border-right: 1px solid rgba(0, 0, 0, 1) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 1) !important;
+  border: none !important;
   border-radius: 0 !important;
   background: #000000 !important;
 }
