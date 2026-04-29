@@ -201,6 +201,17 @@ body {
   font-size: 12px !important;
 }
 
+/* Same defeat for feature category labels on the Product page. */
+.feature-mono-label,
+.feature-mono-label * {
+  font-family: var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase !important;
+  font-size: 12px !important;
+  color: #000 !important;
+}
+
 /* Content fade-in for inline page preview */
 @keyframes content-fade-in {
   from {

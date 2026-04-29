@@ -147,6 +147,25 @@ export function parseAppOpensPerUser() {
   }));
 }
 
+export function parseWauMau() {
+  // Monthly averages of weekly WAU/MAU. April excludes 2026-04-27 (incomplete
+  // week — query date 2026-04-29 cut the rolling window short).
+  const months = [
+    { label: "Sep 2025", value: 33 },
+    { label: "Oct 2025", value: 38 },
+    { label: "Nov 2025", value: 36 },
+    { label: "Dec 2025", value: 37 },
+    { label: "Jan 2026", value: 37 },
+    { label: "Feb 2026", value: 41 },
+    { label: "Mar 2026", value: 45 },
+    { label: "Apr 2026", value: 46 },
+  ];
+  return months.map((m) => ({
+    month: m.label,
+    "WAU/MAU": m.value,
+  }));
+}
+
 export function parseRetentionOverTime() {
   const periods = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"];
   const d1 = [36, 41, 42, 49, 57, 61];
