@@ -42,35 +42,19 @@ const ageRaw = [
   { age: "30", users: 7127 },
 ];
 
-const countryRaw = [
-  { name: "United States", value: 378782 },
-  { name: "United Kingdom", value: 111460 },
-  { name: "Mexico", value: 79453 },
-  { name: "Philippines", value: 34604 },
-  { name: "Canada", value: 31100 },
-  { name: "India", value: 30287 },
-  { name: "Egypt", value: 23225 },
-  { name: "Australia", value: 22889 },
-  { name: "Morocco", value: 21777 },
-  { name: "Romania", value: 20631 },
-  { name: "UAE", value: 18298 },
-  { name: "Saudi Arabia", value: 18196 },
-  { name: "Germany", value: 17636 },
-  { name: "Brazil", value: 17457 },
-  { name: "Italy", value: 16415 },
-  { name: "South Africa", value: 15626 },
-  { name: "Argentina", value: 15275 },
-  { name: "Colombia", value: 13705 },
-  { name: "France", value: 13367 },
-  { name: "Spain", value: 13316 },
+// Continental splits derived from top 20 countries data
+const continentRaw = [
+  { name: "North America", value: 378782 + 31100 },           // US, Canada
+  { name: "Europe", value: 111460 + 20631 + 17636 + 16415 + 13367 + 13316 }, // UK, Romania, Germany, Italy, France, Spain
+  { name: "Central & South America", value: 79453 + 17457 + 15275 + 13705 }, // Mexico, Brazil, Argentina, Colombia
+  { name: "Asia", value: 34604 + 30287 + 18298 + 18196 },     // Philippines, India, UAE, Saudi Arabia
+  { name: "Africa", value: 23225 + 21777 + 15626 },           // Egypt, Morocco, South Africa
+  { name: "Australia & NZ", value: 22889 },                    // Australia
 ];
 
 const GENDER_COLORS = ["#0066FF", "#8627FF", "#FF4D00"];
-const COUNTRY_COLORS = [
-  "#0066FF", "#8627FF", "#FF4D00", "rgba(0, 204, 120, 1)", "#FF4D00",
-  "#00CC78", "#0066FF", "#FF4D00", "#8627FF", "rgba(0, 204, 120, 1)",
-  "#FF4D00", "#00CC78", "#0066FF", "#8627FF", "#FF4D00",
-  "rgba(0, 204, 120, 1)", "#FF4D00", "#00CC78", "#0066FF", "#8627FF",
+const CONTINENT_COLORS = [
+  "#0066FF", "#8627FF", "#FF4D00", "#F5A623", "#E84393", "#00CC78",
 ];
 
 const genderChartConfig: ChartConfig = {
@@ -83,9 +67,9 @@ const ageChartConfig: ChartConfig = {
   "%": { label: "Share", color: "#8627FF" },
 };
 
-const countryChartConfig: ChartConfig = {};
-countryRaw.forEach((c, i) => {
-  countryChartConfig[c.name] = { label: c.name, color: COUNTRY_COLORS[i % COUNTRY_COLORS.length] };
+const continentChartConfig: ChartConfig = {};
+continentRaw.forEach((c, i) => {
+  continentChartConfig[c.name] = { label: c.name, color: CONTINENT_COLORS[i % CONTINENT_COLORS.length] };
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -121,7 +105,7 @@ export default function DemographicsPage() {
   }, []);
   const genZPct = useMemo(() => Math.round((genZ / totalAge) * 100), [genZ, totalAge]);
 
-  const totalCountry = useMemo(() => countryRaw.reduce((s, d) => s + d.value, 0), []);
+  const totalContinent = useMemo(() => continentRaw.reduce((s, d) => s + d.value, 0), []);
 
   return (
     <Section>
@@ -134,11 +118,10 @@ export default function DemographicsPage() {
       </div>
 
       {/* Key Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
         <StatCallout value={`${malePct}/${femalePct}`} label="Male/Female Ratio" />
         <StatCallout value={`${genZPct}%`} label="Gen Z (14-29)" color="text-accent-purple" />
         <StatCallout value="20+" label="Countries" color="text-accent-blue" />
-        <StatCallout value="100%" label="Identity Verified" color="text-accent-orange" />
       </div>
 
       {/* Gender Distribution - Pie Chart */}
@@ -169,10 +152,10 @@ export default function DemographicsPage() {
                 <Tooltip
                   contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }}
                   itemStyle={{ color: "var(--foreground)" }}
-                  formatter={(value: unknown) => {
+                  formatter={(value: unknown, name: unknown) => {
                     const v = Number(value);
                     const pct = ((v / totalGender) * 100).toFixed(1);
-                    return [`${v.toLocaleString()} (${pct}%)`, "Users"];
+                    return [`${pct}%`, String(name)];
                   }}
                 />
                 <Legend wrapperStyle={{ color: "var(--muted-foreground)", fontSize: "12px" }} />
@@ -221,18 +204,18 @@ export default function DemographicsPage() {
         </CardContent>
       </Card>
 
-      {/* Country Distribution - Pie Chart */}
+      {/* Continental Distribution - Pie Chart */}
       <Card className="bg-card mb-6">
         <CardHeader>
-          <CardTitle>Top Countries</CardTitle>
-          <CardDescription>All historic active users, user-stated location - source: Amplitude</CardDescription>
+          <CardTitle>Geographic Distribution</CardTitle>
+          <CardDescription>All historic active users by continent - source: Amplitude</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
-                  data={countryRaw}
+                  data={continentRaw}
                   cx="50%"
                   cy="50%"
                   outerRadius={140}
@@ -242,33 +225,31 @@ export default function DemographicsPage() {
                   labelLine={true}
                   strokeWidth={0}
                 >
-                  {countryRaw.map((_, i) => (
-                    <Cell key={i} fill={COUNTRY_COLORS[i % COUNTRY_COLORS.length]} />
+                  {continentRaw.map((_, i) => (
+                    <Cell key={i} fill={CONTINENT_COLORS[i % CONTINENT_COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip
                   contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }}
                   itemStyle={{ color: "var(--foreground)" }}
-                  formatter={(value: unknown) => {
+                  formatter={(value: unknown, name: unknown) => {
                     const v = Number(value);
-                    const pct = ((v / totalCountry) * 100).toFixed(1);
-                    return [`${v.toLocaleString()} (${pct}%)`, "Users"];
+                    const pct = ((v / totalContinent) * 100).toFixed(1);
+                    return [`${pct}%`, String(name)];
                   }}
                 />
                 <Legend
-                  wrapperStyle={{ color: "var(--muted-foreground)", fontSize: "10px" }}
-                  layout="vertical"
-                  align="right"
-                  verticalAlign="middle"
+                  wrapperStyle={{ color: "var(--muted-foreground)", fontSize: "12px" }}
                 />
               </PieChart>
             </ResponsiveContainer>
           </div>
           <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
             <p className="text-muted-foreground text-sm leading-relaxed">
-                Equals has a genuinely global user base spanning 6 continents. The US and UK lead, but Mexico, Philippines, India,
-                Egypt, and Morocco all feature prominently - reflecting the universal appeal of music as a social connector.
-                This diversity is achieved with content moderation across 40+ languages and identity verification working internationally.
+                Equals has a genuinely global user base spanning 6 continents. The US and UK represent our largest markets, but
+                the app has very strong presence across 20+ countries and presence in 100+ countries - leading to a naturally
+                diverse user base that reflects the universal appeal of music as a social connector. This diversity is achieved
+                with content moderation across 40+ languages and identity verification working internationally.
               </p>
           </div>
         </CardContent>
