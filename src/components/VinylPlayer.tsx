@@ -9,6 +9,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   const [playing, setPlaying] = useState(false);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const [dragging, setDragging] = useState(false);
+  const [snapping, setSnapping] = useState(false);
   const dragOffset = useRef<{ dx: number; dy: number } | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -72,6 +73,38 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
       } catch {}
       dragOffset.current = null;
       setDragging(false);
+      // Snap to whichever of the 4 edges is closest to the player's center.
+      setPos((prev) => {
+        if (!prev) return prev;
+        const margin = 24;
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const maxX = Math.max(0, vw - PLAYER_W);
+        const maxY = Math.max(0, vh - PLAYER_H);
+        const centerX = prev.x + PLAYER_W / 2;
+        const centerY = prev.y + PLAYER_H / 2;
+        const distLeft = centerX;
+        const distRight = vw - centerX;
+        const distTop = centerY;
+        const distBottom = vh - centerY;
+        const min = Math.min(distLeft, distRight, distTop, distBottom);
+        const clampedY = Math.max(margin, Math.min(maxY - margin, prev.y));
+        const clampedX = Math.max(margin, Math.min(maxX - margin, prev.x));
+        if (min === distLeft) {
+          return { x: Math.min(margin, maxX), y: clampedY };
+        }
+        if (min === distRight) {
+          return { x: Math.max(0, maxX - margin), y: clampedY };
+        }
+        if (min === distTop) {
+          return { x: clampedX, y: Math.min(margin, maxY) };
+        }
+        return { x: clampedX, y: Math.max(0, maxY - margin) };
+      });
+      setSnapping(true);
+      // Clear the snapping flag once the transition finishes so future
+      // drags start without animation.
+      window.setTimeout(() => setSnapping(false), 480);
     }
   };
 
@@ -175,6 +208,9 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
         visibility: pos ? "visible" : "hidden",
         userSelect: "none",
         touchAction: "none",
+        transition: snapping
+          ? "left 460ms cubic-bezier(0.34, 1.56, 0.64, 1), top 460ms cubic-bezier(0.34, 1.56, 0.64, 1)"
+          : "none",
       }}
     >
       <audio

@@ -41,7 +41,6 @@ const features: FeatureSection[] = [
       { src: "/screenshots/artist-profile-reviews.png", alt: "Artist profile reviews" },
       { src: "/screenshots/artist-profile-music.png", alt: "Artist profile music" },
     ],
-    video: "/videos/feature-3.mp4",
   },
   {
     title: "Album Pages and Digital Vinyls",
@@ -104,9 +103,11 @@ export default function ProductPage() {
       <div
         className="sticky top-0 z-30 bg-background pt-6 pb-4 px-6 md:px-12"
         data-product-fixed-header
-        style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.06)" }}
       >
-        <div className="max-w-5xl mx-auto">
+        <div
+          className="max-w-5xl mx-auto pb-4"
+          style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.06)" }}
+        >
           <PageHeader
             label="The Product"
             title="A music social network built for real connection"

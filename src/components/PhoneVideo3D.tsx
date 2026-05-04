@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { RoundedBox, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -298,6 +298,20 @@ function useScreenTexture(displayedSrc?: string, displayedImage?: string, active
   return texture;
 }
 
+// Window-level pointer tracker — normalised to [-1, 1] across the viewport so
+// the phone keeps tilting even when the cursor leaves the canvas. One ref is
+// shared across all PhoneVideo3D instances.
+const globalPointer = { x: 0, y: 0, attached: false };
+function ensureGlobalPointer() {
+  if (globalPointer.attached || typeof window === "undefined") return;
+  globalPointer.attached = true;
+  const handle = (e: PointerEvent) => {
+    globalPointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+    globalPointer.y = -((e.clientY / window.innerHeight) * 2 - 1);
+  };
+  window.addEventListener("pointermove", handle, { passive: true });
+}
+
 function useTiltAndScreenFade(
   groupRef: React.RefObject<THREE.Group | null>,
   matRef: React.RefObject<THREE.MeshBasicMaterial | null>,
@@ -305,15 +319,17 @@ function useTiltAndScreenFade(
   staticTilt: boolean,
   targetOpacity: React.RefObject<number>,
 ) {
-  const { pointer } = useThree();
+  useEffect(() => {
+    ensureGlobalPointer();
+  }, []);
   useFrame(() => {
     if (groupRef.current) {
       const targetX = staticTilt
         ? (baseTilt.x ?? 0)
-        : (baseTilt.x ?? 0) + -pointer.y * 0.18;
+        : (baseTilt.x ?? 0) + -globalPointer.y * 0.18;
       const targetY = staticTilt
         ? (baseTilt.y ?? 0)
-        : (baseTilt.y ?? 0) + pointer.x * 0.32;
+        : (baseTilt.y ?? 0) + globalPointer.x * 0.32;
       groupRef.current.rotation.x = THREE.MathUtils.lerp(
         groupRef.current.rotation.x,
         targetX,
