@@ -126,7 +126,7 @@ export default function RetentionPage() {
             ]}
             xKey="day"
             title="Retention by Friends Added (D0 through D30)"
-            subtitle="N-Day retention segmented by friend count - all days through D30"
+            subtitle="N-Day retention for verified users, segmented by friend count - all days through D30"
             type="line"
             height={380}
             yAxisFormatter={(v: number) => `${v}%`}
@@ -136,11 +136,10 @@ export default function RetentionPage() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
-        <StatCallout value="34%" label="D7 Retention" color="text-accent-blue" />
-        <StatCallout value="~20%" label="D30 Retention" color="text-accent-purple" />
-        <StatCallout value="37 min" label="Daily Time Spent" color="text-accent-orange" />
-        <StatCallout value="30%+" label="Return 5+ Days/Week" color="text-accent-green" />
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-10">
+        <StatCallout value="33%" label="D7 Retention (Verified Users)" color="text-accent-blue" />
+        <StatCallout value="37 min" label="Daily Time Spent (Verified Users)" color="text-accent-orange" />
+        <StatCallout value="30%+" label="Return 5+ Days/Week (Verified Users)" color="text-accent-green" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">

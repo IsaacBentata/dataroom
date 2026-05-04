@@ -117,7 +117,7 @@ export default function ProductPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
             <StatCallout value="4.5+" label="App Store Rating" />
             <StatCallout value="1:1" label="Male / Female Ratio" color="text-accent-blue" />
-            <StatCallout value="36 min" label="Daily Time Spent" color="text-accent-purple" />
+            <StatCallout value="37 min" label="Daily Time Spent" color="text-accent-purple" />
             <StatCallout value="100%" label="Verified Humans" color="text-accent-orange" />
           </div>
         </div>
