@@ -456,6 +456,8 @@ html:has(.feature-snap),
 .minimal-preview [data-slot="card-header"],
 .minimal-preview [data-slot="card-footer"] {
   padding: 0 !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
 }
 
 /* Chart cards: separate the title block from the chart body */
@@ -494,8 +496,10 @@ html:has(.feature-snap),
 /* Stat grid — white text */
 .minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] .text-3xl,
 .minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] .text-2xl,
+.minimal-preview [class*="grid-cols-3"]:has(> [data-slot="card"]) > [data-slot="card"] .text-sm,
 .minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] .text-3xl,
 .minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] .text-2xl,
+.minimal-preview [class*="grid-cols-4"]:has(> [data-slot="card"]) > [data-slot="card"] .text-sm,
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] div[data-animate-text],
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] div[data-animate-text] span,
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] .text-3xl,

@@ -1,18 +1,22 @@
 "use client";
 
+import { useState } from "react";
+import { createPortal } from "react-dom";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { teamMembers } from "@/lib/data";
 
 export default function TeamPage() {
+  const [openBio, setOpenBio] = useState<number | null>(null);
+
   return (
     <Section>
       <div className="mb-12">
         <PageHeader
           label="Team"
-          title="A team of 9 doing the work of 30"
-          subtitle="Deliberately lean and high-output. No middle management. Founders hands-on across every function. Over 90% of production code written by AI agents, giving this team the output of one three times its size."
+          title="A team of 8 doing the work of 30"
+          subtitle="Deliberately lean and high-output. No middle management. Founders hands-on across every function. Over 90% of production code written by AI agents, giving our team the output of one three times its size."
         />
       </div>
 
@@ -62,10 +66,66 @@ export default function TeamPage() {
               {member.detail && (
                 <p className="text-muted-foreground text-xs">{member.detail}</p>
               )}
+              {member.bio && (
+                <button
+                  onClick={() => setOpenBio(i)}
+                  className="text-accent-blue text-xs mt-1.5 hover:underline cursor-pointer"
+                >
+                  Read more
+                </button>
+              )}
             </CardContent>
           </Card>
         ))}
       </div>
+
+      {openBio !== null && createPortal(
+        <BioModal member={teamMembers[openBio]} onClose={() => setOpenBio(null)} />,
+        document.body
+      )}
     </Section>
+  );
+}
+
+function BioModal({ member, onClose }: { member: typeof teamMembers[number]; onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60"
+      onClick={onClose}
+    >
+      <Card
+        className="bg-card max-w-lg w-full mx-4 max-h-[80vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <CardContent className="p-4">
+          <div className="flex items-start justify-between mb-1.5">
+            <div>
+              <h4 className="text-[18px]" style={{ fontFamily: 'var(--font-fair-favorit-book), sans-serif', fontWeight: 400 }}>{member.name}</h4>
+              <p className="text-accent-blue text-xs">{member.role}</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+          {member.bg && (
+            <p className="text-muted-foreground text-xs mb-3">{member.bg}</p>
+          )}
+          <ul className="space-y-2">
+            {member.bio.map((point, j) => (
+              <li key={j} className="text-muted-foreground text-xs leading-relaxed flex gap-2">
+                <span className="text-accent-blue mt-0.5 shrink-0">-</span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

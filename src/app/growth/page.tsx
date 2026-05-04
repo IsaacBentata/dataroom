@@ -66,8 +66,8 @@ export default function GrowthPage() {
       <div className="flex items-start justify-between gap-4 mb-12">
         <PageHeader
           label="Growth"
-          title="From 50K to 500K MAUs in 5 months"
-          subtitle="Equals has achieved 10x user growth since November 2025, driven by strong organic acquisition and improving retention. The growth curve is accelerating, not flattening."
+          title="From 50K to 530K MAUs in 6 months"
+          subtitle="Equals has achieved 9x user growth since November 2025, driven by strong organic acquisition and improving retention. The growth curve is accelerating, not flattening."
         />
         <DownloadAllButton
           datasets={[
@@ -97,9 +97,9 @@ export default function GrowthPage() {
       />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
-        <StatCallout value="351K" label="MAUs (Mar 2026)" />
-        <StatCallout value="243K" label="Installs (Mar 2026)" />
-        <StatCallout value="3.6x" label="Growth since Nov 2025" color="text-accent-purple" />
+        <StatCallout value="532K" label="MAUs (Apr 2026)" />
+        <StatCallout value="385K" label="Installs (Apr 2026)" />
+        <StatCallout value="8.7x" label="Growth since Nov 2025 start" color="text-accent-purple" />
         <StatCallout value="70K" label="DAU (Rolling Avg)" color="text-accent-blue" />
       </div>
 

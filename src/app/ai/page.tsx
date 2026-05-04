@@ -18,10 +18,10 @@ export default function AIAdoptionPage() {
 
       {/* Hero Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-        <StatCallout value="244" label="Tickets shipped in April alone" />
+        <StatCallout value="483" label="Tickets shipped in April alone" />
         <StatCallout value="90%+" label="Code written by AI agents" color="text-accent-purple" />
-        <StatCallout value="5" label="Engineers" color="text-accent-blue" />
-        <StatCallout value="~49" label="Tickets per engineer per month" color="text-accent-orange" />
+        <StatCallout value="4" label="Engineers" color="text-accent-blue" />
+        <StatCallout value="~121" label="Tickets per engineer per month" color="text-accent-orange" />
       </div>
 
       {/* Engineering Velocity */}
@@ -34,46 +34,39 @@ export default function AIAdoptionPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <Card className="bg-secondary border-0 text-center">
               <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-green">244</div>
+                <div className="text-2xl font-bold text-accent-green">483</div>
                 <div className="text-xs text-muted-foreground">Tickets in April</div>
               </CardContent>
             </Card>
             <Card className="bg-secondary border-0 text-center">
               <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-blue">112</div>
-                <div className="text-xs text-muted-foreground">In a single sprint</div>
+                <div className="text-2xl font-bold text-accent-blue">~22</div>
+                <div className="text-xs text-muted-foreground">Tickets per working day</div>
               </CardContent>
             </Card>
             <Card className="bg-secondary border-0 text-center">
               <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-purple">37</div>
-                <div className="text-xs text-muted-foreground">Projects completed</div>
+                <div className="text-2xl font-bold text-accent-purple">~5.5</div>
+                <div className="text-xs text-muted-foreground">Tickets / engineer / day</div>
               </CardContent>
             </Card>
             <Card className="bg-secondary border-0 text-center">
               <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-orange">67%</div>
-                <div className="text-xs text-muted-foreground">Weekly cycle completion</div>
+                <div className="text-2xl font-bold text-accent-orange">22</div>
+                <div className="text-xs text-muted-foreground">Working days in April</div>
               </CardContent>
             </Card>
           </div>
 
           <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
             <p>
-              5 engineers shipped 244 tickets in April alone - that is roughly 49 tickets per engineer per month, or more than 2 per engineer per day.
-              or nearly 3 per person per week. In April 2026 alone, the team completed 244 tickets by the 24th.
-              That is approximately 12 tickets per working day across the entire team.
+              4 engineers shipped 483 tickets in April across 22 working days - roughly 121 tickets per engineer per month,
+              or 5.5 tickets per engineer per working day. That is approximately 22 tickets per working day across the entire team.
             </p>
             <p>
-              The peak sprint (Cycle 79) saw 112 tickets completed in a single week. To put that in context, most
-              Series A startups with teams of 20-30 engineers target 30-50 tickets per sprint. Equals does 2-3x that
-              with a fraction of the headcount.
-            </p>
-            <p>
-              37 projects were completed across the organisation. In April alone, 10+ projects shipped including:
-              Feed Personalisation, New Posting Flow, Chatroom Pinning and Search, DM Search, Album Selection,
-              Blocking changes, and A/B testing infrastructure. These are not minor tweaks - these are full features
-              that shipped in days rather than weeks.
+              To put that in context, most Series A startups with teams of 20-30 engineers target 30-50 tickets per sprint.
+              Equals ships that in a single day with a fraction of the headcount. These are not minor tweaks - full features
+              ship in days rather than weeks.
             </p>
           </div>
         </CardContent>
@@ -98,7 +91,7 @@ export default function AIAdoptionPage() {
                 <p>
                   Human engineers focus on what humans do best: architectural decisions, edge case handling,
                   code review, and product judgment. The AI handles the volume. This is not a productivity hack -
-                  it is a fundamentally different operating model that lets a team of 9 ship like a team of 30+.
+                  it is a fundamentally different operating model that lets 4 engineers ship like a team of 30+.
                 </p>
               </div>
             </div>
@@ -273,14 +266,16 @@ export default function AIAdoptionPage() {
           </div>
           <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
             <p>
-              AI powers the core product experience - recommendations, safety, and personalisation - at a per-user
-              inference cost of just $0.01, down from $0.27. That 96% cost reduction was achieved through model
-              optimisation and self-hosting, making AI-powered features economically viable even at scale.
+              AI powers the core product experience - recommendations, safety, and personalisation. A concrete example:
+              every user on Equals must verify their identity. External identity verification providers charge $0.15-0.30
+              per verification. We built our own in-house verification system that runs at $0.01 per inference - a 93-97%
+              cost reduction. At 500K+ MAUs and growing, this saves hundreds of thousands of dollars per year on
+              verification alone, and the same approach applies across recommendations, moderation, and personalisation.
             </p>
             <p>
               Equals has built an in-house experimentation engine for rapid A/B testing. The team runs 5+ concurrent
               experiments at any time, using data to drive every product decision. This is the same infrastructure
-              that companies like Spotify and Netflix use - but built and maintained by a team of 9.
+              that companies like Spotify and Netflix use - but built and maintained by 4 engineers.
             </p>
           </div>
         </CardContent>
@@ -300,8 +295,8 @@ export default function AIAdoptionPage() {
             <p>
               This philosophy runs through every part of Equals. The app itself contains zero visible AI features -
               no chatbots, no AI-generated content, no &ldquo;powered by AI&rdquo; badges. Users come to Equals for real human
-              connection through music. But behind the scenes, AI is what makes it possible for a team of 9 to build
-              and operate a platform serving 500K monthly active users across 100+ countries.
+              connection through music. But behind the scenes, AI is what makes it possible for 4 engineers to ship
+              483 tickets in a single month while operating a platform serving 500K+ monthly active users across 100+ countries.
             </p>
             <p>
               The implication for investors is significant: Equals has the unit economics of a large engineering team

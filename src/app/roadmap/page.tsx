@@ -10,7 +10,7 @@ export default function RoadmapPage() {
       <div className="mb-12">
         <PageHeader
           label="Roadmap"
-          title="From 500K to 15M MAUs"
+          title="From 530K to 10M MAUs"
           subtitle="A detailed, data-backed plan for how Equals becomes the default music social network. Every target below is grounded in current trendlines, proven mechanics, and signed partnerships."
         />
       </div>
@@ -19,54 +19,39 @@ export default function RoadmapPage() {
         {/* Timeline line */}
         <div className="absolute left-5 md:left-7 top-0 bottom-0 w-px bg-border" />
 
-        {/* ── TODAY ── */}
+        {/* -- TODAY -- */}
         <div className="relative pl-14 md:pl-18 pb-12">
           <div className="absolute left-3 md:left-5 top-1 w-4 h-4 rounded-full bg-accent-green border-4 border-background" />
           <div className="bg-card rounded-2xl border border-accent-green/30 p-5">
-            <div className="text-accent-green text-xs font-medium mb-1">Today - April 2026</div>
+            <div className="text-accent-green text-xs font-medium mb-1">Today - May 2026</div>
             <h3 className="text-lg font-semibold mb-4">Where we are now</h3>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-              <div className="text-center">
-                <div className="text-xl font-bold text-accent-green">500K</div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+              <div className="text-center bg-secondary rounded-xl p-3">
+                <div className="text-xl font-bold text-accent-green">530K</div>
                 <div className="text-xs text-muted-foreground">MAUs</div>
               </div>
-              <div className="text-center">
-                <div className="text-xl font-bold text-accent-blue">80K+</div>
+              <div className="text-center bg-secondary rounded-xl p-3">
+                <div className="text-xl font-bold text-accent-green">80K+</div>
                 <div className="text-xs text-muted-foreground">DAUs</div>
               </div>
-              <div className="text-center">
-                <div className="text-xl font-bold text-accent-purple">34%</div>
+              <div className="text-center bg-secondary rounded-xl p-3">
+                <div className="text-xl font-bold text-accent-green">33%</div>
                 <div className="text-xs text-muted-foreground">D7 Retention</div>
               </div>
-              <div className="text-center">
-                <div className="text-xl font-bold text-accent-orange">37 min</div>
-                <div className="text-xs text-muted-foreground">Daily Time Spent</div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-              <div className="text-center">
+              <div className="text-center bg-secondary rounded-xl p-3">
                 <div className="text-xl font-bold text-accent-green">~20%</div>
                 <div className="text-xs text-muted-foreground">D30 Retention</div>
               </div>
-              <div className="text-center">
-                <div className="text-xl font-bold text-accent-blue">4.5+</div>
-                <div className="text-xs text-muted-foreground">App Store Rating</div>
-              </div>
-              <div className="text-center">
-                <div className="text-xl font-bold text-accent-purple">54/46</div>
-                <div className="text-xs text-muted-foreground">Male/Female Ratio</div>
-              </div>
-              <div className="text-center">
-                <div className="text-xl font-bold text-accent-orange">9</div>
-                <div className="text-xs text-muted-foreground">Team Size</div>
+              <div className="text-center bg-secondary rounded-xl p-3">
+                <div className="text-xl font-bold text-accent-green">37 min</div>
+                <div className="text-xs text-muted-foreground">Time Spent/Day</div>
               </div>
             </div>
 
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
               <p>
-                Equals has achieved 10x MAU growth in 5 months, going from ~50K in November 2025 to 500K by April 2026.
+                Equals has achieved 9x MAU growth in 6 months, going from ~50K in November 2025 to 530K by May 2026.
                 The growth curve is accelerating, not flattening. Daily active users have grown from under 4K to over 80K
                 in the same period. Users spend 37 minutes per day on the app - comparable to Instagram and TikTok.
               </p>
@@ -78,40 +63,40 @@ export default function RoadmapPage() {
               <p>
                 Revenue infrastructure is proven: paywall conversion sits at 4.5-5% (top-quartile for consumer social),
                 but has been deliberately scaled back to prioritise network effects and growth over near-term revenue.
-                The team ships at extraordinary velocity - 250+ tickets in 90 days, 90%+ of code written by AI agents
+                The team ships at extraordinary velocity - 483 tickets in April alone, 90%+ of code written by AI agents
                 (see <a href="/ai" className="text-accent-blue hover:underline">AI Adoption</a> for details).
               </p>
             </div>
           </div>
         </div>
 
-        {/* ── 6 MONTHS ── */}
+        {/* -- Q3 2026: FAN LAYER -- */}
         <div className="relative pl-14 md:pl-18 pb-12">
           <div className="absolute left-3 md:left-5 top-1 w-4 h-4 rounded-full bg-accent-blue border-4 border-background" />
           <div className="bg-card rounded-2xl border border-accent-blue/30 p-5">
-            <div className="text-accent-blue text-xs font-medium mb-1">Q4 2026 - 6 Months</div>
-            <h3 className="text-lg font-semibold mb-4">Network effects compounding</h3>
+            <div className="text-accent-blue text-xs font-medium mb-1">Q3 2026 - Fan Layer</div>
+            <h3 className="text-lg font-semibold mb-4">1M MAUs</h3>
 
             {/* KPIs */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-blue">2M</div>
+                <div className="text-xl font-bold text-accent-blue">1M</div>
                 <div className="text-xs text-muted-foreground">Target MAUs</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-blue">400K+</div>
+                <div className="text-xl font-bold text-accent-blue">200K+</div>
                 <div className="text-xs text-muted-foreground">DAUs</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-blue">40%+</div>
+                <div className="text-xl font-bold text-accent-blue">38%+</div>
                 <div className="text-xs text-muted-foreground">D7 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-blue">30%+</div>
+                <div className="text-xl font-bold text-accent-blue">25%+</div>
                 <div className="text-xs text-muted-foreground">D30 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-blue">45 min</div>
+                <div className="text-xl font-bold text-accent-blue">40 min</div>
                 <div className="text-xs text-muted-foreground">Time Spent/Day</div>
               </div>
             </div>
@@ -122,89 +107,70 @@ export default function RoadmapPage() {
               <p>
                 The core thesis is simple: every retention metric improves with friend count. The data proves it
                 (see <a href="/retention" className="text-accent-blue hover:underline">Retention</a> - users with 50+ friends retain at 36% D30 vs 14% for all users).
-                So the 6-month plan is about accelerating friend connections through k-factor mechanics deployed across 3+ surfaces.
+                So the Fan Layer is about accelerating friend connections through k-factor mechanics deployed across multiple surfaces.
               </p>
               <p>
-                K-factor mechanics include: a viewers invite gate (see who viewed your profile, invite friends to unlock),
-                DSP integration (see what friends listen to on Spotify/Apple Music), and referral rewards.
-                Each surface creates a natural reason to invite friends, and each invited friend improves retention for the inviter.
-                This is the same flywheel that drove early Instagram and Snapchat growth.
-              </p>
-              <p>
-                Organic acquisition is targeted to cross 60% of total installs, up from current levels. CPI will be
-                reduced a further 25% through continued marketing automation. The A/B testing engine will run 5+ concurrent
-                experiments at all times, optimising every step of the user journey.
+                K-factor mechanics include social features gated behind referrals, DSP integration showing friends' activity,
+                and user-led chatrooms. Each surface creates a natural reason to invite friends, and each invited friend
+                improves retention for the inviter. This is the same flywheel that drove early Instagram and Snapchat growth.
               </p>
             </div>
 
-            {/* Product & Industry */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <h4 className="text-sm font-medium mb-2">Product Milestones</h4>
-                <ul className="space-y-1.5 text-xs text-muted-foreground">
-                  <li>- DSP integration live - connect Spotify/Apple Music to see what friends listen to</li>
-                  <li>- Invite friends bottom sheet deployed across multiple surfaces (viewers, profile, feed)</li>
-                  <li>- Digital Vinyl drops generating measurable download revenue</li>
-                  <li>- Enhanced music quiz features driving repeat engagement and virality</li>
-                  <li>- Feed personalisation v2 - algorithmic and friend-weighted</li>
-                  <li>- Cross-platform sharing optimised for TikTok, Instagram Stories, and Snapchat</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-sm font-medium mb-2">Music Industry</h4>
-                <ul className="space-y-1.5 text-xs text-muted-foreground">
-                  <li>- First major UMG artist activation - full fanbase capture onto Equals</li>
-                  <li>- All three major labels live (UMG active, Warner and Sony signed)</li>
-                  <li>- Pre-release exclusives running on platform</li>
-                  <li>- Label marketing spend beginning to flow through Equals</li>
-                  <li>- Artist profile tools enabling direct fan engagement</li>
-                  <li>- First data insights reports delivered to label partners</li>
-                </ul>
-              </div>
+            {/* Product */}
+            <div>
+              <h4 className="text-sm font-medium mb-2">Product Milestones</h4>
+              <ul className="space-y-1.5 text-xs text-muted-foreground">
+                <li>- DSP integration: See friends' Spotify and Apple Music activity inside Equals</li>
+                <li>- Social features gated behind referrals: K-factor flywheel, every user brings their friends</li>
+                <li>- User-led chatrooms: Create and manage your own chatrooms with friends inside Equals</li>
+                <li>- Listen to music together in real time: Friends stream music together, radio-style sessions around shared artists</li>
+                <li>- Activation pilot with UMG: Leverage Digital Vinyls to boost chart positioning on album release week</li>
+                <li>- Collaborative playlists: Co-curated playlists where each addition becomes a social post</li>
+              </ul>
             </div>
 
             {/* Why achievable */}
             <div className="bg-secondary rounded-xl p-4 mt-5">
-              <h4 className="text-sm font-medium mb-2">Why 4x growth in 6 months is achievable</h4>
+              <h4 className="text-sm font-medium mb-2">Why 2x growth in one quarter is achievable</h4>
               <p className="text-muted-foreground text-xs leading-relaxed">
-                Equals already grew 10x in 5 months (Nov 2025 to Apr 2026). The 4x target from 500K to 2M is more
+                Equals already grew 9x in 6 months (Nov 2025 to May 2026). The 2x target from 530K to 1M is far more
                 conservative than the trajectory already demonstrated. Label partnerships bring built-in audiences -
                 a single major artist activation can drive 100K+ installs. K-factor mechanics have not yet been deployed,
                 representing a major untapped growth lever. And the team ships features in days, not months -
-                244 tickets completed in April alone.
+                483 tickets completed in April alone with just 4 engineers.
               </p>
             </div>
           </div>
         </div>
 
-        {/* ── 12 MONTHS ── */}
+        {/* -- Q4 2026: ARTIST LAYER -- */}
         <div className="relative pl-14 md:pl-18 pb-12">
           <div className="absolute left-3 md:left-5 top-1 w-4 h-4 rounded-full bg-accent-purple border-4 border-background" />
           <div className="bg-card rounded-2xl border border-accent-purple/30 p-5">
-            <div className="text-accent-purple text-xs font-medium mb-1">Q2 2027 - 12 Months</div>
-            <h3 className="text-lg font-semibold mb-4">Category definition</h3>
+            <div className="text-accent-purple text-xs font-medium mb-1">Q4 2026 - Artist Layer</div>
+            <h3 className="text-lg font-semibold mb-4">2M MAUs</h3>
 
             {/* KPIs */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-purple">5M</div>
+                <div className="text-xl font-bold text-accent-purple">2M</div>
                 <div className="text-xs text-muted-foreground">Target MAUs</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-purple">1M+</div>
+                <div className="text-xl font-bold text-accent-purple">400K+</div>
                 <div className="text-xs text-muted-foreground">DAUs</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-purple">45%+</div>
+                <div className="text-xl font-bold text-accent-purple">42%+</div>
                 <div className="text-xs text-muted-foreground">D7 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-purple">35%+</div>
+                <div className="text-xl font-bold text-accent-purple">30%+</div>
                 <div className="text-xs text-muted-foreground">D30 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-purple">90%</div>
-                <div className="text-xs text-muted-foreground">Organic Acquisition</div>
+                <div className="text-xl font-bold text-accent-purple">45 min</div>
+                <div className="text-xs text-muted-foreground">Time Spent/Day</div>
               </div>
             </div>
 
@@ -212,78 +178,58 @@ export default function RoadmapPage() {
             <h4 className="text-sm font-medium mb-3">How we get there</h4>
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed mb-6">
               <p>
-                By Q2 2027, network effects should be fully compounding. Each new user makes the product better for
-                everyone - more content, more conversations, more taste-based connections. Word-of-mouth becomes the
-                primary growth driver, with organic acquisition targeted at 90% of total.
-              </p>
-              <p>
-                International expansion accelerates into non-English markets. Equals already has content moderation
-                in 40+ languages and a genuinely global user base (see <a href="/demographics" className="text-accent-purple hover:underline">Demographics</a> -
-                users across 100+ countries today). The infrastructure for international scale is already built.
+                By Q4 2026, network effects should be compounding from the Fan Layer investments. The Artist Layer
+                shifts focus to making Equals the go-to activation channel for all major labels. Digital Vinyls move
+                from king-maker to table stakes for charting, creating a self-reinforcing industry standard.
               </p>
               <p>
                 Artist-driven growth becomes a major lever. Artists promote their Equals communities to their fanbases,
-                creating a virtuous cycle: artists get direct fan access, fans get exclusive content, Equals gets
-                distribution. After 10+ artist activations, the playbook is proven and repeatable.
+                creating a virtuous cycle: artists get direct fan access, fans get exclusive content and early album access,
+                Equals gets distribution. Community listening parties around album drops create event-driven engagement spikes.
               </p>
             </div>
 
-            {/* Product & Revenue */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <h4 className="text-sm font-medium mb-2">Product Milestones</h4>
-                <ul className="space-y-1.5 text-xs text-muted-foreground">
-                  <li>- 10+ artist activations completed with measurable fanbase growth</li>
-                  <li>- Social streaming beta - social listening experience built on the taste graph</li>
-                  <li>- Creator tools for artists building communities on Equals</li>
-                  <li>- Advanced recommendation engine driven by taste graph data</li>
-                  <li>- Live event integration - discover and attend concerts with friends</li>
-                  <li>- Group listening sessions and shared playlists</li>
-                  <li>- Taste graph API powering personalisation across every surface</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-sm font-medium mb-2">Revenue</h4>
-                <ul className="space-y-1.5 text-xs text-muted-foreground">
-                  <li>- Labels actively routing marketing spend through Equals</li>
-                  <li>- Live event ticketing generating revenue in 2+ markets</li>
-                  <li>- Digital Vinyl sales at scale</li>
-                  <li>- B2B revenue stream from label partnerships and data insights</li>
-                  <li>- Premium features generating predictable subscription revenue</li>
-                  <li>- Clear path to profitability demonstrated</li>
-                  <li>- Revenue run rate supporting next fundraise narrative</li>
-                </ul>
-              </div>
+            {/* Product */}
+            <div>
+              <h4 className="text-sm font-medium mb-2">Product Milestones</h4>
+              <ul className="space-y-1.5 text-xs text-muted-foreground">
+                <li>- Go-to activation channel for all major labels: Digital Vinyls shift from king-maker to table stakes for charting</li>
+                <li>- The IMDB of music reviews: Surface verified user reviews on a public website for organic search acquisition</li>
+                <li>- Album Pre-release: Fans purchase Digital Vinyls to unlock albums before general release</li>
+                <li>- Community listening parties: Real-time group listening events built around album drops</li>
+                <li>- AI Conversations with Artist: AI-powered 1:1 conversations, personalised by Equals data</li>
+              </ul>
             </div>
 
-            {/* 50 min/day context */}
+            {/* Why achievable */}
             <div className="bg-secondary rounded-xl p-4 mt-5">
-              <h4 className="text-sm font-medium mb-2">Time spent: 50 min/day target</h4>
+              <h4 className="text-sm font-medium mb-2">Why 2x growth from Q3 to Q4 is achievable</h4>
               <p className="text-muted-foreground text-xs leading-relaxed">
-                Equals already achieves 37 min/day - comparable to Instagram (33 min) and approaching TikTok (52 min).
-                DSP integration, social streaming, and live event features each add incremental engagement time.
-                The 50 min/day target is achievable because each new feature adds a new reason to open the app,
-                and friend-driven content creates compounding engagement loops.
+                By this point, k-factor mechanics from the Fan Layer are compounding. Each new user brings friends,
+                and each friend improves retention for everyone in their network. Label partnerships bring built-in audiences -
+                with all three major labels signed, Equals will have access to hundreds of artists with millions of fans.
+                The public reviews website opens an entirely new organic acquisition channel through search traffic,
+                while community listening parties create viral, event-driven growth moments.
               </p>
             </div>
           </div>
         </div>
 
-        {/* ── 18 MONTHS ── */}
+        {/* -- 2027: CULTURE LAYER -- */}
         <div className="relative pl-14 md:pl-18 pb-12">
           <div className="absolute left-3 md:left-5 top-1 w-4 h-4 rounded-full bg-accent-orange border-4 border-background" />
           <div className="bg-card rounded-2xl border border-accent-orange/30 p-5">
-            <div className="text-accent-orange text-xs font-medium mb-1">Q4 2027 - 18 Months</div>
-            <h3 className="text-lg font-semibold mb-4">The music social network</h3>
+            <div className="text-accent-orange text-xs font-medium mb-1">2027 - Culture Layer</div>
+            <h3 className="text-lg font-semibold mb-4">10M MAUs</h3>
 
             {/* KPIs */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-orange">15M</div>
+                <div className="text-xl font-bold text-accent-orange">10M</div>
                 <div className="text-xs text-muted-foreground">Target MAUs</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-orange">4M+</div>
+                <div className="text-xl font-bold text-accent-orange">2.5M+</div>
                 <div className="text-xs text-muted-foreground">DAUs</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
@@ -294,51 +240,41 @@ export default function RoadmapPage() {
                 <div className="text-xl font-bold text-accent-orange">40%+</div>
                 <div className="text-xs text-muted-foreground">D30 Retention</div>
               </div>
+              <div className="text-center bg-secondary rounded-xl p-3">
+                <div className="text-xl font-bold text-accent-orange">50 min</div>
+                <div className="text-xs text-muted-foreground">Time Spent/Day</div>
+              </div>
             </div>
 
             {/* Vision */}
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed mb-6">
               <p>
-                At 15M MAUs, Equals IS where music fans live online. The platform is the default destination for
+                At 10M MAUs, Equals IS where music fans live online. The platform is the default destination for
                 direct-to-fan engagement, music discovery, and fan community. Artists launch music on Equals first
                 because that is where their most engaged fans are.
               </p>
               <p>
                 The taste graph - the proprietary data asset built from hundreds of millions of music interactions -
-                becomes the most valuable dataset in music. Labels, artists, and brands all want access to the
-                Equals community because it represents the highest-intent music audience on the internet.
+                becomes the most valuable dataset in music. The Culture Layer expands Equals beyond listening and social
+                into the full music lifestyle: concerts, collectibles, merchandise, and predictions.
               </p>
             </div>
 
-            {/* Product & Revenue */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <h4 className="text-sm font-medium mb-2">Product and Position</h4>
-                <ul className="space-y-1.5 text-xs text-muted-foreground">
-                  <li>- Equals is the default platform for direct-to-fan engagement</li>
-                  <li>- Full social streaming experience live with major label catalogues</li>
-                  <li>- Music industry standard for fan data and insights</li>
-                  <li>- Expansion into adjacent culture verticals under evaluation</li>
-                  <li>- Labels, artists, and brands all actively building on Equals</li>
-                  <li>- International presence across 150+ countries</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-sm font-medium mb-2">Revenue</h4>
-                <ul className="space-y-1.5 text-xs text-muted-foreground">
-                  <li>- Diversified: advertising, ticketing, label partnerships, premium features</li>
-                  <li>- Social streaming revenue share with major labels</li>
-                  <li>- B2B data and insights platform for the music industry</li>
-                  <li>- Brand partnership programme at scale</li>
-                  <li>- Clear path to sustainable profitability</li>
-                  <li>- Multiple revenue streams reducing concentration risk</li>
-                </ul>
-              </div>
+            {/* Product */}
+            <div>
+              <h4 className="text-sm font-medium mb-2">Product Milestones</h4>
+              <ul className="space-y-1.5 text-xs text-muted-foreground">
+                <li>- Exclusive artist content: Behind-the-scenes, unreleased tracks, and artist-only posts</li>
+                <li>- Ticketing and merch aggregation: Surface tickets and merch directly within artist profiles</li>
+                <li>- Find Friends at Concerts: Connect users attending the same gig with shared taste or mutual friends</li>
+                <li>- Trade + Gift Digital Vinyls: A social collectibles economy around Digital Vinyls</li>
+                <li>- Music predictions: Predict chart positions and award winners, compete on leaderboards</li>
+              </ul>
             </div>
           </div>
         </div>
 
-        {/* ── WHY THESE NUMBERS ARE ACHIEVABLE ── */}
+        {/* -- WHY THESE NUMBERS ARE ACHIEVABLE -- */}
         <div className="relative pl-14 md:pl-18">
           <div className="absolute left-3 md:left-5 top-1 w-4 h-4 rounded-full bg-foreground border-4 border-background" />
           <div className="bg-card rounded-2xl border border-border p-5">
@@ -358,9 +294,9 @@ export default function RoadmapPage() {
               <div>
                 <h4 className="text-sm font-medium text-foreground mb-1">K-factor mechanics are an untapped lever</h4>
                 <p>
-                  The 10x growth from Nov 2025 to Apr 2026 was achieved without any dedicated k-factor mechanics.
-                  The viewers invite gate, DSP integration, and referral rewards represent major untapped growth levers.
-                  Deploying these across 3+ surfaces should meaningfully accelerate organic acquisition.
+                  The 9x growth from Nov 2025 to May 2026 was achieved without any dedicated k-factor mechanics.
+                  Social features gated behind referrals, DSP integration, and user-led chatrooms represent major untapped
+                  growth levers. Deploying these across multiple surfaces should meaningfully accelerate organic acquisition.
                 </p>
               </div>
 
@@ -385,10 +321,9 @@ export default function RoadmapPage() {
               <div>
                 <h4 className="text-sm font-medium text-foreground mb-1">Team velocity is a structural advantage</h4>
                 <p>
-                  250+ tickets shipped in 90 days. 244 tickets in April alone. 112 tickets in a single sprint.
-                  AI-multiplied output means Equals can iterate on product faster than competitors with 5x the headcount.
-                  Speed of iteration compounds - each experiment run, each feature shipped, each insight gained happens
-                  faster than the competition can respond
+                  483 tickets completed in April with just 4 engineers. AI-multiplied output means Equals can iterate on
+                  product faster than competitors with 5x the headcount. Speed of iteration compounds - each experiment run,
+                  each feature shipped, each insight gained happens faster than the competition can respond
                   (see <a href="/ai" className="text-accent-blue hover:underline">AI Adoption</a> for the full picture).
                 </p>
               </div>
@@ -396,10 +331,10 @@ export default function RoadmapPage() {
               <div>
                 <h4 className="text-sm font-medium text-foreground mb-1">The growth engine works and is accelerating</h4>
                 <p>
-                  10x growth in 5 months is not a one-time spike - the month-over-month growth rate has been consistent
+                  9x growth in 6 months is not a one-time spike - the month-over-month growth rate has been consistent
                   (see <a href="/growth" className="text-accent-blue hover:underline">Growth</a>). The curve is accelerating,
                   not flattening. Marketing automation continues to reduce CPI while organic channels grow.
-                  The 4x target for the next 6 months is more conservative than the trajectory already demonstrated.
+                  The targets ahead are more conservative than the trajectory already demonstrated.
                 </p>
               </div>
             </div>

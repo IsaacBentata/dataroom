@@ -13,7 +13,6 @@ import {
   parseWeeklyRetention,
   parsePowerCurve,
   parseEngagementExcludingCurrent,
-  parseMessagesPerUser,
   parseTimeSpentPerUser,
   parseSessionsPerUser,
   parseAppOpensPerUser,
@@ -26,7 +25,7 @@ export default function RetentionPage() {
   const weeklyRetention = useMemo(() => parseWeeklyRetention(), []);
   const powerCurve = useMemo(() => parsePowerCurve(), []);
   const engagement = useMemo(() => parseEngagementExcludingCurrent(), []);
-  const messagesPerUser = useMemo(() => parseMessagesPerUser(), []);
+
   const timeSpentPerUser = useMemo(() => parseTimeSpentPerUser(), []);
   const sessionsPerUser = useMemo(() => parseSessionsPerUser(), []);
   const appOpensPerUser = useMemo(() => parseAppOpensPerUser(), []);
@@ -47,7 +46,7 @@ export default function RetentionPage() {
             { name: "Weekly Retention Evolution", data: weeklyRetention },
             { name: "Power Curve Stickiness", data: powerCurve },
             { name: "Engagement per User", data: engagement },
-            { name: "Messages per User", data: messagesPerUser },
+
             { name: "Time Spent per User", data: timeSpentPerUser },
             { name: "Sessions per User", data: sessionsPerUser },
             { name: "App Opens per User", data: appOpensPerUser },
@@ -73,6 +72,35 @@ export default function RetentionPage() {
         yAxisFormatter={(v: number) => `${v}%`}
         tooltipFormatter={(v: number) => `${v}%`}
       />
+
+      <Card className="bg-card my-10 mb-6">
+        <CardHeader>
+          <CardTitle>Long-term stickiness</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+            Weekly retention has improved consistently as the product has matured. Users are not just trying Equals - they are building habits around it.
+            The upward trend across Week 1, Week 2, and Week 4 retention shows that the product is getting stickier over time, not just growing.
+            This is the foundation for durable, compounding growth: each cohort retains better than the last.
+          </p>
+          <DataChart
+            className="border-0 p-0 shadow-none ring-0"
+            data={weeklyRetention}
+            series={[
+              { key: "Week 1", name: "Week 1 Retention", color: "rgba(0, 204, 120, 1)" },
+              { key: "Week 2", name: "Week 2 Retention", color: "#0066FF" },
+              { key: "Week 4", name: "Week 4 Retention", color: "#8627FF" },
+            ]}
+            xKey="week"
+            title="Weekly Retention Evolution"
+            subtitle="How weekly retention has improved over time for verified users"
+            type="line"
+            height={320}
+            yAxisFormatter={(v: number) => `${v}%`}
+            tooltipFormatter={(v: number) => `${v}%`}
+          />
+        </CardContent>
+      </Card>
 
       <Card className="bg-card my-10">
         <CardHeader>
@@ -101,7 +129,7 @@ export default function RetentionPage() {
             ]}
             xKey="day"
             title="Retention by Friends Added (D0 through D30)"
-            subtitle="N-Day retention segmented by friend count - all days through D30"
+            subtitle="N-Day retention for verified users, segmented by friend count - all days through D30"
             type="line"
             height={380}
             yAxisFormatter={(v: number) => `${v}%`}
@@ -111,25 +139,11 @@ export default function RetentionPage() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
-        <StatCallout value="34%" label="D7 Retention" color="text-accent-blue" />
-        <StatCallout value="~20%" label="D30 Retention" color="text-accent-purple" />
-        <StatCallout value="37 min" label="Daily Time Spent" color="text-accent-orange" />
-        <StatCallout value="30%+" label="Return 5+ Days/Week" color="text-accent-green" />
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-10">
+        <StatCallout value="33%" label="D7 Retention (Verified Users)" color="text-accent-blue" />
+        <StatCallout value="37 min" label="Daily Time Spent (Verified Users)" color="text-accent-orange" />
+        <StatCallout value="30%+" label="Return 5+ Days/Week (Verified Users)" color="text-accent-green" />
       </div>
-
-      <DataChart
-        data={messagesPerUser}
-        series={[
-          { key: "Messages / User", name: "Avg Messages per User per Day", color: "#0000FF" },
-        ]}
-        xKey="date"
-        title="Messages per Verified Active User"
-        subtitle="30-day rolling average of daily messages sent per verified active user"
-        type="line"
-        height={280}
-        showDateFilter={false}
-      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         <DataChart
@@ -173,17 +187,19 @@ export default function RetentionPage() {
       />
 
       <DataChart
-        data={weeklyRetention}
+        data={powerCurve}
         series={[
-          { key: "Week 1", name: "Week 1 Retention", color: "rgba(0, 204, 120, 1)" },
-          { key: "Week 2", name: "Week 2 Retention", color: "#0066FF" },
-          { key: "Week 4", name: "Week 4 Retention", color: "#8627FF" },
+          { key: "All Users", name: "All Users", color: "rgba(0,0,0,0.35)" },
+          { key: "1+ Friends", name: "1+ Friends", color: "rgba(0, 204, 120, 1)" },
+          { key: "10+ Friends", name: "10+ Friends", color: "#0066FF" },
+          { key: "50+ Friends", name: "50+ Friends", color: "#8627FF" },
         ]}
-        xKey="week"
-        title="Weekly Retention Evolution"
-        subtitle="How weekly retention has improved over time for verified users"
-        type="line"
-        height={320}
+        xKey="days"
+        title="Power Curve / Stickiness"
+        subtitle="% of users active on exactly N days per week. The uptick at 7 days is a retention smile - a cohort of power users who return every single day, a hallmark of sticky consumer products."
+        type="bar"
+        height={280}
+        showDateFilter={false}
         yAxisFormatter={(v: number) => `${v}%`}
         tooltipFormatter={(v: number) => `${v}%`}
       />
@@ -203,38 +219,18 @@ export default function RetentionPage() {
         showDateFilter={false}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-        <DataChart
-          data={powerCurve}
-          series={[
-            { key: "All Users", name: "All Users", color: "rgba(0,0,0,0.35)" },
-            { key: "1+ Friends", name: "1+ Friends", color: "rgba(0, 204, 120, 1)" },
-            { key: "10+ Friends", name: "10+ Friends", color: "#0066FF" },
-            { key: "50+ Friends", name: "50+ Friends", color: "#8627FF" },
-          ]}
-          xKey="days"
-          title="Power Curve / Stickiness"
-          subtitle="% of users active on exactly N days per week"
-          type="bar"
-          height={280}
-          showDateFilter={false}
-          yAxisFormatter={(v: number) => `${v}%`}
-          tooltipFormatter={(v: number) => `${v}%`}
-        />
-
-        <DataChart
-          data={engagement}
-          series={[
-            { key: "Avg Actions", name: "Avg Actions per User", color: "#E84393" },
-          ]}
-          xKey="month"
-          title="Engagement per User"
-          subtitle="Average engagement actions per user per month (excluding current month)"
-          type="bar"
-          height={280}
-          showDateFilter={false}
-        />
-      </div>
+      <DataChart
+        data={engagement}
+        series={[
+          { key: "Avg Actions", name: "Avg Actions per User", color: "#E84393" },
+        ]}
+        xKey="month"
+        title="Engagement per User"
+        subtitle="Avg engaged actions per user per month. An engaged action is any active interaction with impact across the network: sending a message, liking a post, making a friend, commenting, reposting, voting on a poll, speaking in a chatroom, or entering a quiz competition."
+        type="bar"
+        height={280}
+        showDateFilter={false}
+      />
     </Section>
   );
 }
