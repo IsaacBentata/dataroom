@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import StatCallout from "@/components/StatCallout";
 import dynamic from "next/dynamic";
@@ -42,7 +41,6 @@ const features: FeatureSection[] = [
       { src: "/screenshots/artist-profile-reviews.png", alt: "Artist profile reviews" },
       { src: "/screenshots/artist-profile-music.png", alt: "Artist profile music" },
     ],
-    video: "/videos/feature-3.mp4",
   },
   {
     title: "Album Pages and Digital Vinyls",
@@ -105,9 +103,11 @@ export default function ProductPage() {
       <div
         className="sticky top-0 z-30 bg-background pt-6 pb-4 px-6 md:px-12"
         data-product-fixed-header
-        style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.06)" }}
       >
-        <div className="max-w-5xl mx-auto">
+        <div
+          className="max-w-5xl mx-auto pb-4"
+          style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.06)" }}
+        >
           <PageHeader
             label="The Product"
             title="A music social network built for real connection"
@@ -222,8 +222,10 @@ function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] lg:gap-16 items-start">
-      {/* Scrolling text column */}
-      <div>
+      {/* Scrolling text column — hidden until sticky offset is measured to
+          avoid a one-frame layout jump where sections center-justify in 100vh
+          before re-centering in calc(100vh - stickyOffset). */}
+      <div style={{ visibility: stickyOffset > 0 ? "visible" : "hidden" }}>
         {features.map((feature, idx) => (
           <section
             key={idx}
@@ -239,11 +241,21 @@ function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
               className="max-w-xl transition-opacity duration-500 ease-out"
               style={{ opacity: activeIdx === idx ? 1 : 0.25 }}
             >
-              <div className="text-xs text-accent-blue font-medium uppercase tracking-wider mb-2 font-mono">
-                {String(idx + 1).padStart(2, "0")}
+              <div
+                className="feature-mono-label flex items-start gap-2 mb-4"
+                style={{ lineHeight: 1.4 }}
+              >
+                <span className="inline-block w-[10px] h-[10px] rounded-full bg-black mt-[3px] shrink-0" />
+                <span>{feature.title.toUpperCase()}</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <p
+                className="text-black leading-[1.5]"
+                style={{
+                  fontFamily: "var(--font-fair-favorit-book), sans-serif",
+                  fontSize: 14,
+                  color: "rgba(0,0,0,0.7)",
+                }}
+              >
                 {feature.description}
               </p>
             </div>
@@ -258,6 +270,7 @@ function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
           top: `${stickyOffset}px`,
           height: `calc(100vh - ${stickyOffset}px)`,
           width: 400,
+          visibility: stickyOffset > 0 ? "visible" : "hidden",
         }}
       >
         <PhoneVideo3D

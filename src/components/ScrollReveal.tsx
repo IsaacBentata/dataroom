@@ -12,6 +12,12 @@ const NESTED_GROUP_SELECTOR = [
 ].join(",");
 
 function shouldSkip(el: HTMLElement): boolean {
+  // Feature-snap sections drive their own scroll-snap interactions; the
+  // micro-scale-fade animation conflicts with snap centering and looks like
+  // content jumping into place.
+  if (el.classList.contains("feature-snap")) return true;
+  if (el.closest(".feature-snap")) return true;
+  if (el.closest("[data-no-reveal]")) return true;
   if (el.closest("[data-animate-text]")) return false;
   if (el.querySelector("[data-animate-text]")) return false;
   return false;

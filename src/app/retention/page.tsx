@@ -16,6 +16,7 @@ import {
   parseTimeSpentPerUser,
   parseSessionsPerUser,
   parseAppOpensPerUser,
+  parseWauMau,
 } from "@/lib/data";
 
 export default function RetentionPage() {
@@ -28,6 +29,7 @@ export default function RetentionPage() {
   const timeSpentPerUser = useMemo(() => parseTimeSpentPerUser(), []);
   const sessionsPerUser = useMemo(() => parseSessionsPerUser(), []);
   const appOpensPerUser = useMemo(() => parseAppOpensPerUser(), []);
+  const wauMau = useMemo(() => parseWauMau(), []);
 
   return (
     <Section>
@@ -48,6 +50,7 @@ export default function RetentionPage() {
             { name: "Time Spent per User", data: timeSpentPerUser },
             { name: "Sessions per User", data: sessionsPerUser },
             { name: "App Opens per User", data: appOpensPerUser },
+            { name: "WAU/MAU Stickiness", data: wauMau },
           ]}
           filename="equals-retention-data"
         />
@@ -199,6 +202,21 @@ export default function RetentionPage() {
         showDateFilter={false}
         yAxisFormatter={(v: number) => `${v}%`}
         tooltipFormatter={(v: number) => `${v}%`}
+      />
+
+      <DataChart
+        data={wauMau}
+        series={[
+          { key: "WAU/MAU", name: "WAU / MAU", color: "rgba(0, 204, 120, 1)" },
+        ]}
+        xKey="month"
+        title="WAU / MAU Stickiness"
+        subtitle="Averaging 46% in the last month, up from 33% last quarter — crossed into the 'Great' tier of consumer-social stickiness"
+        type="line"
+        height={320}
+        yAxisFormatter={(v: number) => `${v}%`}
+        tooltipFormatter={(v: number) => `${v}%`}
+        showDateFilter={false}
       />
 
       <DataChart
