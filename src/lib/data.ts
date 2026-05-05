@@ -379,6 +379,7 @@ export const teamMembers = [
       "Shipped production apps across mobile, web, and blockchain.",
     ],
     linkedin: "https://www.linkedin.com/in/norman-wilde/",
+    song: { title: "Riptide", artist: "Vance Joy", cover: "/team-songs/riptide.jpeg" },
   },
   {
     name: "Dora Yilmaz",
