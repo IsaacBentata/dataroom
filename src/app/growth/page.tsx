@@ -42,7 +42,7 @@ const cpmMonthly = [
 // Organic. Both are peer invites, not paid acquisition.
 const installSplit = [
   { name: "Organic", value: 177402 + 2214 + 585, color: "#00CC78" },
-  { name: "TikTok", value: 104722, color: "#FF4D00" },
+  { name: "TikTok", value: 104722, color: "#D6ED5E" },
   { name: "Meta", value: 54462, color: "#0066FF" },
   { name: "Apple Search Ads", value: 13083 - 2214, color: "#8627FF" },
 ];
@@ -50,9 +50,13 @@ const installSplitTotal = installSplit.reduce((s, d) => s + d.value, 0);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const renderInstallLabel = (props: any) => {
-  const { name, percent } = props;
+  const { name, percent, x, y, textAnchor } = props;
   if (percent < 0.03) return null;
-  return `${name} ${(percent * 100).toFixed(1)}%`;
+  return (
+    <text x={x} y={y} fill="#000" textAnchor={textAnchor} dominantBaseline="central" fontSize={13}>
+      {`${name} ${(percent * 100).toFixed(1)}%`}
+    </text>
+  );
 };
 
 export default function GrowthPage() {
@@ -150,7 +154,10 @@ export default function GrowthPage() {
                     return [`${v.toLocaleString()} (${pct}%)`, "Installs"];
                   }}
                 />
-                <Legend wrapperStyle={{ color: "var(--muted-foreground)", fontSize: "12px" }} />
+                <Legend
+                  wrapperStyle={{ fontSize: "12px" }}
+                  formatter={(value) => <span style={{ color: "#000" }}>{value}</span>}
+                />
               </PieChart>
             </ResponsiveContainer>
           </div>

@@ -52,9 +52,10 @@ const continentRaw = [
   { name: "Australia & NZ", value: 22889 },                    // Australia
 ];
 
+// Brand accent palette — saturated but balanced
 const GENDER_COLORS = ["#0066FF", "#8627FF", "#FF4D00"];
 const CONTINENT_COLORS = [
-  "#0066FF", "#8627FF", "#FF4D00", "#F5A623", "#E84393", "#00CC78",
+  "#0066FF", "#8627FF", "#FF4D00", "#00CC78", "#E84393", "#F5A623",
 ];
 
 const genderChartConfig: ChartConfig = {

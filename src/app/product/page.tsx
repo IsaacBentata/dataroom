@@ -37,9 +37,9 @@ const features: FeatureSection[] = [
     description:
       "Every artist on Equals has a rich profile page with reviews from fans, their full discography, and a live chat room. These are not static pages - they are living communities where fans congregate, debate, and connect. With the UMG worldwide catalogue deal, every major artist has a fully populated profile. This is the kind of direct-to-fan channel that labels have been looking for.",
     screenshots: [
+      { src: "/screenshots/artist-profile-music.png", alt: "Artist profile music" },
       { src: "/screenshots/artist-profile-highlight.png", alt: "Artist profile highlights" },
       { src: "/screenshots/artist-profile-reviews.png", alt: "Artist profile reviews" },
-      { src: "/screenshots/artist-profile-music.png", alt: "Artist profile music" },
     ],
   },
   {
@@ -115,10 +115,10 @@ export default function ProductPage() {
           />
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-            <StatCallout value="4.5+" label="App Store Rating" />
-            <StatCallout value="1:1" label="Male / Female Ratio" color="text-accent-blue" />
-            <StatCallout value="37 min" label="Daily Time Spent" color="text-accent-purple" />
-            <StatCallout value="100%" label="Verified Humans" color="text-accent-orange" />
+            <StatCallout value="4.5+" label="App Store Rating" compact />
+            <StatCallout value="1:1" label="Male / Female Ratio" color="text-accent-blue" compact />
+            <StatCallout value="37 min" label="Daily Time Spent" color="text-accent-purple" compact />
+            <StatCallout value="100%" label="Verified Humans" color="text-accent-orange" compact />
           </div>
         </div>
       </div>
@@ -277,7 +277,7 @@ function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
           src={active?.video}
           imageSrc={active?.screenshots[0]?.src}
           baseTilt={{ x: -0.04, y: 0.12 }}
-          height={720}
+          height="100%"
         />
       </div>
     </div>

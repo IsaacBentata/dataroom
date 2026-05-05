@@ -13,7 +13,7 @@ type Props = {
   baseTilt?: { x?: number; y?: number };
   staticTilt?: boolean;
   className?: string;
-  height?: number;
+  height?: number | string;
   /** GLB/GLTF model URL. Defaults to /models/iphone.glb; falls back to procedural if absent. */
   modelUrl?: string;
 };
@@ -51,7 +51,7 @@ export default function PhoneVideo3D({
     >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 30 }}
-        dpr={[1, 1.75]}
+        dpr={[1.5, 2.5]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         style={{ background: "transparent" }}
       >
@@ -170,6 +170,11 @@ function useRoundedAlphaTexture(width: number, height: number, radiusPct: number
 }
 
 function useScreenTexture(displayedSrc?: string, displayedImage?: string, active = true) {
+  // Track whether the video has frame data — gates whether we use a
+  // VideoTexture or fall back to the still image. Avoids "black phone" when
+  // the user navigates back and the video element hasn't decoded a frame yet.
+  const [videoReady, setVideoReady] = useState(false);
+
   const video = useMemo(() => {
     if (!displayedSrc) return null;
     if (typeof document === "undefined") return null;
@@ -272,8 +277,30 @@ function useScreenTexture(displayedSrc?: string, displayedImage?: string, active
     };
   }, [video]);
 
+  // Sync videoReady with the video element's readyState. Set true once the
+  // video has at least one decoded frame (HAVE_CURRENT_DATA = 2). Reset
+  // false when the video element changes.
+  useEffect(() => {
+    if (!video) {
+      setVideoReady(false);
+      return;
+    }
+    const check = () => {
+      if (video.readyState >= 2) setVideoReady(true);
+    };
+    check();
+    if (video.readyState >= 2) return;
+    setVideoReady(false);
+    video.addEventListener("loadeddata", check);
+    video.addEventListener("canplay", check);
+    return () => {
+      video.removeEventListener("loadeddata", check);
+      video.removeEventListener("canplay", check);
+    };
+  }, [video]);
+
   const texture = useMemo<THREE.Texture | null>(() => {
-    if (video) {
+    if (video && videoReady) {
       const t = new THREE.VideoTexture(video);
       t.colorSpace = THREE.SRGBColorSpace;
       t.minFilter = THREE.LinearFilter;
@@ -282,14 +309,53 @@ function useScreenTexture(displayedSrc?: string, displayedImage?: string, active
     }
     if (displayedImage) {
       const loader = new THREE.TextureLoader();
-      const t = loader.load(displayedImage);
+      const t = loader.load(displayedImage, (loaded) => {
+        // For tall page-screenshots (e.g., artist profile pages), preserve
+        // aspect ratio so the image isn't squished to fit the phone screen.
+        // Show the top of the image at correct proportions; auto-scroll
+        // animation below cycles through the full content.
+        const img = loaded.image as HTMLImageElement | undefined;
+        if (!img) return;
+        const imgAspect = img.width / img.height;
+        const SCREEN_ASPECT = 9 / 19.5;
+        if (imgAspect < SCREEN_ASPECT * 0.7) {
+          loaded.repeat.y = imgAspect / SCREEN_ASPECT;
+          // With default flipY=true: offset.y = 1 - repeat.y shows the TOP of
+          // the image. We start at the top and animate toward the bottom.
+          loaded.offset.y = 1 - loaded.repeat.y;
+        }
+      });
       t.colorSpace = THREE.SRGBColorSpace;
       t.minFilter = THREE.LinearFilter;
       t.magFilter = THREE.LinearFilter;
       return t;
     }
     return null;
-  }, [video, displayedImage]);
+  }, [video, videoReady, displayedImage]);
+
+  // Auto-scroll long page-screenshots (top → bottom → top) so the user can
+  // see all the content in the natural feel of a scrolling phone page.
+  useEffect(() => {
+    if (!texture) return;
+    let raf = 0;
+    let start = 0;
+    const tick = (ts: number) => {
+      if (!start) start = ts;
+      const max = 1 - texture.repeat.y;
+      if (max < 0.01) return; // not a tall image — nothing to scroll
+      const cycleMs = 14000; // 14s for one round-trip
+      const phase = ((ts - start) % cycleMs) / cycleMs; // 0..1
+      // Ping-pong: 0→1→0
+      const pp = phase < 0.5 ? phase * 2 : 2 - phase * 2;
+      // Ease in/out cubic
+      const eased = pp < 0.5 ? 4 * pp * pp * pp : 1 - Math.pow(-2 * pp + 2, 3) / 2;
+      // 0 (start) shows top → max shows bottom (with flipY=true)
+      texture.offset.y = max * (1 - eased);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [texture]);
 
   useEffect(() => {
     return () => texture?.dispose();

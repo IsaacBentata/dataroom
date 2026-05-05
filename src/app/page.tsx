@@ -59,9 +59,22 @@ const FEATURE_VIDEO_SRCS = [
 ];
 let mediaPrimed = false;
 function primeMediaAutoplay(href: string) {
-  if (mediaPrimed) return;
   if (typeof document === "undefined") return;
   void href;
+  // Already primed once — just resume any videos the browser paused while
+  // off-screen. This call runs inside a click handler so .play() rides the
+  // fresh user gesture, which is what restarting paused background videos
+  // needs.
+  if (mediaPrimed) {
+    const existing = (window as unknown as { __primedFeatureVideos?: Record<string, HTMLVideoElement> })
+      .__primedFeatureVideos;
+    if (existing) {
+      for (const v of Object.values(existing)) {
+        if (v.paused) void v.play().catch(() => {});
+      }
+    }
+    return;
+  }
   const store: Record<string, HTMLVideoElement> = {};
   for (const src of FEATURE_VIDEO_SRCS) {
     const v = document.createElement("video");
@@ -224,6 +237,38 @@ export default function Home() {
 
   return (
     <section className="fixed inset-0 overflow-hidden bg-background select-none">
+      {/* Persistent hidden feature videos — kept in the React tree so React
+          owns the lifecycle. Refs populate window.__primedFeatureVideos so
+          PhoneVideo3D's useScreenTexture can attach VideoTextures to these
+          live, always-playing elements. With muted+autoPlay+playsInline they
+          satisfy autoplay policy on page load, and they survive navigation
+          between PreviewComponents — fixes "black on first screen" after
+          navigating away and back. */}
+      <div
+        aria-hidden
+        style={{ position: "fixed", left: 0, top: 0, width: 1, height: 1, opacity: 0, pointerEvents: "none", overflow: "hidden" }}
+      >
+        {FEATURE_VIDEO_SRCS.map((src) => (
+          <video
+            key={src}
+            src={src}
+            muted
+            autoPlay
+            playsInline
+            loop
+            preload="auto"
+            ref={(el) => {
+              if (!el) return;
+              if (typeof window === "undefined") return;
+              const w = window as unknown as { __primedFeatureVideos?: Record<string, HTMLVideoElement> };
+              if (!w.__primedFeatureVideos) w.__primedFeatureVideos = {};
+              w.__primedFeatureVideos[src] = el;
+            }}
+            style={{ width: 1, height: 1 }}
+          />
+        ))}
+      </div>
+
       {/* Menu — animates between centered and pinned-left */}
       <div
         className="absolute top-1/2 z-30"

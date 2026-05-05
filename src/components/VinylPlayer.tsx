@@ -1,17 +1,51 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const PLAYER_W = 393;
 const PLAYER_H = 60;
+
+// 5×3 grid; `null` = empty "+" slot, string = placeholder color.
+const PICKER_GRID: (string | null)[] = [
+  "#1a1a1a", null,      "#7a3b2e", "#c8a96a", "#3a4d2c",
+  "#1f3a2a", null,      "#2b2b2b", "#8a8f96", null,
+  null,      "#9b1c20", "#a4d83a", "#c98aa6", null,
+];
 
 export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBottomCenter?: boolean } = {}) {
   const [playing, setPlaying] = useState(false);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const [dragging, setDragging] = useState(false);
   const [snapping, setSnapping] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
   const dragOffset = useRef<{ dx: number; dy: number } | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const pickerRef = useRef<HTMLDivElement | null>(null);
+  const pillRef = useRef<HTMLDivElement | null>(null);
+  const albumBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (!pickerOpen) return;
+    const onDocPointerDown = (e: PointerEvent) => {
+      const t = e.target as Node;
+      if (
+        pickerRef.current && !pickerRef.current.contains(t) &&
+        albumBtnRef.current && !albumBtnRef.current.contains(t)
+      ) {
+        setPickerOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPickerOpen(false);
+    };
+    document.addEventListener("pointerdown", onDocPointerDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDocPointerDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [pickerOpen]);
 
   const togglePlay = () => {
     const a = audioRef.current;
@@ -128,9 +162,17 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
         />
+        {pickerOpen && (
+          <AlbumPicker
+            pickerRef={pickerRef}
+            anchorRef={pillRef}
+            onPick={() => setPickerOpen(false)}
+          />
+        )}
         <div
-          className="flex w-full items-center justify-between rounded-[32px] bg-white pl-1 pr-3 py-1"
-          style={{ filter: "drop-shadow(0px 4px 6px rgba(0,0,0,0.1))" }}
+          ref={pillRef}
+          className="relative flex w-full items-center justify-between rounded-[32px] bg-white pl-1 pr-3 py-1"
+          style={{ boxShadow: "0px 4px 6px rgba(0,0,0,0.1)" }}
         >
           <div className="flex flex-1 items-center gap-2 min-w-0">
             <div
@@ -149,15 +191,25 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
                 <rect x="20" y="36" width="4" height="4" fill="white" />
               </svg>
             </div>
-            <img
-              src="/player/discovery.jpg"
-              alt="Daft Punk — Discovery"
-              width={44}
-              height={44}
-              draggable={false}
-              className="shrink-0 rounded-[4px] object-cover"
-              style={{ width: 44, height: 44, border: "0.5px solid rgba(0,0,0,0.05)" }}
-            />
+            <button
+              ref={albumBtnRef}
+              type="button"
+              onClick={() => setPickerOpen((v) => !v)}
+              onPointerDown={(e) => e.stopPropagation()}
+              aria-label="Choose album"
+              className="shrink-0 cursor-pointer p-0"
+              style={{ background: "transparent", border: "none" }}
+            >
+              <img
+                src="/player/discovery.jpg"
+                alt="Daft Punk — Discovery"
+                width={44}
+                height={44}
+                draggable={false}
+                className="block rounded-[4px] object-cover"
+                style={{ width: 44, height: 44, border: "0.5px solid rgba(0,0,0,0.05)" }}
+              />
+            </button>
             <div
               className="flex flex-1 flex-col gap-[2px] min-w-0"
               style={{
@@ -221,14 +273,22 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       />
+      {pickerOpen && (
+        <AlbumPicker
+          pickerRef={pickerRef}
+          anchorRef={pillRef}
+          onPick={() => setPickerOpen(false)}
+        />
+      )}
       <div
+        ref={pillRef}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
-        className="flex w-full items-center justify-between rounded-[32px] bg-white pl-1 pr-3 py-1"
+        className="relative flex w-full items-center justify-between rounded-[32px] bg-white pl-1 pr-3 py-1"
         style={{
-          filter: "drop-shadow(0px 4px 6px rgba(0,0,0,0.1))",
+          boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
           cursor: dragging ? "grabbing" : "grab",
         }}
       >
@@ -252,19 +312,30 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
           </div>
 
           {/* Album cover — Daft Punk, Discovery */}
-          <img
-            src="/player/discovery.jpg"
-            alt="Daft Punk — Discovery"
-            width={44}
-            height={44}
-            draggable={false}
-            className="shrink-0 rounded-[4px] object-cover"
-            style={{
-              width: 44,
-              height: 44,
-              border: "0.5px solid rgba(0,0,0,0.05)",
-            }}
-          />
+          <button
+            ref={albumBtnRef}
+            type="button"
+            data-no-drag
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={() => setPickerOpen((v) => !v)}
+            aria-label="Choose album"
+            className="shrink-0 cursor-pointer p-0"
+            style={{ background: "transparent", border: "none" }}
+          >
+            <img
+              src="/player/discovery.jpg"
+              alt="Daft Punk — Discovery"
+              width={44}
+              height={44}
+              draggable={false}
+              className="block rounded-[4px] object-cover"
+              style={{
+                width: 44,
+                height: 44,
+                border: "0.5px solid rgba(0,0,0,0.05)",
+              }}
+            />
+          </button>
 
           {/* Track text */}
           <div
@@ -307,5 +378,128 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
         </button>
       </div>
     </div>
+  );
+}
+
+function AlbumPicker({
+  pickerRef,
+  anchorRef,
+  onPick,
+}: {
+  pickerRef: React.RefObject<HTMLDivElement | null>;
+  anchorRef: React.RefObject<HTMLDivElement | null>;
+  onPick: () => void;
+}) {
+  const TILE = 42;
+  const GAP = 3;
+  const COLS = 5;
+  const ROWS = 3;
+  const width = COLS * TILE + (COLS - 1) * GAP;
+  const height = ROWS * TILE + (ROWS - 1) * GAP;
+
+  const [coords, setCoords] = useState<{ left: number; top: number } | null>(null);
+
+  // Position the picker above the pill anchor in viewport coordinates.
+  // Tracked via getBoundingClientRect so it follows the pill while it's
+  // dragged or the page scrolls.
+  useLayoutEffect(() => {
+    const update = () => {
+      const el = anchorRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      setCoords({ left: r.left + 4, top: r.top - 12 - height });
+    };
+    update();
+    let raf = 0;
+    const tick = () => {
+      update();
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    window.addEventListener("resize", update);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", update);
+    };
+  }, [anchorRef, height]);
+
+  if (!coords || typeof document === "undefined") return null;
+
+  // Portaled to body and rendered with NO stacking-context-creating styles
+  // (no z-index, no transform, no opacity<1, no filter) so backdrop-filter
+  // on each empty tile reaches the page content beneath.
+  return createPortal(
+    <div
+      ref={pickerRef}
+      role="dialog"
+      aria-label="Choose album"
+      style={{
+        position: "fixed",
+        left: coords.left,
+        top: coords.top,
+        width,
+      }}
+      onPointerDown={(e) => e.stopPropagation()}
+    >
+      <div
+        className="grid"
+        style={{
+          gridTemplateColumns: `repeat(${COLS}, ${TILE}px)`,
+          gridAutoRows: `${TILE}px`,
+          gap: GAP,
+        }}
+      >
+        {PICKER_GRID.map((color, i) => {
+          const row = Math.floor(i / COLS);
+          const col = i % COLS;
+          const delayMs = (row + col) * 18;
+          const isEmpty = color === null;
+          // Figma: 17.82 / 118.8 = 0.15 of tile size
+          const iconSize = Math.round(TILE * 0.15);
+          return (
+            <button
+              key={i}
+              type="button"
+              onClick={onPick}
+              aria-label={isEmpty ? "Add album" : "Album option"}
+              className="relative cursor-pointer p-0 overflow-hidden"
+              style={{
+                width: TILE,
+                height: TILE,
+                border: "none",
+                borderRadius: 0,
+                background: isEmpty ? "rgba(223,223,223,0.2)" : color ?? undefined,
+                backdropFilter: isEmpty ? "blur(16.971px)" : undefined,
+                WebkitBackdropFilter: isEmpty ? "blur(16.971px)" : undefined,
+                animation: `album-tile-in 260ms cubic-bezier(0.34, 1.56, 0.64, 1) ${delayMs}ms both`,
+              }}
+            >
+              {isEmpty && (
+                <svg
+                  width={iconSize}
+                  height={iconSize}
+                  viewBox="0 0 14 14"
+                  aria-hidden
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  <path
+                    d="M7 1 L7 13 M1 7 L13 7"
+                    stroke="rgba(255,255,255,0.85)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </div>,
+    document.body,
   );
 }

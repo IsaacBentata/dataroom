@@ -167,6 +167,11 @@ body {
   to { transform: rotate(360deg); }
 }
 
+@keyframes album-tile-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 /* TikTok carousel — left-to-left infinite marquee. The track contains the
  * video tiles duplicated, so a -50% translate loops back to the start with
  * no visible jump. */
@@ -254,9 +259,8 @@ body {
    inside the inline page preview. */
 html:has(.feature-snap),
 .minimal-preview:has(.feature-snap) {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   scroll-padding-top: var(--feature-sticky-offset, 0px);
-  scroll-behavior: smooth;
 }
 .feature-snap {
   scroll-snap-align: start;
@@ -372,6 +376,15 @@ html:has(.feature-snap),
   font-size: 14px !important;
   font-family: var(--font-fair-favorit-book), sans-serif !important;
   font-weight: 400 !important;
+}
+
+/* Compact variant — ~20% smaller for product page sticky strip */
+.minimal-preview [data-slot="stat"].py-3 div[data-animate-text],
+.minimal-preview [data-slot="stat"].py-3 div[data-animate-text] span {
+  font-size: 22px !important;
+}
+.minimal-preview [data-slot="stat"].py-3 > div:not([data-animate-text]) {
+  font-size: 11px !important;
 }
 
 .minimal-preview [data-page-header] p,
@@ -536,6 +549,20 @@ html:has(.feature-snap),
 
 .minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"] {
   padding: 24px 16px !important;
+}
+
+/* Compact variant — stats marked with .py-3 (compact prop on StatCallout)
+   should keep their reduced vertical padding and font-size even inside
+   .minimal-preview. */
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"].py-3 {
+  padding: 12px 16px !important;
+}
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"].py-3 div[data-animate-text],
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"].py-3 div[data-animate-text] span {
+  font-size: 22px !important;
+}
+.minimal-preview .grid:has(> [data-slot="stat"]) > [data-slot="stat"].py-3 > div:not([data-animate-text]) {
+  font-size: 11px !important;
 }
 
 /* Chart cards (those with a CardHeader) get internal horizontal padding so
