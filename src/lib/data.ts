@@ -313,6 +313,7 @@ export const teamMembers = [
       "As a founder, built and launched his own product from the ground up with end-to-end ownership across product and execution.",
     ],
     linkedin: "https://www.linkedin.com/in/nacoki/",
+    song: { title: "Automatic", artist: "Hikaru Utada", cover: "/team-songs/ab67616d0000b2734fa36b14a276fe560940baa0.jpeg" },
   },
   {
     name: "Carlos Saenz",
@@ -330,6 +331,7 @@ export const teamMembers = [
       "At Equals: drives the full mobile development lifecycle, scalable ecosystem design, and integration with global music content providers.",
     ],
     linkedin: "https://www.linkedin.com/in/cesaenzv/",
+    song: { title: "Tabaco y Chanel", artist: "Bacilos", cover: "/team-songs/ab67616d0000b273508f6cb8971fc173e1b6f26f.jpeg" },
   },
   {
     name: "Jacint Varga",
@@ -347,7 +349,7 @@ export const teamMembers = [
       "Built his own streaming application, bringing first-hand knowledge of the platform and business side of running a consumer app.",
     ],
     linkedin: "",
-    song: { title: "Englishman in New York", artist: "Sting", cover: "/team-songs/englishman.jpg" },
+    song: { title: "Pedro", artist: "Raffaella Carrà", cover: "/team-songs/maxresdefault.jpg" },
   },
   {
     name: "Ilken Bahcecioglu",
@@ -363,6 +365,7 @@ export const teamMembers = [
       "Shipped at every layer of the stack, from casino gaming engines at Playtech to government digital services at Firmstep.",
     ],
     linkedin: "https://www.linkedin.com/in/ilken/",
+    song: { title: "In the End", artist: "Linkin Park", cover: "/team-songs/LinkinParkIntheEnd.jpg" },
   },
   {
     name: "Norman Wilde",
@@ -457,7 +460,7 @@ export const screenshots = [
   { src: "/screenshots/feed.png", caption: "The Feed - music-first social conversations" },
   { src: "/screenshots/meet-card.png", caption: "Meet - taste-based friend recommendations" },
   { src: "/screenshots/artist-profile-highlight.png", caption: "Artist Profiles - deep fan engagement" },
-  { src: "/screenshots/album-page.png", caption: "Album Pages and Digital Vinyls" },
+  { src: "/screenshots/album-page.png", caption: "Album Pages and Digital Vinyls™" },
   { src: "/screenshots/music-player.png", caption: "Music Player with social context" },
   { src: "/screenshots/music-quiz.png", caption: "Music Quizzes - competitive superfan tests" },
   { src: "/screenshots/chats-with-rooms.png", caption: "Chat Rooms - real-time fan communities" },

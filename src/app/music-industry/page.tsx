@@ -79,62 +79,135 @@ export default function MusicIndustryPage() {
       {/* Digital Vinyls - New Asset Class */}
       <Card className="bg-card mb-6">
         <CardHeader>
-          <CardTitle>Digital Vinyls - A New Asset Class for Music</CardTitle>
+          <CardTitle>Digital Vinyl™ - A New Asset Class for Music</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-sm mb-4">
-            We have created a new asset class for the music industry. Digital Vinyls are the industry&apos;s revival of
-            music downloads - empowering superfans to take their favourite artists to the top of the charts while
-            displaying their fandom.
+          {/* Full-width intro */}
+          <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+            We have created a new asset class for the music industry. Digital Vinyl™ - a trademark Equals owns -
+            is the industry&apos;s revival of music downloads, empowering superfans to take their favourite
+            artists to the top of the charts while displaying their fandom.
           </p>
 
-          <div className="bg-secondary rounded-lg p-5 mb-5">
-            <div className="text-center mb-3">
-              <span className="text-accent-green font-bold text-lg">Billboard and Official Charts Certified</span>
+          {/* image | comparison stats */}
+          <div className="grid grid-cols-1 md:grid-cols-[259px_1fr] gap-6 md:gap-8 items-center mb-6">
+            {/* Hero graphic — sits to the side */}
+            <div className="rounded-xl overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/digital-vinyl-hero.png"
+                alt="Digital Vinyl"
+                className="w-full block"
+              />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground mb-1">1 Digital Vinyl = 1,500 stream units</div>
-                <p className="text-muted-foreground text-xs">Each Digital Vinyl purchase counts as 1,500 streams towards chart positioning</p>
+
+            <div>
+              {/* Chart-impact comparison — two stacked conversion stats */}
+              <div className="rounded-xl border border-border p-5">
+                <div
+                  className="mb-4"
+                  style={{
+                    fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                    fontSize: 12,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    color: "rgba(0,0,0,0.5)",
+                  }}
+                >
+                  Billboard &amp; Official Charts Certified
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <div
+                      className="flex items-baseline gap-2 flex-wrap mb-1 text-foreground"
+                      style={{
+                        fontFamily: "var(--font-fair-favorit-body), sans-serif",
+                        fontWeight: 700,
+                        fontSize: 20,
+                        letterSpacing: 0,
+                      }}
+                    >
+                      <span>1 Digital Vinyl™</span>
+                      <span>=</span>
+                      <span>1,500 stream units</span>
+                    </div>
+                    <p className="text-muted-foreground text-xs leading-relaxed">
+                      Each Digital Vinyl™ purchase counts as 1,500 streams towards chart positioning.
+                    </p>
+                  </div>
+                  <div className="border-t border-border pt-4">
+                    <div
+                      className="flex items-baseline gap-2 flex-wrap mb-1 text-foreground"
+                      style={{
+                        fontFamily: "var(--font-fair-favorit-body), sans-serif",
+                        fontWeight: 700,
+                        fontSize: 20,
+                        letterSpacing: 0,
+                      }}
+                    >
+                      <span>1K fans</span>
+                      <span>=</span>
+                      <span>1.5M passive listeners</span>
+                    </div>
+                    <p className="text-muted-foreground text-xs leading-relaxed">
+                      1,000 passionate fans buying Digital Vinyl™ has the same chart impact as 1.5M passive fans
+                      streaming.
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground mb-1">1K fans = 1.5M passive listeners</div>
-                <p className="text-muted-foreground text-xs">1,000 passionate fans buying Digital Vinyls has the same chart impact as 1.5 million passive fans streaming</p>
-              </div>
+
+              <p className="text-muted-foreground text-sm leading-relaxed mt-4">
+                This means a small, engaged fanbase on Equals can have the same chart impact as millions of passive
+                listeners. Labels no longer need to rely solely on mass streaming volume - they can activate their most
+                dedicated fans to drive chart performance directly.
+              </p>
             </div>
           </div>
 
-          <p className="text-muted-foreground text-sm mb-4">
-            This means a small, engaged fanbase on Equals can have the same chart impact as millions of passive
-            listeners. Labels no longer need to rely solely on mass streaming volume - they can activate their most
-            dedicated fans to drive chart performance directly.
-          </p>
-
-          <p className="text-muted-foreground text-sm mb-5">
-            UMG sees Equals as core to their ARPU strategy. In Q3 2026, Equals deepens the partnership to do
-            pre-releases as Digital Vinyls - giving fans exclusive early access to new music while driving chart
-            performance from day one.
-          </p>
+          <div className="bg-secondary rounded-2xl px-5 py-4 mb-6">
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              UMG sees Equals as core to their ARPU strategy. In Q3 2026, Equals deepens the partnership to do
+              pre-releases as Digital Vinyl™ - giving fans exclusive early access to new music while driving chart
+              performance from day one.
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <Card className="bg-secondary border-0">
-              <CardContent className="p-4">
-                <div className="text-accent-green font-semibold text-sm mb-1">For Artists</div>
-                <p className="text-muted-foreground text-xs">Digital Vinyl sales push artists up the charts. Net-new revenue that does not cannibalise streaming.</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0">
-              <CardContent className="p-4">
-                <div className="text-accent-blue font-semibold text-sm mb-1">For Labels</div>
-                <p className="text-muted-foreground text-xs">Direct fan engagement channel. Drive fans to Equals for exclusive drops and activations during release weeks.</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0">
-              <CardContent className="p-4">
-                <div className="text-accent-purple font-semibold text-sm mb-1">For Fans</div>
-                <p className="text-muted-foreground text-xs">Collectibles that express music identity. Pin them to your Vinyl Grid on your profile. Take your favourite artists to the top of the charts.</p>
-              </CardContent>
-            </Card>
+            {[
+              {
+                label: "For Artists",
+                body:
+                  "Digital Vinyl™ sales push artists up the charts. Net-new revenue that does not cannibalise streaming.",
+              },
+              {
+                label: "For Labels",
+                body:
+                  "Direct fan engagement channel. Drive fans to Equals for exclusive drops and activations during release weeks.",
+              },
+              {
+                label: "For Fans",
+                body:
+                  "Collectibles that express music identity. Pin them to your Vinyl Grid on your profile. Take your favourite artists to the top of the charts.",
+              },
+            ].map((stake) => (
+              <div key={stake.label} className="rounded-xl border border-border p-4">
+                <div
+                  className="flex items-center gap-2 mb-2"
+                  style={{
+                    fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                    fontSize: 12,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    color: "#000",
+                  }}
+                >
+                  <span className="inline-block w-[6px] h-[6px] rounded-full bg-black shrink-0" />
+                  {stake.label}
+                </div>
+                <p className="text-muted-foreground text-xs leading-relaxed">{stake.body}</p>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
@@ -198,7 +271,7 @@ export default function MusicIndustryPage() {
           </p>
 
           <div className="bg-secondary rounded-lg p-5 mb-5 mt-4">
-            <p className="text-sm text-foreground font-medium mb-3">The key insight:</p>
+            <p className="key-insight-label mb-3">The key insight</p>
             <p className="text-sm text-muted-foreground">
               Equals does not just know what music fans listen to - every streaming platform has that. Equals knows
               how fans <span className="font-semibold text-foreground">talk</span> about music,
@@ -214,30 +287,40 @@ export default function MusicIndustryPage() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <Card className="bg-secondary border-0">
-              <CardContent className="p-4">
-                <div className="text-accent-green font-semibold text-sm mb-1">For Users</div>
-                <p className="text-muted-foreground text-xs">
-                  Personalised recommendations and artist discovery powered by social context - not just listening history.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0">
-              <CardContent className="p-4">
-                <div className="text-accent-blue font-semibold text-sm mb-1">For Labels</div>
-                <p className="text-muted-foreground text-xs">
-                  Hyper-targeting and artist discovery. Understand which fan segments drive the most engagement and revenue.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0">
-              <CardContent className="p-4">
-                <div className="text-accent-purple font-semibold text-sm mb-1">For Artists</div>
-                <p className="text-muted-foreground text-xs">
-                  A 360-degree understanding of their fanbase - who their fans are, how they connect, and what drives loyalty.
-                </p>
-              </CardContent>
-            </Card>
+            {[
+              {
+                label: "For Users",
+                body:
+                  "Personalised recommendations and artist discovery powered by social context - not just listening history.",
+              },
+              {
+                label: "For Labels",
+                body:
+                  "Hyper-targeting and artist discovery. Understand which fan segments drive the most engagement and revenue.",
+              },
+              {
+                label: "For Artists",
+                body:
+                  "A 360-degree understanding of their fanbase - who their fans are, how they connect, and what drives loyalty.",
+              },
+            ].map((stake) => (
+              <div key={stake.label} className="rounded-xl border border-border p-4">
+                <div
+                  className="flex items-center gap-2 mb-2"
+                  style={{
+                    fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                    fontSize: 12,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    color: "#000",
+                  }}
+                >
+                  <span className="inline-block w-[6px] h-[6px] rounded-full bg-black shrink-0" />
+                  {stake.label}
+                </div>
+                <p className="text-muted-foreground text-xs leading-relaxed">{stake.body}</p>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
@@ -255,7 +338,7 @@ export default function MusicIndustryPage() {
           </p>
           <p className="text-muted-foreground text-sm mb-5">
             Equals fills that gap. We are where labels can engage fans directly, drive commerce through
-            Digital Vinyls and exclusives, and access data on how fans discover and connect through music.
+            Digital Vinyls™ and exclusives, and access data on how fans discover and connect through music.
           </p>
 
           <div className="space-y-4">
@@ -275,9 +358,9 @@ export default function MusicIndustryPage() {
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-accent-blue mt-2 flex-shrink-0" />
               <div>
-                <div className="font-semibold text-foreground text-sm mb-1">Chart performance through Digital Vinyl sales</div>
+                <div className="font-semibold text-foreground text-sm mb-1">Chart performance through Digital Vinyl™ sales</div>
                 <p className="text-muted-foreground text-xs">
-                  Labels can get artists to the top of the charts through Digital Vinyl sales during release weeks.
+                  Labels can get artists to the top of the charts through Digital Vinyl™ sales during release weeks.
                   A focused campaign on Equals can deliver chart-moving results that would otherwise require millions of streams.
                 </p>
               </div>
@@ -297,7 +380,7 @@ export default function MusicIndustryPage() {
               <div>
                 <div className="font-semibold text-foreground text-sm mb-1">Net-new revenue</div>
                 <p className="text-muted-foreground text-xs">
-                  Revenue from Digital Vinyl sales and fan activations on Equals does not cannibalise streaming.
+                  Revenue from Digital Vinyl™ sales and fan activations on Equals does not cannibalise streaming.
                   This is incremental revenue for labels - a new line item, not a redistribution of existing income.
                 </p>
               </div>

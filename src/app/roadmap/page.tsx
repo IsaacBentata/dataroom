@@ -124,7 +124,7 @@ export default function RoadmapPage() {
                 <li>- Social features gated behind referrals: K-factor flywheel, every user brings their friends</li>
                 <li>- User-led chatrooms: Create and manage your own chatrooms with friends inside Equals</li>
                 <li>- Listen to music together in real time: Friends stream music together, radio-style sessions around shared artists</li>
-                <li>- Activation pilot with UMG: Leverage Digital Vinyls to boost chart positioning on album release week</li>
+                <li>- Activation pilot with UMG: Leverage Digital Vinyls™ to boost chart positioning on album release week</li>
                 <li>- Collaborative playlists: Co-curated playlists where each addition becomes a social post</li>
               </ul>
             </div>
@@ -179,7 +179,7 @@ export default function RoadmapPage() {
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed mb-6">
               <p>
                 By Q4 2026, network effects should be compounding from the Fan Layer investments. The Artist Layer
-                shifts focus to making Equals the go-to activation channel for all major labels. Digital Vinyls move
+                shifts focus to making Equals the go-to activation channel for all major labels. Digital Vinyls™ move
                 from king-maker to table stakes for charting, creating a self-reinforcing industry standard.
               </p>
               <p>
@@ -193,9 +193,9 @@ export default function RoadmapPage() {
             <div>
               <h4 className="text-sm font-medium mb-2">Product Milestones</h4>
               <ul className="space-y-1.5 text-xs text-muted-foreground">
-                <li>- Go-to activation channel for all major labels: Digital Vinyls shift from king-maker to table stakes for charting</li>
+                <li>- Go-to activation channel for all major labels: Digital Vinyls™ shift from king-maker to table stakes for charting</li>
                 <li>- The IMDB of music reviews: Surface verified user reviews on a public website for organic search acquisition</li>
-                <li>- Album Pre-release: Fans purchase Digital Vinyls to unlock albums before general release</li>
+                <li>- Album Pre-release: Fans purchase Digital Vinyls™ to unlock albums before general release</li>
                 <li>- Community listening parties: Real-time group listening events built around album drops</li>
                 <li>- AI Conversations with Artist: AI-powered 1:1 conversations, personalised by Equals data</li>
               </ul>
@@ -267,78 +267,113 @@ export default function RoadmapPage() {
                 <li>- Exclusive artist content: Behind-the-scenes, unreleased tracks, and artist-only posts</li>
                 <li>- Ticketing and merch aggregation: Surface tickets and merch directly within artist profiles</li>
                 <li>- Find Friends at Concerts: Connect users attending the same gig with shared taste or mutual friends</li>
-                <li>- Trade + Gift Digital Vinyls: A social collectibles economy around Digital Vinyls</li>
+                <li>- Trade + Gift Digital Vinyls™: A social collectibles economy around Digital Vinyls™</li>
                 <li>- Music predictions: Predict chart positions and award winners, compete on leaderboards</li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* -- WHY THESE NUMBERS ARE ACHIEVABLE -- */}
-        <div className="relative pl-14 md:pl-18">
-          <div className="absolute left-3 md:left-5 top-1 w-4 h-4 rounded-full bg-foreground border-4 border-background" />
-          <div className="bg-card rounded-2xl border border-border p-5">
-            <h3 className="text-lg font-semibold mb-4">Why these numbers are achievable</h3>
+      </div>
 
-            <div className="space-y-4 text-muted-foreground text-sm leading-relaxed">
-              <div>
-                <h4 className="text-sm font-medium text-foreground mb-1">Retention improves with friends - this is proven</h4>
-                <p>
+      {/* -- WHY THESE NUMBERS ARE ACHIEVABLE -- (full-width, outside timeline) */}
+      <div className="bg-card rounded-2xl border border-border p-6 md:p-8 mt-8">
+        <h3
+          className="mb-6"
+          style={{
+            fontFamily: "var(--font-fair-favorit-heading), sans-serif",
+            fontWeight: 400,
+            fontSize: 28,
+            letterSpacing: "-0.02em",
+            color: "#000",
+          }}
+        >
+          Why these numbers are achievable
+        </h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+          {[
+            {
+              label: "Retention improves with friends",
+              body: (
+                <>
                   The single most important chart in this data room is the retention-by-friends curve
                   (see <a href="/retention" className="text-accent-blue hover:underline">Retention</a>). Users with 50+ friends retain at 40% at Week 8 -
                   over 2x the all-users average. Every investment in k-factor directly improves retention, which improves
                   LTV, which funds more growth. This is a classic network effects flywheel and the data already proves it works.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-medium text-foreground mb-1">K-factor mechanics are an untapped lever</h4>
-                <p>
+                </>
+              ),
+            },
+            {
+              label: "K-factor mechanics are an untapped lever",
+              body: (
+                <>
                   The 9x growth from Nov 2025 to May 2026 was achieved without any dedicated k-factor mechanics.
                   Social features gated behind referrals, DSP integration, and user-led chatrooms represent major untapped
                   growth levers. Deploying these across multiple surfaces should meaningfully accelerate organic acquisition.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-medium text-foreground mb-1">Label partnerships bring built-in audiences</h4>
-                <p>
+                </>
+              ),
+            },
+            {
+              label: "Label partnerships bring built-in audiences",
+              body: (
+                <>
                   A single major artist activation can drive 100K+ installs. With all three major labels signed,
                   Equals will have access to hundreds of artists with millions of fans. Each artist activation is a
                   distribution event that brings a pre-qualified, music-obsessed audience directly to the platform.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-medium text-foreground mb-1">35 min/day proves deep product-market fit</h4>
-                <p>
+                </>
+              ),
+            },
+            {
+              label: "35 min/day proves deep product-market fit",
+              body: (
+                <>
                   Users do not spend 35 minutes per day on a product they are lukewarm about. This level of engagement -
                   comparable to Instagram and approaching TikTok - indicates genuine product-market fit. Time spent is
                   the hardest metric to fake and the most predictive of long-term retention.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-medium text-foreground mb-1">Team velocity is a structural advantage</h4>
-                <p>
+                </>
+              ),
+            },
+            {
+              label: "Team velocity is a structural advantage",
+              body: (
+                <>
                   483 tickets completed in April with just 4 engineers. AI-multiplied output means Equals can iterate on
                   product faster than competitors with 5x the headcount. Speed of iteration compounds - each experiment run,
                   each feature shipped, each insight gained happens faster than the competition can respond
                   (see <a href="/ai" className="text-accent-blue hover:underline">AI Adoption</a> for the full picture).
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-medium text-foreground mb-1">The growth engine works and is accelerating</h4>
-                <p>
+                </>
+              ),
+            },
+            {
+              label: "The growth engine works and is accelerating",
+              body: (
+                <>
                   9x growth in 6 months is not a one-time spike - the month-over-month growth rate has been consistent
                   (see <a href="/growth" className="text-accent-blue hover:underline">Growth</a>). The curve is accelerating,
                   not flattening. Marketing automation continues to reduce CPI while organic channels grow.
                   The targets ahead are more conservative than the trajectory already demonstrated.
-                </p>
+                </>
+              ),
+            },
+          ].map((item) => (
+            <div key={item.label}>
+              <div
+                className="flex items-center gap-2 mb-2"
+                style={{
+                  fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                  fontSize: 12,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "#000",
+                }}
+              >
+                <span className="inline-block w-[6px] h-[6px] rounded-full bg-black shrink-0" />
+                {item.label}
               </div>
+              <p className="text-muted-foreground text-sm leading-relaxed">{item.body}</p>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </Section>

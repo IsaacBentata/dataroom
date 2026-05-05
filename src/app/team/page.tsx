@@ -39,9 +39,13 @@ export default function TeamPage() {
         {teamMembers.map((member, i) => (
           <Card
             key={i}
-            className="bg-card hover:border-accent-blue/30 transition-colors"
+            className="bg-card hover:border-accent-blue/30 transition-colors h-full"
           >
-            <CardContent className="p-5">
+            <CardContent
+              className="p-5 grid"
+              style={{ gridTemplateRows: "1fr auto", height: "100%", minHeight: "100%" }}
+            >
+              <div>
               <div className="flex items-start justify-between gap-3 mb-4">
                 <div className="min-w-0">
                   <p
@@ -57,24 +61,10 @@ export default function TeamPage() {
                     {member.role}
                   </p>
                   <h4
-                    className="text-[20px] leading-tight flex items-baseline gap-2 flex-wrap"
-                    style={{ fontFamily: 'var(--font-fair-favorit-heading), sans-serif', fontWeight: 400, letterSpacing: '-0.02em' }}
+                    className="text-[20px] leading-tight"
+                    style={{ fontFamily: 'var(--font-fair-favorit-heading), sans-serif', fontWeight: 400, letterSpacing: '-0.02em', color: "#FFFFFF" }}
                   >
-                    <span style={{ color: "#FFFFFF" }}>{member.name}</span>
-                    {"handle" in member && member.handle && (
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-fair-favorit-mono), monospace',
-                          fontSize: 11,
-                          fontWeight: 400,
-                          letterSpacing: 0,
-                          textTransform: 'uppercase',
-                          color: 'rgba(255,255,255,0.4)',
-                        }}
-                      >
-                        {member.handle}
-                      </span>
-                    )}
+                    {member.name}
                   </h4>
                 </div>
                 {member.linkedin && (
@@ -115,13 +105,23 @@ export default function TeamPage() {
               {member.bio && (
                 <button
                   onClick={() => setOpenBio(i)}
-                  className="text-accent-blue text-xs mt-3 hover:underline cursor-pointer"
+                  className="text-accent-blue text-xs mt-3 hover:underline cursor-pointer self-start text-left block"
                 >
                   Read more →
                 </button>
               )}
+              </div>
               {"song" in member && member.song && (
-                <div className="mt-4">
+                <div
+                  style={{
+                    marginTop: 16,
+                    marginBottom: -18,
+                    background: "rgba(255,255,255,0.06)",
+                    border: "none",
+                    borderRadius: 8,
+                    padding: "12px",
+                  }}
+                >
                   <p
                     className="mb-2"
                     style={{
@@ -148,7 +148,7 @@ export default function TeamPage() {
                         style={{ width: 28, height: 28, border: "0.5px solid rgba(255,255,255,0.1)" }}
                       />
                     )}
-                    <div className="flex items-baseline gap-2 min-w-0">
+                    <div className="flex flex-col min-w-0">
                       <p
                         className="truncate"
                         style={{
@@ -163,7 +163,7 @@ export default function TeamPage() {
                         {member.song.title}
                       </p>
                       <p
-                        className="truncate shrink-0"
+                        className="truncate"
                         style={{
                           color: "rgba(255,255,255,0.4)",
                           fontFamily: "var(--font-fair-favorit-body), sans-serif",

@@ -34,7 +34,7 @@ const revenueStreams = [
     total: "$78M",
     color: "text-accent-purple",
     description:
-      "Digital Vinyls and merch marketplace. Today, ~2% of users buy at least one Digital Vinyl per quarter. As the product matures and Digital Vinyls become tied to chart positioning, uptake grows - we model 10% of users purchasing regularly at scale, averaging 4 per year at $5 each with ~30% margins. Merch marketplace adds a 15% take rate on $35 average orders.",
+      "Digital Vinyls™ and merch marketplace. Today, ~2% of users buy at least one Digital Vinyl™ per quarter. As the product matures and Digital Vinyls™ become tied to chart positioning, uptake grows - we model 10% of users purchasing regularly at scale, averaging 4 per year at $5 each with ~30% margins. Merch marketplace adds a 15% take rate on $35 average orders.",
     justification: "Current baseline: 2% quarterly buyer rate. Platforms where collectibles are core to the experience see much higher uptake - Roblox sees ~25% of users purchasing virtual items. At scale with chart-certified vinyls and gifting mechanics, 10% annual buyer rate is conservative. ~30% margins after licensing costs.",
   },
   {
@@ -43,7 +43,7 @@ const revenueStreams = [
     total: "$40M",
     color: "text-accent-green",
     description:
-      "B2B revenue from major labels. The three majors collectively spend ~$5B/year on marketing and promotion. Equals captures a fraction of this through daily activations (pre-release campaigns, Digital Vinyl drops, community listening parties), data insights packages (audience sentiment, taste clustering, trend prediction, fan targeting), and always-on campaign management across artist profiles.",
+      "B2B revenue from major labels. The three majors collectively spend ~$5B/year on marketing and promotion. Equals captures a fraction of this through daily activations (pre-release campaigns, Digital Vinyl™ drops, community listening parties), data insights packages (audience sentiment, taste clustering, trend prediction, fan targeting), and always-on campaign management across artist profiles.",
     justification: "Labels are actively looking for direct-to-fan channels with measurable ROI. Equals offers something no other platform can: chart-moving activations, behavioural fan data, and a verified audience. Even capturing <1% of major label marketing spend gets to $40M.",
   },
   {
@@ -196,7 +196,7 @@ export default function MonetisationPage() {
             type="bar"
             height={260}
             showDateFilter={false}
-            className="border-0 p-0 shadow-none ring-0"
+            className="border-0 px-0 pt-6 pb-2 shadow-none ring-0"
           />
         </CardContent>
       </Card>
@@ -226,8 +226,28 @@ export default function MonetisationPage() {
           <Card key={stream.name} className="bg-card text-center">
             <CardContent className="p-4">
               <h4 className="text-sm font-semibold text-foreground mb-2">{stream.name}</h4>
-              <div className={`text-2xl font-bold ${stream.color} mb-1`}>{stream.total}</div>
-              <div className="text-xs text-muted-foreground">{stream.arpu} ARPU</div>
+              <div
+                className={`text-2xl ${stream.color} mb-1`}
+                style={{
+                  fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                  fontWeight: 400,
+                  letterSpacing: "0.02em",
+                  textTransform: "uppercase",
+                }}
+              >
+                {stream.total}
+              </div>
+              <div
+                className="text-xs text-muted-foreground"
+                style={{
+                  fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                  fontWeight: 400,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                }}
+              >
+                {stream.arpu} ARPU
+              </div>
             </CardContent>
           </Card>
         ))}

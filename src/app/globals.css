@@ -172,6 +172,18 @@ body {
   to { opacity: 1; }
 }
 
+/* Force bold-black inline labels past the .minimal-preview cascade.
+ * Need higher specificity than `.minimal-preview .bg-secondary *` (0,2,1). */
+.key-insight-label,
+.minimal-preview .key-insight-label,
+.minimal-preview .bg-secondary .key-insight-label,
+.minimal-preview .bg-secondary p.key-insight-label {
+  font-family: var(--font-fair-favorit-body), sans-serif !important;
+  font-weight: 700 !important;
+  color: #888888 !important;
+  font-size: 14px !important;
+}
+
 /* Force green on stat delta indicators past the .minimal-preview cascade */
 .stat-delta-green,
 .stat-delta-green *,

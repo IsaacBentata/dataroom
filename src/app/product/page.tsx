@@ -43,9 +43,9 @@ const features: FeatureSection[] = [
     ],
   },
   {
-    title: "Album Pages and Digital Vinyls",
+    title: "Album Pages and Digital Vinyls™",
     description:
-      "Every album has its own page where users can rate, review, and discuss the music. The Digital Vinyl feature lets users collect branded digital downloads and pin them to their profile. For labels, Digital Vinyl sales count toward chart positioning - creating net-new revenue that does not cannibalise streaming. For fans, it is a way to express identity through the music they love.",
+      "Every album has its own page where users can rate, review, and discuss the music. The Digital Vinyl™ feature lets users collect branded digital downloads and pin them to their profile. For labels, Digital Vinyl™ sales count toward chart positioning - creating net-new revenue that does not cannibalise streaming. For fans, it is a way to express identity through the music they love.",
     screenshots: [
       { src: "/screenshots/album-page-vinyl.png", alt: "Album page with digital vinyl" },
     ],
