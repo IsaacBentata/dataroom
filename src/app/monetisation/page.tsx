@@ -43,17 +43,17 @@ const revenueStreams = [
     total: "$40M",
     color: "text-accent-green",
     description:
-      "B2B revenue from major labels. Includes album release activations (~300/yr at $130K avg), data insights packages (audience sentiment, taste clustering, trend prediction), and campaign management fees. High-margin revenue - mostly platform configuration, not incremental cost.",
-    justification: "Labels currently spend billions on marketing with poor attribution. Equals offers direct-to-fan activation with measurable chart impact - pricing power increases as ROI is proven.",
+      "B2B revenue from major labels. The three majors collectively spend ~$5B/year on marketing and promotion. Equals captures a fraction of this through daily activations (pre-release campaigns, Digital Vinyl drops, community listening parties), data insights packages (audience sentiment, taste clustering, trend prediction, fan targeting), and always-on campaign management across artist profiles.",
+    justification: "Labels are actively looking for direct-to-fan channels with measurable ROI. Equals offers something no other platform can: chart-moving activations, behavioural fan data, and a verified audience. Even capturing <1% of major label marketing spend gets to $40M.",
   },
   {
     name: "Live Experiences",
-    arpu: "$0.35",
-    total: "$35M",
+    arpu: "$0.20",
+    total: "$20M",
     color: "text-accent-blue",
     description:
-      "Equals Live events across 15+ cities, targeting 480K attendees at $50 average ticket price, plus sponsorship revenue from brand partners.",
-    justification: "Modelled on Fever's economics (~$600M+ revenue). Equals has the audience data to curate premium, intimate music experiences that command higher ticket prices and sponsorship value.",
+      "Festival partnerships and co-branded live experiences. Equals collaborates with festivals and promoters to create exclusive on-platform activations - artist meet-and-greets, listening parties, and community events tied to major festivals. Revenue from sponsorship packages, ticketing referrals, and co-branded content.",
+    justification: "The global live music market is $35B+. Equals doesn't need to own venues - it partners with existing festivals and promoters, adding a digital layer that drives ticket sales and brand sponsorship value.",
   },
   {
     name: "Ticketing",
@@ -67,11 +67,11 @@ const revenueStreams = [
 ];
 
 const revenueSummary = [
-  { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "60.9%" },
-  { stream: "Subscriptions", arpu: "$6.12", annual: "$612M", share: "31.1%" },
+  { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "61.3%" },
+  { stream: "Subscriptions", arpu: "$6.12", annual: "$612M", share: "31.3%" },
   { stream: "Commerce", arpu: "$0.78", annual: "$78M", share: "4.0%" },
   { stream: "Label Services", arpu: "$0.40", annual: "$40M", share: "2.0%" },
-  { stream: "Live Experiences", arpu: "$0.35", annual: "$35M", share: "1.8%" },
+  { stream: "Live Experiences", arpu: "$0.20", annual: "$20M", share: "1.0%" },
   { stream: "Ticketing", arpu: "$0.06", annual: "$6M", share: "0.3%" },
 ];
 
@@ -216,7 +216,7 @@ export default function MonetisationPage() {
         <div className="grid grid-cols-3 gap-4 my-6">
           <StatCallout value="100M" label="Monthly Active Users" color="text-accent-green" />
           <StatCallout value="$2.0B" label="Annual Revenue" color="text-accent-blue" />
-          <StatCallout value="$19.71" label="Blended ARPU" color="text-accent-purple" />
+          <StatCallout value="$19.56" label="Blended ARPU" color="text-accent-purple" />
         </div>
       </div>
 
@@ -282,7 +282,7 @@ export default function MonetisationPage() {
                 ))}
                 <tr className="font-bold">
                   <td className="pt-3 text-foreground">Total</td>
-                  <td className="pt-3 text-right text-foreground">$19.71</td>
+                  <td className="pt-3 text-right text-foreground">$19.56</td>
                   <td className="pt-3 text-right text-accent-green">$2.0B</td>
                   <td className="pt-3 text-right text-foreground">100%</td>
                 </tr>
