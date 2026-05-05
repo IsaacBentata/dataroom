@@ -207,7 +207,7 @@ export default function GrowthPage() {
         <CardHeader>
           <CardTitle>We're a content machine</CardTitle>
           <CardDescription>
-            30 accounts. ~150 videos a week. 1B+ views.
+            1B+ views. ~150 videos a week. 30 accounts.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -281,12 +281,12 @@ export default function GrowthPage() {
                 <div className="text-4xl font-bold text-accent-green">52%</div>
                 <div
                   className="stat-delta-green font-bold flex items-center gap-1 whitespace-nowrap"
-                  style={{ fontSize: 11 }}
+                  style={{ fontSize: 11, color: "#00CC78" }}
                 >
-                  <svg width="7" height="7" viewBox="0 0 10 10" aria-hidden>
-                    <path d="M5 1 L9 8 L1 8 Z" fill="currentColor" />
+                  <svg width="7" height="7" viewBox="0 0 10 10" aria-hidden style={{ fill: "#00CC78" }}>
+                    <path d="M5 1 L9 8 L1 8 Z" fill="#00CC78" />
                   </svg>
-                  <span>20% Q/Q</span>
+                  <span style={{ color: "#00CC78" }}>from 20% last Q</span>
                 </div>
               </div>
               <div className="text-xs text-black mt-1">Verification rate</div>

@@ -235,6 +235,7 @@ function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
             className="feature-snap flex flex-col justify-center"
             style={{
               height: `calc(100vh - ${stickyOffset}px)`,
+              paddingBottom: "20%",
             }}
           >
             <div
@@ -276,7 +277,7 @@ function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
         <PhoneVideo3D
           src={active?.video}
           imageSrc={active?.screenshots[0]?.src}
-          baseTilt={{ x: -0.04, y: 0.12 }}
+          baseTilt={{ x: -0.04, y: -0.18 }}
           height="100%"
         />
       </div>

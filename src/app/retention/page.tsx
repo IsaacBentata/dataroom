@@ -66,7 +66,7 @@ export default function RetentionPage() {
             This is the foundation for durable, compounding growth: each cohort retains better than the last.
           </p>
           <DataChart
-            className="border-0 p-0 shadow-none ring-0"
+            className="border-0 px-0 pt-4 pb-2 shadow-none ring-0"
             data={weeklyRetention}
             series={[
               { key: "Week 1", name: "Week 1 Retention", color: "rgba(0, 204, 120, 1)" },
