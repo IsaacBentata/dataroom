@@ -9,6 +9,17 @@ const communityData = [
   { artist: "Billie Eilish", equals: "244K", discord: "69K" },
   { artist: "The Weeknd", equals: "241K", discord: "64K" },
   { artist: "Kendrick Lamar", equals: "210K", discord: "16K" },
+  { artist: "Tyler the Creator", equals: "171K", discord: "71K" },
+  { artist: "Sabrina Carpenter", equals: "160K", discord: "44K" },
+  { artist: "Lana Del Rey", equals: "154K", discord: "51K" },
+  { artist: "SZA", equals: "153K", discord: "19K" },
+  { artist: "Kanye West", equals: "152K", discord: "39K" },
+  { artist: "Travis Scott", equals: "147K", discord: "48K" },
+  { artist: "Ariana Grande", equals: "142K", discord: "74K" },
+  { artist: "Frank Ocean", equals: "137K", discord: "10K" },
+  { artist: "Bad Bunny", equals: "124K", discord: "12K" },
+  { artist: "Olivia Rodrigo", equals: "122K", discord: "47K" },
+  { artist: "Playboi Carti", equals: "121K", discord: "18K" },
 ];
 
 export default function MusicIndustryPage() {

@@ -53,11 +53,11 @@ export function parseRetentionByFriends() {
 export function parseWeeklyRetention() {
   const weeks = [
     "Sep 22", "Oct 13", "Nov 03", "Nov 24", "Dec 15", "Jan 05",
-    "Jan 26", "Feb 16", "Mar 09", "Mar 30",
+    "Jan 26", "Feb 16", "Mar 09",
   ];
-  const w1 = [0.2997, 0.2803, 0.2917, 0.3539, 0.3206, 0.4324, 0.452, 0.5028, 0.5172, 0.4982];
-  const w2 = [0.1987, 0.1865, 0.1977, 0.2297, 0.2032, 0.3156, 0.3415, 0.3914, 0.4011, 0.3816];
-  const w4 = [0.0944, 0.0854, 0.0954, 0.1386, 0.1258, 0.2016, 0.2318, 0.2657, 0.2804, 0.2272];
+  const w1 = [0.2997, 0.2803, 0.2917, 0.3539, 0.3206, 0.4324, 0.452, 0.5028, 0.5172];
+  const w2 = [0.1987, 0.1865, 0.1977, 0.2297, 0.2032, 0.3156, 0.3415, 0.3914, 0.4011];
+  const w4 = [0.0944, 0.0854, 0.0954, 0.1386, 0.1258, 0.2016, 0.2318, 0.2657, 0.2804];
   return weeks.map((w, i) => ({
     week: w,
     "Week 1": Math.round(w1[i] * 100 * 10) / 10,
@@ -84,8 +84,8 @@ export function parsePowerCurve() {
 }
 
 export function parseEngagement() {
-  const months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"];
-  const values = [283, 252, 325, 415, 640, 636];
+  const months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026"];
+  const values = [283, 255, 326, 415, 640, 635, 655];
   return months.map((m, i) => ({ month: m, "Avg Actions": Math.round(values[i]) }));
 }
 
@@ -252,10 +252,12 @@ export const revenueData = [
   { month: "Aug 2025", revenue: 7732 },
   { month: "Sep 2025", revenue: 9126 },
   { month: "Oct 2025", revenue: 14337 },
-  { month: "Nov 2025", revenue: 40539 },
-  { month: "Dec 2025", revenue: 49341 },
-  { month: "Jan 2026", revenue: 50271 },
-  { month: "Feb 2026", revenue: 33931 },
+  { month: "Nov 2025", revenue: 46605 },
+  { month: "Dec 2025", revenue: 52173 },
+  { month: "Jan 2026", revenue: 54031 },
+  { month: "Feb 2026", revenue: 35060 },
+  { month: "Mar 2026", revenue: 35831 },
+  { month: "Apr 2026", revenue: 33553 },
 ];
 
 // ── Team Data ───────────────────────────────────────────────────────

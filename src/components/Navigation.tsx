@@ -19,7 +19,6 @@ const sections = [
   { href: "/team", label: "Team" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/legal", label: "Legal" },
-  { href: "/financials", label: "Financials" },
 ];
 
 export default function Navigation() {

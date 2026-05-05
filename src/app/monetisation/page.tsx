@@ -21,12 +21,12 @@ const revenueStreams = [
   },
   {
     name: "Subscriptions",
-    arpu: "$2.40",
-    total: "$240M",
+    arpu: "$6.12",
+    total: "$612M",
     color: "text-accent-blue",
     description:
-      "4% conversion to Pro at $5.99/mo, adjusted for regional pricing. Pro features include unlimited quiz entries, advanced profile customisation, exclusive community access, early vinyl drops, and an ad-free experience.",
-    justification: "Comps: Discord Nitro converts at ~3-4% and trending up. Snapchat+ reached 12M subscribers (~2% of MAU) within 2 years. 4% is in line with proven social app benchmarks.",
+      "Based on proven ARPU of $0.51/month ($6.12 annualised) demonstrated during the Oct 2025 - Jan 2026 monetisation test at 90K MAU. Pro features include unlimited quiz entries, advanced profile customisation, exclusive community access, early vinyl drops, and an ad-free experience.",
+    justification: "This is not a projection - it is an extrapolation of proven unit economics. The $0.51/month ARPU was achieved with a 4.5-5% paywall conversion rate on a less mature product with lower engagement than today.",
   },
   {
     name: "Commerce",
@@ -67,12 +67,12 @@ const revenueStreams = [
 ];
 
 const revenueSummary = [
-  { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "75.1%" },
-  { stream: "Subscriptions", arpu: "$2.40", annual: "$240M", share: "15.0%" },
-  { stream: "Commerce", arpu: "$0.78", annual: "$78M", share: "4.9%" },
-  { stream: "Label Services", arpu: "$0.40", annual: "$40M", share: "2.5%" },
-  { stream: "Live Experiences", arpu: "$0.35", annual: "$35M", share: "2.2%" },
-  { stream: "Ticketing", arpu: "$0.06", annual: "$6M", share: "0.4%" },
+  { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "60.9%" },
+  { stream: "Subscriptions", arpu: "$6.12", annual: "$612M", share: "31.1%" },
+  { stream: "Commerce", arpu: "$0.78", annual: "$78M", share: "4.0%" },
+  { stream: "Label Services", arpu: "$0.40", annual: "$40M", share: "2.0%" },
+  { stream: "Live Experiences", arpu: "$0.35", annual: "$35M", share: "1.8%" },
+  { stream: "Ticketing", arpu: "$0.06", annual: "$6M", share: "0.3%" },
 ];
 
 export default function MonetisationPage() {
@@ -98,30 +98,61 @@ export default function MonetisationPage() {
       <div className="space-y-4 text-muted-foreground text-sm leading-relaxed mb-10">
         <Card className="bg-card">
           <CardHeader>
-            <CardTitle>The A/B test that proved monetisation</CardTitle>
+            <CardTitle>We proved monetisation</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="mb-3">
-              Between November 2025 and January 2026, Equals ran an extended A/B test on monetisation.
-              The results were strong - top-quartile conversion for consumer social:
+              Between October 2025 and January 2026, Equals ran an extended A/B test on subscription
+              monetisation. At peak, the platform generated $46K in a single month on just
+              90K MAU - an effective ARPU of $0.51/month per MAU, or $6.12 annualised.
             </p>
-            <div className="grid grid-cols-2 gap-4 my-4">
-              <StatCallout value="4.5-5%" label="Paywall conversion rate" color="text-accent-green" />
-              <StatCallout value="$3M+" label="Projected ARR at current MAU base" color="text-accent-blue" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
+              <StatCallout value="$46K" label="Peak monthly revenue" color="text-accent-green" />
+              <StatCallout value="90K" label="MAUs at peak" />
+              <StatCallout value="$0.51" label="Monthly ARPU" color="text-accent-purple" />
+              <StatCallout value="4.5-5%" label="Paywall conversion" color="text-accent-blue" />
             </div>
           </CardContent>
         </Card>
 
-        <h3 className="text-lg font-semibold text-foreground">The trade-off we made</h3>
+        <Card className="bg-card border-accent-green/30">
+          <CardHeader>
+            <CardTitle>Subscription revenue at today's scale</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4">
+              Applying the proven $0.51/month ARPU to today's 530K MAU base gives ~$270K/month - a
+              $3.2M annual run rate from subscriptions alone, before any commerce, label services, or
+              ticketing revenue. The annualised proven ARPU of $6.12 is the basis for our subscription
+              line in the long-term revenue forecast - grounded in demonstrated unit economics, not assumptions.
+            </p>
+            <div className="grid grid-cols-3 gap-4 my-4">
+              <StatCallout value="$270K" label="Projected monthly revenue" color="text-accent-green" />
+              <StatCallout value="$3.2M" label="Projected ARR" color="text-accent-blue" />
+              <StatCallout value="$6.12" label="Proven annualised ARPU" color="text-accent-purple" />
+            </div>
+            <p className="text-xs">
+              This projection is conservative on multiple fronts: it assumes no improvement in conversion
+              or pricing despite significantly better product-market fit today, and it does not account for
+              retained revenue compounding from prior months. November was the first month with full
+              monetisation - earlier months had limited paid features, so there was no subscriber base
+              carrying over. A mature subscription base with retained cohorts would produce meaningfully
+              higher numbers.
+            </p>
+          </CardContent>
+        </Card>
+
+        <h3 className="text-lg font-semibold text-foreground">Why we chose growth over revenue</h3>
         <p>
-          The team deliberately pulled back monetisation in late January 2026 because aggressive
-          monetisation was dampening network effects - users hitting paywalls early were less likely
-          to add friends, join chatrooms, and engage with core social loops. The friction was
-          suppressing the very behaviours that drive long-term retention and virality.
+          Starting at the end of December 2025, we began gradually rolling back paid features
+          where we observed a significant impact on network effects. Users hitting paywalls early
+          were less likely to add friends, join chatrooms, and engage with the core social loops
+          that drive long-term retention and virality. We systematically identified which paid
+          gates were suppressing these behaviours and removed them one by one.
         </p>
         <p>
-          The impact was immediate. February saw a spike in growth, engagement, and retention as
-          friction was removed from the core experience. The decision to prioritise network effects
+          The impact was clear. As friction was removed from the core experience, growth,
+          engagement, and retention all improved. The decision to prioritise network effects
           over near-term revenue is validated by the 9x MAU growth since. Revenue can be switched
           back on at any time - the audience cannot.
         </p>
@@ -135,7 +166,7 @@ export default function MonetisationPage() {
         ]}
         xKey="month"
         title="Revenue by Month"
-        subtitle="Revenue peaked at $50K/mo before deliberate pull-back to prioritise growth"
+        subtitle="Revenue peaked at $54K/mo before gradual roll-down from end of December to prioritise growth"
         type="bar"
         height={320}
         yAxisFormatter={(v: number) => `$${(v / 1000).toFixed(0)}K`}
@@ -149,7 +180,7 @@ export default function MonetisationPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-xs mb-4">
-            This chart shows how average engagement per user spiked in February 2026 after monetisation was reduced.
+            This chart shows how average engagement per user increased as paid features were gradually rolled down from end of December 2025.
             Removing friction from the core experience let users engage more deeply with the product.
           </p>
           <DataChart
@@ -174,7 +205,7 @@ export default function MonetisationPage() {
           className="text-2xl md:text-3xl font-bold text-foreground mb-2"
           style={{ fontFamily: "var(--font-fair-favorit-heading)", letterSpacing: "-0.03em" }}
         >
-          By 2030, Equals will have 100M Monthly Active Users and $1.6B Annual Revenue
+          By 2030, Equals will have 100M Monthly Active Users and $2.0B Annual Revenue
         </h2>
         <p className="text-muted-foreground text-sm leading-relaxed mb-2">
           Six diversified revenue streams - weighted toward advertising, supplemented by subscriptions,
@@ -182,8 +213,8 @@ export default function MonetisationPage() {
         </p>
         <div className="grid grid-cols-3 gap-4 my-6">
           <StatCallout value="100M" label="Monthly Active Users" color="text-accent-green" />
-          <StatCallout value="$1.6B" label="Annual Revenue" color="text-accent-blue" />
-          <StatCallout value="$15.99" label="Blended ARPU" color="text-accent-purple" />
+          <StatCallout value="$2.0B" label="Annual Revenue" color="text-accent-blue" />
+          <StatCallout value="$19.71" label="Blended ARPU" color="text-accent-purple" />
         </div>
       </div>
 
@@ -249,8 +280,8 @@ export default function MonetisationPage() {
                 ))}
                 <tr className="font-bold">
                   <td className="pt-3 text-foreground">Total</td>
-                  <td className="pt-3 text-right text-foreground">$15.99</td>
-                  <td className="pt-3 text-right text-accent-green">$1.6B</td>
+                  <td className="pt-3 text-right text-foreground">$19.71</td>
+                  <td className="pt-3 text-right text-accent-green">$2.0B</td>
                   <td className="pt-3 text-right text-foreground">100%</td>
                 </tr>
               </tbody>

@@ -17,7 +17,6 @@ const items = [
   { href: "/team", label: "Team" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/legal", label: "Legal" },
-  { href: "/financials", label: "Financials" },
 ];
 
 const pageLoaders: Record<string, () => Promise<{ default: React.ComponentType }>> = {
@@ -31,7 +30,6 @@ const pageLoaders: Record<string, () => Promise<{ default: React.ComponentType }
   "/team": () => import("./team/page"),
   "/roadmap": () => import("./roadmap/page"),
   "/legal": () => import("./legal/page"),
-  "/financials": () => import("./financials/page"),
 };
 
 const pageComponents: Record<string, React.ComponentType> = Object.fromEntries(
