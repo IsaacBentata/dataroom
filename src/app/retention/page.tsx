@@ -16,7 +16,6 @@ import {
   parseSessionsPerUser,
   parseAppOpensPerUser,
   parseWauMau,
-  parseFriendsMatchMadeMonthly,
   parseChatMessagesSentMonthly,
 } from "@/lib/data";
 
@@ -29,7 +28,6 @@ export default function RetentionPage() {
   const sessionsPerUser = useMemo(() => parseSessionsPerUser(), []);
   const appOpensPerUser = useMemo(() => parseAppOpensPerUser(), []);
   const wauMau = useMemo(() => parseWauMau(), []);
-  const friendsMatchMade = useMemo(() => parseFriendsMatchMadeMonthly(), []);
   const chatMessages = useMemo(() => parseChatMessagesSentMonthly(), []);
 
   return (
@@ -50,14 +48,43 @@ export default function RetentionPage() {
             { name: "Sessions per User", data: sessionsPerUser },
             { name: "App Opens per User", data: appOpensPerUser },
             { name: "WAU/MAU Stickiness", data: wauMau },
-            { name: "Friendships Made Monthly", data: friendsMatchMade },
             { name: "Chat Messages Sent Monthly", data: chatMessages },
           ]}
           filename="equals-retention-data"
         />
       </div>
 
-      {/* ── Weekly Retention by Friends (hero chart) ── */}
+      {/* ── Long-term stickiness (weekly retention evolution) - FIRST ── */}
+      <Card className="bg-card mb-6">
+        <CardHeader>
+          <CardTitle>Long-term stickiness</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+            Weekly retention has improved consistently as the product has matured. Users are not just trying Equals - they are building habits around it.
+            The upward trend across Week 1, Week 2, and Week 4 retention shows that the product is getting stickier over time, not just growing.
+            This is the foundation for durable, compounding growth: each cohort retains better than the last.
+          </p>
+          <DataChart
+            className="border-0 px-0 pt-4 pb-2 shadow-none ring-0"
+            data={weeklyRetention}
+            series={[
+              { key: "Week 1", name: "Week 1 Retention", color: "rgba(0, 204, 120, 1)" },
+              { key: "Week 2", name: "Week 2 Retention", color: "#0066FF" },
+              { key: "Week 4", name: "Week 4 Retention", color: "#8627FF" },
+            ]}
+            xKey="week"
+            title="Weekly Retention Evolution"
+            subtitle="How weekly retention has improved over time for onboarded users"
+            type="line"
+            height={320}
+            yAxisFormatter={(v: number) => `${v}%`}
+            tooltipFormatter={(v: number) => `${v}%`}
+          />
+        </CardContent>
+      </Card>
+
+      {/* ── Weekly Retention by Friends ── */}
       <Card className="bg-card mb-10">
         <CardHeader>
           <div className="flex gap-6">
@@ -95,7 +122,14 @@ export default function RetentionPage() {
         </CardContent>
       </Card>
 
-      {/* ── Time Spent (second chart) ── */}
+      {/* ── Stat callouts ── */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-10">
+        <StatCallout value="33%" label="D7 Retention (Onboarded Users)" color="text-accent-blue" />
+        <StatCallout value="35 min" label="Daily Time Spent (Onboarded Users)" color="text-accent-orange" />
+        <StatCallout value="30%+" label="Return 5+ Days/Week (Onboarded Users)" color="text-accent-green" />
+      </div>
+
+      {/* ── Time Spent ── */}
       <DataChart
         data={timeSpentPerUser}
         series={[
@@ -108,43 +142,6 @@ export default function RetentionPage() {
         height={320}
         showDateFilter={false}
       />
-
-      {/* ── Stat callouts ── */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-10">
-        <StatCallout value="33%" label="D7 Retention (Onboarded Users)" color="text-accent-blue" />
-        <StatCallout value="35 min" label="Daily Time Spent (Onboarded Users)" color="text-accent-orange" />
-        <StatCallout value="30%+" label="Return 5+ Days/Week (Onboarded Users)" color="text-accent-green" />
-      </div>
-
-      {/* ── Long-term stickiness (weekly retention evolution) ── */}
-      <Card className="bg-card mb-6">
-        <CardHeader>
-          <CardTitle>Long-term stickiness</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            Weekly retention has improved consistently as the product has matured. Users are not just trying Equals - they are building habits around it.
-            The upward trend across Week 1, Week 2, and Week 4 retention shows that the product is getting stickier over time, not just growing.
-            This is the foundation for durable, compounding growth: each cohort retains better than the last.
-          </p>
-          <DataChart
-            className="border-0 px-0 pt-4 pb-2 shadow-none ring-0"
-            data={weeklyRetention}
-            series={[
-              { key: "Week 1", name: "Week 1 Retention", color: "rgba(0, 204, 120, 1)" },
-              { key: "Week 2", name: "Week 2 Retention", color: "#0066FF" },
-              { key: "Week 4", name: "Week 4 Retention", color: "#8627FF" },
-            ]}
-            xKey="week"
-            title="Weekly Retention Evolution"
-            subtitle="How weekly retention has improved over time for onboarded users"
-            type="line"
-            height={320}
-            yAxisFormatter={(v: number) => `${v}%`}
-            tooltipFormatter={(v: number) => `${v}%`}
-          />
-        </CardContent>
-      </Card>
 
       {/* ── Sessions + App Opens ── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -222,21 +219,6 @@ export default function RetentionPage() {
         type="bar"
         height={280}
         showDateFilter={false}
-      />
-
-      {/* ── Friendships Made Monthly ── */}
-      <DataChart
-        data={friendsMatchMade}
-        series={[
-          { key: "Friendships Made", name: "Friendships Made", color: "#0066FF" },
-        ]}
-        xKey="month"
-        title="Friendships Made per Month"
-        subtitle="Total new friendships formed on the platform each month. The social graph is growing exponentially - from 186K friendships in Oct 2025 to 4.3M in Apr 2026."
-        type="bar"
-        height={320}
-        yAxisFormatter={(v: number) => v >= 1000000 ? `${(v / 1000000).toFixed(1)}M` : `${(v / 1000).toFixed(0)}K`}
-        tooltipFormatter={(v: number) => v.toLocaleString()}
       />
 
       {/* ── Chat Messages Sent Monthly ── */}
