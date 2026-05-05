@@ -263,8 +263,9 @@ export const revenueData = [
 export const teamMembers = [
   {
     name: "Isaac Kamlish",
+    handle: "=isaac",
     role: "Co-Founder & CEO",
-    bg: "Forbes 30u30 | Ex Instagram/Meta | MSc Machine Learning, UCL",
+    bg: "Ex Instagram/Meta | MSc Machine Learning, UCL | Forbes 30u30",
     detail: "Built the entire AI stack in-house, cutting per-user inference costs from $0.27 to $0.01. 90%+ of production code written by AI agents.",
     bio: [
       "Published AI researcher. Forbes 30 Under 30.",
@@ -276,11 +277,13 @@ export const teamMembers = [
       "Core contributor to the engineering team and architect of the platform's recommendation system across all dimensions.",
     ],
     linkedin: "https://www.linkedin.com/in/isaac-kamlish-a0901088/",
+    song: { title: "Runaway", artist: "Kanye West", cover: "/team-songs/runaway.jpeg" },
   },
   {
     name: "Isaac Bentata",
+    handle: "=bento",
     role: "Co-Founder & COO",
-    bg: "Forbes 30u30 | Ex Goldman Sachs | MSc Machine Learning, UCL",
+    bg: "Ex Goldman Sachs | MSc Machine Learning, UCL | Forbes 30u30",
     detail: "Closed the UMG worldwide deal. Secured $500K+ in grants. Manages a 10+ agentic workforce in production.",
     bio: [
       "Published AI researcher (NLP for chess). Forbes 30 Under 30. Le Rossignol Scholar.",
@@ -293,9 +296,11 @@ export const teamMembers = [
       "Leads the engineering team and co-leads product development alongside Isaac Kamlish.",
     ],
     linkedin: "https://www.linkedin.com/in/isaacbc/",
+    song: { title: "Romeo and Juliet", artist: "Dire Straits", cover: "/team-songs/romeo-juliet.jpeg" },
   },
   {
     name: "Ray Cheung",
+    handle: "=nacoki",
     role: "Head of Product Design",
     bg: "Ex Apple | Ex Nike | Ex AKQA | Ex Wieden+Kennedy",
     detail: "Product designer and 0-to-1 builder across London, Portland, Hong Kong, and Shanghai.",
@@ -309,6 +314,7 @@ export const teamMembers = [
   },
   {
     name: "Carlos Saenz",
+    handle: "=carlos",
     role: "Head of Engineering",
     bg: "Ex Grability (Rappi origin) | Ex The Iconic | 13+ yrs",
     detail: "Early engineer at the company that spawned Rappi (YC unicorn). Built entire engineering ecosystems from scratch.",
@@ -325,6 +331,7 @@ export const teamMembers = [
   },
   {
     name: "Jacint Varga",
+    handle: "=jacint",
     role: "Full Stack Engineer",
     bg: "Ex Solana Mobile | Ex Callstack | 12+ yrs",
     detail: "Primary contributor to the React Native repository. Lead mobile engineer on Solana Mobile's Saga wallet.",
@@ -338,9 +345,11 @@ export const teamMembers = [
       "Built his own streaming application, bringing first-hand knowledge of the platform and business side of running a consumer app.",
     ],
     linkedin: "",
+    song: { title: "Englishman in New York", artist: "Sting", cover: "/team-songs/englishman.jpg" },
   },
   {
     name: "Ilken Bahcecioglu",
+    handle: "=ilken",
     role: "Senior Full Stack Engineer",
     bg: "Ex Encore Musicians (Lead Dev) | 10+ yrs",
     detail: "Spearheads AI orchestration initiatives at Equals.",
@@ -355,6 +364,7 @@ export const teamMembers = [
   },
   {
     name: "Norman Wilde",
+    handle: "=norman",
     role: "Full Stack Engineer",
     bg: "Ex Ledger | Cross-platform specialist",
     detail: "Improved Android crash-free users from 85% to 98%+. Built the core Equals feed and Community Channels from 0 to 1.",
@@ -370,6 +380,7 @@ export const teamMembers = [
   },
   {
     name: "Dora Yilmaz",
+    handle: "=dora",
     role: "Community, QA & Artist Liaison",
     bg: "UCL Genetics | International DJ",
     detail: "Took Equals past 1 billion TikTok views in 8 months. Built and runs the 11-strong ambassador programme.",
@@ -383,6 +394,7 @@ export const teamMembers = [
       "BSc Genetics (2:1) from UCL - dissertation applied computational eQTL analysis to Crohn's disease-linked genes in R.",
     ],
     linkedin: "https://www.linkedin.com/in/dora-yilmaz-5248851b9/",
+    song: { title: "Love No More", artist: "The Durutti Column", cover: "/team-songs/love-no-more.jpg" },
   },
 ];
 

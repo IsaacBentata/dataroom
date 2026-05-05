@@ -75,7 +75,7 @@ export default function RetentionPage() {
         </CardHeader>
         <CardContent>
           <DataChart
-            className="mt-4 pt-3 border-0 p-0 shadow-none ring-0"
+            className="mt-4 border-0 px-0 pt-4 pb-2 shadow-none ring-0"
             data={weeklyRetentionByFriends}
             series={[
               { key: "All Users", name: "All Users", color: "rgba(0,0,0,0.35)" },

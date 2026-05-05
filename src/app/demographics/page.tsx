@@ -52,8 +52,8 @@ const continentRaw = [
   { name: "Australia & NZ", value: 22889 },                    // Australia
 ];
 
-// Brand accent palette — saturated but balanced
-const GENDER_COLORS = ["#0066FF", "#8627FF", "#FF4D00"];
+// Soft Figma palette — Male blue, Female purple, Non-Binary lime
+const GENDER_COLORS = ["#42B1FA", "#BC78F8", "#D6ED5E"];
 const CONTINENT_COLORS = [
   "#0066FF", "#8627FF", "#FF4D00", "#00CC78", "#E84393", "#F5A623",
 ];

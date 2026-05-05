@@ -57,10 +57,24 @@ export default function TeamPage() {
                     {member.role}
                   </p>
                   <h4
-                    className="text-[20px] leading-tight"
+                    className="text-[20px] leading-tight flex items-baseline gap-2 flex-wrap"
                     style={{ fontFamily: 'var(--font-fair-favorit-heading), sans-serif', fontWeight: 400, letterSpacing: '-0.02em' }}
                   >
-                    {member.name}
+                    <span style={{ color: "#FFFFFF" }}>{member.name}</span>
+                    {"handle" in member && member.handle && (
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-fair-favorit-mono), monospace',
+                          fontSize: 11,
+                          fontWeight: 400,
+                          letterSpacing: 0,
+                          textTransform: 'uppercase',
+                          color: 'rgba(255,255,255,0.4)',
+                        }}
+                      >
+                        {member.handle}
+                      </span>
+                    )}
                   </h4>
                 </div>
                 {member.linkedin && (
@@ -84,6 +98,7 @@ export default function TeamPage() {
                     fontSize: 11,
                     lineHeight: 1.5,
                     letterSpacing: 0,
+                    textTransform: 'uppercase',
                   }}
                 >
                   {member.bg}
@@ -91,8 +106,8 @@ export default function TeamPage() {
               )}
               {member.detail && (
                 <p
-                  className="text-muted-foreground text-xs"
-                  style={{ fontSize: 13, lineHeight: 1.55 }}
+                  className="text-sm"
+                  style={{ fontSize: 13, lineHeight: 1.55, color: "#FFFFFF" }}
                 >
                   {member.detail}
                 </p>
@@ -104,6 +119,65 @@ export default function TeamPage() {
                 >
                   Read more →
                 </button>
+              )}
+              {"song" in member && member.song && (
+                <div className="mt-4">
+                  <p
+                    className="mb-2"
+                    style={{
+                      fontFamily: "var(--font-fair-favorit-mono), monospace",
+                      fontSize: 10,
+                      fontWeight: 400,
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      color: "rgba(255,255,255,0.4)",
+                    }}
+                  >
+                    Favourite Song
+                  </p>
+                  <div className="flex items-center gap-2 min-w-0">
+                    {"cover" in member.song && member.song.cover && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={member.song.cover}
+                        alt={`${member.song.title} cover`}
+                        width={28}
+                        height={28}
+                        draggable={false}
+                        className="shrink-0 rounded-[4px] object-cover"
+                        style={{ width: 28, height: 28, border: "0.5px solid rgba(255,255,255,0.1)" }}
+                      />
+                    )}
+                    <div className="flex items-baseline gap-2 min-w-0">
+                      <p
+                        className="truncate"
+                        style={{
+                          color: "#FFFFFF",
+                          fontFamily: "var(--font-fair-favorit-body), sans-serif",
+                          fontWeight: 700,
+                          fontSize: 12,
+                          lineHeight: 1.2,
+                          letterSpacing: "0.24px",
+                        }}
+                      >
+                        {member.song.title}
+                      </p>
+                      <p
+                        className="truncate shrink-0"
+                        style={{
+                          color: "rgba(255,255,255,0.4)",
+                          fontFamily: "var(--font-fair-favorit-body), sans-serif",
+                          fontWeight: 700,
+                          fontSize: 12,
+                          lineHeight: 1.2,
+                          letterSpacing: "0.24px",
+                        }}
+                      >
+                        {member.song.artist}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               )}
             </CardContent>
           </Card>
@@ -128,11 +202,23 @@ function BioModal({ member, onClose }: { member: typeof teamMembers[number]; onC
         className="bg-card max-w-lg w-full mx-4 max-h-[80vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <CardContent className="p-4">
-          <div className="flex items-start justify-between mb-1.5">
+        <CardContent className="px-6 pt-5 pb-6">
+          <div className="flex items-start justify-between mb-3">
             <div>
               <h4 className="text-[18px]" style={{ fontFamily: 'var(--font-fair-favorit-book), sans-serif', fontWeight: 400 }}>{member.name}</h4>
-              <p className="text-accent-blue text-xs">{member.role}</p>
+              <p
+                className="mt-1"
+                style={{
+                  fontFamily: 'var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace',
+                  fontWeight: 400,
+                  fontSize: 11,
+                  letterSpacing: 0,
+                  textTransform: 'uppercase',
+                  color: 'rgba(0,0,0,0.7)',
+                }}
+              >
+                {member.role}
+              </p>
             </div>
             <button
               onClick={onClose}
@@ -145,12 +231,12 @@ function BioModal({ member, onClose }: { member: typeof teamMembers[number]; onC
             </button>
           </div>
           {member.bg && (
-            <p className="text-muted-foreground text-xs mb-3">{member.bg}</p>
+            <p className="text-muted-foreground text-xs mb-4">{member.bg}</p>
           )}
-          <ul className="space-y-2">
+          <ul className="space-y-2.5">
             {member.bio.map((point, j) => (
-              <li key={j} className="text-muted-foreground text-xs leading-relaxed flex gap-2">
-                <span className="text-accent-blue mt-0.5 shrink-0">-</span>
+              <li key={j} className="text-muted-foreground text-xs leading-relaxed flex items-start gap-2.5">
+                <span className="inline-block w-[5px] h-[5px] rounded-full bg-black mt-[7px] shrink-0" />
                 <span>{point}</span>
               </li>
             ))}

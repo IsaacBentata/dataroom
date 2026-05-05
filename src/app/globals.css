@@ -172,6 +172,15 @@ body {
   to { opacity: 1; }
 }
 
+/* Force green on stat delta indicators past the .minimal-preview cascade */
+.stat-delta-green,
+.stat-delta-green *,
+.minimal-preview .stat-delta-green,
+.minimal-preview .stat-delta-green * {
+  color: #00CC78 !important;
+  fill: #00CC78 !important;
+}
+
 /* TikTok carousel — left-to-left infinite marquee. The track contains the
  * video tiles duplicated, so a -50% translate loops back to the start with
  * no visible jump. */

@@ -313,7 +313,7 @@ export default function DataChart({
   };
 
   return (
-    <Card className={`bg-card ${className}`}>
+    <Card className={`bg-card pt-6 pb-4 ${className}`}>
       {(title || showDateFilter || showExport) && (
         <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>

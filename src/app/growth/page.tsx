@@ -213,16 +213,16 @@ export default function GrowthPage() {
         <CardContent>
           <div className="grid grid-cols-3 gap-6 mb-6">
             <div>
-              <div className="text-3xl font-bold text-foreground">30</div>
-              <div className="text-xs text-muted-foreground mt-1">TikTok accounts</div>
+              <div className="text-3xl font-bold text-foreground">1B+</div>
+              <div className="text-xs text-muted-foreground mt-1">views</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-foreground">150</div>
               <div className="text-xs text-muted-foreground mt-1">videos / week</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-foreground">1B+</div>
-              <div className="text-xs text-muted-foreground mt-1">views</div>
+              <div className="text-3xl font-bold text-foreground">30</div>
+              <div className="text-xs text-muted-foreground mt-1">TikTok accounts</div>
             </div>
           </div>
           <TopVideosCarousel />
@@ -275,22 +275,29 @@ export default function GrowthPage() {
           <CardTitle>Identity Verification</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center gap-8 mb-4">
-            <div>
-              <div className="text-4xl font-bold text-accent-green">52%</div>
-              <div className="text-xs text-muted-foreground mt-1">Verification rate</div>
+          <div className="flex items-start gap-8">
+            <div className="shrink-0">
+              <div className="flex items-baseline gap-2">
+                <div className="text-4xl font-bold text-accent-green">52%</div>
+                <div
+                  className="stat-delta-green font-bold flex items-center gap-1 whitespace-nowrap"
+                  style={{ fontSize: 11 }}
+                >
+                  <svg width="7" height="7" viewBox="0 0 10 10" aria-hidden>
+                    <path d="M5 1 L9 8 L1 8 Z" fill="currentColor" />
+                  </svg>
+                  <span>20% Q/Q</span>
+                </div>
+              </div>
+              <div className="text-xs text-black mt-1">Verification rate</div>
             </div>
-            <div>
-              <div className="text-lg font-bold text-accent-purple">Up from 20%</div>
-              <div className="text-xs text-muted-foreground mt-1">Last quarter</div>
-            </div>
+            <p className="text-muted-foreground text-sm leading-relaxed flex-1">
+              Equals is a human-only social network. Every user must complete identity verification to participate
+              and unlock all social features on the platform. The verification rate has improved from 20% in late 2025
+              to 52% today as the onboarding flow has been refined - meaning more than half of all users who start
+              onboarding now fully complete it.
+            </p>
           </div>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            Equals is a human-only social network. Every user must complete identity verification to participate
-            and unlock all social features on the platform. The verification rate has improved from 20% in late 2025
-            to 52% today as the onboarding flow has been refined - meaning more than half of all users who start
-            onboarding now fully complete it.
-          </p>
         </CardContent>
       </Card>
     </Section>
