@@ -154,7 +154,9 @@ export default function MonetisationPage() {
           The impact was clear. As friction was removed from the core experience, growth,
           engagement, and retention all improved. The decision to prioritise network effects
           over near-term revenue is validated by the 9x MAU growth since. Revenue can be switched
-          back on at any time - the audience cannot.
+          back on at any time - the audience cannot. We plan to turn on full monetisation at
+          ~50M MAU, when the network effects are deep enough that paid features enhance rather
+          than suppress the social experience.
         </p>
       </div>
 

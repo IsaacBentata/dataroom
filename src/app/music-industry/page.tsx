@@ -147,7 +147,7 @@ export default function MusicIndustryPage() {
         <CardContent>
           <p className="text-muted-foreground text-sm mb-5">
             Equals is where the most passionate music fans gather. These are not passive followers - these are verified
-            humans actively engaging in artist communities. Equals consistently outperforms Discord, the incumbent
+            humans actively engaging in artist communities. Equals consistently outperforms artists' official Discord channels, the incumbent
             for online artist communities, across the biggest names in music.
           </p>
 
@@ -157,7 +157,7 @@ export default function MusicIndustryPage() {
                 <tr className="border-b border-border">
                   <th className="text-left py-3 pr-4 font-semibold text-foreground">Artist</th>
                   <th className="text-right py-3 px-4 font-semibold text-accent-green">Equals Members</th>
-                  <th className="text-right py-3 px-4 font-semibold text-muted-foreground">Discord Members</th>
+                  <th className="text-right py-3 px-4 font-semibold text-muted-foreground">Official Discord Members</th>
                   <th className="text-right py-3 pl-4 font-semibold text-foreground">Multiplier</th>
                 </tr>
               </thead>
