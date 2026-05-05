@@ -65,7 +65,7 @@ export default function RetentionPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            Weekly retention has improved consistently as the product has matured. Users are not just trying Equals - they are building habits around it.
+            Weekly retention has improved consistently as the product has matured.
             The upward trend across Week 1, Week 2, and Week 4 retention shows that the product is getting stickier over time, not just growing.
             This is the foundation for durable, compounding growth: each cohort retains better than the last.
           </p>

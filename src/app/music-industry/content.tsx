@@ -85,8 +85,9 @@ export default function MusicIndustryPage() {
           {/* Full-width intro */}
           <p className="text-muted-foreground text-sm leading-relaxed mb-6">
             We have created a new asset class for the music industry. Digital Vinyl™ - a trademark Equals owns -
-            is the industry&apos;s revival of music downloads, empowering superfans to take their favourite
-            artists to the top of the charts while displaying their fandom.
+            is a rebrand of digital downloads - turning them into displayable collectibles that fans pin to their
+            profiles. This empowers superfans to take their favourite artists to the top of the charts while
+            displaying their fandom.
           </p>
 
           {/* image | comparison stats */}

@@ -163,7 +163,7 @@ export default function GrowthPage() {
             <p className="text-muted-foreground text-sm leading-relaxed">
               Just over half of all installs in April 2026 came from organic - a healthy share for a paid-marketing
               business at this scale, and the strongest signal that product-led growth is working. TikTok and Meta
-              together drive ~46% of installs, and Apple Search Ads is a small efficient supplement at ~3%.
+              together drive ~46% of installs, and Apple Search Ads is at ~3%.
             </p>
           </div>
         </CardContent>
@@ -229,8 +229,6 @@ export default function GrowthPage() {
           <div className="bg-secondary rounded-2xl px-5 py-4 mt-6">
             <p className="text-muted-foreground text-sm leading-relaxed">
               Owned content engine: ~7,800 videos a year across 30 TikTok accounts averaging ~128K views each.
-              This is how we keep eCPI at $0.70 - half of installs are organic because the content does the acquisition work.
-              The carousel above is a snapshot of top performers, all featuring @Equals.
             </p>
           </div>
         </CardContent>
@@ -293,9 +291,7 @@ export default function GrowthPage() {
               Equals is a human-only social network. Every user must complete identity verification to participate
               and unlock all social features on the platform. The verification rate has improved from 20% in late 2025
               to 52% today as the onboarding flow has been refined - meaning more than half of all users who start
-              onboarding now fully complete it. Without this gate our growth numbers would be materially larger,
-              but verification is non-negotiable: it is what keeps Equals a network of real humans rather than
-              another bot-and-burner social app, and it is the foundation every other metric in this data room sits on.
+              onboarding now fully complete it. Verification is non-negotiable - it is what keeps Equals a network of real humans.
             </p>
           </div>
         </CardContent>

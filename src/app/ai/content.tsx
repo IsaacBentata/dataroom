@@ -128,7 +128,7 @@ export default function AIAdoptionPage() {
             </p>
             <p>
               On the organic side, 11 ambassadors are coordinated through AI-assisted systems, contributing to
-              over 50 million organic views without any paid spend. The combination of AI-generated creative
+              over 50 million organic views. The combination of AI-generated creative
               and human ambassador authenticity creates a marketing engine that scales without proportional cost increases.
             </p>
           </div>
