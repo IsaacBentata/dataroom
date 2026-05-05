@@ -98,20 +98,18 @@ export default function MonetisationPage() {
       <div className="space-y-4 text-muted-foreground text-sm leading-relaxed mb-10">
         <Card className="bg-card">
           <CardHeader>
-            <CardTitle>We proved monetisation - then deliberately turned it off</CardTitle>
+            <CardTitle>We proved monetisation</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="mb-3">
-              Between November 2025 and January 2026, Equals ran an extended A/B test on monetisation
+              Between October 2025 and January 2026, Equals ran an extended A/B test on monetisation
               across subscriptions and ads. At peak, the platform generated $46K in a single month on just
-              90K MAU - and this was with only a subset of users seeing the full paid experience as part of
-              A/B testing. At full rollout, revenue would have reached ~$60K/month - an effective ARPU of
-              $0.67/month per MAU.
+              90K MAU - an effective ARPU of $0.51/month per MAU.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
               <StatCallout value="$46K" label="Peak monthly revenue" color="text-accent-green" />
               <StatCallout value="90K" label="MAUs at peak" />
-              <StatCallout value="$0.67" label="Monthly ARPU" color="text-accent-purple" />
+              <StatCallout value="$0.51" label="Monthly ARPU" color="text-accent-purple" />
               <StatCallout value="4.5-5%" label="Paywall conversion" color="text-accent-blue" />
             </div>
           </CardContent>
@@ -123,19 +121,19 @@ export default function MonetisationPage() {
           </CardHeader>
           <CardContent>
             <p className="mb-4">
-              Applying the same $0.67/month ARPU to today's 530K MAU base, Equals would be generating
-              ~$355K/month - a $4.3M annual run rate from subscriptions and ads alone, before any commerce,
+              Applying the same $0.51/month ARPU to today's 530K MAU base, Equals would be generating
+              ~$270K/month - a $3.2M annual run rate from subscriptions and ads alone, before any commerce,
               label services, or ticketing revenue. This is purely extrapolating the proven conversion rate
               to the current user base.
             </p>
             <div className="grid grid-cols-3 gap-4 my-4">
-              <StatCallout value="$355K" label="Projected monthly revenue" color="text-accent-green" />
-              <StatCallout value="$4.3M" label="Projected ARR" color="text-accent-blue" />
+              <StatCallout value="$270K" label="Projected monthly revenue" color="text-accent-green" />
+              <StatCallout value="$3.2M" label="Projected ARR" color="text-accent-blue" />
               <StatCallout value="530K" label="Current MAUs" color="text-accent-purple" />
             </div>
             <p className="text-xs">
               This projection is conservative - it assumes no improvement in conversion, pricing, or ARPU
-              despite significantly better product-market fit and engagement metrics today vs November 2025.
+              despite significantly better product-market fit and engagement metrics today vs October 2025.
               The real number would likely be higher.
             </p>
           </CardContent>
@@ -143,14 +141,15 @@ export default function MonetisationPage() {
 
         <h3 className="text-lg font-semibold text-foreground">Why we chose growth over revenue</h3>
         <p>
-          The team deliberately pulled back monetisation in late January 2026 because aggressive
-          monetisation was dampening network effects - users hitting paywalls early were less likely
-          to add friends, join chatrooms, and engage with core social loops. The friction was
-          suppressing the very behaviours that drive long-term retention and virality.
+          Starting at the end of December 2025, we began gradually rolling back paid features
+          where we observed a significant impact on network effects. Users hitting paywalls early
+          were less likely to add friends, join chatrooms, and engage with the core social loops
+          that drive long-term retention and virality. We systematically identified which paid
+          gates were suppressing these behaviours and removed them one by one.
         </p>
         <p>
-          The impact was immediate. February saw a spike in growth, engagement, and retention as
-          friction was removed from the core experience. The decision to prioritise network effects
+          The impact was clear. As friction was removed from the core experience, growth,
+          engagement, and retention all improved. The decision to prioritise network effects
           over near-term revenue is validated by the 9x MAU growth since. Revenue can be switched
           back on at any time - the audience cannot.
         </p>
