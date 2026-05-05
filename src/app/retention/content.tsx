@@ -133,7 +133,7 @@ export default function RetentionPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            72% of active onboarded users have at least one friend. 43% have 10 or more. 18% have 50+ friends -
+            72% of onboarded users have at least one friend. 43% have 10 or more. 18% have 50+ friends -
             the cohort that retains at 40% at Week 8. As k-factor mechanics are deployed, these distributions
             shift upward, directly improving overall retention.
           </p>
