@@ -173,7 +173,7 @@ function useScreenTexture(displayedSrc?: string, displayedImage?: string, active
   const video = useMemo(() => {
     if (!displayedSrc) return null;
     if (typeof document === "undefined") return null;
-    // Reuse a primed video element if one exists for this src — these were
+    // Reuse a primed video element if one exists for this src - these were
     // created synchronously inside the click gesture on the home page, so
     // they already have valid autoplay activation.
     const primed = (window as unknown as { __primedFeatureVideos?: Record<string, HTMLVideoElement> })
@@ -215,7 +215,7 @@ function useScreenTexture(displayedSrc?: string, displayedImage?: string, active
     isPrimedRef.current = !!primed && Object.values(primed).includes(video);
   }, [video]);
 
-  // Remove the hidden DOM node when the video instance changes / unmounts —
+  // Remove the hidden DOM node when the video instance changes / unmounts -
   // but only if we created it. Primed videos persist on window for reuse.
   useEffect(() => {
     if (!video) return;
@@ -298,7 +298,7 @@ function useScreenTexture(displayedSrc?: string, displayedImage?: string, active
   return texture;
 }
 
-// Window-level pointer tracker — normalised to [-1, 1] across the viewport so
+// Window-level pointer tracker - normalised to [-1, 1] across the viewport so
 // the phone keeps tilting even when the cursor leaves the canvas. One ref is
 // shared across all PhoneVideo3D instances.
 const globalPointer = { x: 0, y: 0, attached: false };
@@ -439,7 +439,7 @@ function ModelPhone({
     wrapper.scale.setScalar(scale);
     wrapper.updateMatrixWorld(true);
 
-    // Find the screen — by node name "Screen", or material name "Display"/"Screen".
+    // Find the screen - by node name "Screen", or material name "Display"/"Screen".
     const meshes: THREE.Mesh[] = [];
     cloned.traverse((obj) => {
       if ((obj as THREE.Mesh).isMesh) meshes.push(obj as THREE.Mesh);
@@ -527,7 +527,7 @@ function ModelPhone({
       const matName = (
         Array.isArray(mesh.material) ? mesh.material[0]?.name : (mesh.material as THREE.Material | undefined)?.name
       ) ?? "";
-      // Hide only the main front cover glass — anything else (lens covers,
+      // Hide only the main front cover glass - anything else (lens covers,
       // filters, mirrors) stays visible to keep the camera/sensor solid.
       if (/^glass$/i.test(matName)) {
         const prev = mesh.visible;

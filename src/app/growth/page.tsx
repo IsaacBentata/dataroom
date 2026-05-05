@@ -13,28 +13,27 @@ import {
   parseMAUData,
   parseMAUDataExcludingCurrent,
   parseDAUData,
-  parseOnboardingFunnelExcludingCurrent,
 } from "@/lib/data";
 
-// Monthly average eCPI from AppsFlyer (GBP).
+// Monthly average eCPI from AppsFlyer (USD, converted from GBP at 1.35).
 // October 2025 excluded (only 3 days of data).
 const ecpiMonthly = [
-  { month: "Nov 2025", "eCPI": 0.92 },
-  { month: "Dec 2025", "eCPI": 1.06 },
-  { month: "Jan 2026", "eCPI": 0.99 },
-  { month: "Feb 2026", "eCPI": 0.85 },
-  { month: "Mar 2026", "eCPI": 0.88 },
-  { month: "Apr 2026", "eCPI": 0.52 },
+  { month: "Nov 2025", "eCPI": 1.24 },
+  { month: "Dec 2025", "eCPI": 1.43 },
+  { month: "Jan 2026", "eCPI": 1.34 },
+  { month: "Feb 2026", "eCPI": 1.15 },
+  { month: "Mar 2026", "eCPI": 1.19 },
+  { month: "Apr 2026", "eCPI": 0.70 },
 ];
 
-// Monthly average CPM (GBP). October 2025 excluded.
+// Monthly average CPM (USD, converted from GBP at 1.35). October 2025 excluded.
 const cpmMonthly = [
-  { month: "Nov 2025", CPM: 1.31 },
-  { month: "Dec 2025", CPM: 1.46 },
-  { month: "Jan 2026", CPM: 1.02 },
-  { month: "Feb 2026", CPM: 0.91 },
-  { month: "Mar 2026", CPM: 0.99 },
-  { month: "Apr 2026", CPM: 0.89 },
+  { month: "Nov 2025", CPM: 1.77 },
+  { month: "Dec 2025", CPM: 1.97 },
+  { month: "Jan 2026", CPM: 1.38 },
+  { month: "Feb 2026", CPM: 1.23 },
+  { month: "Mar 2026", CPM: 1.34 },
+  { month: "Apr 2026", CPM: 1.20 },
 ];
 
 // Install split, April 2026 (AppsFlyer). User_invite (2,214) is reattributed
@@ -59,7 +58,6 @@ export default function GrowthPage() {
   const mauData = useMemo(() => parseMAUData(), []);
   const mauDataFiltered = useMemo(() => parseMAUDataExcludingCurrent(), []);
   const dauData = useMemo(() => parseDAUData(), []);
-  const onboardingFunnel = useMemo(() => parseOnboardingFunnelExcludingCurrent(), []);
 
   return (
     <Section>
@@ -73,7 +71,7 @@ export default function GrowthPage() {
           datasets={[
             { name: "MAU and Install Growth", data: mauData },
             { name: "DAU Rolling Average", data: dauData },
-            { name: "Onboarding Verification Rate", data: onboardingFunnel },
+
             { name: "Monthly Avg eCPI", data: ecpiMonthly },
             { name: "Monthly Avg CPM", data: cpmMonthly },
             { name: "Install Split (Apr 2026)", data: installSplit },
@@ -119,7 +117,7 @@ export default function GrowthPage() {
         <CardHeader>
           <CardTitle>We are majority organic</CardTitle>
           <CardDescription>
-            Source: AppsFlyer, April 2026.
+            April 2026.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -156,7 +154,7 @@ export default function GrowthPage() {
           </div>
           <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Just over half of all installs in April 2026 came from organic — a healthy share for a paid-marketing
+              Just over half of all installs in April 2026 came from organic - a healthy share for a paid-marketing
               business at this scale, and the strongest signal that product-led growth is working. TikTok and Meta
               together drive ~46% of installs, and Apple Search Ads is a small efficient supplement at ~3%.
             </p>
@@ -170,9 +168,9 @@ export default function GrowthPage() {
             <div className="bg-secondary rounded-md px-4 py-3 mb-2">
               <p className="text-muted-foreground text-sm leading-relaxed">
                 Paid acquisition has gotten dramatically more efficient as the product has matured and creative has improved.
-                Average effective Cost-Per-Install (eCPI) peaked at £1.06 in December 2025 and has fallen to £0.52 in April 2026 —
+                Average effective Cost-Per-Install (eCPI) peaked at $1.43 in December 2025 and has fallen to $0.70 in April 2026 -
                 a 51% reduction. Cheaper installs at scale means the same marketing budget now buys roughly 2x the users it did five months ago.
-                We are also running well below the £1.71 social-app benchmark on every month measured.
+                We are also running well below the $2.31 social-app benchmark on every month measured.
               </p>
             </div>
           }
@@ -182,25 +180,25 @@ export default function GrowthPage() {
           ]}
           xKey="month"
           title="We have been getting cheaper over time"
-          subtitle="Average effective Cost-Per-Install per month, AppsFlyer attribution (GBP)"
+          subtitle="Average effective Cost-Per-Install per month (USD)"
           type="area"
           height={320}
-          yAxisFormatter={(v: number) => `£${v.toFixed(2)}`}
-          tooltipFormatter={(v: number) => `£${v.toFixed(2)}`}
-          referenceLines={[{ y: 1.71, label: "Benchmark £1.71" }]}
+          yAxisFormatter={(v: number) => `$${v.toFixed(2)}`}
+          tooltipFormatter={(v: number) => `$${v.toFixed(2)}`}
+          referenceLines={[{ y: 2.31, label: "Benchmark $2.31" }]}
         />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
-        <StatCallout value="£1.06" label="Peak eCPI (Dec 2025)" />
-        <StatCallout value="£0.52" label="eCPI (Apr 2026)" color="text-accent-green" />
+        <StatCallout value="$1.43" label="Peak eCPI (Dec 2025)" />
+        <StatCallout value="$0.70" label="eCPI (Apr 2026)" color="text-accent-green" />
         <StatCallout value="-51%" label="Cost reduction in 5 months" color="text-accent-purple" />
-        <StatCallout value="2x" label="Installs per £ vs Dec 2025" color="text-accent-blue" />
+        <StatCallout value="2x" label="Installs per $ vs Dec 2025" color="text-accent-blue" />
       </div>
 
       <Card className="bg-card mt-16">
         <CardHeader>
-          <CardTitle>Cultural relevance, by design</CardTitle>
+          <CardTitle>We're a content machine</CardTitle>
           <CardDescription>
             30 accounts. ~150 videos a week. 1B+ views.
           </CardDescription>
@@ -224,7 +222,7 @@ export default function GrowthPage() {
           <div className="bg-secondary rounded-2xl px-5 py-4 mt-6">
             <p className="text-muted-foreground text-sm leading-relaxed">
               Owned content engine: ~7,800 videos a year across 30 TikTok accounts averaging ~128K views each.
-              This is how we keep eCPI at £0.52 — half of installs are organic because the content does the acquisition work.
+              This is how we keep eCPI at $0.70 - half of installs are organic because the content does the acquisition work.
               The carousel above is a snapshot of top performers, all featuring @Equals.
             </p>
           </div>
@@ -236,8 +234,8 @@ export default function GrowthPage() {
           headerChildren={
             <div className="bg-secondary rounded-md px-4 py-3 mb-2">
               <p className="text-muted-foreground text-sm leading-relaxed">
-                CPMs are significantly below the £6.10 social-app benchmark — every month measured has come in
-                under £1.50, with April 2026 at £0.89 (~7x cheaper than benchmark). Combined with the falling eCPI,
+                CPMs are significantly below the $8.24 social-app benchmark - every month measured has come in
+                under $2.00, with April 2026 at $1.20 (~7x cheaper than benchmark). Combined with the falling eCPI,
                 this means we are reaching the right audience cheaply at the impression layer and converting
                 impressions into installs efficiently.
               </p>
@@ -249,46 +247,45 @@ export default function GrowthPage() {
           ]}
           xKey="month"
           title="CPMs well below benchmark"
-          subtitle="Average Cost-Per-Mille (1,000 impressions) per month, GBP"
+          subtitle="Average Cost-Per-Mille (1,000 impressions) per month, USD"
           type="line"
           height={320}
-          yAxisFormatter={(v: number) => `£${v.toFixed(2)}`}
-          tooltipFormatter={(v: number) => `£${v.toFixed(2)}`}
-          referenceLines={[{ y: 6.10, label: "Benchmark £6.10" }]}
+          yAxisFormatter={(v: number) => `$${v.toFixed(2)}`}
+          tooltipFormatter={(v: number) => `$${v.toFixed(2)}`}
+          referenceLines={[{ y: 8.24, label: "Benchmark $8.24" }]}
         />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
-        <StatCallout value="£6.10" label="Industry benchmark CPM" />
-        <StatCallout value="£0.89" label="Our CPM (Apr 2026)" color="text-accent-blue" />
+        <StatCallout value="$8.24" label="Industry benchmark CPM" />
+        <StatCallout value="$1.20" label="Our CPM (Apr 2026)" color="text-accent-blue" />
         <StatCallout value="~7x" label="Below benchmark" color="text-accent-green" />
         <StatCallout value="100%" label="Months under benchmark" color="text-accent-purple" />
       </div>
 
-      <div className="mt-16">
-        <DataChart
-          headerChildren={
-            <div className="bg-secondary rounded-md px-4 py-3 mb-2">
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Equals is a human-only social network. Every user must complete identity verification to participate.
-                The chart below shows the percentage of onboarded users who successfully verify their identity.
-                Verification rates have improved significantly as the onboarding flow has been refined - from 20% in late 2025 to over 50% in early 2026.
-              </p>
+      <Card className="bg-card mt-16">
+        <CardHeader>
+          <CardTitle>Identity Verification</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center gap-8 mb-4">
+            <div>
+              <div className="text-4xl font-bold text-accent-green">52%</div>
+              <div className="text-xs text-muted-foreground mt-1">Verification rate</div>
             </div>
-          }
-          data={onboardingFunnel}
-          series={[
-            { key: "Verification Rate", name: "Verification Rate (%)", color: "rgba(0, 204, 120, 1)" },
-          ]}
-          xKey="month"
-          title="Onboarding Verification Rate"
-          subtitle="Percentage of new users who complete identity verification (excluding current month)"
-          type="bar"
-          height={280}
-          yAxisFormatter={(v: number) => `${v}%`}
-          tooltipFormatter={(v: number) => `${v}%`}
-        />
-      </div>
+            <div>
+              <div className="text-lg font-bold text-accent-purple">Up from 20%</div>
+              <div className="text-xs text-muted-foreground mt-1">Last quarter</div>
+            </div>
+          </div>
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            Equals is a human-only social network. Every user must complete identity verification to participate
+            and unlock all social features on the platform. The verification rate has improved from 20% in late 2025
+            to 52% today as the onboarding flow has been refined - meaning more than half of all users who start
+            onboarding now fully complete it.
+          </p>
+        </CardContent>
+      </Card>
     </Section>
   );
 }

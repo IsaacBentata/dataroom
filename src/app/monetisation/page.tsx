@@ -21,21 +21,21 @@ const revenueStreams = [
   },
   {
     name: "Subscriptions",
-    arpu: "$3",
-    total: "$300M",
+    arpu: "$2.40",
+    total: "$240M",
     color: "text-accent-blue",
     description:
-      "5% conversion to Pro at $5.99/mo, adjusted for regional pricing. Pro features include unlimited quiz entries, advanced profile customisation, exclusive community access, early vinyl drops, and an ad-free experience.",
-    justification: "Comps: Discord Nitro converts at ~3-4% and trending up. Snapchat+ reached 12M subscribers (~2% of MAU) within 2 years. 5% is achievable for a mature social app with sticky features.",
+      "4% conversion to Pro at $5.99/mo, adjusted for regional pricing. Pro features include unlimited quiz entries, advanced profile customisation, exclusive community access, early vinyl drops, and an ad-free experience.",
+    justification: "Comps: Discord Nitro converts at ~3-4% and trending up. Snapchat+ reached 12M subscribers (~2% of MAU) within 2 years. 4% is in line with proven social app benchmarks.",
   },
   {
     name: "Commerce",
-    arpu: "$1.20",
-    total: "$120M",
+    arpu: "$0.78",
+    total: "$78M",
     color: "text-accent-purple",
     description:
-      "Digital Vinyls and merch marketplace. Today, ~2% of users buy at least one Digital Vinyl per quarter. As the product matures and Digital Vinyls become tied to chart positioning, uptake grows - we model 10% of users purchasing regularly at scale, averaging 4 per year at $5 each. Merch marketplace adds a 15% take rate on $35 average orders.",
-    justification: "Current baseline: 2% quarterly buyer rate. At scale with chart-certified vinyls and gifting mechanics, 10% annual buyer rate is conservative. Digital goods carry 70% margins.",
+      "Digital Vinyls and merch marketplace. Today, ~2% of users buy at least one Digital Vinyl per quarter. As the product matures and Digital Vinyls become tied to chart positioning, uptake grows - we model 10% of users purchasing regularly at scale, averaging 4 per year at $5 each with ~30% margins. Merch marketplace adds a 15% take rate on $35 average orders.",
+    justification: "Current baseline: 2% quarterly buyer rate. At scale with chart-certified vinyls and gifting mechanics, 10% annual buyer rate is conservative. ~30% margins after licensing costs.",
   },
   {
     name: "Label Services",
@@ -67,11 +67,11 @@ const revenueStreams = [
 ];
 
 const revenueSummary = [
-  { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "70.6%" },
-  { stream: "Subscriptions", arpu: "$3.00", annual: "$300M", share: "17.6%" },
-  { stream: "Commerce", arpu: "$1.20", annual: "$120M", share: "7.1%" },
-  { stream: "Label Services", arpu: "$0.40", annual: "$40M", share: "2.4%" },
-  { stream: "Live Experiences", arpu: "$0.35", annual: "$35M", share: "2.1%" },
+  { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "75.1%" },
+  { stream: "Subscriptions", arpu: "$2.40", annual: "$240M", share: "15.0%" },
+  { stream: "Commerce", arpu: "$0.78", annual: "$78M", share: "4.9%" },
+  { stream: "Label Services", arpu: "$0.40", annual: "$40M", share: "2.5%" },
+  { stream: "Live Experiences", arpu: "$0.35", annual: "$35M", share: "2.2%" },
   { stream: "Ticketing", arpu: "$0.06", annual: "$6M", share: "0.4%" },
 ];
 
@@ -183,7 +183,7 @@ export default function MonetisationPage() {
         <div className="grid grid-cols-3 gap-4 my-6">
           <StatCallout value="100M" label="Monthly Active Users" color="text-accent-green" />
           <StatCallout value="$1.6B" label="Annual Revenue" color="text-accent-blue" />
-          <StatCallout value="$17.01" label="Blended ARPU" color="text-accent-purple" />
+          <StatCallout value="$15.99" label="Blended ARPU" color="text-accent-purple" />
         </div>
       </div>
 
@@ -201,23 +201,26 @@ export default function MonetisationPage() {
       </div>
 
       {/* ── Revenue Stream Detail ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-        {revenueStreams.map((stream) => (
-          <Card key={`detail-${stream.name}`} className="bg-card">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm">{stream.name}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground text-xs leading-relaxed mb-2">
-                {stream.description}
-              </p>
-              <p className="text-muted-foreground text-[11px] leading-relaxed bg-secondary rounded-lg p-2">
-                {stream.justification}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <Card className="bg-card mt-6">
+        <CardHeader>
+          <CardTitle>Revenue Stream Breakdown</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-8">
+            {revenueStreams.map((stream) => (
+              <div key={`detail-${stream.name}`}>
+                <h4 className="text-sm font-semibold text-foreground mb-2">{stream.name}</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-2">
+                  {stream.description}
+                </p>
+                <p className="text-muted-foreground text-xs leading-relaxed bg-secondary rounded-lg p-3">
+                  {stream.justification}
+                </p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* ── Revenue Summary Table ── */}
       <Card className="bg-card mt-8">
@@ -246,8 +249,8 @@ export default function MonetisationPage() {
                 ))}
                 <tr className="font-bold">
                   <td className="pt-3 text-foreground">Total</td>
-                  <td className="pt-3 text-right text-foreground">$17.01</td>
-                  <td className="pt-3 text-right text-accent-green">$1.7B</td>
+                  <td className="pt-3 text-right text-foreground">$15.99</td>
+                  <td className="pt-3 text-right text-accent-green">$1.6B</td>
                   <td className="pt-3 text-right text-foreground">100%</td>
                 </tr>
               </tbody>

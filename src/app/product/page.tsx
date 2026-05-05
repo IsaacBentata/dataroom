@@ -97,7 +97,7 @@ const features: FeatureSection[] = [
 export default function ProductPage() {
   return (
     <>
-      {/* Sticky page header — pins to top of scroll container in both direct
+      {/* Sticky page header - pins to top of scroll container in both direct
           route and inline preview. Out of normal flow concerns thanks to
           sticky semantics. */}
       <div
@@ -117,7 +117,7 @@ export default function ProductPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
             <StatCallout value="4.5+" label="App Store Rating" />
             <StatCallout value="1:1" label="Male / Female Ratio" color="text-accent-blue" />
-            <StatCallout value="37 min" label="Daily Time Spent" color="text-accent-purple" />
+            <StatCallout value="35 min" label="Daily Time Spent" color="text-accent-purple" />
             <StatCallout value="100%" label="Verified Humans" color="text-accent-orange" />
           </div>
         </div>
@@ -222,7 +222,7 @@ function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] lg:gap-16 items-start">
-      {/* Scrolling text column — hidden until sticky offset is measured to
+      {/* Scrolling text column - hidden until sticky offset is measured to
           avoid a one-frame layout jump where sections center-justify in 100vh
           before re-centering in calc(100vh - stickyOffset). */}
       <div style={{ visibility: stickyOffset > 0 ? "visible" : "hidden" }}>
@@ -263,7 +263,7 @@ function FeaturesScrollStory({ features }: { features: FeatureSection[] }) {
         ))}
       </div>
 
-      {/* Sticky phone — stays put, screen content swaps with the active feature */}
+      {/* Sticky phone - stays put, screen content swaps with the active feature */}
       <div
         className="hidden lg:flex sticky self-start items-center justify-center"
         style={{

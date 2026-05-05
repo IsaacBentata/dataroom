@@ -64,7 +64,7 @@ export default function TopVideosCarousel() {
           <div
             key={`${v.handle}-${i}`}
             className="relative shrink-0 w-[180px] aspect-[9/16] rounded-[14px] overflow-hidden"
-            title={`@${v.handle} — ${formatViews(v.views)} views`}
+            title={`@${v.handle} - ${formatViews(v.views)} views`}
           >
             {v.video ? (
               <video

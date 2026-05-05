@@ -3,7 +3,15 @@
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import StatCallout from "@/components/StatCallout";
+import DataChart from "@/components/DataChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+const ticketsByMonth = [
+  { month: "Jan 2026", Tickets: 211 },
+  { month: "Feb 2026", Tickets: 303 },
+  { month: "Mar 2026", Tickets: 391 },
+  { month: "Apr 2026", Tickets: 483 },
+];
 
 export default function AIAdoptionPage() {
   return (
@@ -63,14 +71,22 @@ export default function AIAdoptionPage() {
               4 engineers shipped 483 tickets in April across 22 working days - roughly 121 tickets per engineer per month,
               or 5.5 tickets per engineer per working day. That is approximately 22 tickets per working day across the entire team.
             </p>
-            <p>
-              To put that in context, most Series A startups with teams of 20-30 engineers target 30-50 tickets per sprint.
-              Equals ships that in a single day with a fraction of the headcount. These are not minor tweaks - full features
-              ship in days rather than weeks.
-            </p>
           </div>
         </CardContent>
       </Card>
+
+      {/* Engineering Velocity Over Time */}
+      <DataChart
+        data={ticketsByMonth}
+        series={[
+          { key: "Tickets", name: "Tickets", color: "#0066FF" },
+        ]}
+        xKey="month"
+        title="Engineering Velocity Over Time"
+        subtitle="Tickets completed per month - 4 engineers"
+        type="bar"
+        height={280}
+      />
 
       {/* AI-First Engineering */}
       <Card className="bg-card border-accent-purple/30 mb-6">

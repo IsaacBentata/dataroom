@@ -15,14 +15,22 @@ export function parseMAUDataExcludingCurrent() {
 }
 
 export function parseDAUData() {
+  // 30-day rolling average DAU. Apr-Oct 2025 estimated from MAU ratios.
+  // Nov 2025 onward from Amplitude chart 0y7ihf40.
   const dates = [
-    "2025-10-26","2025-10-29","2025-11-12","2025-11-26","2025-12-10",
+    "2025-04-15","2025-05-15","2025-06-15","2025-07-15","2025-08-15","2025-09-15",
+    "2025-10-15","2025-11-05","2025-11-26","2025-12-10",
     "2025-12-24","2026-01-07","2026-01-21","2026-02-04","2026-02-18",
-    "2026-03-04","2026-03-18","2026-04-01","2026-04-15","2026-04-25",
+    "2026-03-04","2026-03-18","2026-04-01","2026-04-15","2026-05-03",
   ];
-  const values = [3691, 3938, 5003, 5887, 7180, 6717, 9697, 12959, 19477, 30150, 38357, 43116, 47634, 61793, 69911];
+  const values = [
+    690, 600, 700, 1900, 4100, 6600,
+    3691, 4515, 5888, 7181,
+    6718, 9698, 12961, 19479, 30153,
+    38363, 43126, 47655, 61851, 72031,
+  ];
   return dates.map((d, i) => ({
-    date: new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    date: new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "2-digit" }),
     DAU: Math.round(values[i]),
   }));
 }
@@ -149,7 +157,7 @@ export function parseAppOpensPerUser() {
 
 export function parseWauMau() {
   // Monthly averages of weekly WAU/MAU. April excludes 2026-04-27 (incomplete
-  // week — query date 2026-04-29 cut the rolling window short).
+  // week - query date 2026-04-29 cut the rolling window short).
   const months = [
     { label: "Sep 2025", value: 33 },
     { label: "Oct 2025", value: 38 },
@@ -163,6 +171,58 @@ export function parseWauMau() {
   return months.map((m) => ({
     month: m.label,
     "WAU/MAU": m.value,
+  }));
+}
+
+export function parseWeeklyRetentionByFriends() {
+  // Weekly retention bracket view, segmented by Friends MatchMade count (rolling 365d).
+  // Start event: Verify Successful. Return event: Any Active Event.
+  // Date range: Mar 29 - May 1, 2026. Source: Amplitude ad-hoc query.
+  const weeks = ["W0", "W1", "W2", "W3", "W4", "W5"];
+  const allUsers = [100, 48.5, 37.5, 29.9, 26.8, 19.5];
+  const friends1 = [100, 66.5, 53.4, 44.2, 38.1, 27.8];
+  const friends10 = [100, 79.0, 66.8, 57.4, 50.0, 37.9];
+  const friends50 = [100, 87.5, 77.1, 69.0, 60.8, 47.7];
+  return weeks.map((w, i) => ({
+    week: w,
+    "All Users": allUsers[i],
+    "1+ Friends": friends1[i],
+    "10+ Friends": friends10[i],
+    "50+ Friends": friends50[i],
+  }));
+}
+
+export function parseFriendsMatchMadeMonthly() {
+  // Monthly totals of Friends MatchMade event. Source: Amplitude.
+  const months = [
+    { label: "Oct 2025", value: 186178 },
+    { label: "Nov 2025", value: 104836 },
+    { label: "Dec 2025", value: 140199 },
+    { label: "Jan 2026", value: 1112426 },
+    { label: "Feb 2026", value: 3950778 },
+    { label: "Mar 2026", value: 3987770 },
+    { label: "Apr 2026", value: 4298888 },
+  ];
+  return months.map((m) => ({
+    month: m.label,
+    "Friendships Made": m.value,
+  }));
+}
+
+export function parseChatMessagesSentMonthly() {
+  // Monthly totals of Chat MessageSent event. Source: Amplitude.
+  const months = [
+    { label: "Oct 2025", value: 2193475 },
+    { label: "Nov 2025", value: 3499026 },
+    { label: "Dec 2025", value: 5196269 },
+    { label: "Jan 2026", value: 7595755 },
+    { label: "Feb 2026", value: 17941249 },
+    { label: "Mar 2026", value: 22189512 },
+    { label: "Apr 2026", value: 28444336 },
+  ];
+  return months.map((m) => ({
+    month: m.label,
+    "Messages Sent": m.value,
   }));
 }
 
@@ -210,7 +270,7 @@ export const teamMembers = [
       "Published AI researcher. Forbes 30 Under 30.",
       "MSc Machine Learning and BSc Mathematics from UCL.",
       "Data Scientist at Facebook, then the first Data Scientist in Instagram's London office.",
-      "Co-founded Fair.xyz, which grew into Europe's largest NFT minting platform.",
+      "Co-founded Fair.xyz, which grew into Europe's largest NFT minting platform - processing $45M in NFT sales volume.",
       "At Equals: co-leads product development, spearheads marketing through a fully agentic acquisition workforce, and drives product analytics and A/B testing.",
       "Built the entire AI stack in-house, slashing per-user inference costs from $0.27 to $0.01 - powering recommendations, safety, and personalization at scale.",
       "Core contributor to the engineering team and architect of the platform's recommendation system across all dimensions.",
@@ -226,7 +286,7 @@ export const teamMembers = [
       "Published AI researcher (NLP for chess). Forbes 30 Under 30. Le Rossignol Scholar.",
       "MSc Machine Learning & Data Science and BEng Chemical Engineering, both from UCL.",
       "Ran the most profitable algorithmic credit trading desk in Europe at Goldman Sachs, as part of a two-person team.",
-      "Co-founded Fair.xyz, which grew into Europe's largest NFT minting platform.",
+      "Co-founded Fair.xyz, which grew into Europe's largest NFT minting platform - processing $45M in NFT sales volume.",
       "At Equals: spearheads licensing negotiations with major labels and publishers (including the UMG worldwide deal).",
       "Runs operations and finance. Secured $500K+ in grants.",
       "Manages a fully agentic workforce across content moderation, platform moderation, and support.",
@@ -312,12 +372,12 @@ export const teamMembers = [
     name: "Dora Yilmaz",
     role: "Community, QA & Artist Liaison",
     bg: "UCL Genetics | International DJ",
-    detail: "Took Equals past 1 billion TikTok views in 8 months. Built and runs the 30-strong ambassador programme.",
+    detail: "Took Equals past 1 billion TikTok views in 8 months. Built and runs the 11-strong ambassador programme.",
     bio: [
       "An internationally recognised DJ who brings an artist's instinct and insider's network to product building.",
       "Moves inside a tight circle of musicians, producers, DJs, and label executives across multiple scenes and continents - often first to hear what's breaking before it hits the mainstream.",
       "Designed and launched Equals' ambassador programme from scratch - in eight months took the platform past one billion views on TikTok alone.",
-      "Scaled the programme to a 30-strong ambassador network she runs today.",
+      "Scaled the programme to a 11-strong ambassador network she runs today.",
       "Previously led artist liaison and supported A&R, giving her end-to-end fluency across product, music, and audience.",
       "Now leads quality assurance across iOS and Android, running structured manual testing, regression, and release validation.",
       "BSc Genetics (2:1) from UCL - dissertation applied computational eQTL analysis to Crohn's disease-linked genes in R.",

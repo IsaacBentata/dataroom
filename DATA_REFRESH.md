@@ -51,7 +51,7 @@ Each chart has fixed start dates and relative end dates. "Today" means the day t
 - **Chart ID:** `0y7ihf40`
 - **Type:** Events Segmentation (line, 30-day rolling average)
 - **CSV:** `data/growth-marketing/dau-rolling-average.csv`
-- **Start date:** October 26, 2025 (always fixed)
+- **Start date:** April 1, 2025 (always fixed). Note: Amplitude data only goes back ~180 days. For months before the Amplitude lookback window, use estimated DAU values based on MAU ratios (~15-20% of MAU).
 - **End date:** Yesterday (T-1 from today)
 - **Example:** If refreshing on April 26 2026, end date = April 25, 2026
 
@@ -185,12 +185,70 @@ Each chart has fixed start dates and relative end dates. "Today" means the day t
 
 ---
 
+### 13. Friends MatchMade Monthly
+
+- **Type:** Events Segmentation (totals, monthly)
+- **Event:** `Friends MatchMade`
+- **Start date:** October 1, 2025 (always fixed)
+- **End date:** Last day of the month before the current month
+- **Interval:** 30 (monthly)
+- **Data location:** `src/lib/data.ts` -> `parseFriendsMatchMadeMonthly()`
+- **Amplitude query definition:**
+  ```json
+  {"type": "eventsSegmentation", "app": "598644", "name": "Friends MatchMade Monthly", "params": {"start": "2025-10-01", "end": "[END_DATE]", "events": [{"event_type": "Friends MatchMade", "filters": [], "group_by": []}], "metric": "totals", "countGroup": "User", "groupBy": [], "interval": 30, "segments": [{"conditions": []}], "timezone": "UTC"}}
+  ```
+
+---
+
+### 14. Chat Messages Sent Monthly
+
+- **Type:** Events Segmentation (totals, monthly)
+- **Event:** `Chat MessageSent`
+- **Start date:** October 1, 2025 (always fixed)
+- **End date:** Last day of the month before the current month
+- **Interval:** 30 (monthly)
+- **Data location:** `src/lib/data.ts` -> `parseChatMessagesSentMonthly()`
+- **Amplitude query definition:**
+  ```json
+  {"type": "eventsSegmentation", "app": "598644", "name": "Chat MessageSent Monthly", "params": {"start": "2025-10-01", "end": "[END_DATE]", "events": [{"event_type": "Chat MessageSent", "filters": [], "group_by": []}], "metric": "totals", "countGroup": "User", "groupBy": [], "interval": 30, "segments": [{"conditions": []}], "timezone": "UTC"}}
+  ```
+
+---
+
+### 15. Weekly Retention by Friends
+
+- **Type:** Retention (bracket view, weekly, segments by Friends MatchMade count)
+- **Start event:** `Verify Successful`
+- **Return event:** `Any Active Event`
+- **Segments:** All Users / 1+ / 10+ / 50+ Friends MatchMade (rolling 365d)
+- **Start date:** T-36 days
+- **End date:** T-3 days
+- **Data location:** `src/lib/data.ts` -> `parseWeeklyRetentionByFriends()`
+- **IMPORTANT: Always confirm with the user before updating this chart.**
+- **Amplitude query definition:**
+  ```json
+  {"type": "retention", "app": "598644", "name": "Weekly Retention by Friends", "view": "bracket", "params": {"start": "[START_DATE]", "end": "[END_DATE]", "metric": "retention", "groupBy": [], "interval": 7, "segments": [{"conditions": []}, {"conditions": [{"op": ">=", "type": "event", "value": 1, "filters": [], "time_type": "rolling", "event_type": "Friends MatchMade", "time_value": 365}]}, {"conditions": [{"op": ">=", "type": "event", "value": 10, "filters": [], "time_type": "rolling", "event_type": "Friends MatchMade", "time_value": 365}]}, {"conditions": [{"op": ">=", "type": "event", "value": 50, "filters": [], "time_type": "rolling", "event_type": "Friends MatchMade", "time_value": 365}]}], "timezone": "UTC", "alignment": "default", "countGroup": "User", "startEvent": {"filters": [], "group_by": [], "event_type": "Verify Successful"}, "retentionEvents": [{"filters": [], "group_by": [], "event_type": "_active"}], "retentionMethod": "nday", "nthTimeLookbackWindow": 365}}
+  ```
+
+---
+
+### 16. WAU/MAU Stickiness
+
+- **Type:** Events Segmentation (weekly active users / monthly active users ratio)
+- **Start date:** September 1, 2025 (always fixed)
+- **End date:** Last day of the month before the current month
+- **Interval:** 7 (weekly), then average per month
+- **Data location:** `src/lib/data.ts` -> `parseWauMau()`
+- **Note:** Compute monthly averages of weekly WAU/MAU values. Exclude incomplete weeks at month boundaries.
+
+---
+
 ## Quick Reference
 
 | # | Chart | Chart ID | Fixed Start | End Date Rule | Confirm? |
 |---|---|---|---|---|---|
 | 1 | MAU and Install Growth | `0fzez654` | Apr 1, 2025 | End of prior month | No |
-| 2 | DAUs Rolling Average | `0y7ihf40` | Oct 26, 2025 | Yesterday (T-1) | No |
+| 2 | DAUs Rolling Average | `0y7ihf40` | Apr 1, 2025 | Yesterday (T-1) | No |
 | 3 | Retention Over Time | `73g3ajox` | Oct 1, 2025 | End of current month | No |
 | 4 | Retention per Friend Added | `j256t416` | T-36 days | T-3 days | YES |
 | 5 | Weekly Retention Evolution | `ayo280o0` | Sep 22, 2025 | T-30 days, rounded to last full W4 week | No |
@@ -201,3 +259,7 @@ Each chart has fixed start dates and relative end dates. "Today" means the day t
 | 10 | Time Spent per User | `hjcyzzzi` | Oct 26, 2025 | Yesterday (T-1) | No |
 | 11 | Sessions per User | `eixd4by7` | Oct 26, 2025 | Yesterday (T-1) | No |
 | 12 | App Opens per User | `vvmn2y01` | Oct 26, 2025 | Yesterday (T-1) | No |
+| 13 | Friends MatchMade Monthly | ad-hoc | Oct 1, 2025 | End of prior month | No |
+| 14 | Chat Messages Sent Monthly | ad-hoc | Oct 1, 2025 | End of prior month | No |
+| 15 | Weekly Retention by Friends | ad-hoc | T-36 days | T-3 days | YES |
+| 16 | WAU/MAU Stickiness | ad-hoc | Sep 1, 2025 | End of prior month | No |

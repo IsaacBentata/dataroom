@@ -151,7 +151,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
             </div>
             <img
               src="/player/discovery.jpg"
-              alt="Daft Punk — Discovery"
+              alt="Daft Punk - Discovery"
               width={44}
               height={44}
               draggable={false}
@@ -251,10 +251,10 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
             </svg>
           </div>
 
-          {/* Album cover — Daft Punk, Discovery */}
+          {/* Album cover - Daft Punk, Discovery */}
           <img
             src="/player/discovery.jpg"
-            alt="Daft Punk — Discovery"
+            alt="Daft Punk - Discovery"
             width={44}
             height={44}
             draggable={false}
@@ -284,7 +284,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
           </div>
         </div>
 
-        {/* Play / Pause button — won't initiate drag */}
+        {/* Play / Pause button - won't initiate drag */}
         <button
           type="button"
           data-no-drag

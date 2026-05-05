@@ -251,10 +251,13 @@ export default function MusicIndustryPage() {
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 rounded-full bg-accent-green mt-2 flex-shrink-0" />
               <div>
-                <div className="font-semibold text-foreground text-sm mb-1">Pre-release partnerships with all three majors</div>
+                <div className="font-semibold text-foreground text-sm mb-1">Fan targeting and audience intelligence</div>
                 <p className="text-muted-foreground text-xs">
-                  Active partnership conversations with UMG, Sony, and Warner for pre-releases on Equals.
-                  Artists and labels can build anticipation and drive chart performance before a track even hits streaming platforms.
+                  Equals gives labels something no streaming platform can: the ability to target fans based on how they talk about music,
+                  who they connect with, and how they engage socially - not just what they listen to. Labels can identify superfans,
+                  map social influence within fanbases, predict which audiences will convert on merch and tickets, and run precision
+                  campaigns against taste-clustered segments. This is a fundamentally richer targeting layer than anything available
+                  on Spotify, Apple Music, or traditional social platforms.
                 </p>
               </div>
             </div>

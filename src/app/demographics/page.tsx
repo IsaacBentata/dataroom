@@ -128,7 +128,7 @@ export default function DemographicsPage() {
       <Card className="bg-card mb-6">
         <CardHeader>
           <CardTitle>Gender Distribution</CardTitle>
-          <CardDescription>All onboarded users - source: Amplitude</CardDescription>
+          <CardDescription>All onboarded users</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-[320px]">
@@ -176,7 +176,7 @@ export default function DemographicsPage() {
       <Card className="bg-card mb-6">
         <CardHeader>
           <CardTitle>Age Distribution</CardTitle>
-          <CardDescription>All onboarded users - source: Amplitude</CardDescription>
+          <CardDescription>All onboarded users</CardDescription>
         </CardHeader>
         <CardContent>
           <ChartContainer config={ageChartConfig} className="h-[320px] w-full">
@@ -208,7 +208,7 @@ export default function DemographicsPage() {
       <Card className="bg-card mb-6">
         <CardHeader>
           <CardTitle>Geographic Distribution</CardTitle>
-          <CardDescription>All historic active users by continent - source: Amplitude</CardDescription>
+          <CardDescription>All historic active users by continent</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-[400px]">
@@ -246,7 +246,7 @@ export default function DemographicsPage() {
           </div>
           <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
             <p className="text-muted-foreground text-sm leading-relaxed">
-                Equals has a genuinely global user base spanning 6 continents. The US and UK represent our largest markets, but
+                Equals has a genuinely global user base spanning 6 continents. The US and UK jointly represent 40% of the user base, but
                 the app has very strong presence across 20+ countries and presence in 100+ countries - leading to a naturally
                 diverse user base that reflects the universal appeal of music as a social connector. This diversity is achieved
                 with content moderation across 40+ languages and identity verification working internationally.

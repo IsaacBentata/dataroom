@@ -44,7 +44,7 @@ export default function RoadmapPage() {
                 <div className="text-xs text-muted-foreground">D30 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-green">37 min</div>
+                <div className="text-xl font-bold text-accent-green">35 min</div>
                 <div className="text-xs text-muted-foreground">Time Spent/Day</div>
               </div>
             </div>
@@ -53,7 +53,7 @@ export default function RoadmapPage() {
               <p>
                 Equals has achieved 9x MAU growth in 6 months, going from ~50K in November 2025 to 530K by May 2026.
                 The growth curve is accelerating, not flattening. Daily active users have grown from under 4K to over 80K
-                in the same period. Users spend 37 minutes per day on the app - comparable to Instagram and TikTok.
+                in the same period. Users spend 35 minutes per day on the app - comparable to Instagram and TikTok.
               </p>
               <p>
                 The UMG worldwide catalogue deal is signed. Warner and Sony term sheets are pending. This means Equals
@@ -310,9 +310,9 @@ export default function RoadmapPage() {
               </div>
 
               <div>
-                <h4 className="text-sm font-medium text-foreground mb-1">37 min/day proves deep product-market fit</h4>
+                <h4 className="text-sm font-medium text-foreground mb-1">35 min/day proves deep product-market fit</h4>
                 <p>
-                  Users do not spend 37 minutes per day on a product they are lukewarm about. This level of engagement -
+                  Users do not spend 35 minutes per day on a product they are lukewarm about. This level of engagement -
                   comparable to Instagram and approaching TikTok - indicates genuine product-market fit. Time spent is
                   the hardest metric to fake and the most predictive of long-term retention.
                 </p>
