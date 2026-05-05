@@ -102,9 +102,9 @@ export default function MonetisationPage() {
           </CardHeader>
           <CardContent>
             <p className="mb-3">
-              Between October 2025 and January 2026, Equals ran an extended A/B test on monetisation
-              across subscriptions and ads. At peak, the platform generated $46K in a single month on just
-              90K MAU - an effective ARPU of $0.51/month per MAU.
+              Between October 2025 and January 2026, Equals ran an extended A/B test on subscription
+              monetisation. At peak, the platform generated $46K in a single month on just
+              90K MAU - an effective ARPU of $0.51/month per MAU, or $6.12 annualised.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
               <StatCallout value="$46K" label="Peak monthly revenue" color="text-accent-green" />
@@ -117,24 +117,28 @@ export default function MonetisationPage() {
 
         <Card className="bg-card border-accent-green/30">
           <CardHeader>
-            <CardTitle>Where we'd be today if we hadn't pulled back</CardTitle>
+            <CardTitle>Subscription revenue at today's scale</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="mb-4">
-              Applying the same $0.51/month ARPU to today's 530K MAU base, Equals would be generating
-              ~$270K/month - a $3.2M annual run rate from subscriptions and ads alone, before any commerce,
-              label services, or ticketing revenue. This is purely extrapolating the proven conversion rate
-              to the current user base.
+              Applying the proven $0.51/month ARPU to today's 530K MAU base gives ~$270K/month - a
+              $3.2M annual run rate from subscriptions alone, before any commerce, label services, or
+              ticketing revenue. Notably, the annualised proven ARPU of $6.12 is already higher than
+              the $2.40 subscription ARPU in our long-term revenue forecast - meaning the forecast
+              is conservative relative to what we've already demonstrated.
             </p>
             <div className="grid grid-cols-3 gap-4 my-4">
               <StatCallout value="$270K" label="Projected monthly revenue" color="text-accent-green" />
               <StatCallout value="$3.2M" label="Projected ARR" color="text-accent-blue" />
-              <StatCallout value="530K" label="Current MAUs" color="text-accent-purple" />
+              <StatCallout value="$6.12" label="Proven annualised ARPU" color="text-accent-purple" />
             </div>
             <p className="text-xs">
-              This projection is conservative - it assumes no improvement in conversion, pricing, or ARPU
-              despite significantly better product-market fit and engagement metrics today vs October 2025.
-              The real number would likely be higher.
+              This projection is conservative on multiple fronts: it assumes no improvement in conversion
+              or pricing despite significantly better product-market fit today, and it does not account for
+              retained revenue compounding from prior months. November was the first month with full
+              monetisation - earlier months had limited paid features, so there was no subscriber base
+              carrying over. A mature subscription base with retained cohorts would produce meaningfully
+              higher numbers.
             </p>
           </CardContent>
         </Card>
@@ -163,7 +167,7 @@ export default function MonetisationPage() {
         ]}
         xKey="month"
         title="Revenue by Month"
-        subtitle="Revenue peaked at $54K/mo (subs + ads) before deliberate pull-back to prioritise growth"
+        subtitle="Revenue peaked at $54K/mo before gradual roll-down from end of December to prioritise growth"
         type="bar"
         height={320}
         yAxisFormatter={(v: number) => `$${(v / 1000).toFixed(0)}K`}
@@ -177,7 +181,7 @@ export default function MonetisationPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-xs mb-4">
-            This chart shows how average engagement per user spiked in February 2026 after monetisation was reduced.
+            This chart shows how average engagement per user increased as paid features were gradually rolled down from end of December 2025.
             Removing friction from the core experience let users engage more deeply with the product.
           </p>
           <DataChart
