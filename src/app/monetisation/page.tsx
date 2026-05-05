@@ -98,21 +98,50 @@ export default function MonetisationPage() {
       <div className="space-y-4 text-muted-foreground text-sm leading-relaxed mb-10">
         <Card className="bg-card">
           <CardHeader>
-            <CardTitle>The A/B test that proved monetisation</CardTitle>
+            <CardTitle>We proved monetisation - then deliberately turned it off</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="mb-3">
-              Between November 2025 and January 2026, Equals ran an extended A/B test on monetisation.
-              The results were strong - top-quartile conversion for consumer social:
+              Between November 2025 and January 2026, Equals ran an extended A/B test on monetisation
+              across subscriptions and ads. At peak, the platform generated $46K in a single month on just
+              90K MAU - and this was with only a subset of users seeing the full paid experience as part of
+              A/B testing. At full rollout, revenue would have reached ~$60K/month - an effective ARPU of
+              $0.67/month per MAU.
             </p>
-            <div className="grid grid-cols-2 gap-4 my-4">
-              <StatCallout value="4.5-5%" label="Paywall conversion rate" color="text-accent-green" />
-              <StatCallout value="$3M+" label="Projected ARR at current MAU base" color="text-accent-blue" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
+              <StatCallout value="$46K" label="Peak monthly revenue" color="text-accent-green" />
+              <StatCallout value="90K" label="MAUs at peak" />
+              <StatCallout value="$0.67" label="Monthly ARPU" color="text-accent-purple" />
+              <StatCallout value="4.5-5%" label="Paywall conversion" color="text-accent-blue" />
             </div>
           </CardContent>
         </Card>
 
-        <h3 className="text-lg font-semibold text-foreground">The trade-off we made</h3>
+        <Card className="bg-card border-accent-green/30">
+          <CardHeader>
+            <CardTitle>Where we'd be today if we hadn't pulled back</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4">
+              Applying the same $0.67/month ARPU to today's 530K MAU base, Equals would be generating
+              ~$355K/month - a $4.3M annual run rate from subscriptions and ads alone, before any commerce,
+              label services, or ticketing revenue. This is purely extrapolating the proven conversion rate
+              to the current user base.
+            </p>
+            <div className="grid grid-cols-3 gap-4 my-4">
+              <StatCallout value="$355K" label="Projected monthly revenue" color="text-accent-green" />
+              <StatCallout value="$4.3M" label="Projected ARR" color="text-accent-blue" />
+              <StatCallout value="530K" label="Current MAUs" color="text-accent-purple" />
+            </div>
+            <p className="text-xs">
+              This projection is conservative - it assumes no improvement in conversion, pricing, or ARPU
+              despite significantly better product-market fit and engagement metrics today vs November 2025.
+              The real number would likely be higher.
+            </p>
+          </CardContent>
+        </Card>
+
+        <h3 className="text-lg font-semibold text-foreground">Why we chose growth over revenue</h3>
         <p>
           The team deliberately pulled back monetisation in late January 2026 because aggressive
           monetisation was dampening network effects - users hitting paywalls early were less likely
@@ -135,7 +164,7 @@ export default function MonetisationPage() {
         ]}
         xKey="month"
         title="Revenue by Month"
-        subtitle="Revenue peaked at $50K/mo before deliberate pull-back to prioritise growth"
+        subtitle="Revenue peaked at $54K/mo (subs + ads) before deliberate pull-back to prioritise growth"
         type="bar"
         height={320}
         yAxisFormatter={(v: number) => `$${(v / 1000).toFixed(0)}K`}

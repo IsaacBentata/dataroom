@@ -252,10 +252,12 @@ export const revenueData = [
   { month: "Aug 2025", revenue: 7732 },
   { month: "Sep 2025", revenue: 9126 },
   { month: "Oct 2025", revenue: 14337 },
-  { month: "Nov 2025", revenue: 40539 },
-  { month: "Dec 2025", revenue: 49341 },
-  { month: "Jan 2026", revenue: 50271 },
-  { month: "Feb 2026", revenue: 33931 },
+  { month: "Nov 2025", revenue: 46605 },
+  { month: "Dec 2025", revenue: 52173 },
+  { month: "Jan 2026", revenue: 54031 },
+  { month: "Feb 2026", revenue: 35060 },
+  { month: "Mar 2026", revenue: 35831 },
+  { month: "Apr 2026", revenue: 33553 },
 ];
 
 // ── Team Data ───────────────────────────────────────────────────────
