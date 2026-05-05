@@ -64,7 +64,7 @@ export default function GrowthPage() {
       <div className="flex items-start justify-between gap-4 mb-12">
         <PageHeader
           label="Growth"
-          title="From 50K to 530K MAUs in 6 months"
+          title="From 60K to 530K MAUs in 6 months"
           subtitle="Equals has achieved 9x user growth since November 2025, driven by strong organic acquisition and improving retention. The growth curve is accelerating, not flattening."
         />
         <DownloadAllButton
@@ -117,7 +117,7 @@ export default function GrowthPage() {
         <CardHeader>
           <CardTitle>We are majority organic</CardTitle>
           <CardDescription>
-            April 2026.
+            Install split by channel.
           </CardDescription>
         </CardHeader>
         <CardContent>
