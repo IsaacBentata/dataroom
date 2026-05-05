@@ -10,8 +10,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <PasswordGate>
-      {!isHome && <Navigation />}
-      <main className={isHome ? "" : "lg:ml-56"}>
+      <main>
         {children}
       </main>
     </PasswordGate>

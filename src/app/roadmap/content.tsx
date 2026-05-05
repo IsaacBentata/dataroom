@@ -64,7 +64,7 @@ export default function RoadmapPage() {
                 Revenue infrastructure is proven: paywall conversion sits at 4.5-5% (top-quartile for consumer social),
                 but has been deliberately scaled back to prioritise network effects and growth over near-term revenue.
                 The team ships at extraordinary velocity - 483 tickets in April alone, 90%+ of code written by AI agents
-                (see <a href="/ai" className="text-accent-blue hover:underline">AI Adoption</a> for details).
+                (see AI Adoption for details).
               </p>
             </div>
           </div>
@@ -106,7 +106,7 @@ export default function RoadmapPage() {
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed mb-6">
               <p>
                 The core thesis is simple: every retention metric improves with friend count. The data proves it
-                (see <a href="/retention" className="text-accent-blue hover:underline">Retention</a> - users with 50+ friends retain at 40% at W8 vs 18% for all users).
+                (see Retention - users with 50+ friends retain at 40% at W8 vs 18% for all users).
                 So the Fan Layer is about accelerating friend connections through k-factor mechanics deployed across multiple surfaces.
               </p>
               <p>
@@ -298,7 +298,7 @@ export default function RoadmapPage() {
               body: (
                 <>
                   The single most important chart in this data room is the retention-by-friends curve
-                  (see <a href="/retention" className="text-accent-blue hover:underline">Retention</a>). Users with 50+ friends retain at 40% at Week 8 -
+                  (see Retention). Users with 50+ friends retain at 40% at Week 8 -
                   over 2x the all-users average. Every investment in k-factor directly improves retention, which improves
                   LTV, which funds more growth. This is a classic network effects flywheel and the data already proves it works.
                 </>
@@ -341,7 +341,7 @@ export default function RoadmapPage() {
                   483 tickets completed in April with just 4 engineers. AI-multiplied output means Equals can iterate on
                   product faster than competitors with 5x the headcount. Speed of iteration compounds - each experiment run,
                   each feature shipped, each insight gained happens faster than the competition can respond
-                  (see <a href="/ai" className="text-accent-blue hover:underline">AI Adoption</a> for the full picture).
+                  (see AI Adoption for the full picture).
                 </>
               ),
             },
@@ -350,7 +350,7 @@ export default function RoadmapPage() {
               body: (
                 <>
                   9x growth in 6 months is not a one-time spike - the month-over-month growth rate has been consistent
-                  (see <a href="/growth" className="text-accent-blue hover:underline">Growth</a>). The curve is accelerating,
+                  (see Growth). The curve is accelerating,
                   not flattening. Marketing automation continues to reduce CPI while organic channels grow.
                   The targets ahead are more conservative than the trajectory already demonstrated.
                 </>
