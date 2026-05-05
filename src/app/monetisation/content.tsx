@@ -204,8 +204,8 @@ export default function MonetisationPage() {
       {/* ── Future Revenue Vision ── */}
       <div className="mt-16">
         <h2
-          className="text-2xl md:text-3xl font-bold text-foreground mb-2"
-          style={{ fontFamily: "var(--font-fair-favorit-heading)", letterSpacing: "-0.03em" }}
+          className="text-3xl md:text-5xl font-bold text-foreground mb-3"
+          style={{ fontFamily: "var(--font-fair-favorit-heading)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
         >
           By 2030, Equals will have 100M Monthly Active Users and $2.0B Annual Revenue
         </h2>

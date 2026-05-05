@@ -145,7 +145,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   if (pinnedBottomCenter) {
     return (
       <div
-        className="fixed z-50 flex flex-col items-start px-2"
+        className="fixed z-50 flex flex-col items-start px-2 vinyl-player-enter"
         style={{
           width: `min(${PLAYER_W}px, calc(100vw - 32px))`,
           left: "50%",
@@ -251,7 +251,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
 
   return (
     <div
-      className="fixed z-50 flex flex-col items-start px-2"
+      className="fixed z-50 flex flex-col items-start px-2 vinyl-player-enter"
       style={{
         width: PLAYER_W,
         left: pos?.x ?? 24,

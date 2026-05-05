@@ -66,6 +66,16 @@ export default function TeamPage() {
                   >
                     {member.name}
                   </h4>
+                  {"logo" in member && member.logo && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={member.logo}
+                      alt=""
+                      draggable={false}
+                      className="team-logo mt-2 object-contain"
+                      style={{ height: 16, width: "auto", maxWidth: 80, opacity: 0.9 }}
+                    />
+                  )}
                 </div>
                 {member.linkedin && (
                   <a
@@ -199,30 +209,55 @@ function BioModal({ member, onClose }: { member: typeof teamMembers[number]; onC
       onClick={onClose}
     >
       <Card
-        className="bg-card max-w-lg w-full mx-4 max-h-[80vh] overflow-y-auto"
+        className="bg-card max-w-xl w-full mx-4 max-h-[85vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <CardContent className="px-6 pt-5 pb-6">
-          <div className="flex items-start justify-between mb-3">
-            <div>
-              <h4 className="text-[18px]" style={{ fontFamily: 'var(--font-fair-favorit-book), sans-serif', fontWeight: 400 }}>{member.name}</h4>
+        <CardContent className="px-7 pt-6 pb-7">
+          <div className="flex items-start justify-between mb-5">
+            <div className="min-w-0">
               <p
-                className="mt-1"
                 style={{
-                  fontFamily: 'var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace',
+                  fontFamily: 'var(--font-fair-favorit-mono), monospace',
+                  fontSize: 10,
                   fontWeight: 400,
-                  fontSize: 11,
-                  letterSpacing: 0,
+                  letterSpacing: '0.06em',
                   textTransform: 'uppercase',
-                  color: 'rgba(0,0,0,0.7)',
+                  color: 'rgba(0,0,0,0.5)',
                 }}
               >
                 {member.role}
               </p>
+              <h4
+                className="mt-1"
+                style={{
+                  fontFamily: 'var(--font-fair-favorit-heading), sans-serif',
+                  fontWeight: 400,
+                  fontSize: 24,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1.1,
+                  color: '#0A0A0A',
+                }}
+              >
+                {member.name}
+              </h4>
+              {"handle" in member && member.handle && (
+                <p
+                  className="mt-1"
+                  style={{
+                    fontFamily: 'var(--font-fair-favorit-mono), monospace',
+                    fontSize: 12,
+                    fontWeight: 400,
+                    textTransform: 'uppercase',
+                    color: 'rgba(0,0,0,0.4)',
+                  }}
+                >
+                  {member.handle}
+                </p>
+              )}
             </div>
             <button
               onClick={onClose}
-              className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0 ml-4"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
@@ -231,12 +266,45 @@ function BioModal({ member, onClose }: { member: typeof teamMembers[number]; onC
             </button>
           </div>
           {member.bg && (
-            <p className="text-muted-foreground text-xs mb-4">{member.bg}</p>
+            <div className="flex flex-wrap gap-1.5 mb-5">
+              {member.bg.split("|").map((tag, j) => (
+                <span
+                  key={j}
+                  style={{
+                    fontFamily: 'var(--font-fair-favorit-mono), monospace',
+                    fontSize: 10,
+                    letterSpacing: '0.04em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(0,0,0,0.7)',
+                    background: 'rgba(0,0,0,0.05)',
+                    padding: '4px 8px',
+                    borderRadius: 4,
+                  }}
+                >
+                  {tag.trim()}
+                </span>
+              ))}
+            </div>
           )}
-          <ul className="space-y-2.5">
+          <ul className="space-y-3">
             {member.bio.map((point, j) => (
-              <li key={j} className="text-muted-foreground text-xs leading-relaxed flex items-start gap-2.5">
-                <span className="inline-block w-[5px] h-[5px] rounded-full bg-black mt-[7px] shrink-0" />
+              <li
+                key={j}
+                className="flex items-start gap-3"
+                style={{ fontSize: 13, lineHeight: 1.55, color: 'rgba(0,0,0,0.75)' }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'var(--font-fair-favorit-mono), monospace',
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: '#0A0A0A',
+                    lineHeight: 1.55,
+                    flexShrink: 0,
+                  }}
+                >
+                  =
+                </span>
                 <span>{point}</span>
               </li>
             ))}
