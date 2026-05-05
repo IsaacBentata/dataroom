@@ -84,8 +84,8 @@ export function parsePowerCurve() {
 }
 
 export function parseEngagement() {
-  const months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"];
-  const values = [283, 252, 325, 415, 640, 636];
+  const months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026"];
+  const values = [283, 255, 326, 415, 640, 635, 655];
   return months.map((m, i) => ({ month: m, "Avg Actions": Math.round(values[i]) }));
 }
 
