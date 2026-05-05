@@ -106,7 +106,7 @@ export default function RoadmapPage() {
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed mb-6">
               <p>
                 The core thesis is simple: every retention metric improves with friend count. The data proves it
-                (see <a href="/retention" className="text-accent-blue hover:underline">Retention</a> - users with 50+ friends retain at 36% D30 vs 14% for all users).
+                (see <a href="/retention" className="text-accent-blue hover:underline">Retention</a> - users with 50+ friends retain at 40% at W8 vs 18% for all users).
                 So the Fan Layer is about accelerating friend connections through k-factor mechanics deployed across multiple surfaces.
               </p>
               <p>
@@ -285,8 +285,8 @@ export default function RoadmapPage() {
                 <h4 className="text-sm font-medium text-foreground mb-1">Retention improves with friends - this is proven</h4>
                 <p>
                   The single most important chart in this data room is the retention-by-friends curve
-                  (see <a href="/retention" className="text-accent-blue hover:underline">Retention</a>). Users with 50+ friends retain at 36% D30 -
-                  nearly 3x the all-users average. Every investment in k-factor directly improves retention, which improves
+                  (see <a href="/retention" className="text-accent-blue hover:underline">Retention</a>). Users with 50+ friends retain at 40% at Week 8 -
+                  over 2x the all-users average. Every investment in k-factor directly improves retention, which improves
                   LTV, which funds more growth. This is a classic network effects flywheel and the data already proves it works.
                 </p>
               </div>
