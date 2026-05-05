@@ -20,16 +20,16 @@ const items = [
 ];
 
 const pageLoaders: Record<string, () => Promise<{ default: React.ComponentType }>> = {
-  "/product": () => import("./product/page"),
-  "/growth": () => import("./growth/page"),
-  "/retention": () => import("./retention/page"),
-  "/demographics": () => import("./demographics/page"),
-  "/music-industry": () => import("./music-industry/page"),
-  "/monetisation": () => import("./monetisation/page"),
-  "/ai": () => import("./ai/page"),
-  "/team": () => import("./team/page"),
-  "/roadmap": () => import("./roadmap/page"),
-  "/legal": () => import("./legal/page"),
+  "/product": () => import("./product/content"),
+  "/growth": () => import("./growth/content"),
+  "/retention": () => import("./retention/content"),
+  "/demographics": () => import("./demographics/content"),
+  "/music-industry": () => import("./music-industry/content"),
+  "/monetisation": () => import("./monetisation/content"),
+  "/ai": () => import("./ai/content"),
+  "/team": () => import("./team/content"),
+  "/roadmap": () => import("./roadmap/content"),
+  "/legal": () => import("./legal/content"),
 };
 
 const pageComponents: Record<string, React.ComponentType> = Object.fromEntries(

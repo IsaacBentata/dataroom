@@ -88,58 +88,6 @@ export default function AIAdoptionPage() {
         height={280}
       />
 
-      {/* AI-First Engineering */}
-      <Card className="bg-card border-accent-purple/30 mb-6">
-        <CardHeader>
-          <div className="text-accent-purple text-xs font-medium mb-1">How It Works</div>
-          <CardTitle>AI-First Engineering</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
-                <p>
-                  Over 90% of Equals production code is written by AI agents - primarily Claude Code and Cursor.
-                  47 tickets were directly delegated to and completed by AI agents in the last quarter.
-                  These are not simple autocomplete suggestions. AI agents are assigned Linear tickets, write complete
-                  implementations, and submit pull requests for human review.
-                </p>
-                <p>
-                  Human engineers focus on what humans do best: architectural decisions, edge case handling,
-                  code review, and product judgment. The AI handles the volume. This is not a productivity hack -
-                  it is a fundamentally different operating model that lets 4 engineers ship like a team of 30+.
-                </p>
-              </div>
-            </div>
-            <div>
-              <Card className="bg-secondary border-0">
-                <CardContent className="p-4">
-                  <h4 className="text-sm font-medium mb-3">The AI Engineering Stack</h4>
-                  <ul className="space-y-2 text-muted-foreground text-xs">
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-purple mt-0.5">-</span>
-                      <span><strong className="text-foreground">Claude Code:</strong> Primary coding agent for complex implementations, architecture, and multi-file changes</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-purple mt-0.5">-</span>
-                      <span><strong className="text-foreground">Cursor:</strong> IDE-integrated AI for rapid iteration and ticket completion</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-purple mt-0.5">-</span>
-                      <span><strong className="text-foreground">Linear Integration:</strong> AI agents pull tickets, understand context, and submit work</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-purple mt-0.5">-</span>
-                      <span><strong className="text-foreground">Human Review:</strong> Every AI-generated PR is reviewed by a senior engineer</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Marketing Automation */}
       <Card className="bg-card mb-6">
         <CardHeader>
@@ -289,71 +237,16 @@ export default function AIAdoptionPage() {
               verification alone, and the same approach applies across recommendations, moderation, and personalisation.
             </p>
             <p>
-              Equals has built an in-house experimentation engine for rapid A/B testing. The team runs 5+ concurrent
-              experiments at any time, using data to drive every product decision. This is the same infrastructure
-              that companies like Spotify and Netflix use - but built and maintained by 4 engineers.
+              Equals runs an extensive A/B testing suite across all product surfaces - onboarding, feed, recommendations,
+              social features, and monetisation. The team runs 5+ concurrent experiments at any time, with every test
+              designed to drive higher retention. Every product decision is data-driven, and the experimentation
+              infrastructure allows rapid iteration on what keeps users coming back. This is the same testing rigour
+              that companies like Spotify and Netflix deploy - built and maintained by 4 engineers.
             </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* The Philosophy */}
-      <Card className="bg-card border-accent-blue/30">
-        <CardHeader>
-          <CardTitle>The Philosophy</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4 text-muted-foreground text-sm leading-relaxed">
-            <blockquote className="border-l-2 border-accent-blue pl-4 text-foreground italic">
-              &ldquo;AI is our multiplier, not our product. We use AI aggressively internally so that the product itself
-              can be about genuine human connection. Every other company is selling AI to users. We use AI to build FOR humans.&rdquo;
-            </blockquote>
-            <p>
-              This philosophy runs through every part of Equals. The app itself contains zero visible AI features -
-              no chatbots, no AI-generated content, no &ldquo;powered by AI&rdquo; badges. Users come to Equals for real human
-              connection through music. But behind the scenes, AI is what makes it possible for 4 engineers to ship
-              483 tickets in a single month while operating a platform serving 500K+ monthly active users across 100+ countries.
-            </p>
-            <p>
-              The implication for investors is significant: Equals has the unit economics of a large engineering team
-              with the cost structure of a small one. As the company scales, this advantage compounds. Adding users
-              does not require proportional headcount growth because AI handles the operational load.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <Card className="bg-secondary border-0">
-                <CardContent className="p-4">
-                  <h4 className="text-sm font-medium text-foreground mb-2">What AI Does at Equals</h4>
-                  <ul className="space-y-1.5 text-xs">
-                    <li>- Writes 90%+ of production code</li>
-                    <li>- Generates and optimises ad creative</li>
-                    <li>- Moderates content in 40+ languages</li>
-                    <li>- Handles user support at scale</li>
-                    <li>- Powers recommendations and personalisation</li>
-                    <li>- Runs identity verification workflows</li>
-                    <li>- Manages ambassador coordination</li>
-                    <li>- Analyses data and generates reports</li>
-                  </ul>
-                </CardContent>
-              </Card>
-              <Card className="bg-secondary border-0">
-                <CardContent className="p-4">
-                  <h4 className="text-sm font-medium text-foreground mb-2">What Humans Do at Equals</h4>
-                  <ul className="space-y-1.5 text-xs">
-                    <li>- Make architectural and product decisions</li>
-                    <li>- Review and approve AI-generated code</li>
-                    <li>- Negotiate label and industry partnerships</li>
-                    <li>- Define strategy and priorities</li>
-                    <li>- Handle complex edge cases</li>
-                    <li>- Build relationships with artists and labels</li>
-                    <li>- Design the user experience</li>
-                    <li>- Set the creative and brand direction</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </Section>
   );
 }
