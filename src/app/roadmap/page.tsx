@@ -51,7 +51,7 @@ export default function RoadmapPage() {
 
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
               <p>
-                Equals has achieved 9x MAU growth in 6 months, going from ~50K in November 2025 to 530K by May 2026.
+                Equals has achieved 9x MAU growth in 6 months, going from ~60K in November 2025 to 530K by May 2026.
                 The growth curve is accelerating, not flattening. Daily active users have grown from under 4K to over 80K
                 in the same period. Users spend 35 minutes per day on the app - comparable to Instagram and TikTok.
               </p>

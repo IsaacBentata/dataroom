@@ -70,7 +70,7 @@ const revenueSummary = [
   { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "61.3%" },
   { stream: "Subscriptions", arpu: "$6.12", annual: "$612M", share: "31.3%" },
   { stream: "Commerce", arpu: "$0.78", annual: "$78M", share: "4.0%" },
-  { stream: "Label Services", arpu: "$0.40", annual: "$40M", share: "2.0%" },
+  { stream: "Label Services", arpu: "$0.40", annual: "$40M", share: "2.1%" },
   { stream: "Live Experiences", arpu: "$0.20", annual: "$20M", share: "1.0%" },
   { stream: "Ticketing", arpu: "$0.06", annual: "$6M", share: "0.3%" },
 ];
