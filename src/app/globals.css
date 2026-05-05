@@ -172,6 +172,55 @@ body {
   to { opacity: 1; }
 }
 
+/* Password gate input — placeholder matches dimmed nav-item grey */
+.password-gate-input::placeholder {
+  color: rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+  font-family: var(--font-fair-favorit-mono), monospace;
+  letter-spacing: 0.24px;
+  opacity: 1;
+}
+
+/* "Incorrect" message fades in with the same easing as menu/player. */
+@keyframes password-gate-error-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.password-gate-error {
+  opacity: 0;
+  animation: password-gate-error-fade 600ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .password-gate-error {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Vinyl player entrance — matches the AnimateText easing/timing so the pill
+ * arrives in step with the home-page menu text. Opacity-only so it doesn't
+ * fight the wrapper's positioning transform on the pinned variant. */
+@keyframes vinyl-player-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.vinyl-player-enter {
+  opacity: 0;
+  animation: vinyl-player-fade-in 1500ms cubic-bezier(0.32, 0.72, 0, 1) 0ms forwards;
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vinyl-player-enter {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* Force bold-black inline labels past the .minimal-preview cascade.
  * Need higher specificity than `.minimal-preview .bg-secondary *` (0,2,1). */
 .key-insight-label,
@@ -626,6 +675,16 @@ html:has(.feature-snap),
   max-width: 100%;
   height: auto;
   border-radius: 4px;
+}
+
+/* Team member company logos — keep at intrinsic sized small height */
+img.team-logo,
+.minimal-preview img.team-logo {
+  height: 16px !important;
+  width: auto !important;
+  max-width: 80px !important;
+  border-radius: 0 !important;
+  object-fit: contain;
 }
 
 /* Remove gradient backgrounds */

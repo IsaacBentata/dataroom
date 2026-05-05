@@ -291,6 +291,7 @@ export const teamMembers = [
       "Core contributor to the engineering team and architect of the platform's recommendation system across all dimensions.",
     ],
     linkedin: "https://www.linkedin.com/in/isaac-kamlish-a0901088/",
+    logo: "/team-logos/IG_logo.png",
     song: { title: "Runaway", artist: "Kanye West", cover: "/team-songs/runaway.jpeg" },
   },
   {
@@ -310,6 +311,7 @@ export const teamMembers = [
       "Leads the engineering team and co-leads product development alongside Isaac Kamlish.",
     ],
     linkedin: "https://www.linkedin.com/in/isaacbc/",
+    logo: "/team-logos/goldman_logo.png",
     song: { title: "Romeo and Juliet", artist: "Dire Straits", cover: "/team-songs/romeo-juliet.jpeg" },
   },
   {
@@ -325,6 +327,7 @@ export const teamMembers = [
       "As a founder, built and launched his own product from the ground up with end-to-end ownership across product and execution.",
     ],
     linkedin: "https://www.linkedin.com/in/nacoki/",
+    logo: "/team-logos/Nike_logo.png",
     song: { title: "Automatic", artist: "Hikaru Utada", cover: "/team-songs/ab67616d0000b2734fa36b14a276fe560940baa0.jpeg" },
   },
   {
@@ -343,6 +346,7 @@ export const teamMembers = [
       "At Equals: drives the full mobile development lifecycle, scalable ecosystem design, and integration with global music content providers.",
     ],
     linkedin: "https://www.linkedin.com/in/cesaenzv/",
+    logo: "/team-logos/rappi_BIG.D-07f475bf.png",
     song: { title: "Tabaco y Chanel", artist: "Bacilos", cover: "/team-songs/ab67616d0000b273508f6cb8971fc173e1b6f26f.jpeg" },
   },
   {
@@ -361,6 +365,7 @@ export const teamMembers = [
       "Built his own streaming application, bringing first-hand knowledge of the platform and business side of running a consumer app.",
     ],
     linkedin: "",
+    logo: "/team-logos/solana-sol-logo.png",
     song: { title: "Pedro", artist: "Raffaella Carrà", cover: "/team-songs/maxresdefault.jpg" },
   },
   {
@@ -377,6 +382,7 @@ export const teamMembers = [
       "Shipped at every layer of the stack, from casino gaming engines at Playtech to government digital services at Firmstep.",
     ],
     linkedin: "https://www.linkedin.com/in/ilken/",
+    logo: "/team-logos/nmusic.png",
     song: { title: "In the End", artist: "Linkin Park", cover: "/team-songs/LinkinParkIntheEnd.jpg" },
   },
   {
@@ -394,6 +400,7 @@ export const teamMembers = [
       "Shipped production apps across mobile, web, and blockchain.",
     ],
     linkedin: "https://www.linkedin.com/in/norman-wilde/",
+    logo: "/team-logos/ledger-logo-black-and-white.png",
     song: { title: "Riptide", artist: "Vance Joy", cover: "/team-songs/riptide.jpeg" },
   },
   {
@@ -412,6 +419,7 @@ export const teamMembers = [
       "BSc Genetics (2:1) from UCL - dissertation applied computational eQTL analysis to Crohn's disease-linked genes in R.",
     ],
     linkedin: "https://www.linkedin.com/in/dora-yilmaz-5248851b9/",
+    logo: "/team-logos/NTS-PNG.png",
     song: { title: "Love No More", artist: "The Durutti Column", cover: "/team-songs/love-no-more.jpg" },
   },
 ];

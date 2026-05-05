@@ -277,25 +277,25 @@ export default function GrowthPage() {
         <CardContent>
           <div className="flex items-start gap-8">
             <div className="shrink-0">
-              <div className="flex items-baseline gap-2">
-                <div className="text-4xl font-bold text-accent-green">52%</div>
-                <div
-                  className="stat-delta-green font-bold flex items-center gap-1 whitespace-nowrap"
-                  style={{ fontSize: 11, color: "#00CC78" }}
-                >
-                  <svg width="7" height="7" viewBox="0 0 10 10" aria-hidden style={{ fill: "#00CC78" }}>
-                    <path d="M5 1 L9 8 L1 8 Z" fill="#00CC78" />
-                  </svg>
-                  <span style={{ color: "#00CC78" }}>from 20% last Q</span>
-                </div>
-              </div>
+              <div className="text-4xl font-bold text-accent-green">52%</div>
               <div className="text-xs text-black mt-1">Verification rate</div>
+              <div
+                className="stat-delta-green font-bold flex items-center gap-1 whitespace-nowrap mt-1"
+                style={{ fontSize: 11, color: "#00CC78" }}
+              >
+                <svg width="7" height="7" viewBox="0 0 10 10" aria-hidden style={{ fill: "#00CC78" }}>
+                  <path d="M5 1 L9 8 L1 8 Z" fill="#00CC78" />
+                </svg>
+                <span style={{ color: "#00CC78" }}>from 20% last Q</span>
+              </div>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed flex-1">
               Equals is a human-only social network. Every user must complete identity verification to participate
               and unlock all social features on the platform. The verification rate has improved from 20% in late 2025
               to 52% today as the onboarding flow has been refined - meaning more than half of all users who start
-              onboarding now fully complete it.
+              onboarding now fully complete it. Without this gate our growth numbers would be materially larger,
+              but verification is non-negotiable: it is what keeps Equals a network of real humans rather than
+              another bot-and-burner social app, and it is the foundation every other metric in this data room sits on.
             </p>
           </div>
         </CardContent>

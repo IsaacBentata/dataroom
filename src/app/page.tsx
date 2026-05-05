@@ -7,10 +7,10 @@ import AnimateText from "@/components/AnimateText";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const items = [
-  { href: "/product", label: "Product" },
   { href: "/growth", label: "Growth" },
   { href: "/retention", label: "Retention" },
   { href: "/demographics", label: "Demographics" },
+  { href: "/product", label: "Product" },
   { href: "/music-industry", label: "Music Industry" },
   { href: "/monetisation", label: "Monetisation" },
   { href: "/ai", label: "AI Adoption" },

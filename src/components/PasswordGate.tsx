@@ -1,12 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { useEffect, useRef, useState } from "react";
 
-const CORRECT_PASSWORD = "equals2026";
+const CORRECT_PASSWORD = "Unitetheworld";
 const STORAGE_KEY = "equals-data-room-auth";
 
 export default function PasswordGate({ children }: { children: React.ReactNode }) {
@@ -14,6 +10,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [checking, setChecking] = useState(true);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -21,6 +18,10 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setChecking(false);
   }, []);
+
+  useEffect(() => {
+    if (!checking && !authenticated) inputRef.current?.focus();
+  }, [checking, authenticated]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,11 +35,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   };
 
   if (checking) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-foreground/20 border-t-foreground rounded-full animate-spin" />
-      </div>
-    );
+    return <div className="min-h-screen bg-background" />;
   }
 
   if (authenticated) {
@@ -46,43 +43,71 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
-      <Card className="max-w-md w-full bg-transparent border-0 ring-0 shadow-none">
-        <CardContent>
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold tracking-tight mb-3">EQUALS</h1>
-            <p className="text-muted-foreground text-lg">Series A Data Room</p>
-          </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="password" className="sr-only">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setError(false);
-                }}
-                placeholder="Enter password"
-                autoFocus
-                className="h-12 bg-card border-border text-foreground placeholder:text-muted-foreground"
-              />
-            </div>
+    <section className="fixed inset-0 overflow-hidden bg-background select-none">
+      <div
+        className="absolute top-1/2 left-1/2 z-30"
+        style={{ transform: "translate(-50%, -50%)" }}
+      >
+        <div className="relative">
+          <form onSubmit={handleSubmit} className="flex flex-col items-start">
+            <input
+              id="data-room-password"
+              ref={inputRef}
+              type="text"
+              value={"=".repeat(password.length)}
+              placeholder="Enter Password"
+              onChange={(e) => {
+                const next = e.target.value;
+                if (next.length > password.length) {
+                  const added = next.slice(password.length);
+                  setPassword(password + added);
+                } else {
+                  setPassword(password.slice(0, next.length));
+                }
+                setError(false);
+              }}
+              autoFocus
+              autoComplete="off"
+              spellCheck={false}
+              className="password-gate-input"
+              style={{
+                fontFamily: "var(--font-fair-favorit-mono), monospace",
+                fontWeight: 400,
+                fontSize: 12,
+                lineHeight: "160%",
+                letterSpacing: "0.24px",
+                textTransform: "uppercase",
+                color: "var(--foreground)",
+                background: "transparent",
+                border: 0,
+                outline: "none",
+                padding: 0,
+                margin: 0,
+                width: 220,
+                caretColor: "var(--foreground)",
+              }}
+            />
             {error && (
-              <p className="text-destructive text-sm">Incorrect password. Please try again.</p>
+              <span
+                key={password}
+                className="password-gate-error"
+                style={{
+                  fontFamily: "var(--font-fair-favorit-mono), monospace",
+                  fontWeight: 400,
+                  fontSize: 12,
+                  lineHeight: "160%",
+                  letterSpacing: "0.24px",
+                  textTransform: "uppercase",
+                  color: "rgba(0, 0, 0, 0.3)",
+                  marginTop: 4,
+                }}
+              >
+                Incorrect
+              </span>
             )}
-            <Button type="submit" className="w-full h-12 bg-foreground hover:bg-foreground/90 text-background rounded-xl">
-              Access Data Room
-            </Button>
           </form>
-        </CardContent>
-        <CardFooter className="justify-center border-0 bg-transparent">
-          <p className="text-muted-foreground text-xs text-center">
-            This data room contains confidential information intended for prospective investors only.
-          </p>
-        </CardFooter>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </section>
   );
 }
