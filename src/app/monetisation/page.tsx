@@ -35,7 +35,7 @@ const revenueStreams = [
     color: "text-accent-purple",
     description:
       "Digital Vinyls and merch marketplace. Today, ~2% of users buy at least one Digital Vinyl per quarter. As the product matures and Digital Vinyls become tied to chart positioning, uptake grows - we model 10% of users purchasing regularly at scale, averaging 4 per year at $5 each with ~30% margins. Merch marketplace adds a 15% take rate on $35 average orders.",
-    justification: "Current baseline: 2% quarterly buyer rate. At scale with chart-certified vinyls and gifting mechanics, 10% annual buyer rate is conservative. ~30% margins after licensing costs.",
+    justification: "Current baseline: 2% quarterly buyer rate. Platforms where collectibles are core to the experience see much higher uptake - Roblox sees ~25% of users purchasing virtual items. At scale with chart-certified vinyls and gifting mechanics, 10% annual buyer rate is conservative. ~30% margins after licensing costs.",
   },
   {
     name: "Label Services",
