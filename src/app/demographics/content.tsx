@@ -52,8 +52,9 @@ const continentRaw = [
   { name: "Australia & NZ", value: 22889 },                    // Australia
 ];
 
-// Soft Figma palette — Male blue, Female purple, Non-Binary lime
-const GENDER_COLORS = ["#42B1FA", "#BC78F8", "#D6ED5E"];
+// Soft Figma palette — Male purple, Female soft orange, Non-Binary lime.
+// (Avoiding the stereotypical blue=male / pink=female mapping.)
+const GENDER_COLORS = ["#BC78F8", "#F5A472", "#D6ED5E"];
 const CONTINENT_COLORS = [
   "#0066FF", "#8627FF", "#FF4D00", "#00CC78", "#E84393", "#F5A623",
 ];
@@ -76,7 +77,7 @@ continentRaw.forEach((c, i) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const renderPieLabel = (props: any) => {
   const { name, percent } = props;
-  if (percent < 0.03) return null;
+  if (percent < 0.01) return null;
   return `${name} ${(percent * 100).toFixed(1)}%`;
 };
 

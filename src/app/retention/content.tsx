@@ -147,7 +147,7 @@ export default function RetentionPage() {
                   outerRadius={110}
                   innerRadius={60}
                   dataKey="value"
-                  label={({ name, percent }) => percent < 0.05 ? null : `${name} ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }) => (percent ?? 0) < 0.05 ? null : `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
                   labelLine={false}
                   strokeWidth={0}
                 >

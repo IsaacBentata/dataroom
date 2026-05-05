@@ -24,7 +24,16 @@ export default function RoadmapPage() {
           <div className="absolute left-3 md:left-5 top-1 w-4 h-4 rounded-full bg-accent-green border-4 border-background" />
           <div className="bg-card rounded-2xl border border-accent-green/30 p-5">
             <div className="text-accent-green text-xs font-medium mb-1">Today - May 2026</div>
-            <h3 className="text-lg font-semibold mb-4">Where we are now</h3>
+            <div
+              className="mb-4"
+              style={{
+                fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                fontSize: 12,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "#000",
+              }}
+            >Where we are now</div>
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
               <div className="text-center bg-secondary rounded-xl p-3">
@@ -75,7 +84,16 @@ export default function RoadmapPage() {
           <div className="absolute left-3 md:left-5 top-1 w-4 h-4 rounded-full bg-accent-blue border-4 border-background" />
           <div className="bg-card rounded-2xl border border-accent-blue/30 p-5">
             <div className="text-accent-blue text-xs font-medium mb-1">Q3 2026 - Fan Layer</div>
-            <h3 className="text-lg font-semibold mb-4">1M MAUs</h3>
+            <div
+              className="mb-4"
+              style={{
+                fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                fontSize: 12,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "#000",
+              }}
+            >1M MAUs</div>
 
             {/* KPIs */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
@@ -102,7 +120,16 @@ export default function RoadmapPage() {
             </div>
 
             {/* How We Get There */}
-            <h4 className="text-sm font-medium mb-3">How we get there</h4>
+            <div
+              className="mb-3"
+              style={{
+                fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                fontSize: 12,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "#000",
+              }}
+            >How we get there</div>
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed mb-6">
               <p>
                 The core thesis is simple: every retention metric improves with friend count. The data proves it
@@ -118,7 +145,16 @@ export default function RoadmapPage() {
 
             {/* Product */}
             <div>
-              <h4 className="text-sm font-medium mb-2">Product Milestones</h4>
+              <h4
+                className="mb-2"
+                style={{
+                  fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                  fontSize: 12,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "#000",
+                }}
+              >Product Milestones</h4>
               <ul className="space-y-1.5 text-xs text-muted-foreground">
                 <li>- DSP integration: See friends' Spotify and Apple Music activity inside Equals</li>
                 <li>- Social features gated behind referrals: K-factor flywheel, every user brings their friends</li>
@@ -148,7 +184,16 @@ export default function RoadmapPage() {
           <div className="absolute left-3 md:left-5 top-1 w-4 h-4 rounded-full bg-accent-purple border-4 border-background" />
           <div className="bg-card rounded-2xl border border-accent-purple/30 p-5">
             <div className="text-accent-purple text-xs font-medium mb-1">Q4 2026 - Artist Layer</div>
-            <h3 className="text-lg font-semibold mb-4">2M MAUs</h3>
+            <div
+              className="mb-4"
+              style={{
+                fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                fontSize: 12,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "#000",
+              }}
+            >2M MAUs</div>
 
             {/* KPIs */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
@@ -175,7 +220,16 @@ export default function RoadmapPage() {
             </div>
 
             {/* How We Get There */}
-            <h4 className="text-sm font-medium mb-3">How we get there</h4>
+            <div
+              className="mb-3"
+              style={{
+                fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                fontSize: 12,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "#000",
+              }}
+            >How we get there</div>
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed mb-6">
               <p>
                 By Q4 2026, network effects should be compounding from the Fan Layer investments. The Artist Layer
@@ -191,7 +245,16 @@ export default function RoadmapPage() {
 
             {/* Product */}
             <div>
-              <h4 className="text-sm font-medium mb-2">Product Milestones</h4>
+              <h4
+                className="mb-2"
+                style={{
+                  fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                  fontSize: 12,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "#000",
+                }}
+              >Product Milestones</h4>
               <ul className="space-y-1.5 text-xs text-muted-foreground">
                 <li>- Go-to activation channel for all major labels: Digital Vinyls™ shift from king-maker to table stakes for charting</li>
                 <li>- The IMDB of music reviews: Surface verified user reviews on a public website for organic search acquisition</li>
@@ -220,7 +283,16 @@ export default function RoadmapPage() {
           <div className="absolute left-3 md:left-5 top-1 w-4 h-4 rounded-full bg-accent-orange border-4 border-background" />
           <div className="bg-card rounded-2xl border border-accent-orange/30 p-5">
             <div className="text-accent-orange text-xs font-medium mb-1">2027 - Culture Layer</div>
-            <h3 className="text-lg font-semibold mb-4">10M MAUs</h3>
+            <div
+              className="mb-4"
+              style={{
+                fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                fontSize: 12,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "#000",
+              }}
+            >10M MAUs</div>
 
             {/* KPIs */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
@@ -262,7 +334,16 @@ export default function RoadmapPage() {
 
             {/* Product */}
             <div>
-              <h4 className="text-sm font-medium mb-2">Product Milestones</h4>
+              <h4
+                className="mb-2"
+                style={{
+                  fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
+                  fontSize: 12,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "#000",
+                }}
+              >Product Milestones</h4>
               <ul className="space-y-1.5 text-xs text-muted-foreground">
                 <li>- Exclusive artist content: Behind-the-scenes, unreleased tracks, and artist-only posts</li>
                 <li>- Ticketing and merch aggregation: Surface tickets and merch directly within artist profiles</li>
@@ -361,10 +442,7 @@ export default function RoadmapPage() {
               <div
                 className="flex items-center gap-2 mb-2"
                 style={{
-                  fontFamily: "var(--font-fair-favorit-mono), ui-monospace, Menlo, monospace",
-                  fontSize: 12,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
+                  fontSize: 14,
                   color: "#000",
                 }}
               >
