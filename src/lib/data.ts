@@ -177,12 +177,12 @@ export function parseWauMau() {
 export function parseWeeklyRetentionByFriends() {
   // Weekly retention bracket view, segmented by Friends MatchMade count (rolling 365d).
   // Start event: Verify Successful. Return event: Any Active Event.
-  // Date range: Mar 29 - May 1, 2026. Source: Amplitude ad-hoc query.
-  const weeks = ["W0", "W1", "W2", "W3", "W4", "W5"];
-  const allUsers = [100, 48.5, 37.5, 29.9, 26.8, 19.5];
-  const friends1 = [100, 66.5, 53.4, 44.2, 38.1, 27.8];
-  const friends10 = [100, 79.0, 66.8, 57.4, 50.0, 37.9];
-  const friends50 = [100, 87.5, 77.1, 69.0, 60.8, 47.7];
+  // Chart ID: qkwq1kog. Start date: T-10 weeks. End date: T-3 days.
+  const weeks = ["W0", "W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"];
+  const allUsers = [100, 48.8, 37.6, 30.1, 26.6, 22.8, 20.7, 18.5, 17.8];
+  const friends1 = [100, 65.5, 51.9, 42.2, 36.5, 30.7, 27.7, 24.6, 22.7];
+  const friends10 = [100, 78.1, 64.8, 54.7, 47.7, 40.9, 36.8, 32.9, 29.9];
+  const friends50 = [100, 86.9, 75.6, 66.5, 58.9, 52.1, 47.7, 43.2, 39.7];
   return weeks.map((w, i) => ({
     week: w,
     "All Users": allUsers[i],

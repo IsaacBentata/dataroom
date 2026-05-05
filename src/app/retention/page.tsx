@@ -68,7 +68,7 @@ export default function RetentionPage() {
               <p className="text-sm text-black">
                 Weekly retention segmented by number of friends
                 shows a clear, consistent pattern: the more friends a user adds, the higher their retention
-                at every time horizon. Users with 50+ friends retain at 48% at Week 5 - nearly 2.5x the baseline. This proves the network effect is working.
+                at every time horizon. Users with 50+ friends retain at 40% at Week 8 - over 2x the baseline. This proves the network effect is working.
               </p>
             </div>
           </div>
