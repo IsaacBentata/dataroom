@@ -198,8 +198,10 @@ export default function DemographicsPage() {
           <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
             <p className="text-muted-foreground text-sm leading-relaxed">
                 {genZPct}% of users are Gen Z (14-29), with the single largest cohort being 18-year-olds.
-                The peak at 18 aligns with the age when music fandom is most intense and identity-forming. This is the demographic
-                every music label, streaming service, and brand wants to reach.
+                The peak at 18 aligns with the age when music fandom is most intense and identity-forming.
+                Gen Z are the stewards of culture - they set the trends, define what's cool, and drive the conversations
+                that shape mainstream music. They are the demographic every music label, streaming service, and brand
+                wants to reach, and Equals is where they congregate.
               </p>
           </div>
         </CardContent>
