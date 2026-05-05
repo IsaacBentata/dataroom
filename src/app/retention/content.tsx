@@ -173,9 +173,9 @@ export default function RetentionPage() {
 
       {/* ── Stat callouts ── */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-10">
-        <StatCallout value="48.8%" label="W1 Retention (Onboarded Users)" color="text-accent-blue" />
-        <StatCallout value="35 min" label="Daily Time Spent (Onboarded Users)" color="text-accent-orange" />
-        <StatCallout value="30%+" label="Return 5+ Days/Week (Onboarded Users)" color="text-accent-green" />
+        <StatCallout value="48.8%" label="W1 Retention" color="text-accent-blue" />
+        <StatCallout value="35 min" label="Daily Time Spent" color="text-accent-orange" />
+        <StatCallout value="30%+" label="Return 5+ Days/Week" color="text-accent-green" />
       </div>
 
       {/* ── Time Spent ── */}
