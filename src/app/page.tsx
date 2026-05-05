@@ -88,7 +88,7 @@ function primeMediaAutoplay(href: string) {
     v.autoplay = true;
     v.loop = true;
     v.preload = "auto";
-    // Keep videos in viewport (top-left corner, 1x1, invisible) — Safari
+    // Keep videos in viewport (top-left corner, 1x1, invisible) - Safari
     // and some Chrome versions block autoplay for off-viewport videos
     // even when muted. opacity:0 + 1x1 keeps them visually invisible.
     v.style.cssText =
@@ -96,7 +96,7 @@ function primeMediaAutoplay(href: string) {
     document.body.appendChild(v);
     v.src = src;
     // play() inside the click handler captures the user gesture for ALL
-    // feature videos — they all stay primed and will be reused by
+    // feature videos - they all stay primed and will be reused by
     // PhoneVideo3D's useScreenTexture when the texture for that src is needed.
     void v.play().catch(() => {});
     // Retry on metadata/canplay in case the initial play() raced the load.
@@ -345,7 +345,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Full-page content panel — fills the right side, soft-blur entrance */}
+      {/* Full-page content panel - fills the right side, soft-blur entrance */}
       {isPreviewing && PreviewComponent && (
         <div
           key={previewIndex}

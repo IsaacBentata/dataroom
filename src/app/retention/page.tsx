@@ -8,8 +8,7 @@ import DataChart from "@/components/DataChart";
 import DownloadAllButton from "@/components/DownloadAllButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  parseRetentionByFriends,
-  parseRetentionOverTime,
+  parseWeeklyRetentionByFriends,
   parseWeeklyRetention,
   parsePowerCurve,
   parseEngagementExcludingCurrent,
@@ -17,19 +16,21 @@ import {
   parseSessionsPerUser,
   parseAppOpensPerUser,
   parseWauMau,
+  parseFriendsMatchMadeMonthly,
+  parseChatMessagesSentMonthly,
 } from "@/lib/data";
 
 export default function RetentionPage() {
-  const retentionByFriends = useMemo(() => parseRetentionByFriends(), []);
-  const retentionOverTime = useMemo(() => parseRetentionOverTime(), []);
+  const weeklyRetentionByFriends = useMemo(() => parseWeeklyRetentionByFriends(), []);
   const weeklyRetention = useMemo(() => parseWeeklyRetention(), []);
   const powerCurve = useMemo(() => parsePowerCurve(), []);
   const engagement = useMemo(() => parseEngagementExcludingCurrent(), []);
-
   const timeSpentPerUser = useMemo(() => parseTimeSpentPerUser(), []);
   const sessionsPerUser = useMemo(() => parseSessionsPerUser(), []);
   const appOpensPerUser = useMemo(() => parseAppOpensPerUser(), []);
   const wauMau = useMemo(() => parseWauMau(), []);
+  const friendsMatchMade = useMemo(() => parseFriendsMatchMadeMonthly(), []);
+  const chatMessages = useMemo(() => parseChatMessagesSentMonthly(), []);
 
   return (
     <Section>
@@ -41,39 +42,82 @@ export default function RetentionPage() {
         />
         <DownloadAllButton
           datasets={[
-            { name: "Retention Over Time", data: retentionOverTime },
-            { name: "Retention by Friends Added", data: retentionByFriends },
+            { name: "Weekly Retention by Friends", data: weeklyRetentionByFriends },
             { name: "Weekly Retention Evolution", data: weeklyRetention },
             { name: "Power Curve Stickiness", data: powerCurve },
             { name: "Engagement per User", data: engagement },
-
             { name: "Time Spent per User", data: timeSpentPerUser },
             { name: "Sessions per User", data: sessionsPerUser },
             { name: "App Opens per User", data: appOpensPerUser },
             { name: "WAU/MAU Stickiness", data: wauMau },
+            { name: "Friendships Made Monthly", data: friendsMatchMade },
+            { name: "Chat Messages Sent Monthly", data: chatMessages },
           ]}
           filename="equals-retention-data"
         />
       </div>
 
+      {/* ── Weekly Retention by Friends (hero chart) ── */}
+      <Card className="bg-card mb-10">
+        <CardHeader>
+          <div className="flex gap-6">
+            <div style={{ flex: "0 0 30%" }}>
+              <CardTitle className="font-mono">The network effect chart</CardTitle>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm text-black">
+                Weekly retention segmented by number of friends
+                shows a clear, consistent pattern: the more friends a user adds, the higher their retention
+                at every time horizon. Users with 50+ friends retain at 40% at Week 8 - over 2x the baseline. This proves the network effect is working.
+              </p>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <DataChart
+            className="mt-4 pt-3 border-0 p-0 shadow-none ring-0"
+            data={weeklyRetentionByFriends}
+            series={[
+              { key: "All Users", name: "All Users", color: "rgba(0,0,0,0.35)" },
+              { key: "1+ Friends", name: "1+ Friends", color: "rgba(0, 204, 120, 1)" },
+              { key: "10+ Friends", name: "10+ Friends", color: "#0066FF" },
+              { key: "50+ Friends", name: "50+ Friends", color: "#8627FF" },
+            ]}
+            xKey="week"
+            title="Weekly Retention by Friends Added"
+            subtitle="Weekly retention for onboarded users, segmented by friend count"
+            type="line"
+            height={380}
+            yAxisFormatter={(v: number) => `${v}%`}
+            tooltipFormatter={(v: number) => `${v}%`}
+            showDateFilter={false}
+          />
+        </CardContent>
+      </Card>
+
+      {/* ── Time Spent (second chart) ── */}
       <DataChart
-        data={retentionOverTime}
+        data={timeSpentPerUser}
         series={[
-          { key: "D1", name: "Day 1", color: "rgba(0, 204, 120, 1)" },
-          { key: "D7", name: "Day 7", color: "#0066FF" },
-          { key: "D14", name: "Day 14", color: "#8627FF" },
-          { key: "D30", name: "Day 30", color: "#FF4D00" },
+          { key: "Minutes / User", name: "Minutes per User per Day", color: "rgba(0, 204, 120, 1)" },
         ]}
-        xKey="period"
-        title="Retention Over Time"
-        subtitle="N-Day retention for verified users, improving month over month"
-        type="line"
+        xKey="date"
+        title="Time Spent per User"
+        subtitle="30-day rolling avg of daily session time per onboarded user (minutes)"
+        type="area"
         height={320}
-        yAxisFormatter={(v: number) => `${v}%`}
-        tooltipFormatter={(v: number) => `${v}%`}
+        showDateFilter={false}
       />
 
-      <Card className="bg-card my-10 mb-6">
+      {/* ── Stat callouts ── */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-10">
+        <StatCallout value="33%" label="D7 Retention (Onboarded Users)" color="text-accent-blue" />
+        <StatCallout value="35 min" label="Daily Time Spent (Onboarded Users)" color="text-accent-orange" />
+        <StatCallout value="30%+" label="Return 5+ Days/Week (Onboarded Users)" color="text-accent-green" />
+      </div>
+
+      {/* ── Long-term stickiness (weekly retention evolution) ── */}
+      <Card className="bg-card mb-6">
         <CardHeader>
           <CardTitle>Long-term stickiness</CardTitle>
         </CardHeader>
@@ -93,7 +137,7 @@ export default function RetentionPage() {
             ]}
             xKey="week"
             title="Weekly Retention Evolution"
-            subtitle="How weekly retention has improved over time for verified users"
+            subtitle="How weekly retention has improved over time for onboarded users"
             type="line"
             height={320}
             yAxisFormatter={(v: number) => `${v}%`}
@@ -102,63 +146,8 @@ export default function RetentionPage() {
         </CardContent>
       </Card>
 
-      <Card className="bg-card my-10">
-        <CardHeader>
-          <div className="flex gap-6">
-            <div style={{ flex: "0 0 30%" }}>
-              <CardTitle className="font-mono">The network effect chart</CardTitle>
-            </div>
-            <div className="flex-1">
-              <p className="text-sm text-black">
-                This is the most important chart in the data room. Retention by number of friends added
-                shows a clear, consistent pattern: the more friends a user adds, the higher their retention
-                at every time horizon. Users with 50+ friends retain at 36% on D30 - nearly 3x the baseline. This proves the network effect is working.
-              </p>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <DataChart
-            className="mt-4 pt-3 border-0 p-0 shadow-none ring-0"
-            data={retentionByFriends}
-            series={[
-              { key: "All Users", name: "All Users", color: "rgba(0,0,0,0.35)" },
-              { key: "1+ Friends", name: "1+ Friends", color: "rgba(0, 204, 120, 1)" },
-              { key: "10+ Friends", name: "10+ Friends", color: "#0066FF" },
-              { key: "50+ Friends", name: "50+ Friends", color: "#8627FF" },
-            ]}
-            xKey="day"
-            title="Retention by Friends Added (D0 through D30)"
-            subtitle="N-Day retention for verified users, segmented by friend count - all days through D30"
-            type="line"
-            height={380}
-            yAxisFormatter={(v: number) => `${v}%`}
-            tooltipFormatter={(v: number) => `${v}%`}
-            showDateFilter={false}
-          />
-        </CardContent>
-      </Card>
-
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-10">
-        <StatCallout value="33%" label="D7 Retention (Verified Users)" color="text-accent-blue" />
-        <StatCallout value="37 min" label="Daily Time Spent (Verified Users)" color="text-accent-orange" />
-        <StatCallout value="30%+" label="Return 5+ Days/Week (Verified Users)" color="text-accent-green" />
-      </div>
-
+      {/* ── Sessions + App Opens ── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <DataChart
-          data={timeSpentPerUser}
-          series={[
-            { key: "Minutes / User", name: "Minutes per User per Day", color: "rgba(0, 204, 120, 1)" },
-          ]}
-          xKey="date"
-          title="Time Spent per User"
-          subtitle="30-day rolling avg of daily session time per verified user (minutes)"
-          type="area"
-          height={280}
-          showDateFilter={false}
-        />
-
         <DataChart
           data={sessionsPerUser}
           series={[
@@ -166,26 +155,27 @@ export default function RetentionPage() {
           ]}
           xKey="date"
           title="Sessions per User"
-          subtitle="30-day rolling avg of daily sessions per verified user"
+          subtitle="30-day rolling avg of daily sessions per onboarded user"
           type="area"
+          height={280}
+          showDateFilter={false}
+        />
+
+        <DataChart
+          data={appOpensPerUser}
+          series={[
+            { key: "App Opens / User", name: "App Opens per User per Day", color: "#FF4D00" },
+          ]}
+          xKey="date"
+          title="App Opens per User"
+          subtitle="30-day rolling avg of Application Opened events per onboarded daily active user"
+          type="line"
           height={280}
           showDateFilter={false}
         />
       </div>
 
-      <DataChart
-        data={appOpensPerUser}
-        series={[
-          { key: "App Opens / User", name: "App Opens per User per Day", color: "#FF4D00" },
-        ]}
-        xKey="date"
-        title="App Opens per User"
-        subtitle="30-day rolling avg of Application Opened events per verified daily active user"
-        type="line"
-        height={280}
-        showDateFilter={false}
-      />
-
+      {/* ── Power Curve ── */}
       <DataChart
         data={powerCurve}
         series={[
@@ -204,6 +194,7 @@ export default function RetentionPage() {
         tooltipFormatter={(v: number) => `${v}%`}
       />
 
+      {/* ── WAU/MAU ── */}
       <DataChart
         data={wauMau}
         series={[
@@ -211,7 +202,7 @@ export default function RetentionPage() {
         ]}
         xKey="month"
         title="WAU / MAU Stickiness"
-        subtitle="Averaging 46% in the last month, up from 33% last quarter — crossed into the 'Great' tier of consumer-social stickiness"
+        subtitle="Averaging 46% in the last month, up from 33% last quarter - crossed into the 'Great' tier of consumer-social stickiness"
         type="line"
         height={320}
         yAxisFormatter={(v: number) => `${v}%`}
@@ -219,6 +210,7 @@ export default function RetentionPage() {
         showDateFilter={false}
       />
 
+      {/* ── Engagement per User ── */}
       <DataChart
         data={engagement}
         series={[
@@ -230,6 +222,36 @@ export default function RetentionPage() {
         type="bar"
         height={280}
         showDateFilter={false}
+      />
+
+      {/* ── Friendships Made Monthly ── */}
+      <DataChart
+        data={friendsMatchMade}
+        series={[
+          { key: "Friendships Made", name: "Friendships Made", color: "#0066FF" },
+        ]}
+        xKey="month"
+        title="Friendships Made per Month"
+        subtitle="Total new friendships formed on the platform each month. The social graph is growing exponentially - from 186K friendships in Oct 2025 to 4.3M in Apr 2026."
+        type="bar"
+        height={320}
+        yAxisFormatter={(v: number) => v >= 1000000 ? `${(v / 1000000).toFixed(1)}M` : `${(v / 1000).toFixed(0)}K`}
+        tooltipFormatter={(v: number) => v.toLocaleString()}
+      />
+
+      {/* ── Chat Messages Sent Monthly ── */}
+      <DataChart
+        data={chatMessages}
+        series={[
+          { key: "Messages Sent", name: "Messages Sent", color: "#8627FF" },
+        ]}
+        xKey="month"
+        title="Chat Messages Sent per Month"
+        subtitle="Total messages sent across all chat surfaces. From 2.2M in Oct 2025 to 28.4M in Apr 2026 - a 13x increase in 6 months."
+        type="bar"
+        height={320}
+        yAxisFormatter={(v: number) => v >= 1000000 ? `${(v / 1000000).toFixed(0)}M` : `${(v / 1000).toFixed(0)}K`}
+        tooltipFormatter={(v: number) => v.toLocaleString()}
       />
     </Section>
   );

@@ -355,7 +355,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
           </div>
         </div>
 
-        {/* Play / Pause button — won't initiate drag */}
+        {/* Play / Pause button - won't initiate drag */}
         <button
           type="button"
           data-no-drag
