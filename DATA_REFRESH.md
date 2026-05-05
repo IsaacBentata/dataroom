@@ -235,6 +235,22 @@ Each chart has fixed start dates and relative end dates. "Today" means the day t
 
 ---
 
+### 17. Friend Count Distribution
+
+- **Chart ID:** `m6gb7rrt`
+- **Type:** Events Segmentation (uniques, monthly)
+- **Event:** Any Active Event, segmented by Verify Successful >= 1 AND Friends MatchMade >= 0/1/10/50 (rolling 365d)
+- **Start date:** Last 30 Days
+- **End date:** Use most recent complete month
+- **Data location:** `src/lib/data.ts` -> `parseFriendCountDistribution()`
+- **Note:** Results are cumulative (>=). Calculate exclusive buckets: 0 friends = All verified - 1+; 1-9 = 1+ minus 10+; 10-49 = 10+ minus 50+; 50+ = 50+.
+- **Amplitude query definition:**
+  ```json
+  {"type": "eventsSegmentation", "app": "598644", "name": "Friend Count Distribution", "params": {"range": "Last 30 Days", "events": [{"event_type": "_active", "filters": [], "group_by": []}], "metric": "uniques", "countGroup": "User", "groupBy": [], "interval": 30, "segments": [{"conditions": [{"op": ">=", "type": "event", "value": 1, "filters": [], "time_type": "rolling", "event_type": "Verify Successful", "time_value": 365}]}, {"conditions": [{"op": ">=", "type": "event", "value": 1, "filters": [], "time_type": "rolling", "event_type": "Verify Successful", "time_value": 365}, {"op": ">=", "type": "event", "value": 1, "filters": [], "time_type": "rolling", "event_type": "Friends MatchMade", "time_value": 365}]}, {"conditions": [{"op": ">=", "type": "event", "value": 1, "filters": [], "time_type": "rolling", "event_type": "Verify Successful", "time_value": 365}, {"op": ">=", "type": "event", "value": 10, "filters": [], "time_type": "rolling", "event_type": "Friends MatchMade", "time_value": 365}]}, {"conditions": [{"op": ">=", "type": "event", "value": 1, "filters": [], "time_type": "rolling", "event_type": "Verify Successful", "time_value": 365}, {"op": ">=", "type": "event", "value": 50, "filters": [], "time_type": "rolling", "event_type": "Friends MatchMade", "time_value": 365}]}], "timezone": "UTC"}}
+  ```
+
+---
+
 ### 16. WAU/MAU Stickiness
 
 - **Type:** Events Segmentation (weekly active users / monthly active users ratio)
@@ -266,3 +282,4 @@ Each chart has fixed start dates and relative end dates. "Today" means the day t
 | 14 | Chat Messages Sent Monthly | `wk3s20qy` | Oct 1, 2025 | End of prior month | No |
 | 15 | Weekly Retention by Friends | `qkwq1kog` | T-10 weeks | T-3 days | YES |
 | 16 | WAU/MAU Stickiness | ad-hoc | Sep 1, 2025 | End of prior month | No |
+| 17 | Friend Count Distribution | `m6gb7rrt` | Last 30 Days | Most recent complete month | No |

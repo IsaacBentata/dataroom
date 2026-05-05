@@ -174,6 +174,18 @@ export function parseWauMau() {
   }));
 }
 
+export function parseFriendCountDistribution() {
+  // Active onboarded users by friend count bucket. Chart ID: m6gb7rrt.
+  // Derived from cumulative segments: All verified active, 1+, 10+, 50+ Friends MatchMade (rolling 365d).
+  // Range: Last 30 Days (use the most recent complete month).
+  return [
+    { name: "0 friends", value: 66180, color: "rgba(0,0,0,0.35)" },
+    { name: "1-9 friends", value: 67892, color: "rgba(0, 204, 120, 1)" },
+    { name: "10-49 friends", value: 58336, color: "#0066FF" },
+    { name: "50+ friends", value: 42296, color: "#8627FF" },
+  ];
+}
+
 export function parseWeeklyRetentionByFriends() {
   // Weekly retention bracket view, segmented by Friends MatchMade count (rolling 365d).
   // Start event: Verify Successful. Return event: Any Active Event.

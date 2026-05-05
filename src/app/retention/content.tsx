@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import StatCallout from "@/components/StatCallout";
@@ -8,6 +9,7 @@ import DataChart from "@/components/DataChart";
 import DownloadAllButton from "@/components/DownloadAllButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  parseFriendCountDistribution,
   parseWeeklyRetentionByFriends,
   parseWeeklyRetention,
   parsePowerCurve,
@@ -20,6 +22,8 @@ import {
 } from "@/lib/data";
 
 export default function RetentionPage() {
+  const friendDistribution = useMemo(() => parseFriendCountDistribution(), []);
+  const friendTotal = useMemo(() => friendDistribution.reduce((s, d) => s + d.value, 0), [friendDistribution]);
   const weeklyRetentionByFriends = useMemo(() => parseWeeklyRetentionByFriends(), []);
   const weeklyRetention = useMemo(() => parseWeeklyRetention(), []);
   const powerCurve = useMemo(() => parsePowerCurve(), []);
@@ -119,6 +123,51 @@ export default function RetentionPage() {
             tooltipFormatter={(v: number) => `${v}%`}
             showDateFilter={false}
           />
+        </CardContent>
+      </Card>
+
+      {/* ── Friend Count Distribution ── */}
+      <Card className="bg-card mb-10">
+        <CardHeader>
+          <CardTitle>How many friends do users have?</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+            72% of active onboarded users have at least one friend. 43% have 10 or more. 18% have 50+ friends -
+            the cohort that retains at 40% at Week 8. As k-factor mechanics are deployed, these distributions
+            shift upward, directly improving overall retention.
+          </p>
+          <div className="h-[320px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={friendDistribution}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={110}
+                  innerRadius={60}
+                  dataKey="value"
+                  label={({ name, percent }) => percent < 0.05 ? null : `${name} ${(percent * 100).toFixed(0)}%`}
+                  labelLine={false}
+                  strokeWidth={0}
+                >
+                  {friendDistribution.map((d) => (
+                    <Cell key={d.name} fill={d.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", borderRadius: "8px" }}
+                  itemStyle={{ color: "var(--foreground)" }}
+                  formatter={(value: unknown, name: unknown) => {
+                    const v = Number(value);
+                    const pct = ((v / friendTotal) * 100).toFixed(1);
+                    return [`${pct}%`, String(name)];
+                  }}
+                />
+                <Legend wrapperStyle={{ color: "var(--muted-foreground)", fontSize: "12px" }} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </CardContent>
       </Card>
 
