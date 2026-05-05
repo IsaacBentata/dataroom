@@ -36,12 +36,12 @@ export default function RoadmapPage() {
                 <div className="text-xs text-muted-foreground">DAUs</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-green">33%</div>
-                <div className="text-xs text-muted-foreground">D7 Retention</div>
+                <div className="text-xl font-bold text-accent-green">27%</div>
+                <div className="text-xs text-muted-foreground">W4 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-green">~20%</div>
-                <div className="text-xs text-muted-foreground">D30 Retention</div>
+                <div className="text-xl font-bold text-accent-green">18%</div>
+                <div className="text-xs text-muted-foreground">W8 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
                 <div className="text-xl font-bold text-accent-green">35 min</div>
@@ -51,7 +51,7 @@ export default function RoadmapPage() {
 
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
               <p>
-                Equals has achieved 9x MAU growth in 6 months, going from ~60K in November 2025 to 530K by May 2026.
+                Equals has achieved 9x MAU growth in 6 months, going from ~60K at the beginning of November 2025 to 530K by May 2026.
                 The growth curve is accelerating, not flattening. Daily active users have grown from under 4K to over 80K
                 in the same period. Users spend 35 minutes per day on the app - comparable to Instagram and TikTok.
               </p>
@@ -88,12 +88,12 @@ export default function RoadmapPage() {
                 <div className="text-xs text-muted-foreground">DAUs</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-blue">38%+</div>
-                <div className="text-xs text-muted-foreground">D7 Retention</div>
+                <div className="text-xl font-bold text-accent-blue">32%+</div>
+                <div className="text-xs text-muted-foreground">W4 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-blue">25%+</div>
-                <div className="text-xs text-muted-foreground">D30 Retention</div>
+                <div className="text-xl font-bold text-accent-blue">22%+</div>
+                <div className="text-xs text-muted-foreground">W8 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
                 <div className="text-xl font-bold text-accent-blue">40 min</div>
@@ -161,12 +161,12 @@ export default function RoadmapPage() {
                 <div className="text-xs text-muted-foreground">DAUs</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-purple">42%+</div>
-                <div className="text-xs text-muted-foreground">D7 Retention</div>
+                <div className="text-xl font-bold text-accent-purple">38%+</div>
+                <div className="text-xs text-muted-foreground">W4 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-purple">30%+</div>
-                <div className="text-xs text-muted-foreground">D30 Retention</div>
+                <div className="text-xl font-bold text-accent-purple">27%+</div>
+                <div className="text-xs text-muted-foreground">W8 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
                 <div className="text-xl font-bold text-accent-purple">45 min</div>
@@ -233,12 +233,12 @@ export default function RoadmapPage() {
                 <div className="text-xs text-muted-foreground">DAUs</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-orange">50%+</div>
-                <div className="text-xs text-muted-foreground">D7 Retention</div>
+                <div className="text-xl font-bold text-accent-orange">45%+</div>
+                <div className="text-xs text-muted-foreground">W4 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
-                <div className="text-xl font-bold text-accent-orange">40%+</div>
-                <div className="text-xs text-muted-foreground">D30 Retention</div>
+                <div className="text-xl font-bold text-accent-orange">35%+</div>
+                <div className="text-xs text-muted-foreground">W8 Retention</div>
               </div>
               <div className="text-center bg-secondary rounded-xl p-3">
                 <div className="text-xl font-bold text-accent-orange">50 min</div>
