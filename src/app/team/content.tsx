@@ -16,7 +16,7 @@ export default function TeamPage() {
         <PageHeader
           label="Team"
           title="A team of 8 doing the work of 30"
-          subtitle="Deliberately lean and high-output. No middle management. Founders hands-on across every function. Over 90% of production code written by AI agents, giving our team the output of one three times its size."
+          subtitle="Deliberately lean. No middle management. Founders hands-on across every function. 90%+ of production code written by AI agents, giving 4 engineers the output of 12."
         />
       </div>
 
@@ -26,11 +26,10 @@ export default function TeamPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm leading-relaxed">
-            The founding team previously built Fair.xyz together, which grew to become the largest NFT minting
-            platform in Europe. Fair.xyz processed millions of transactions and served some of the biggest
-            brands and creators in the space. The team applied the same technical rigour and speed of execution
-            to pivot into Equals - bringing deep experience in building consumer-facing products, managing
-            high-throughput systems, and shipping rapidly with a small team.
+            The founding team built Fair.xyz together, which became Europe's largest NFT minting
+            platform. Fair.xyz processed millions of transactions and served major
+            brands and creators. Same technical rigour and speed applied to Equals,
+            with direct experience in consumer products, high-throughput systems, and shipping fast with a small team.
           </p>
         </CardContent>
       </Card>

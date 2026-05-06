@@ -28,7 +28,7 @@ export default function MusicIndustryPage() {
       <div className="mb-12">
         <PageHeader
           label="Music Industry"
-          title="The distribution layer the music industry has been missing"
+          title="The missing distribution layer for music"
         />
       </div>
 
@@ -76,7 +76,7 @@ export default function MusicIndustryPage() {
         </CardContent>
       </Card>
 
-      {/* Digital Vinyls - New Asset Class */}
+      {/* Digital Vinyls™ - New Asset Class */}
       <Card className="bg-card mb-6">
         <CardHeader>
           <CardTitle>Digital Vinyl™ - A New Asset Class for Music</CardTitle>
@@ -84,9 +84,9 @@ export default function MusicIndustryPage() {
         <CardContent>
           {/* Full-width intro */}
           <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-            We have created a new asset class for the music industry. Digital Vinyl™ - a trademark Equals owns -
-            is a rebrand of digital downloads - turning them into displayable collectibles that fans pin to their
-            profiles. This empowers superfans to take their favourite artists to the top of the charts while
+            We created a new asset class for music. Digital Vinyl™ (a trademark Equals owns)
+            is a rebrand of digital downloads, turned into displayable collectibles that fans pin to their
+            profiles. Superfans buy them to push their favourite artists up the charts while
             displaying their fandom.
           </p>
 
@@ -97,7 +97,7 @@ export default function MusicIndustryPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/digital-vinyl-hero.png"
-                alt="Digital Vinyl"
+                alt="Digital Vinyl™"
                 className="w-full block"
               />
             </div>
@@ -159,9 +159,9 @@ export default function MusicIndustryPage() {
               </div>
 
               <p className="text-muted-foreground text-sm leading-relaxed mt-4">
-                This means a small, engaged fanbase on Equals can have the same chart impact as millions of passive
-                listeners. Labels no longer need to rely solely on mass streaming volume - they can activate their most
-                dedicated fans to drive chart performance directly.
+                A small, engaged fanbase on Equals can match the chart impact of millions of passive
+                listeners. Labels no longer need to rely solely on mass streaming volume. They activate their most
+                dedicated fans to move charts directly.
               </p>
             </div>
           </div>
@@ -220,9 +220,8 @@ export default function MusicIndustryPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm mb-5">
-            Equals is where the most passionate music fans gather. These are not passive followers - these are verified
-            humans actively engaging in artist communities. Equals consistently outperforms artists' official Discord channels, the incumbent
-            for online artist communities, across the biggest names in music.
+            Equals is where the most passionate music fans gather. Verified humans, actively engaging in artist communities. Equals consistently outperforms artists' official Discord channels (the incumbent
+            for online artist communities) across the biggest names in music.
           </p>
 
           <div className="overflow-x-auto">
@@ -254,8 +253,8 @@ export default function MusicIndustryPage() {
           </div>
 
           <p className="text-muted-foreground text-xs mt-4">
-            Equals communities are built on verified, active engagement - not bots, not idle accounts. This gives labels
-            and artists a reliable, high-signal audience to activate.
+            All Equals communities are verified, active users. No bots, no idle accounts. Labels
+            and artists get a high-signal audience they can activate.
           </p>
         </CardContent>
       </Card>
@@ -267,23 +266,23 @@ export default function MusicIndustryPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm mb-2">
-            Equals has the deepest fandom data in music. We have pre-trained our <span className="font-semibold text-foreground">Universe 1</span> model
-            on this proprietary dataset to unlock insights no other platform can offer.
+            Equals has the deepest fandom data in music. We pre-trained our <span className="font-semibold text-foreground">Universe 1</span> model
+            on this proprietary dataset. No other platform has access to these insights.
           </p>
 
           <div className="bg-secondary rounded-lg p-5 mb-5 mt-4">
             <p className="key-insight-label mb-3">The key insight</p>
             <p className="text-sm text-muted-foreground">
-              Equals does not just know what music fans listen to - every streaming platform has that. Equals knows
+              Every streaming platform knows what fans listen to. Equals knows
               how fans <span className="font-semibold text-foreground">talk</span> about music,
               how they <span className="font-semibold text-foreground">think</span> about artists,
               and how they <span className="font-semibold text-foreground">socialise</span> around music.
-              This is a fundamentally different and richer dataset.
+              Fundamentally different data. Fundamentally richer.
             </p>
           </div>
 
           <p className="text-muted-foreground text-sm mb-5">
-            This provides unique audience insights that no DSP can offer: sentiment analysis, taste clustering,
+            This produces audience insights no DSP can offer: sentiment analysis, taste clustering,
             social influence mapping, and trend prediction.
           </p>
 
@@ -292,7 +291,7 @@ export default function MusicIndustryPage() {
               {
                 label: "For Users",
                 body:
-                  "Personalised recommendations and artist discovery powered by social context - not just listening history.",
+                  "Personalised recommendations and artist discovery powered by social context, not listening history alone.",
               },
               {
                 label: "For Labels",
@@ -302,7 +301,7 @@ export default function MusicIndustryPage() {
               {
                 label: "For Artists",
                 body:
-                  "A 360-degree understanding of their fanbase - who their fans are, how they connect, and what drives loyalty.",
+                  "Full visibility into their fanbase: who their fans are, how they connect, and what drives loyalty.",
               },
             ].map((stake) => (
               <div key={stake.label} className="rounded-xl border border-border p-4">
@@ -333,16 +332,15 @@ export default function MusicIndustryPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm mb-4">
-            Streaming saved the music industry. It also commoditised it. Labels built their business on
-            distribution, but Spotify and Apple Music now control 80% of label revenue and own the consumer
+            Streaming saved the music industry. It also commoditised it. Spotify and Apple Music now control 80% of label revenue and own the consumer
             relationship entirely. Labels have the catalogue, the artists, and the marketing budget. What
             they don&apos;t have is a direct line to the superfans who pay for it all.
           </p>
           <p className="text-muted-foreground text-sm mb-5">
-            Equals fills that gap. We are not a streaming competitor. We are the social, marketing, and
-            commerce layer that sits on top of streaming, where labels understand their fans, speak to them
+            Equals fills that gap. We are the social, marketing, and
+            commerce layer on top of streaming. Labels understand their fans, speak to them
             directly, drive chart-moving Digital Vinyl™ sales, and unlock incremental revenue. Our
-            worldwide UMG agreement is signed and live, with Sony and Warner conversations active.
+            worldwide UMG agreement is signed and live. Sony and Warner conversations are active.
           </p>
 
           <div className="space-y-4">
@@ -353,8 +351,8 @@ export default function MusicIndustryPage() {
                 <p className="text-muted-foreground text-xs">
                   Streaming tells labels what fans listen to. Equals tells them who those fans are, who they
                   trust, and who they influence. Every Equals user has a verified human identity, a music
-                  taste graph, and a social signal. The result is a structural data layer no streaming
-                  platform or social network can replicate, powering A&amp;R signing decisions, catalogue
+                  taste graph, and a social signal. This is a structural data layer no streaming
+                  platform or social network can replicate. It powers A&amp;R signing decisions, catalogue
                   strategy, tour routing, and talent scouting.
                 </p>
               </div>
@@ -364,9 +362,9 @@ export default function MusicIndustryPage() {
               <div>
                 <div className="font-semibold text-foreground text-sm mb-1">Targeted marketing</div>
                 <p className="text-muted-foreground text-xs">
-                  That intelligence becomes precision marketing. Labels can run campaigns against superfan
-                  cohorts segmented by taste, by influence within the social graph, and by predicted purchase
-                  intent. The targeting layer that powers Meta&apos;s ad business, applied to music for the
+                  That intelligence becomes precision marketing. Labels run campaigns against superfan
+                  cohorts segmented by taste, influence within the social graph, and predicted purchase
+                  intent. The same targeting layer that powers Meta&apos;s ad business, applied to music for the
                   first time.
                 </p>
               </div>
@@ -376,10 +374,10 @@ export default function MusicIndustryPage() {
               <div>
                 <div className="font-semibold text-foreground text-sm mb-1">Direct fan access</div>
                 <p className="text-muted-foreground text-xs">
-                  Labels have always struggled with one fundamental gap: no direct line to their superfans.
-                  Equals gives them that line. Our chat rooms for major artists are already bigger than the
-                  labels&apos; own official community channels. We are where the densest, most active
-                  superfan clusters live.
+                  Labels have no direct line to their superfans.
+                  Equals gives them one. Our chat rooms for major artists are already bigger than the
+                  labels&apos; own official community channels. The densest, most active
+                  superfan clusters are on Equals.
                 </p>
               </div>
             </div>
@@ -389,9 +387,9 @@ export default function MusicIndustryPage() {
                 <div className="font-semibold text-foreground text-sm mb-1">Chart performance</div>
                 <p className="text-muted-foreground text-xs">
                   Every Digital Vinyl™ sale counts toward Billboard chart positioning. A coordinated Equals
-                  drop during release week delivers chart-moving results that would otherwise require tens of
-                  millions of streams. A chart lever that does not depend on playlist gatekeepers, streaming
-                  algorithms, or paid streaming farms.
+                  drop during release week moves charts in ways that would otherwise require tens of
+                  millions of streams. No playlist gatekeepers, no streaming
+                  algorithms, no paid streaming farms.
                 </p>
               </div>
             </div>
@@ -401,8 +399,8 @@ export default function MusicIndustryPage() {
                 <div className="font-semibold text-foreground text-sm mb-1">Net-new revenue</div>
                 <p className="text-muted-foreground text-xs">
                   Digital Vinyl™ sales, premium subscriptions, and fan-to-fan commerce on Equals do not
-                  cannibalise streaming. Incremental revenue, a new line item that grows with engagement,
-                  not a redistribution of the same pie. The first uplift to label P&amp;Ls in a decade that
+                  cannibalise streaming. Incremental revenue. A new line item that grows with engagement,
+                  not a redistribution of the same pie. First uplift to label P&amp;Ls in a decade that
                   does not depend on raising streaming prices.
                 </p>
               </div>

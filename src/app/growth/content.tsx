@@ -12,7 +12,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import {
   parseMAUData,
   parseMAUDataExcludingCurrent,
-  parseDAUData,
 } from "@/lib/data";
 
 // Monthly average eCPI from AppsFlyer (USD, converted from GBP at 1.35).
@@ -61,7 +60,7 @@ const renderInstallLabel = (props: any) => {
 export default function GrowthPage() {
   const mauData = useMemo(() => parseMAUData(), []);
   const mauDataFiltered = useMemo(() => parseMAUDataExcludingCurrent(), []);
-  const dauData = useMemo(() => parseDAUData(), []);
+
 
   return (
     <Section>
@@ -69,12 +68,11 @@ export default function GrowthPage() {
         <PageHeader
           label="Growth"
           title="From 60K to 530K MAUs in 6 months"
-          subtitle="Equals has achieved 9x user growth since November 2025, driven by strong organic acquisition and improving retention. The growth curve is accelerating, not flattening."
+          subtitle="9x user growth since November 2025 on organic acquisition and improving retention. The growth curve is accelerating."
         />
         <DownloadAllButton
           datasets={[
             { name: "MAU and Install Growth", data: mauData },
-            { name: "DAU Rolling Average", data: dauData },
 
             { name: "Monthly Avg eCPI", data: ecpiMonthly },
             { name: "Monthly Avg CPM", data: cpmMonthly },
@@ -98,24 +96,11 @@ export default function GrowthPage() {
         hero
       />
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
+      <div className="grid grid-cols-3 gap-4 my-10">
         <StatCallout value="532K" label="MAUs (Apr 2026)" />
         <StatCallout value="385K" label="Installs (Apr 2026)" />
         <StatCallout value="8.7x" label="Growth since Nov 2025 start" color="text-accent-purple" />
-        <StatCallout value="70K" label="DAU (Rolling Avg)" color="text-accent-blue" />
       </div>
-
-      <DataChart
-        data={dauData}
-        series={[
-          { key: "DAU", name: "DAU (30-day rolling avg)", color: "#8627FF" },
-        ]}
-        xKey="date"
-        title="Daily Active Users - Rolling Average"
-        subtitle="30-day rolling average of Daily Active Users"
-        type="area"
-        height={320}
-      />
 
       <Card className="bg-card mt-16">
         <CardHeader>
@@ -161,9 +146,8 @@ export default function GrowthPage() {
           </div>
           <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Just over half of all installs in April 2026 came from organic - a healthy share for a paid-marketing
-              business at this scale, and the strongest signal that product-led growth is working. TikTok and Meta
-              together drive ~46% of installs, and Apple Search Ads is at ~3%.
+              51% of April 2026 installs were organic. TikTok and Meta
+              together account for ~46%, Apple Search Ads ~3%. Product-led growth is working.
             </p>
           </div>
         </CardContent>
@@ -174,10 +158,9 @@ export default function GrowthPage() {
           headerChildren={
             <div className="bg-secondary rounded-md px-4 py-3 mb-2">
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Paid acquisition has gotten dramatically more efficient as the product has matured and creative has improved.
-                Average effective Cost-Per-Install (eCPI) peaked at $1.43 in December 2025 and has fallen to $0.70 in April 2026 -
-                a 51% reduction. Cheaper installs at scale means the same marketing budget now buys roughly 2x the users it did five months ago.
-                We are also running well below the $2.31 social-app benchmark on every month measured.
+                eCPI peaked at $1.43 in December 2025 and fell to $0.70 in April 2026, a 51% reduction.
+                Same budget now buys ~2x the users it did five months ago.
+                Every month measured is well below the $2.31 social-app benchmark.
               </p>
             </div>
           }
@@ -239,10 +222,8 @@ export default function GrowthPage() {
           headerChildren={
             <div className="bg-secondary rounded-md px-4 py-3 mb-2">
               <p className="text-muted-foreground text-sm leading-relaxed">
-                CPMs are significantly below the $8.24 social-app benchmark - every month measured has come in
-                under $2.00, with April 2026 at $1.20 (~7x cheaper than benchmark). Combined with the falling eCPI,
-                this means we are reaching the right audience cheaply at the impression layer and converting
-                impressions into installs efficiently.
+                Every month under $2.00 CPM. April 2026 at $1.20, ~7x below the $8.24 social-app benchmark.
+                Cheap impressions plus falling eCPI means efficient full-funnel conversion.
               </p>
             </div>
           }
@@ -288,10 +269,9 @@ export default function GrowthPage() {
               </div>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed flex-1">
-              Equals is a human-only social network. Every user must complete identity verification to participate
-              and unlock all social features on the platform. The verification rate has improved from 20% in late 2025
-              to 52% today as the onboarding flow has been refined - meaning more than half of all users who start
-              onboarding now fully complete it. Verification is non-negotiable - it is what keeps Equals a network of real humans.
+              Equals is a human-only network. Every user must verify identity to unlock social features.
+              Verification rate went from 20% in late 2025 to 52% today after onboarding refinements.
+              More than half of users who start onboarding now complete it.
             </p>
           </div>
         </CardContent>

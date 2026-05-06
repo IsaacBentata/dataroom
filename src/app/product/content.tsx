@@ -21,21 +21,21 @@ const features: FeatureSection[] = [
   {
     title: "The Feed - Hot Takes and Reviews",
     description:
-      "The Feed is where music becomes conversation. Users post hot takes, album reviews, and music opinions that spark real debate. Unlike algorithmic content feeds, every post on Equals comes from a verified human. This is the core social loop - music as the starting point for genuine connection. The Feed drives daily return behavior and sets the tone for the entire experience.",
+      "The Feed is where music becomes conversation. Users post hot takes, album reviews, and music opinions that spark debate. Every post comes from a verified human. This is the core social loop: music as the starting point for connection. The Feed drives daily return behavior.",
     screenshots: [{ src: "/screenshots/feed.png", alt: "The Feed" }],
     video: "/videos/feature-3.mp4",
   },
   {
     title: "Meet - Friend Recommendations Based on Music Taste",
     description:
-      "Meet is how users discover each other. Rather than following celebrities or influencers, Equals recommends real people based on shared music taste. The algorithm analyses listening preferences, reviews, and engagement patterns to surface people you would actually want to be friends with. This is the engine behind the social graph - and it is why users with more friends retain dramatically better.",
+      "Meet is how users discover each other. Instead of following celebrities, Equals recommends real people based on shared music taste. The algorithm analyses listening preferences, reviews, and engagement patterns to surface people you would actually want to be friends with. This is the engine behind the social graph, and why users with more friends retain dramatically better.",
     screenshots: [{ src: "/screenshots/meet-card.png", alt: "Meet card" }],
     video: "/videos/feature-2.mp4",
   },
   {
     title: "Artist Profiles - Deep Fan Engagement Pages",
     description:
-      "Every artist on Equals has a rich profile page with reviews from fans, their full discography, and a live chat room. These are not static pages - they are living communities where fans congregate, debate, and connect. With the UMG worldwide catalogue deal, every major artist has a fully populated profile. This is the kind of direct-to-fan channel that labels have been looking for.",
+      "Every artist on Equals has a profile page with reviews from fans, their full discography, and a live chat room. These are living communities where fans congregate and debate. With the UMG worldwide catalogue deal, every major artist has a fully populated profile. This is the direct-to-fan channel labels have been looking for.",
     screenshots: [
       { src: "/screenshots/artist-profile-music.png", alt: "Artist profile music" },
       { src: "/screenshots/artist-profile-highlight.png", alt: "Artist profile highlights" },
@@ -45,7 +45,7 @@ const features: FeatureSection[] = [
   {
     title: "Album Pages and Digital Vinyls™",
     description:
-      "Every album has its own page where users can rate, review, and discuss the music. The Digital Vinyl™ feature lets users collect branded digital downloads and pin them to their profile. For labels, Digital Vinyl™ sales count toward chart positioning - creating net-new revenue that does not cannibalise streaming. For fans, it is a way to express identity through the music they love.",
+      "Every album has its own page where users rate, review, and discuss music. Digital Vinyl™ lets users collect branded digital downloads and pin them to their profile. For labels, Digital Vinyl™ sales count toward chart positioning, creating net-new revenue that does not cannibalise streaming. For fans, it is identity expression through the music they love.",
     screenshots: [
       { src: "/screenshots/album-page-vinyl.png", alt: "Album page with digital vinyl" },
     ],
@@ -53,14 +53,14 @@ const features: FeatureSection[] = [
   {
     title: "Music Quizzes - Test Your Knowledge",
     description:
-      "Quizzes turn music fandom into a game. Users compete on artist-specific trivia, testing their superfan credentials. This feature drives engagement and time-on-app while reinforcing music identity - one of the core emotional hooks that keeps users coming back. Quizzes also create shareable moments that drive organic acquisition.",
+      "Quizzes turn music fandom into a game. Users compete on artist-specific trivia, testing their superfan credentials. Drives engagement and time-on-app while reinforcing music identity. Quizzes also create shareable moments that drive organic acquisition.",
     screenshots: [{ src: "/screenshots/music-quiz.png", alt: "Music quiz" }],
     video: "/videos/feature-4.mp4",
   },
   {
     title: "Chat Rooms - Live Fan Conversations",
     description:
-      "Every artist and community on Equals has a live chat room. These are real-time, unmoderated spaces where fans talk about new releases, share opinions, and build relationships. Chat rooms are where casual users become power users - the transition from consuming content to participating in community. This is the feature that most directly competes with Discord and Reddit for music fan attention.",
+      "Every artist and community on Equals has a live chat room. Real-time spaces where fans talk about new releases, share opinions, and build relationships. Chat rooms are where casual users become power users: the transition from consuming content to participating in community. Competes directly with Discord and Reddit for music fan attention.",
     screenshots: [
       { src: "/screenshots/chats-with-rooms.png", alt: "Chat rooms overview" },
       { src: "/screenshots/chat-room-inside.png", alt: "Inside a chat room" },
@@ -70,7 +70,7 @@ const features: FeatureSection[] = [
   {
     title: "DMs - Personal Connections with Music Match %",
     description:
-      "Direct messages on Equals come with a unique twist: every conversation shows a music compatibility percentage based on shared taste. This gives users a natural conversation starter and makes every interaction feel personal. The DM experience reinforces the core value proposition - that music is the best foundation for human connection.",
+      "Every DM conversation shows a music compatibility percentage based on shared taste. This gives users a natural conversation starter and makes every interaction feel personal.",
     screenshots: [
       { src: "/screenshots/chats-overview.png", alt: "Chats overview" },
       { src: "/screenshots/dm-conversation.png", alt: "DM conversation" },
@@ -79,7 +79,7 @@ const features: FeatureSection[] = [
   {
     title: "User Profile and Vinyl Grid - Your Music Identity",
     description:
-      "The profile is a user's music passport. The Vinyl Grid lets people curate and display their favourite albums, creating a visual representation of who they are through music. Public profiles show taste compatibility with visitors, encouraging connection. The profile is the destination that ties every other feature together - the feed builds your taste, Meet finds your people, and the profile is where it all lives.",
+      "The profile is a user's music passport. The Vinyl Grid lets people curate and display their favourite albums, a visual representation of identity through music. Public profiles show taste compatibility with visitors. The profile ties every other feature together: the feed builds your taste, Meet finds your people, and the profile is where it all lives.",
     screenshots: [
       { src: "/screenshots/user-profile.png", alt: "User profile" },
       { src: "/screenshots/user-profile-public.png", alt: "Public profile" },
@@ -89,7 +89,7 @@ const features: FeatureSection[] = [
   {
     title: "Activity and Viewers - See Who is Looking",
     description:
-      "The activity feed shows who has viewed your profile, liked your posts, and engaged with your content. This is one of the most retention-driving features - it creates a compelling reason to check back frequently and drives reciprocal engagement. Profile viewers is also a premium feature that generates subscription revenue.",
+      "The activity feed shows who has viewed your profile, liked your posts, and engaged with your content. One of the strongest retention drivers: creates a reason to check back frequently and drives reciprocal engagement. Profile viewers is also a premium feature that generates subscription revenue.",
     screenshots: [{ src: "/screenshots/activity-viewers.png", alt: "Activity and viewers" }],
   },
 ];
@@ -111,7 +111,7 @@ export default function ProductPage() {
           <PageHeader
             label="The Product"
             title="A music social network built for real connection"
-            subtitle="Every feature is connected by the same thread: music as the foundation for human connection. Here is how the app works, feature by feature."
+            subtitle="Every feature connects back to the same thesis: music as the foundation for human connection. Here is how the app works, feature by feature."
           />
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">

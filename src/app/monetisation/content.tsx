@@ -16,7 +16,7 @@ const revenueStreams = [
     total: "$1.2B",
     color: "text-accent-green",
     description:
-      "Content feed with high-impression inventory. Gen Z is the most sought-after advertising demographic, and music context is brand-safe and high-intent. Contextual targeting based on music taste - the strongest psychographic signal available. Native ad formats include sponsored vinyls, branded quizzes, and artist-sponsored channels.",
+      "Content feed with high-impression inventory. Gen Z is the most valuable advertising demographic, and music context is brand-safe and high-intent. Contextual targeting based on music taste, the strongest psychographic signal available. Native ad formats include sponsored vinyls, branded quizzes, and artist-sponsored channels.",
     justification: "Comps: Snapchat ~$11 ARPU, TikTok ~$8-10, Instagram ~$20+. At $12, Equals sits between TikTok and Snapchat - conservative given 37+ min/day engagement and premium Gen Z audience.",
   },
   {
@@ -25,8 +25,8 @@ const revenueStreams = [
     total: "$612M",
     color: "text-accent-blue",
     description:
-      "Based on proven ARPU of $0.51/month ($6.12 annualised) demonstrated during the Oct 2025 - Jan 2026 monetisation test at 90K MAU. Pro features include unlimited quiz entries, advanced profile customisation, exclusive community access, early vinyl drops, and an ad-free experience.",
-    justification: "This is not a projection - it is an extrapolation of proven unit economics. The $0.51/month ARPU was achieved with a 4.5-5% paywall conversion rate on a less mature product with lower engagement than today.",
+      "Based on proven ARPU of $0.51/month ($6.12 annualised) from the Oct 2025 - Jan 2026 monetisation test at 90K MAU. Pro features include unlimited quiz entries, advanced profile customisation, exclusive community access, early vinyl drops, and an ad-free experience.",
+    justification: "This is an extrapolation of proven unit economics, not a projection. The $0.51/month ARPU was achieved with a 4.5-5% paywall conversion rate on a less mature product with lower engagement than today.",
   },
   {
     name: "Commerce",
@@ -34,7 +34,7 @@ const revenueStreams = [
     total: "$78M",
     color: "text-accent-purple",
     description:
-      "Digital Vinyls™ and merch marketplace. Today, ~2% of users buy at least one Digital Vinyl™ per quarter. As the product matures and Digital Vinyls™ become tied to chart positioning, uptake grows - we model 10% of users purchasing regularly at scale, averaging 4 per year at $5 each with ~30% margins. Merch marketplace adds a 15% take rate on $35 average orders.",
+      "Digital Vinyls™ and merch marketplace. Today, ~2% of users buy at least one Digital Vinyl™ per quarter. As Digital Vinyls™ become tied to chart positioning, uptake grows. We model 10% of users purchasing regularly at scale, averaging 4 per year at $5 each with ~30% margins. Merch marketplace adds a 15% take rate on $35 average orders.",
     justification: "Current baseline: 2% quarterly buyer rate. Platforms where collectibles are core to the experience see much higher uptake - Roblox sees ~25% of users purchasing virtual items. At scale with chart-certified vinyls and gifting mechanics, 10% annual buyer rate is conservative. ~30% margins after licensing costs.",
   },
   {
@@ -43,8 +43,8 @@ const revenueStreams = [
     total: "$40M",
     color: "text-accent-green",
     description:
-      "B2B revenue from major labels. The three majors collectively spend ~$5B/year on marketing and promotion. Equals captures a fraction of this through daily activations (pre-release campaigns, Digital Vinyl™ drops, community listening parties), data insights packages (audience sentiment, taste clustering, trend prediction, fan targeting), and always-on campaign management across artist profiles.",
-    justification: "Labels are actively looking for direct-to-fan channels with measurable ROI. Equals offers something no other platform can: chart-moving activations, behavioural fan data, and a verified audience. Even capturing <1% of major label marketing spend gets to $40M.",
+      "B2B revenue from major labels. The three majors collectively spend ~$5B/year on marketing and promotion. Equals captures a fraction of this through daily activations (pre-release campaigns, Digital Vinyl™ drops, community listening parties), data insights packages (audience sentiment, taste clustering, trend prediction, fan targeting), and campaign management across artist profiles.",
+    justification: "Labels want direct-to-fan channels with measurable ROI. Equals offers what no other platform can: chart-moving activations, behavioural fan data, and a verified audience. Capturing <1% of major label marketing spend gets to $40M.",
   },
   {
     name: "Live Experiences",
@@ -52,8 +52,8 @@ const revenueStreams = [
     total: "$20M",
     color: "text-accent-blue",
     description:
-      "Festival partnerships and co-branded live experiences. Equals collaborates with festivals and promoters to create exclusive on-platform activations - artist meet-and-greets, listening parties, and community events tied to major festivals. Revenue from sponsorship packages, ticketing referrals, and co-branded content.",
-    justification: "The global live music market is $35B+. Equals doesn't need to own venues - it partners with existing festivals and promoters, adding a digital layer that drives ticket sales and brand sponsorship value.",
+      "Festival partnerships and co-branded live experiences. Equals works with festivals and promoters on exclusive on-platform activations: artist meet-and-greets, listening parties, and community events tied to major festivals. Revenue from sponsorship packages, ticketing referrals, and co-branded content.",
+    justification: "The global live music market is $35B+. Equals partners with existing festivals and promoters, adding a digital layer that drives ticket sales and brand sponsorship value.",
   },
   {
     name: "Ticketing",
@@ -121,10 +121,10 @@ export default function MonetisationPage() {
           </CardHeader>
           <CardContent>
             <p className="mb-4">
-              Applying the proven $0.51/month ARPU to today's 530K MAU base gives ~$270K/month - a
-              $3.2M annual run rate from subscriptions alone, before any commerce, label services, or
+              Applying the proven $0.51/month ARPU to today's 530K MAU base gives ~$270K/month, a
+              $3.2M annual run rate from subscriptions alone. This excludes commerce, label services, and
               ticketing revenue. The annualised proven ARPU of $6.12 is the basis for our subscription
-              line in the long-term revenue forecast - grounded in demonstrated unit economics, not assumptions.
+              line in the long-term revenue forecast. Demonstrated unit economics, not assumptions.
             </p>
             <div className="grid grid-cols-3 gap-4 my-4">
               <StatCallout value="$270K" label="Projected monthly revenue" color="text-accent-green" />
@@ -132,11 +132,11 @@ export default function MonetisationPage() {
               <StatCallout value="$6.12" label="Proven annualised ARPU" color="text-accent-purple" />
             </div>
             <p className="text-xs">
-              This projection is conservative on multiple fronts: it assumes no improvement in conversion
-              or pricing despite significantly better product-market fit today, and it does not account for
+              This projection is conservative: it assumes no improvement in conversion
+              or pricing despite better product-market fit today, and does not account for
               retained revenue compounding from prior months. November was the first month with full
-              monetisation - earlier months had limited paid features, so there was no subscriber base
-              carrying over. A mature subscription base with retained cohorts would produce meaningfully
+              monetisation. Earlier months had limited paid features, so there was no subscriber base
+              carrying over. A mature subscription base with retained cohorts would produce materially
               higher numbers.
             </p>
           </CardContent>
@@ -144,19 +144,19 @@ export default function MonetisationPage() {
 
         <h3 className="text-lg font-semibold text-foreground">Why we chose growth over revenue</h3>
         <p>
-          Starting at the end of December 2025, we began gradually rolling back paid features
-          where we observed a significant impact on network effects. Users hitting paywalls early
-          were less likely to add friends, join chatrooms, and engage with the core social loops
-          that drive long-term retention and virality. We systematically identified which paid
+          Starting at the end of December 2025, we gradually rolled back paid features
+          where they were hurting network effects. Users hitting paywalls early
+          were less likely to add friends, join chatrooms, and use the core social loops
+          that drive retention and virality. We identified which paid
           gates were suppressing these behaviours and removed them one by one.
         </p>
         <p>
-          The impact was clear. As friction was removed from the core experience, growth,
-          engagement, and retention all improved. The decision to prioritise network effects
-          over near-term revenue is validated by the 9x MAU growth since. Revenue can be switched
-          back on at any time - the audience cannot. We plan to turn on full monetisation at
-          ~50M MAU, when the network effects are deep enough that paid features enhance rather
-          than suppress the social experience.
+          The impact was clear. Removing friction from the core experience improved growth,
+          engagement, and retention. The decision to prioritise network effects
+          over near-term revenue is validated by 9x MAU growth since. Revenue can be switched
+          back on at any time. The audience cannot be rebuilt. We plan to turn on full monetisation at
+          ~50M MAU, when network effects are strong enough that paid features add to
+          rather than suppress the social experience.
         </p>
       </div>
 
@@ -182,8 +182,8 @@ export default function MonetisationPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-xs mb-4">
-            This chart shows how average engagement per user increased as paid features were gradually rolled down from end of December 2025.
-            Removing friction from the core experience let users engage more deeply with the product.
+            Average engagement per user increased as paid features were rolled back from end of December 2025.
+            Removing friction from the core experience drove deeper product usage.
           </p>
           <DataChart
             data={engagement}

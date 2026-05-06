@@ -40,7 +40,7 @@ export default function RetentionPage() {
         <PageHeader
           label="Retention & Engagement"
           title="Friends drive retention. Retention drives everything."
-          subtitle="The single most important insight in our data: users who add friends retain dramatically better. This is not correlation - it is the social graph creating compounding value."
+          subtitle="Users who add friends retain dramatically better. The social graph creates compounding value."
         />
         <DownloadAllButton
           datasets={[
@@ -65,9 +65,8 @@ export default function RetentionPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            Weekly retention has improved consistently as the product has matured.
-            The upward trend across Week 1, Week 2, and Week 4 retention shows that the product is getting stickier over time, not just growing.
-            This is the foundation for durable, compounding growth: each cohort retains better than the last.
+            Weekly retention improved consistently as the product matured.
+            Week 1, Week 2, and Week 4 all trend up. Each cohort retains better than the last.
           </p>
           <DataChart
             className="border-0 px-0 pt-4 pb-2 shadow-none ring-0"
@@ -97,9 +96,8 @@ export default function RetentionPage() {
             </div>
             <div className="flex-1">
               <p className="text-sm text-black">
-                Weekly retention segmented by number of friends
-                shows a clear, consistent pattern: the more friends a user adds, the higher their retention
-                at every time horizon. Users with 50+ friends retain at 40% at Week 8 - over 2x the baseline. This proves the network effect is working.
+                Weekly retention segmented by friend count.
+                More friends = higher retention at every time horizon. 50+ friends retain at 40% at Week 8, over 2x baseline.
               </p>
             </div>
           </div>
@@ -133,9 +131,7 @@ export default function RetentionPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            72% of onboarded users have at least one friend. 43% have 10 or more. 18% have 50+ friends -
-            the cohort that retains at 40% at Week 8. As k-factor mechanics are deployed, these distributions
-            shift upward, directly improving overall retention.
+            72% of onboarded users have at least one friend. 43% have 10+. 18% have 50+ (the cohort retaining at 40% at Week 8). As k-factor mechanics ship, these distributions shift upward.
           </p>
           <div className="h-[320px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -214,7 +210,7 @@ export default function RetentionPage() {
           ]}
           xKey="date"
           title="App Opens per User"
-          subtitle="30-day rolling avg of Application Opened events per onboarded daily active user"
+          subtitle="30-day rolling avg of Application Opened events per onboarded active user"
           type="line"
           height={280}
           showDateFilter={false}
@@ -232,7 +228,7 @@ export default function RetentionPage() {
         ]}
         xKey="days"
         title="Power Curve / Stickiness"
-        subtitle="% of users active on exactly N days per week. The uptick at 7 days is a retention smile - a cohort of power users who return every single day, a hallmark of sticky consumer products."
+        subtitle="% of users active on exactly N days per week. Uptick at 7 days is a retention smile: a cohort of power users returning daily."
         type="bar"
         height={280}
         showDateFilter={false}
@@ -248,7 +244,7 @@ export default function RetentionPage() {
         ]}
         xKey="month"
         title="WAU / MAU Stickiness"
-        subtitle="Averaging 46% in the last month, up from 33% last quarter - crossed into the 'Great' tier of consumer-social stickiness"
+        subtitle="46% in the last month, up from 33% last quarter. Now in the 'Great' tier of consumer-social stickiness."
         type="line"
         height={320}
         yAxisFormatter={(v: number) => `${v}%`}
@@ -264,7 +260,7 @@ export default function RetentionPage() {
         ]}
         xKey="month"
         title="Engagement per User"
-        subtitle="Avg engaged actions per user per month. An engaged action is any active interaction with impact across the network: sending a message, liking a post, making a friend, commenting, reposting, voting on a poll, speaking in a chatroom, or entering a quiz competition."
+        subtitle="Avg engaged actions per user per month. An engaged action is any interaction with network impact: message, like, friend add, comment, repost, poll vote, chatroom speech, or quiz entry."
         type="bar"
         height={280}
         showDateFilter={false}

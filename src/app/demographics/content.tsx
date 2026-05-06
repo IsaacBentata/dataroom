@@ -115,7 +115,7 @@ export default function DemographicsPage() {
         <PageHeader
           label="Demographics"
           title="A balanced, global community"
-          subtitle="Our demographics reflect a genuinely diverse user base - balanced gender ratio, Gen Z core, and users across 100+ countries."
+          subtitle="Balanced gender ratio, Gen Z core, users across 100+ countries."
         />
       </div>
 
@@ -166,9 +166,8 @@ export default function DemographicsPage() {
           </div>
           <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
             <p className="text-muted-foreground text-sm leading-relaxed">
-                Equals has an unusually balanced gender split for a social app - {malePct}% male to {femalePct}% female.
-                Most social platforms skew heavily male (Reddit, Discord) or female (Pinterest). Music appeals
-                universally across gender, and Equals reflects that.
+                {malePct}% male, {femalePct}% female. Unusually balanced for a social app.
+                Most social platforms skew heavily male (Reddit, Discord) or female (Pinterest). Music is universal across gender, and the data shows it.
               </p>
           </div>
         </CardContent>
@@ -198,11 +197,10 @@ export default function DemographicsPage() {
           </ChartContainer>
           <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
             <p className="text-muted-foreground text-sm leading-relaxed">
-                {genZPct}% of users are Gen Z (14-29), with the single largest cohort being 18-year-olds.
+                {genZPct}% of users are Gen Z (14-29). Largest single cohort: 18-year-olds.
                 The peak at 18 aligns with the age when music fandom is most intense and identity-forming.
-                Gen Z are the stewards of culture - they set the trends, define what's cool, and drive the conversations
-                that shape mainstream music. They are the demographic every music label, streaming service, and brand
-                wants to reach, and Equals is where they congregate.
+                Gen Z sets trends and drives the conversations that shape mainstream music. This is the demographic every music label, streaming service, and brand
+                wants to reach. Equals is where they are.
               </p>
           </div>
         </CardContent>
@@ -250,10 +248,8 @@ export default function DemographicsPage() {
           </div>
           <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
             <p className="text-muted-foreground text-sm leading-relaxed">
-                Equals has a genuinely global user base spanning 6 continents. The US and UK jointly represent 40% of the user base, but
-                the app has very strong presence across 20+ countries and presence in 100+ countries - leading to a naturally
-                diverse user base that reflects the universal appeal of music as a social connector. This diversity is achieved
-                with content moderation across 40+ languages and identity verification working internationally.
+                Global user base across 6 continents. US and UK represent 40%, but
+                strong presence across 20+ countries and active users in 100+ countries. Content moderation covers 40+ languages. Identity verification works internationally.
               </p>
           </div>
         </CardContent>
@@ -268,14 +264,13 @@ export default function DemographicsPage() {
             </div>
             <div className="flex-1 space-y-3 text-muted-foreground text-sm leading-relaxed">
               <p>
-                Most consumer social apps struggle with demographic imbalance. Dating apps skew male. Gaming platforms skew young male.
-                Lifestyle apps skew female. Equals is one of the rare social platforms with near-parity gender distribution ({malePct}/{femalePct})
+                Most consumer social apps have demographic imbalance. Dating apps skew male. Gaming platforms skew young male.
+                Lifestyle apps skew female. Equals has near-parity gender distribution ({malePct}/{femalePct})
                 and a core Gen Z audience ({genZPct}% aged 14-29).
               </p>
               <p>
-                The global distribution across 20+ countries with meaningful user counts means Equals
-                has inherent geographic diversification. This reduces market concentration risk and opens multiple monetisation
-                paths. Every user is identity-verified, so the demographic data is real, not estimated or inferred.
+                20+ countries with meaningful user counts gives inherent geographic diversification. Lower market concentration risk, multiple monetisation
+                paths. Every user is identity-verified, so demographic data is real, not estimated or inferred.
               </p>
             </div>
           </div>

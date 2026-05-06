@@ -20,7 +20,7 @@ export default function AIAdoptionPage() {
         <PageHeader
           label="AI Adoption"
           title="AI is our multiplier, not our product"
-          subtitle="We use AI aggressively internally so that the product itself can be about genuine human connection. Every other company is selling AI to users. We use AI to build FOR humans."
+          subtitle="We use AI aggressively internally so the product can be about real human connection. Every other company sells AI to users. We use AI to build for humans."
         />
       </div>
 
@@ -123,13 +123,13 @@ export default function AIAdoptionPage() {
           <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
             <p>
               Equals runs a fully agentised marketing pipeline. AI generates and tests ad creative at scale,
-              with automated campaign optimisation across TikTok and social channels. This has driven a 30%+ reduction
-              in cost-per-install since automation was deployed.
+              with automated campaign optimisation across TikTok and social channels. Result: 30%+ reduction
+              in cost-per-install since deployment.
             </p>
             <p>
-              On the organic side, 11 ambassadors are coordinated through AI-assisted systems, contributing to
-              over 50 million organic views. The combination of AI-generated creative
-              and human ambassador authenticity creates a marketing engine that scales without proportional cost increases.
+              On the organic side, 11 ambassadors are coordinated through AI-assisted systems and have generated
+              over 50 million organic views. AI-generated creative paired with human ambassador authenticity
+              produces a marketing engine that scales without proportional cost increases.
             </p>
           </div>
         </CardContent>
@@ -144,8 +144,8 @@ export default function AIAdoptionPage() {
           <CardContent>
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
               <p>
-                Equals runs self-hosted ML models for both message and image moderation. This is not a third-party
-                API call - the models run on Equals infrastructure for speed, cost control, and customisation.
+                Equals runs self-hosted ML models for message and image moderation. These run on our own infrastructure
+                for speed, cost control, and customisation.
               </p>
               <ul className="space-y-2 text-xs">
                 <li className="flex items-start gap-2">
@@ -176,8 +176,8 @@ export default function AIAdoptionPage() {
           <CardContent>
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
               <p>
-                10+ AI agents are running in production handling user support. These agents classify incoming
-                tickets, route them to the appropriate team, and resolve common issues automatically.
+                10+ AI agents run in production for user support. They classify incoming
+                tickets, route to the appropriate team, and resolve common issues automatically.
               </p>
               <ul className="space-y-2 text-xs">
                 <li className="flex items-start gap-2">
@@ -230,18 +230,18 @@ export default function AIAdoptionPage() {
           </div>
           <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
             <p>
-              AI powers the core product experience - recommendations, safety, and personalisation. A concrete example:
-              every user on Equals must verify their identity. External identity verification providers charge $0.15-0.30
-              per verification. We built our own in-house verification system that runs at $0.01 per inference - a 93-97%
-              cost reduction. At 500K+ MAUs and growing, this saves hundreds of thousands of dollars per year on
-              verification alone, and the same approach applies across recommendations, moderation, and personalisation.
+              AI powers the core product experience: recommendations, safety, and personalisation. Example:
+              every user on Equals must verify their identity. External providers charge $0.15-0.30
+              per verification. We built our own system that runs at $0.01 per inference, a 93-97%
+              cost reduction. At 500K+ MAUs, this saves hundreds of thousands per year on
+              verification alone. Same approach across recommendations, moderation, and personalisation.
             </p>
             <p>
-              Equals runs an extensive A/B testing suite across all product surfaces - onboarding, feed, recommendations,
-              social features, and monetisation. The team runs 5+ concurrent experiments at any time, with every test
-              designed to drive higher retention. Every product decision is data-driven, and the experimentation
-              infrastructure allows rapid iteration on what keeps users coming back. This is the same testing rigour
-              that companies like Spotify and Netflix deploy - built and maintained by 4 engineers.
+              Equals runs A/B testing across all product surfaces: onboarding, feed, recommendations,
+              social features, and monetisation. 5+ concurrent experiments at any time, each targeting
+              retention. Every product decision is data-driven. The experimentation
+              infrastructure enables rapid iteration on what keeps users coming back. Same testing rigour
+              as Spotify and Netflix, built and maintained by 4 engineers.
             </p>
           </div>
         </CardContent>
