@@ -10,10 +10,12 @@ const DATA_FILE = path.join(process.cwd(), "data.json");
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
 
 // ── Data store ──────────────────────────────────────────────────────
+// Stores an array of hourly snapshots, each with cumulative base + hourly rate.
+// Frontend picks the one closest to 24h ago. If that's missing, uses most recent.
 
 function loadData() {
   try { return JSON.parse(fs.readFileSync(DATA_FILE, "utf-8")); }
-  catch { return null; }
+  catch { return { snapshots: [] }; }
 }
 
 function saveData(data) {
@@ -44,95 +46,153 @@ async function pullData() {
   console.log(`[${new Date().toISOString()}] Pulling Amplitude data...`);
 
   const now = new Date();
-  const yesterday = new Date(now.getTime() - 24 * 3600 * 1000);
-  const yesterdayStr = fmtDate(yesterday);
   const allTimeStart = "20250401";
 
-  // Query 1: all-time cumulative installs up to yesterday
+  // We pull daily data for the last 3 days so we have a buffer of hourly rates.
+  // Each day gives us a daily total which we divide by 24 for hourly rate.
+  const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 3600 * 1000);
+  const yesterday = new Date(now.getTime() - 24 * 3600 * 1000);
+  const endDate = fmtDate(yesterday); // up to end of yesterday
+
+  // Query cumulative totals up to end of yesterday
   const usersData = await ampQuery("events/segmentation", {
     e: { event_type: "Application Installed" },
     start: allTimeStart,
-    end: yesterdayStr,
+    end: endDate,
     m: "totals",
-    i: 30, // monthly buckets to reduce response size
+    i: 30,
   });
   const totalUsers = (usersData.data?.series?.[0] || []).reduce((s, v) => s + (v || 0), 0);
-
   await delay(2000);
 
-  // Query 2: all-time cumulative messages up to yesterday
   const msgsData = await ampQuery("events/segmentation", {
     e: { event_type: "Chat MessageSent" },
     start: allTimeStart,
-    end: yesterdayStr,
+    end: endDate,
     m: "totals",
     i: 30,
   });
   const totalMessages = (msgsData.data?.series?.[0] || []).reduce((s, v) => s + (v || 0), 0);
-
   await delay(2000);
 
-  // Query 3: all-time cumulative friends up to yesterday
   const frdsData = await ampQuery("events/segmentation", {
     e: { event_type: "Friends MatchMade" },
     start: allTimeStart,
-    end: yesterdayStr,
+    end: endDate,
     m: "totals",
     i: 30,
   });
   const totalFriends = (frdsData.data?.series?.[0] || []).reduce((s, v) => s + (v || 0), 0);
-
   await delay(2000);
 
-  // Query 4: yesterday's daily counts (for rate)
-  const rateData = await ampQuery("events/segmentation", {
+  // Query daily counts for last 3 days (gives us rates for multiple days as buffer)
+  const rateStart = fmtDate(threeDaysAgo);
+  const rateEnd = fmtDate(yesterday);
+
+  const usrRates = await ampQuery("events/segmentation", {
     e: { event_type: "Application Installed" },
-    start: yesterdayStr,
-    end: yesterdayStr,
-    m: "totals",
-    i: 1,
+    start: rateStart, end: rateEnd, m: "totals", i: 1,
   });
-  const usersYesterday = (rateData.data?.series?.[0] || [])[0] || 0;
-
   await delay(2000);
 
-  const msgRateData = await ampQuery("events/segmentation", {
+  const msgRates = await ampQuery("events/segmentation", {
     e: { event_type: "Chat MessageSent" },
-    start: yesterdayStr,
-    end: yesterdayStr,
-    m: "totals",
-    i: 1,
+    start: rateStart, end: rateEnd, m: "totals", i: 1,
   });
-  const msgsYesterday = (msgRateData.data?.series?.[0] || [])[0] || 0;
-
   await delay(2000);
 
-  const frdRateData = await ampQuery("events/segmentation", {
+  const frdRates = await ampQuery("events/segmentation", {
     e: { event_type: "Friends MatchMade" },
-    start: yesterdayStr,
-    end: yesterdayStr,
-    m: "totals",
-    i: 1,
+    start: rateStart, end: rateEnd, m: "totals", i: 1,
   });
-  const frdsYesterday = (frdRateData.data?.series?.[0] || [])[0] || 0;
 
-  // asOf = end of yesterday (midnight UTC today)
-  const midnightToday = new Date(now);
-  midnightToday.setUTCHours(0, 0, 0, 0);
+  const usrDailySeries = usrRates.data?.series?.[0] || [];
+  const msgDailySeries = msgRates.data?.series?.[0] || [];
+  const frdDailySeries = frdRates.data?.series?.[0] || [];
+  const rateDates = usrRates.data?.xValues || [];
 
-  const result = {
-    asOf: midnightToday.getTime(),
-    pulledAt: Date.now(),
-    metrics: {
-      users:    { base: totalUsers,    ratePerHour: Math.round(usersYesterday / 24) },
-      messages: { base: totalMessages, ratePerHour: Math.round(msgsYesterday / 24) },
-      friends:  { base: totalFriends,  ratePerHour: Math.round(frdsYesterday / 24) },
-    },
-  };
+  // Build snapshots for each day we have rate data for.
+  // Each snapshot: asOf = end of that day (midnight next day), base = cumulative up to that day,
+  // ratePerHour = that day's total / 24.
+  const data = loadData();
+  let cumulativeUsers = totalUsers;
+  let cumulativeMessages = totalMessages;
+  let cumulativeFriends = totalFriends;
 
-  saveData(result);
-  console.log(`[${new Date().toISOString()}] Done.`, JSON.stringify(result.metrics));
-  return result;
+  // We need to subtract back from the total to get the cumulative at the end of each day.
+  // rateDates go from oldest to newest. totalUsers is cumulative through end of yesterday.
+  // So: cumulative at end of day[i] = totalUsers - sum(day[i+1] .. day[last])
+  const numDays = rateDates.length;
+  const snapshots = [];
+
+  for (let i = numDays - 1; i >= 0; i--) {
+    const dayDate = new Date(rateDates[i]);
+    const nextMidnight = new Date(dayDate);
+    nextMidnight.setUTCDate(nextMidnight.getUTCDate() + 1);
+    nextMidnight.setUTCHours(0, 0, 0, 0);
+
+    const usrDay = usrDailySeries[i] || 0;
+    const msgDay = msgDailySeries[i] || 0;
+    const frdDay = frdDailySeries[i] || 0;
+
+    snapshots.push({
+      asOf: nextMidnight.getTime(),
+      bases: {
+        users: cumulativeUsers,
+        messages: cumulativeMessages,
+        friends: cumulativeFriends,
+      },
+      hourlyRates: {
+        users: Math.round(usrDay / 24),
+        messages: Math.round(msgDay / 24),
+        friends: Math.round(frdDay / 24),
+      },
+    });
+
+    // Subtract this day's values to get the previous day's cumulative
+    cumulativeUsers -= usrDay;
+    cumulativeMessages -= msgDay;
+    cumulativeFriends -= frdDay;
+  }
+
+  // Sort by asOf ascending
+  snapshots.sort((a, b) => a.asOf - b.asOf);
+
+  data.snapshots = snapshots;
+  data.pulledAt = Date.now();
+  saveData(data);
+
+  console.log(`[${new Date().toISOString()}] Stored ${snapshots.length} snapshots.`);
+  for (const s of snapshots) {
+    console.log(`  ${new Date(s.asOf).toISOString()} users=${s.bases.users} msgs=${s.bases.messages} friends=${s.bases.friends} rate_u=${s.hourlyRates.users}/h`);
+  }
+}
+
+// ── API endpoint ────────────────────────────────────────────────────
+
+function getGlobeRates() {
+  const data = loadData();
+  if (!data || !data.snapshots || data.snapshots.length === 0) return null;
+
+  const now = Date.now();
+  const target = now - 24 * 3600 * 1000;
+  const sorted = [...data.snapshots].sort((a, b) => a.asOf - b.asOf);
+
+  // Find snapshot closest to 24h ago (not newer than target)
+  let snapshot = null;
+  for (let i = sorted.length - 1; i >= 0; i--) {
+    if (sorted[i].asOf <= target) {
+      snapshot = sorted[i];
+      break;
+    }
+  }
+
+  // If nothing 24h+ ago, use most recent
+  if (!snapshot) {
+    snapshot = sorted[sorted.length - 1];
+  }
+
+  return { asOf: snapshot.asOf, metrics: snapshot.bases, rates: snapshot.hourlyRates };
 }
 
 // ── HTTP server ─────────────────────────────────────────────────────
@@ -145,22 +205,34 @@ const server = http.createServer((req, res) => {
   if (req.method === "OPTIONS") { res.writeHead(204); res.end(); return; }
 
   if (req.method === "GET" && req.url === "/api/globe-rates") {
-    const data = loadData();
-    if (!data) {
+    const result = getGlobeRates();
+    if (!result) {
       res.writeHead(503, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: "No data yet" }));
       return;
     }
-    // Return asOf and metrics (frontend calculates pro-rata from asOf to now)
+    // Reshape for frontend compatibility
+    const response = {
+      asOf: result.asOf,
+      metrics: {
+        users:    { base: result.metrics.users,    ratePerHour: result.rates.users },
+        messages: { base: result.metrics.messages, ratePerHour: result.rates.messages },
+        friends:  { base: result.metrics.friends,  ratePerHour: result.rates.friends },
+      },
+    };
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ asOf: data.asOf, metrics: data.metrics }));
+    res.end(JSON.stringify(response));
     return;
   }
 
   if (req.method === "GET" && req.url === "/health") {
     const data = loadData();
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ status: "ok", hasData: !!data, pulledAt: data?.pulledAt }));
+    res.end(JSON.stringify({
+      status: "ok",
+      snapshots: data?.snapshots?.length || 0,
+      pulledAt: data?.pulledAt,
+    }));
     return;
   }
 
