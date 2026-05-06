@@ -1162,6 +1162,21 @@
     // (name + S3 image URL). Sampled with Tier 1 boosted / Tier 3-4 dampened
     // from a 3-day production snapshot.
     let PAIRS_POOL = []; // [{ aIdx, bIdx, userA, userB, artist }]
+    // Expose to window for debugging — read with `frames[0].__GLOBE_DEBUG()`
+    window.__GLOBE_DEBUG = () => ({
+      pairsPoolLength: PAIRS_POOL.length,
+      cacheSize: pairBubbleCache.size,
+      cacheStates: [...new Set([...pairBubbleCache.values()].map(v => typeof v === 'object' ? 'OK' : v))],
+      cacheBreakdown: [...pairBubbleCache.values()].reduce((acc, v) => {
+        const k = typeof v === 'object' ? 'OK' : v;
+        acc[k] = (acc[k] || 0) + 1;
+        return acc;
+      }, {}),
+      buildQueueLength: buildQueue.length,
+      buildInFlight,
+      seenPairsCount: seenPairIds.size,
+      sampleCacheEntry: [...pairBubbleCache.entries()][0]?.[0] || null,
+    });
     const RECENT_COUNTRY_WINDOW = 5; // last N arcs may not share a country with new pick
     const recentCountries = [];
 
