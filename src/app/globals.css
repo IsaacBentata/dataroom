@@ -517,10 +517,10 @@ html:has(.feature-snap),
   border-radius: 4px !important;
 }
 
-/* `.bg-secondary` blocks (intro paragraphs, callouts) — soft brand-green tint */
+/* `.bg-secondary` blocks (intro paragraphs, callouts) */
 .minimal-preview .bg-secondary,
 .minimal-preview .bg-secondary\/60 {
-  background: rgba(0, 204, 120, 0.12) !important;
+  background: rgba(0, 0, 0, 0.03) !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 4px !important;
