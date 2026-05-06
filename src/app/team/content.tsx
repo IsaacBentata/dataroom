@@ -15,8 +15,8 @@ export default function TeamPage() {
       <div className="mb-12">
         <PageHeader
           label="Team"
-          title="A team of 8 doing the work of 30"
-          subtitle="Deliberately lean. No middle management. Founders hands-on across every function. 90%+ of production code written by AI agents, giving 4 engineers the output of 12."
+          title="A team of 8 doing the work of 100"
+          subtitle="Deliberately lean and high-output. No middle management. Founders hands-on across every function. Our MAU-per-employee outpaces Meta, TikTok, and most consumer giants."
         />
       </div>
 
@@ -26,10 +26,60 @@ export default function TeamPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm leading-relaxed">
-            The founding team built Fair.xyz together, which became Europe's largest NFT minting
-            platform. Fair.xyz processed millions of transactions and served major
-            brands and creators. Same technical rigour and speed applied to Equals,
-            with direct experience in consumer products, high-throughput systems, and shipping fast with a small team.
+            Together we built Fair.xyz, Europe&apos;s largest NFT platform, processing millions of transactions
+            and generating $45M in sales volume over 2 years. We also received OpenSea&apos;s first venture
+            investment. Worked with Kendall Jenner, J Balvin, Peggy Gou, Kate Moss, Jeff Koons, and the
+            Ukrainian Government.
+          </p>
+          <div className="bg-secondary rounded-2xl px-5 py-4 mt-4">
+            <ul className="space-y-2 text-muted-foreground text-sm leading-relaxed">
+              <li>
+                -{" "}
+                <a
+                  href="https://www.forbes.com/sites/abrambrown/2022/03/26/exclusive-inside-the-ukrainian-governments-nft-sale-and-the-3-young-entrepreneurs-who-helped-create-it/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground underline underline-offset-4 hover:text-accent-blue transition-colors"
+                >
+                  Forbes
+                </a>
+                {" "}- launching the first government-backed NFT.
+              </li>
+              <li>
+                -{" "}
+                <a
+                  href="https://www.theblock.co/post/162065/opensea-backs-nft-minting-platform-fair-xyz-in-4-5-million-round"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground underline underline-offset-4 hover:text-accent-blue transition-colors"
+                >
+                  The Block
+                </a>
+                {" "}- OpenSea&apos;s first-ever venture investment into Fair.xyz.
+              </li>
+              <li>
+                -{" "}
+                <a
+                  href="https://fortune.com/2022/06/24/web3-startup-fairxyz-hires-impersonator-nft-kingpin-snoop-dogg-nycnft-conference-doop-snogg/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground underline underline-offset-4 hover:text-accent-blue transition-colors"
+                >
+                  Fortune
+                </a>
+                {" "}- hijacking NFT NYC with the Doop Snogg stunt.
+              </li>
+            </ul>
+          </div>
+          <p className="text-muted-foreground text-sm leading-relaxed mt-4">
+            When the NFT market collapsed, we asked ourselves what of our initial hypothesis still held true.
+            We realised people had been using NFTs to express their identity through cultural artifacts and
+            connect with others - that was the latent job-to-be-done. We iterated through many ideas around
+            self-expression through culture, and eventually realised it didn&apos;t need to span every cultural
+            vertical - just the largest. Music had a massive white space.
+          </p>
+          <p className="text-muted-foreground text-sm leading-relaxed mt-3">
+            Sometimes in life you get one shot. We&apos;ve been blessed as a team to get another - we won&apos;t waste it.
           </p>
         </CardContent>
       </Card>
@@ -71,8 +121,8 @@ export default function TeamPage() {
                       src={member.logo}
                       alt=""
                       draggable={false}
-                      className="team-logo mt-2 object-contain"
-                      style={{ height: 16, width: "auto", maxWidth: 80, opacity: 0.9 }}
+                      className={`team-logo mt-2 object-contain${member.logo.includes("Nike_logo") ? " team-logo--nike" : ""}`}
+                      style={{ width: "auto", maxWidth: 80, opacity: 0.9 }}
                     />
                   )}
                 </div>

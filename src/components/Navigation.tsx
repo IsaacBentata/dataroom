@@ -22,6 +22,14 @@ const sections = [
   { href: "/live", label: "Equals LIVE" },
 ];
 
+const investHref = `mailto:isaac.k@equa.ls?cc=${encodeURIComponent(
+  "isaac@equa.ls"
+)}&subject=${encodeURIComponent(
+  "Equals Series A"
+)}&body=${encodeURIComponent(
+  "After reviewing your materials, it's clear that you are on to something incredible and I would like to participate in your Series A."
+)}`;
+
 export default function Navigation() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +56,13 @@ export default function Navigation() {
               {label}
             </Link>
           ))}
+          <a
+            href={investHref}
+            className="text-left px-3 py-2 rounded-xl transition-all font-bold hover:opacity-80"
+            style={{ fontSize: "20px", color: "#00CC78" }}
+          >
+            Invest
+          </a>
         </div>
         <div className="px-3 text-[11px] text-muted-foreground/60">
           Series A Data Room
@@ -85,6 +100,14 @@ export default function Navigation() {
                 {label}
               </Link>
             ))}
+            <a
+              href={investHref}
+              onClick={() => setIsOpen(false)}
+              className="text-left px-3 py-2 rounded-xl transition-all font-bold hover:opacity-80"
+              style={{ fontSize: "20px", color: "#00CC78" }}
+            >
+              Invest
+            </a>
           </div>
         )}
       </nav>

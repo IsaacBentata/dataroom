@@ -671,7 +671,7 @@ html:has(.feature-snap),
 }
 
 /* Images / screenshots: keep but constrain */
-.minimal-preview img {
+.minimal-preview img:not(.team-logo) {
   max-width: 100%;
   height: auto;
   border-radius: 4px;
@@ -685,6 +685,12 @@ img.team-logo,
   max-width: 80px !important;
   border-radius: 0 !important;
   object-fit: contain;
+}
+
+img.team-logo.team-logo--nike,
+.minimal-preview img.team-logo.team-logo--nike {
+  height: auto !important;
+  max-width: 24px !important;
 }
 
 /* Remove gradient backgrounds */

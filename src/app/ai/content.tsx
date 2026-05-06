@@ -20,7 +20,7 @@ export default function AIAdoptionPage() {
         <PageHeader
           label="AI Adoption"
           title="AI is our multiplier, not our product"
-          subtitle="We use AI aggressively internally so the product can be about real human connection. Every other company sells AI to users. We use AI to build for humans."
+          subtitle="We use AI aggressively internally so that the product itself can be about genuine human connection. Every other company is selling AI to users. We use AI to build FOR humans."
         />
       </div>
 
@@ -31,49 +31,6 @@ export default function AIAdoptionPage() {
         <StatCallout value="4" label="Engineers" color="text-accent-blue" />
         <StatCallout value="~121" label="Tickets per engineer per month" color="text-accent-orange" />
       </div>
-
-      {/* Engineering Velocity */}
-      <Card className="bg-card border-accent-green/30 mb-6">
-        <CardHeader>
-          <div className="text-accent-green text-xs font-medium mb-1">Real Linear Data - April 2026</div>
-          <CardTitle>Engineering Velocity</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-green">483</div>
-                <div className="text-xs text-muted-foreground">Tickets in April</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-blue">~22</div>
-                <div className="text-xs text-muted-foreground">Tickets per working day</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-purple">~5.5</div>
-                <div className="text-xs text-muted-foreground">Tickets / engineer / day</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-orange">22</div>
-                <div className="text-xs text-muted-foreground">Working days in April</div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
-            <p>
-              4 engineers shipped 483 tickets in April across 22 working days - roughly 121 tickets per engineer per month,
-              or 5.5 tickets per engineer per working day. That is approximately 22 tickets per working day across the entire team.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Engineering Velocity Over Time */}
       <DataChart
@@ -91,52 +48,30 @@ export default function AIAdoptionPage() {
       {/* Marketing Automation */}
       <Card className="bg-card mb-6">
         <CardHeader>
-          <CardTitle>Marketing Automation</CardTitle>
+          <CardTitle>Marketing</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-green">30%+</div>
-                <div className="text-xs text-muted-foreground">CPI reduction</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-blue">50M+</div>
-                <div className="text-xs text-muted-foreground">Organic views</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-purple">11</div>
-                <div className="text-xs text-muted-foreground">Ambassadors</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-orange">$0</div>
-                <div className="text-xs text-muted-foreground">Paid for organic views</div>
-              </CardContent>
-            </Card>
-          </div>
           <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
             <p>
-              Equals runs a fully agentised marketing pipeline. AI generates and tests ad creative at scale,
-              with automated campaign optimisation across TikTok and social channels. Result: 30%+ reduction
-              in cost-per-install since deployment.
+              Equals runs a fully agentic growth stack. A fleet of agents, each with its own skill, plugs directly
+              into Meta, TikTok, Snap, AppLovin, and Apple Search Ads, handling budget allocation across platforms
+              in near real-time and shifting spend toward whatever is converting at the lowest CPI on any given day.
+              The result: a 30%+ reduction in cost-per-install since automation was deployed.
             </p>
             <p>
-              On the organic side, 11 ambassadors are coordinated through AI-assisted systems and have generated
-              over 50 million organic views. AI-generated creative paired with human ambassador authenticity
-              produces a marketing engine that scales without proportional cost increases.
+              The team outputs 150 UGC creatives per week, tested and rotated by dedicated agents to combat ad
+              exhaustion, with a performance skill auto-pausing underperformers and scaling winners. A separate ASA
+              agent handles keyword bidding, match-type tuning, and CPT optimisation across our top markets,
+              alongside an ASO programme that has compounded search volume month over month. On top of this,
+              35 ambassadors are managed through agentic workflows, briefs, content review, and performance tracking,
+              contributing 1B+ views, with the whole engine run end to end by a marketing team of one (Isaac Kamlish).
             </p>
           </div>
         </CardContent>
       </Card>
 
       {/* Content Moderation & Safety */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 gap-6 mb-6">
         <Card className="bg-card">
           <CardHeader>
             <CardTitle>Content Moderation and Safety</CardTitle>
@@ -144,8 +79,11 @@ export default function AIAdoptionPage() {
           <CardContent>
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
               <p>
-                Equals runs self-hosted ML models for message and image moderation. These run on our own infrastructure
-                for speed, cost control, and customisation.
+                Every user on Equals must verify their identity. External identity verification providers charge
+                $0.15-0.30 per verification - we built our own in-house verification system that runs at $0.01
+                per inference, a 93-97% cost reduction. At 500K+ MAUs and growing, this saves hundreds of thousands
+                of dollars per year on verification alone, with the same approach applied across moderation and
+                personalisation.
               </p>
               <ul className="space-y-2 text-xs">
                 <li className="flex items-start gap-2">
@@ -176,76 +114,39 @@ export default function AIAdoptionPage() {
           <CardContent>
             <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
               <p>
-                10+ AI agents run in production for user support. They classify incoming
-                tickets, route to the appropriate team, and resolve common issues automatically.
+                User support runs as a multi-agent system, not a chatbot. 10+ specialised agents sit in front of
+                every inbound ticket: a classifier reads the message and tags intent, a router dispatches to the
+                right specialist (account recovery, payments, moderation appeals, safety, bug reports), and
+                resolution agents own each lane end to end, pulling user context, checking history, and replying
+                without a human in the loop. The result: 85% of tickets resolved fully automatically across 40+
+                languages - higher than Klarna&apos;s widely-cited 66% benchmark.
               </p>
               <ul className="space-y-2 text-xs">
                 <li className="flex items-start gap-2">
                   <span className="text-accent-blue">-</span>
-                  <span>Automated classification and routing of support tickets</span>
+                  <span>Multi-agent system: classifier, router, and per-lane resolution agents</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-blue">-</span>
-                  <span>Multi-language support capabilities</span>
+                  <span>40+ languages handled natively, no separate localisation team</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-blue">-</span>
-                  <span>Common issue resolution without human intervention</span>
+                  <span>85% of tickets resolved without human intervention</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-accent-blue">-</span>
-                  <span>Escalation to human agents for complex cases</span>
+                  <span>Edge cases auto-escalated to humans with full context pre-attached</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent-blue">-</span>
+                  <span>Same agentic foundation used across moderation, marketing, and verification</span>
                 </li>
               </ul>
             </div>
           </CardContent>
         </Card>
       </div>
-
-      {/* Product Intelligence */}
-      <Card className="bg-card mb-6">
-        <CardHeader>
-          <CardTitle>Product Intelligence</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-green">$0.01</div>
-                <div className="text-xs text-muted-foreground">Per-user inference cost</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-blue">96%</div>
-                <div className="text-xs text-muted-foreground">Cost reduction (from $0.27)</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-secondary border-0 text-center">
-              <CardContent className="p-3">
-                <div className="text-2xl font-bold text-accent-purple">5+</div>
-                <div className="text-xs text-muted-foreground">Concurrent A/B tests</div>
-              </CardContent>
-            </Card>
-          </div>
-          <div className="space-y-3 text-muted-foreground text-sm leading-relaxed">
-            <p>
-              AI powers the core product experience: recommendations, safety, and personalisation. Example:
-              every user on Equals must verify their identity. External providers charge $0.15-0.30
-              per verification. We built our own system that runs at $0.01 per inference, a 93-97%
-              cost reduction. At 500K+ MAUs, this saves hundreds of thousands per year on
-              verification alone. Same approach across recommendations, moderation, and personalisation.
-            </p>
-            <p>
-              Equals runs A/B testing across all product surfaces: onboarding, feed, recommendations,
-              social features, and monetisation. 5+ concurrent experiments at any time, each targeting
-              retention. Every product decision is data-driven. The experimentation
-              infrastructure enables rapid iteration on what keeps users coming back. Same testing rigour
-              as Spotify and Netflix, built and maintained by 4 engineers.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
 
     </Section>
   );

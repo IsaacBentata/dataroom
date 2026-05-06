@@ -20,6 +20,14 @@ const items = [
   { href: "/live", label: "Equals LIVE" },
 ];
 
+const INVEST_HREF = `mailto:isaac.k@equa.ls?cc=${encodeURIComponent(
+  "isaac@equa.ls"
+)}&subject=${encodeURIComponent(
+  "Equals Series A"
+)}&body=${encodeURIComponent(
+  "After reviewing your materials, it's clear that you are on to something incredible and I would like to participate in your Series A."
+)}`;
+
 const pageLoaders: Record<string, () => Promise<{ default: React.ComponentType }>> = {
   "/product": () => import("./product/content"),
   "/growth": () => import("./growth/content"),
@@ -208,7 +216,7 @@ export default function Home() {
     return () => window.removeEventListener("keydown", onKey);
   }, [index, previewIndex]);
 
-  const offset = Math.round((items.length - 1 - 2 * index) * (ROW_H / 2));
+  const offset = Math.round((items.length - 2 * index) * (ROW_H / 2));
   const isPreviewing = previewIndex !== null;
   const PreviewComponent = isPreviewing
     ? pageComponents[items[previewIndex!].href]
@@ -341,6 +349,28 @@ export default function Home() {
                 </li>
               );
             })}
+            <li
+              style={{
+                fontFamily: "var(--font-fair-favorit-mono), monospace",
+                fontWeight: 400,
+                fontSize: 12,
+                lineHeight: "160%",
+                letterSpacing: "0.24px",
+                textTransform: "uppercase" as const,
+              }}
+              className="flex items-center"
+            >
+              <a
+                href={INVEST_HREF}
+                className="text-foreground/15 hover:text-foreground/40 transition-colors duration-200"
+              >
+                <AnimateText
+                  text="Invest"
+                  triggerOnView={false}
+                  delay={80 + items.length * 60}
+                />
+              </a>
+            </li>
           </ul>
         </div>
       </div>
