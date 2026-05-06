@@ -1281,7 +1281,22 @@
       fetch(url)
         .then(r => r.ok ? r.json() : null)
         .catch(() => null)
-        .then(data => { ingestPairs(data); })
+        .then(data => {
+          const added = ingestPairs(data);
+          // Eagerly enqueue artist texture builds for the first artist of each
+          // newly-ingested pair. The lazy queue (max 2 in flight) means this
+          // ramps up quickly without blocking the main thread.
+          if (added > 0) {
+            const seenUrls = new Set();
+            for (const p of PAIRS_POOL) {
+              for (const a of p.arts) {
+                if (!a.img || seenUrls.has(a.img)) continue;
+                seenUrls.add(a.img);
+                getOrLoadPairBubbleByUrl(a.img, a.name);
+              }
+            }
+          }
+        })
         .finally(() => { refilling = false; });
     }
 
@@ -1295,21 +1310,29 @@
         if (!seenPairIds.has(p.id)) unseen.push(p);
       }
       const candidates = unseen.length > 0 ? unseen : PAIRS_POOL;
-      // If the unseen pool is getting thin, kick off a refill in the background.
       if (unseen.length < REFILL_THRESHOLD) fetchMorePairs();
+      // Only consider pairs whose at least one artist texture is already built.
+      // If none ready yet, return null and let the arc defer rather than
+      // falling back to a preset bubble (which would show a fake artist).
+      const ready = [];
+      for (const p of candidates) {
+        for (const a of p.arts) {
+          const cached = pairBubbleCache.get(a.img);
+          if (cached && typeof cached === 'object') { ready.push({ p, builtArtist: a }); break; }
+        }
+      }
+      if (ready.length === 0) return null;
       for (let attempt = 0; attempt < 12; attempt++) {
-        const pick = candidates[Math.floor(Math.random() * candidates.length)];
+        const item = ready[Math.floor(Math.random() * ready.length)];
+        const pick = item.p;
         if (!availableSet.has(pick.aIdx) || !availableSet.has(pick.bIdx)) continue;
         const ca = CITIES[pick.aIdx].country;
         const cb = CITIES[pick.bIdx].country;
         if (attempt < 7) {
           if (recentCountries.includes(ca) || recentCountries.includes(cb)) continue;
         }
-        // Each spawn picks a different random artist from the pair's
-        // common-artists list, so even repeat pairs feel fresh.
-        const artist = pick.arts[Math.floor(Math.random() * pick.arts.length)];
         seenPairIds.add(pick.id);
-        return { ...pick, artist };
+        return { ...pick, artist: item.builtArtist };
       }
       return null;
     }
@@ -1424,31 +1447,21 @@
         arc.line.geometry.setDrawRange(0, 0);
         return;
       }
-      let i, j;
-      // Pick a real friendship pair (Tier 1-weighted) from the data pool.
+      // Only spawn an arc when we have a real pair with a built artist
+      // texture. If nothing's ready yet, defer the arc — we never want to
+      // show a preset/fake bubble.
       const poolSet = new Set(pool);
       const realPair = pickPairFromPool(poolSet);
-      if (realPair) {
-        i = realPair.aIdx;
-        j = realPair.bIdx;
-        arc.realPair = realPair;
-      } else {
-        // Fallback to original random/region logic if data hasn't loaded
-        // or no diverse pair could be found in time.
-        arc.realPair = null;
-        i = pool[Math.floor(Math.random() * pool.length)];
-        const sameRegion = Math.random() < 0.45;
-        if (sameRegion) {
-          const region = REGION_OF[i];
-          const regionMates = (CITIES_BY_REGION[region] || []).filter(k => k !== i && pool.includes(k));
-          if (regionMates.length > 0) {
-            j = regionMates[Math.floor(Math.random() * regionMates.length)];
-          }
-        }
-        if (j == null) {
-          do { j = pool[Math.floor(Math.random() * pool.length)]; } while (j === i);
-        }
+      if (!realPair) {
+        arc.state = 'waiting';
+        arc.bornAt = now + 0.15 + Math.random() * 0.25;
+        arc.line.material.opacity = 0;
+        arc.line.geometry.setDrawRange(0, 0);
+        return;
       }
+      const i = realPair.aIdx;
+      const j = realPair.bIdx;
+      arc.realPair = realPair;
       noteCountriesUsed(i, j);
       const a = latLngToVec3(CITIES[i].lat, CITIES[i].lng, R * 1.005);
       const b = latLngToVec3(CITIES[j].lat, CITIES[j].lng, R * 1.005);
