@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EQUALS — Connecting Us Through Music</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* official EQUALS fonts (FAIRFavorit family + GreedNarrow display) */
+    @font-face {
+      font-family: 'FAIRFavorit';
+      src: url('./Fonts/FAIRFavorit-Regular.otf') format('opentype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'FAIRFavorit';
+      src: url('./Fonts/FAIRFavorit-Medium.otf') format('opentype');
+      font-weight: 500; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'FAIRFavorit';
+      src: url('./Fonts/FAIRFavorit-Bold.otf') format('opentype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'FAIRFavoritMono';
+      src: url('./Fonts/FAIRFavoritMono-Book.otf') format('opentype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'FAIRFavoritExtended';
+      src: url('./Fonts/FAIRFavoritExtended-Ultra.otf') format('opentype');
+      font-weight: 900; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'GreedNarrow';
+      src: url('./Fonts/GreedNarrow-TRIAL-Heavy.otf') format('opentype');
+      font-weight: 900; font-style: normal; font-display: swap;
+    }
+
+    /* EQUALS design tokens — from src/constants/Color.ts */
+    :root {
+      --eq-black: #000000;
+      --eq-text: #F3F3F3;          /* WHITE_95_SOLID — default text */
+      --eq-text-70: rgba(255,255,255,0.7);
+      --eq-text-50: rgba(255,255,255,0.5);
+      --eq-text-30: rgba(255,255,255,0.3);
+      --eq-white-07: hsla(0, 0%, 100%, 0.07);
+      --eq-surface: hsla(240, 6%, 10%, 0.78);  /* BLACK_90_SOLID with alpha */
+      --eq-turbo-pink: #FF1D86;    /* TURBO_PINK */
+      --eq-love-pink: #FF31AE;     /* LOVE_PINK */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #ffffff; }
+    body {
+      font-family: 'FAIRFavorit', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      color: #000000;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    #canvas { position: fixed; top: -5%; left: -15%; width: 115%; height: 105%; display: block; opacity: 0; transition: opacity 0.8s ease-in; }
+    #canvas.ready { opacity: 1; }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.8s ease-in;
+    }
+    #canvas.ready ~ .overlay, #canvas.ready ~ .feed, #canvas.ready ~ .topline { opacity: 1; }
+    .row { display: flex; justify-content: space-between; align-items: flex-start; }
+    .brand { display: none; }
+
+    /* topline ticker metrics */
+    .topline {
+      position: fixed;
+      bottom: 32px;
+      left: 32px;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.8s ease-in;
+      gap: 16px;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .mission {
+      font-family: 'FAIRFavoritExtended', 'FAIRFavorit', sans-serif;
+      font-weight: 900;
+      font-size: 45px;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: #000000;
+      max-width: 520px;
+    }
+    .metrics {
+      display: flex;
+      gap: 48px;
+    }
+    .metric { display: flex; flex-direction: column; gap: 8px; }
+    .metric-label {
+      font-family: 'FAIRFavoritMono', ui-monospace, Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      color: #000000;
+    }
+    .metric-num {
+      font-family: 'FAIRFavoritExtended', 'FAIRFavorit', sans-serif;
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.015em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      color: #000000;
+    }
+
+    /* live connections feed */
+    .feed {
+      position: fixed;
+      top: 80px;
+      right: 32px;
+      width: 380px;
+      max-height: calc(100vh - 200px);
+      pointer-events: none;
+      z-index: 3;
+      display: flex;
+      opacity: 0;
+      transition: opacity 0.8s ease-in;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+    }
+    .feed-title {
+      font-family: 'FAIRFavoritMono', ui-monospace, Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.7);
+      opacity: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .feed-title::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--eq-turbo-pink);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--eq-turbo-pink);
+      animation: live-pulse 1.4s infinite ease-in-out;
+    }
+    @keyframes live-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.7); }
+    }
+    .feed-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: hidden;
+    }
+    /* connection card: user → artist pill → user */
+    .conn-card {
+      background: rgba(240, 240, 240, 0.9);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 10px 12px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      animation: card-in 0.45s cubic-bezier(0.25, 1.5, 0.4, 1);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      transform-origin: right center;
+    }
+    .conn-card.exit {
+      opacity: 0;
+      transform: translateX(30px) scale(0.94);
+    }
+    @keyframes card-in {
+      from { opacity: 0; transform: translateX(34px) scale(0.92); }
+      to   { opacity: 1; transform: translateX(0) scale(1); }
+    }
+    .conn-user {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'FAIRFavorit', sans-serif;
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+    .conn-user.right { flex-direction: row-reverse; text-align: right; }
+    .conn-user .user-thumb {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      object-fit: cover;
+      box-shadow: 0 0 0 1.5px rgba(0,0,0,0.15);
+    }
+    .conn-user .user-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .conn-user.right .user-info { align-items: flex-end; }
+    .conn-name {
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .conn-loc {
+      font-size: 10px;
+      opacity: 0.6;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .conn-loc .flag { font-size: 12px; line-height: 1; }
+    .conn-artist {
+      flex: 0 1 auto;
+      min-width: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 10px 2px 2px;
+      border-radius: 999px;
+      color: #0f0f10;
+      font-family: 'FAIRFavorit', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.2) inset;
+    }
+    .conn-artist .thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 1.5px rgba(255,255,255,0.4);
+    }
+    .conn-artist .artist-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <aside class="feed">
+    <div class="feed-title">LIVE FRIENDSHIPS</div>
+    <div class="feed-list" id="feed-list"></div>
+  </aside>
+
+  <div class="topline">
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">Users</div>
+        <div class="metric-num" id="m-users">1,314,483</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Messages</div>
+        <div class="metric-num" id="m-messages">88,023,655</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Friends</div>
+        <div class="metric-num" id="m-friends">13,599,033</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay">
+    <div class="row">
+      <div class="brand">
+        <svg viewBox="0 0 90 25" xmlns="http://www.w3.org/2000/svg" aria-label="EQUALS">
+          <g clip-path="url(#clip-equals)">
+            <path d="M3.69869 12.7863H11.7698V9.46263H3.69869V6.04562H13.2153V2.72192H0V19.9625H13.4563V16.6388H3.69869V12.7863Z" fill="currentColor"/>
+            <path d="M26.2567 3.5528C24.9896 2.84185 23.5218 2.48193 21.8844 2.48193C20.2469 2.48193 18.7746 2.84185 17.512 3.5528C16.2449 4.2682 15.241 5.30352 14.5316 6.62767C13.8267 7.94737 13.4697 9.53368 13.4697 11.3377C13.4697 12.9462 13.7553 14.3859 14.3219 15.6168C14.8885 16.852 15.7005 17.8651 16.7312 18.6161C17.7127 19.3359 18.8594 19.8158 20.1443 20.0424V21.4155C20.1443 22.4952 20.4343 23.3306 21.0054 23.8993C21.5765 24.4681 22.4153 24.7569 23.4995 24.7569H28.2288V21.6732H24.8023C24.1687 21.6732 23.959 21.5576 23.8876 21.4866C23.8162 21.4155 23.7002 21.2066 23.7002 20.5756V20.0424C24.9718 19.8025 26.105 19.3137 27.0777 18.5939C28.0994 17.8385 28.9025 16.8298 29.4602 15.5901C30.0179 14.3593 30.299 12.9285 30.299 11.3377C30.299 9.53368 29.942 7.95182 29.2371 6.62767C28.5277 5.29908 27.5283 4.26376 26.2567 3.5528ZM21.7639 5.80563H22.0048C23.437 5.80563 24.5702 6.28997 25.3733 7.24975C26.1854 8.21842 26.6003 9.59589 26.6003 11.3422C26.6003 13.0884 26.1898 14.4437 25.3733 15.4212C24.5613 16.3988 23.4548 16.8787 22.0048 16.8787H21.7639C20.3094 16.8787 19.2074 16.4033 18.3954 15.4212C17.5833 14.4437 17.1684 13.0707 17.1684 11.3422C17.1684 9.61367 17.5789 8.21842 18.3954 7.24975C19.1985 6.28997 20.3317 5.80563 21.7639 5.80563Z" fill="currentColor"/>
+            <path d="M45.2096 2.72192H41.511V13.3818C41.511 14.617 41.2611 15.5191 40.7703 16.0656C40.2885 16.6033 39.5166 16.8787 38.4815 16.8787H38.2406C37.2055 16.8787 36.4336 16.6033 35.9473 16.0656C35.4565 15.5191 35.2111 14.617 35.2111 13.3818V2.72192H31.5125V13.8616C31.5125 15.8834 32.088 17.4608 33.2168 18.5539C34.3456 19.647 36.0767 20.2024 38.361 20.2024C40.6454 20.2024 42.372 19.647 43.5053 18.5539C44.6386 17.4608 45.2096 15.879 45.2096 13.8616V2.72192Z" fill="currentColor"/>
+            <path d="M55.9087 2.72192H51.7951L44.9465 19.9625H48.8505L50.3674 16.0034H57.1446L58.6616 19.9625H62.5878L55.9667 2.86411L55.9132 2.72192H55.9087ZM55.8686 12.6797H51.6479L53.7582 7.16537L55.8686 12.6797Z" fill="currentColor"/>
+            <path d="M66.737 2.72192H63.0383V19.9625H76.2537V16.6388H66.737V2.72192Z" fill="currentColor"/>
+            <path d="M81.1883 6.36101C81.6747 5.99221 82.335 5.80558 83.1515 5.80558H83.3924C84.2356 5.80558 84.9272 6.01887 85.4447 6.441C85.9623 6.85868 86.2434 7.44966 86.3014 8.24059L86.3192 8.44499H90.0001V8.22282C90.0001 7.1164 89.7368 6.11662 89.2237 5.2546C88.7062 4.38812 87.9388 3.70383 86.9394 3.21505C85.9489 2.73072 84.7576 2.48633 83.3969 2.48633C82.0361 2.48633 80.8626 2.73516 79.8632 3.22838C78.8594 3.72605 78.0875 4.37924 77.57 5.17906C77.0524 5.97888 76.7892 6.84535 76.7892 7.74737C76.7892 10.4934 78.3061 12.1997 81.3043 12.8129L84.3159 13.435C84.9896 13.5683 85.4537 13.7638 85.6901 14.0171C85.9221 14.2615 86.0381 14.6125 86.0381 15.0657C86.0381 15.5767 85.8284 15.9944 85.3957 16.3454C84.9584 16.7009 84.3249 16.8831 83.5128 16.8831H83.2719C82.1253 16.8831 81.2374 16.6209 80.6351 16.1099C80.0239 15.5945 79.7026 14.9324 79.6402 14.0926L79.6268 13.8882H75.937L75.9459 14.1193C76.0129 15.9944 76.6419 17.4963 77.8243 18.5805C79.0021 19.6647 80.7556 20.2112 83.0355 20.2112C84.4096 20.2112 85.6187 19.9757 86.6226 19.5047C87.6354 19.0337 88.4162 18.385 88.9427 17.5763C89.4691 16.7676 89.7368 15.8433 89.7368 14.8258C89.7368 12.1419 88.1039 10.4534 84.8826 9.80913L82.3528 9.30702C81.6568 9.17372 81.166 8.97376 80.885 8.71604C80.6173 8.47165 80.4879 8.11618 80.4879 7.63184C80.4879 7.1475 80.7199 6.72982 81.1928 6.3699L81.1883 6.36101Z" fill="currentColor"/>
+          </g>
+          <defs>
+            <clipPath id="clip-equals"><rect width="90" height="24.5455" fill="white"/></clipPath>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { Line2 } from 'three/addons/lines/Line2.js';
+    import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+    import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+
+    // ---------- live topline tickers (fed by API) ----------
+    const GLOBE_API = new URLSearchParams(window.location.search).get('api') || window.GLOBE_API_URL || '/api/globe-rates';
+
+    // Fallback defaults (used until API responds)
+    let tickerState = {
+      users:    { value: 1314483,  ratePerMs: 11000 / 86400000 },
+      messages: { value: 88023655, ratePerMs: 843000 / 86400000 },
+      friends:  { value: 13599033, ratePerMs: 128000 / 86400000 },
+    };
+    let tickerBaseTime = Date.now();
+
+    // Fetch real rates from API
+    fetch(GLOBE_API)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data || !data.metrics) return;
+        const now = Date.now();
+        const asOf = data.asOf;
+        const elapsed24h = 24 * 3600 * 1000;
+        const timeSinceAsOf = now - asOf - elapsed24h;
+        const hourMs = 3600 * 1000;
+
+        for (const [key, m] of Object.entries(data.metrics)) {
+          if (!tickerState[key]) continue;
+          const proRata = m.ratePerHour * Math.max(0, timeSinceAsOf) / hourMs;
+          tickerState[key].value = Math.round(m.base + proRata);
+          tickerState[key].ratePerMs = m.ratePerHour / hourMs;
+        }
+        tickerBaseTime = now;
+
+        // Update display immediately
+        for (const [key, s] of Object.entries(tickerState)) {
+          const el = document.getElementById('m-' + key);
+          if (el) el.textContent = Math.round(s.value).toLocaleString();
+        }
+
+        // Update feed card cadence based on friends rate
+        const friendsPerSec = tickerState.friends.ratePerMs * 1000;
+        if (friendsPerSec > 0) {
+          feedCardIntervalMs = 1000 / friendsPerSec;
+        }
+      })
+      .catch(() => {}); // silently fall back to defaults
+
+    // Tick all counters forward
+    function tickCounters() {
+      const now = Date.now();
+      const dt = now - tickerBaseTime;
+      tickerBaseTime = now;
+      for (const [key, s] of Object.entries(tickerState)) {
+        s.value += s.ratePerMs * dt;
+        const el = document.getElementById('m-' + key);
+        if (el) el.textContent = Math.round(s.value).toLocaleString();
+      }
+    }
+    setInterval(tickCounters, 1000);
+
+    // Friends bump (called from arc spawns)
+    let friendsBumpCounter = 0;
+    const FRIENDS_BUMP_EVERY = 6;
+    function bumpFriends() {
+      friendsBumpCounter++;
+      if (friendsBumpCounter < FRIENDS_BUMP_EVERY) return;
+      friendsBumpCounter = 0;
+      // Counter is now driven by tickCounters, so bumpFriends just syncs visual arcs
+    }
+
+    // Feed card cadence (derived from friends rate)
+    let feedCardIntervalMs = 670; // default ~1.5/sec
+    let lastFeedCardTime = 0;
+    function shouldPostFeedCard() {
+      const now = Date.now();
+      if (now - lastFeedCardTime < feedCardIntervalMs) return false;
+      lastFeedCardTime = now;
+      return true;
+    }
+
+    // ---------- scene basics ----------
+    const canvas = document.getElementById('canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0xffffff, 1);
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x000000, 10, 22);
+
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+    // main page camera — back further to leave room for the UI overlay; zoom is allowed
+    camera.position.set(0, 1.2, 11.4);
+
+    const controls = new OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.35;
+    controls.enablePan = false;
+    controls.minDistance = 5.5;
+    controls.maxDistance = 14;
+
+    // NASA-photo lighting: dark shadow side, single strong sun
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    const key = new THREE.DirectionalLight(0xffffff, 1.8);
+    key.position.set(6, 3, 5);
+    scene.add(key);
+
+    // root group so camera stays still and the whole thing spins together
+    const world = new THREE.Group();
+    world.scale.setScalar(1.4); // globe (and everything anchored to it) appears 40% larger
+    scene.add(world);
+
+    // ---------- photo-real earth (NASA blue-marble look) ----------
+    const R = 2.0;
+
+    const loader = new THREE.TextureLoader();
+    loader.setCrossOrigin('anonymous');
+
+    const earthMat = new THREE.MeshPhongMaterial({
+      color: 0xffffff,
+      specular: 0x222236,
+      shininess: 14,
+    });
+
+    // process the loaded blue-marble texture: pull saturation down + soften brightness
+    function desaturateTexture(tex, saturation = 0.55, lightness = 0.96) {
+      const img = tex.image;
+      const c = document.createElement('canvas');
+      c.width = img.width; c.height = img.height;
+      const ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const data = ctx.getImageData(0, 0, c.width, c.height);
+      const d = data.data;
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1; if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+      };
+      for (let i = 0; i < d.length; i += 4) {
+        const r = d[i] / 255, g = d[i+1] / 255, b = d[i+2] / 255;
+        const max = Math.max(r, g, b), min = Math.min(r, g, b);
+        let l = (max + min) / 2;
+        let h, s;
+        if (max === min) { h = 0; s = 0; }
+        else {
+          const dd = max - min;
+          s = l > 0.5 ? dd / (2 - max - min) : dd / (max + min);
+          switch (max) {
+            case r: h = (g - b) / dd + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / dd + 2; break;
+            default: h = (r - g) / dd + 4;
+          }
+          h /= 6;
+        }
+        s *= saturation;
+        l *= lightness;
+        let nr, ng, nb;
+        if (s === 0) { nr = ng = nb = l; }
+        else {
+          const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+          const p = 2 * l - q;
+          nr = hue2rgb(p, q, h + 1/3);
+          ng = hue2rgb(p, q, h);
+          nb = hue2rgb(p, q, h - 1/3);
+        }
+        d[i] = nr * 255; d[i+1] = ng * 255; d[i+2] = nb * 255;
+      }
+      ctx.putImageData(data, 0, 0);
+      const newTex = new THREE.CanvasTexture(c);
+      newTex.colorSpace = THREE.SRGBColorSpace;
+      newTex.anisotropy = 4;
+      return newTex;
+    }
+
+    const EARTH_URLS = [
+      'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg',
+      'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg',
+    ];
+    (function loadEarth(i = 0) {
+      if (i >= EARTH_URLS.length) return;
+      loader.load(EARTH_URLS[i],
+        (tex) => {
+          tex.colorSpace = THREE.SRGBColorSpace;
+          try {
+            earthMat.map = desaturateTexture(tex, 0.35, 1.3);
+          } catch (e) {
+            earthMat.map = tex;
+          }
+          earthMat.needsUpdate = true;
+        },
+        undefined,
+        () => loadEarth(i + 1)
+      );
+    })();
+    // specular map → only oceans reflect, land stays matte
+    loader.load(
+      'https://threejs.org/examples/textures/planets/earth_specular_2048.jpg',
+      (tex) => { earthMat.specularMap = tex; earthMat.needsUpdate = true; }
+    );
+
+    const earth = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 96), earthMat);
+    world.add(earth);
+
+    // tight, subtle atmospheric rim (no big halo)
+    const glow = new THREE.Mesh(
+      new THREE.SphereGeometry(R * 1.035, 64, 64),
+      new THREE.ShaderMaterial({
+        transparent: true,
+        side: THREE.BackSide,
+        blending: THREE.NormalBlending,
+        depthWrite: false,
+        uniforms: { c: { value: new THREE.Color(0x8ab4e8) }, p: { value: 5.0 } },
+        vertexShader: `varying vec3 vN; void main(){ vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+        fragmentShader: `varying vec3 vN; uniform vec3 c; uniform float p; void main(){ float i = pow(0.9 - dot(vN, vec3(0.,0.,1.)), p); gl_FragColor = vec4(c * i, i * 0.45); }`
+      })
+    );
+    world.add(glow);
+
+    // ---------- helpers ----------
+    function latLngToVec3(lat, lng, r) {
+      const phi = (90 - lat) * Math.PI / 180;
+      const theta = (lng + 180) * Math.PI / 180;
+      return new THREE.Vector3(
+        -r * Math.sin(phi) * Math.cos(theta),
+         r * Math.cos(phi),
+         r * Math.sin(phi) * Math.sin(theta)
+      );
+    }
+
+    // ---------- avatars (memoji-style sprites) ----------
+    const AVATAR_BG = ['#FFB5D0', '#B5E3E8', '#A8E6CF', '#C5B3E6', '#FFD4A3', '#F6F1A8', '#FFB8C6', '#CFE8FF'];
+    const EMOJI = ['😎', '🥰', '🤩', '😊', '😇', '😌', '😏', '🥳', '😁', '😄', '🤗', '😉', '🙂', '😆', '😋', '🤭'];
+
+    function makeAvatarCanvas(bg, emoji) {
+      const s = 256;
+      const c = document.createElement('canvas');
+      c.width = c.height = s;
+      const ctx = c.getContext('2d');
+      // soft shadow
+      ctx.shadowColor = 'rgba(0,0,0,0.5)';
+      ctx.shadowBlur = 14;
+      ctx.shadowOffsetY = 4;
+      // filled circle
+      ctx.fillStyle = bg;
+      ctx.beginPath();
+      ctx.arc(s/2, s/2, s/2 - 18, 0, Math.PI * 2);
+      ctx.fill();
+      // reset shadow
+      ctx.shadowColor = 'transparent';
+      // white ring
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.arc(s/2, s/2, s/2 - 18, 0, Math.PI * 2);
+      ctx.stroke();
+      // emoji
+      ctx.font = '138px -apple-system, "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(emoji, s/2, s/2 + 6);
+      return c;
+    }
+
+    function makeAvatarTexture(bg, emoji) {
+      const tex = new THREE.CanvasTexture(makeAvatarCanvas(bg, emoji));
+      tex.anisotropy = 4;
+      return tex;
+    }
+
+    // pool of avatar images for the feed cards
+    const AVATAR_POOL_SIZE = 24;
+    const avatarPool = [];
+    for (let i = 0; i < AVATAR_POOL_SIZE; i++) {
+      const bg = AVATAR_BG[Math.floor(Math.random() * AVATAR_BG.length)];
+      const emoji = EMOJI[Math.floor(Math.random() * EMOJI.length)];
+      avatarPool.push(makeAvatarCanvas(bg, emoji).toDataURL('image/png'));
+    }
+    const pickAvatarUrl = () => avatarPool[Math.floor(Math.random() * avatarPool.length)];
+
+    // cities — lat, lng, country, flag
+    const CITIES = [
+      { name: 'New York',      country: 'USA',          flag: '🇺🇸', lat:  40.71, lng:  -74.01 },
+      { name: 'Los Angeles',   country: 'USA',          flag: '🇺🇸', lat:  34.05, lng: -118.24 },
+      { name: 'Mexico City',   country: 'Mexico',       flag: '🇲🇽', lat:  19.43, lng:  -99.13 },
+      { name: 'São Paulo',     country: 'Brazil',       flag: '🇧🇷', lat: -23.55, lng:  -46.63 },
+      { name: 'London',        country: 'UK',           flag: '🇬🇧', lat:  51.50, lng:   -0.12 },
+      { name: 'Paris',         country: 'France',       flag: '🇫🇷', lat:  48.86, lng:    2.35 },
+      { name: 'Berlin',        country: 'Germany',      flag: '🇩🇪', lat:  52.52, lng:   13.40 },
+      { name: 'Stockholm',     country: 'Sweden',       flag: '🇸🇪', lat:  59.33, lng:   18.07 },
+      { name: 'Lagos',         country: 'Nigeria',      flag: '🇳🇬', lat:   6.52, lng:    3.38 },
+      { name: 'Mumbai',        country: 'India',        flag: '🇮🇳', lat:  19.08, lng:   72.88 },
+      { name: 'Seoul',         country: 'Korea',        flag: '🇰🇷', lat:  37.57, lng:  126.98 },
+      { name: 'Tokyo',         country: 'Japan',        flag: '🇯🇵', lat:  35.68, lng:  139.69 },
+      { name: 'Sydney',        country: 'Australia',    flag: '🇦🇺', lat: -33.87, lng:  151.21 },
+      { name: 'Toronto',       country: 'Canada',       flag: '🇨🇦', lat:  43.65, lng:  -79.38 },
+      { name: 'Dubai',         country: 'UAE',          flag: '🇦🇪', lat:  25.20, lng:   55.27 },
+      { name: 'Cape Town',     country: 'South Africa', flag: '🇿🇦', lat: -33.92, lng:   18.42 },
+      { name: 'Chicago',       country: 'USA',          flag: '🇺🇸', lat:  41.88, lng:  -87.63 },
+      { name: 'Miami',         country: 'USA',          flag: '🇺🇸', lat:  25.76, lng:  -80.19 },
+      { name: 'Vancouver',     country: 'Canada',       flag: '🇨🇦', lat:  49.28, lng: -123.12 },
+      { name: 'Buenos Aires',  country: 'Argentina',    flag: '🇦🇷', lat: -34.60, lng:  -58.38 },
+      { name: 'Rio',           country: 'Brazil',       flag: '🇧🇷', lat: -22.91, lng:  -43.17 },
+      { name: 'Madrid',        country: 'Spain',        flag: '🇪🇸', lat:  40.42, lng:   -3.70 },
+      { name: 'Rome',          country: 'Italy',        flag: '🇮🇹', lat:  41.90, lng:   12.50 },
+      { name: 'Amsterdam',     country: 'Netherlands',  flag: '🇳🇱', lat:  52.37, lng:    4.90 },
+      { name: 'Istanbul',      country: 'Türkiye',      flag: '🇹🇷', lat:  41.01, lng:   28.98 },
+      { name: 'Cairo',         country: 'Egypt',        flag: '🇪🇬', lat:  30.04, lng:   31.24 },
+      { name: 'Nairobi',       country: 'Kenya',        flag: '🇰🇪', lat:  -1.29, lng:   36.82 },
+      { name: 'Johannesburg',  country: 'South Africa', flag: '🇿🇦', lat: -26.20, lng:   28.05 },
+      { name: 'Bangkok',       country: 'Thailand',     flag: '🇹🇭', lat:  13.76, lng:  100.50 },
+      { name: 'Singapore',     country: 'Singapore',    flag: '🇸🇬', lat:   1.35, lng:  103.82 },
+      { name: 'Jakarta',       country: 'Indonesia',    flag: '🇮🇩', lat:  -6.21, lng:  106.85 },
+      { name: 'Manila',        country: 'Philippines',  flag: '🇵🇭', lat:  14.60, lng:  120.98 },
+      { name: 'Auckland',      country: 'New Zealand',  flag: '🇳🇿', lat: -36.85, lng:  174.76 },
+      { name: 'Melbourne',     country: 'Australia',    flag: '🇦🇺', lat: -37.81, lng:  144.96 },
+      { name: 'Shanghai',      country: 'China',        flag: '🇨🇳', lat:  31.23, lng:  121.47 },
+      { name: 'Taipei',        country: 'Taiwan',       flag: '🇹🇼', lat:  25.03, lng:  121.57 },
+    ];
+
+    const avatarGroup = new THREE.Group();
+    world.add(avatarGroup);
+
+    // real EQUALS user profile photos sampled from the CSV → ./pfps/pfp-NN.png
+    // pre-processed as circular PNGs (white ring + transparent corners) by build script
+    const PFP_COUNT = 36;
+    const memojiTextures = []; // keep the field name; downstream code still uses it
+    for (let m = 1; m <= PFP_COUNT; m++) {
+      const filename = `./music/pfps/pfp-${String(m).padStart(2, '0')}.png`;
+      const tex = loader.load(filename);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = 4;
+      memojiTextures.push(tex);
+    }
+    // shuffle so adjacent cities don't share the same memoji
+    const memojiOrder = memojiTextures.map((_, i) => i);
+    for (let i = memojiOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [memojiOrder[i], memojiOrder[j]] = [memojiOrder[j], memojiOrder[i]];
+    }
+
+    const AVATAR_SIZE = 0.198;
+    const avatars = []; // indexed by city index
+    CITIES.forEach((city, i) => {
+      // sprite anchored right on the globe surface (not floating above)
+      const pos = latLngToVec3(city.lat, city.lng, R * 1.0);
+      const tex = memojiTextures[memojiOrder[i % memojiTextures.length]];
+      const mat = new THREE.SpriteMaterial({
+        map: tex,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+        depthTest: false, // avatars always render on top of the earth geometry
+      });
+      const sprite = new THREE.Sprite(mat);
+      sprite.position.copy(pos);
+      sprite.renderOrder = 10;
+      sprite.scale.set(0.001, 0.001, 0.001); // start invisible / zero-sized
+      avatarGroup.add(sprite);
+
+      const anchor = new THREE.Mesh(
+        new THREE.SphereGeometry(0.007, 10, 10),
+        new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 })
+      );
+      anchor.position.copy(latLngToVec3(city.lat, city.lng, R * 1.002));
+      world.add(anchor);
+
+      avatars.push({
+        sprite,
+        anchor,
+        basePos: pos.clone(),
+        opacity: 0,
+        liveCount: 0,
+        idx: i,
+        state: 'idle',           // 'idle' | 'alive' | 'fading'
+        maxAliveUntil: 0,
+        cooldownUntil: 0,
+      });
+    });
+
+    const MAX_AVATARS_ALIVE = 5; // same avatar can be in at most this many live arcs
+
+    function availableForNewArc(idx, now) {
+      const av = avatars[idx];
+      if (av.state === 'fading') return false;
+      if (av.state === 'idle') return now >= av.cooldownUntil;
+      // state === 'alive' — still ok if there's room and not about to expire
+      if (av.liveCount >= MAX_AVATARS_ALIVE) return false;
+      return now < av.maxAliveUntil - 0.3;
+    }
+
+    function incEndpoint(idx, now) {
+      const av = avatars[idx];
+      av.liveCount++;
+      if (av.state === 'idle') {
+        av.state = 'alive';
+        // avatar stays on screen long enough for its arc to run
+        av.maxAliveUntil = now + 1.68 + Math.random() * 0.84;
+      }
+    }
+
+    function decEndpoint(idx) {
+      const av = avatars[idx];
+      av.liveCount = Math.max(0, av.liveCount - 1);
+      if (av.liveCount === 0 && av.state === 'alive') {
+        av.state = 'fading';
+      }
+    }
+
+    // ---------- album textures ----------
+    function makeAlbumCanvas(title, a, b, textColor = '#ffffff', style = 'gradient') {
+      const s = 512;
+      const c = document.createElement('canvas');
+      c.width = c.height = s;
+      const ctx = c.getContext('2d');
+
+      if (style === 'solid') {
+        ctx.fillStyle = a;
+        ctx.fillRect(0, 0, s, s);
+      } else if (style === 'split') {
+        ctx.fillStyle = a; ctx.fillRect(0, 0, s, s/2);
+        ctx.fillStyle = b; ctx.fillRect(0, s/2, s, s/2);
+      } else {
+        const g = ctx.createLinearGradient(0, 0, s, s);
+        g.addColorStop(0, a);
+        g.addColorStop(1, b);
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, s, s);
+      }
+
+      // subtle grain
+      ctx.globalAlpha = 0.06;
+      for (let i = 0; i < 400; i++) {
+        ctx.fillStyle = Math.random() > 0.5 ? '#fff' : '#000';
+        ctx.fillRect(Math.random() * s, Math.random() * s, 2, 2);
+      }
+      ctx.globalAlpha = 1;
+
+      // title
+      ctx.fillStyle = textColor;
+      ctx.font = `900 ${title.length > 6 ? 72 : 110}px -apple-system, "Helvetica Neue", sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(title, s/2, s/2);
+
+      return c;
+    }
+
+    function makeAlbumTexture(...args) {
+      return new THREE.CanvasTexture(makeAlbumCanvas(...args));
+    }
+
+    const ALBUMS = [
+      { t: 'brat',      title: 'brat',          artist: 'Charli xcx',       a: '#8BC53F', b: '#8BC53F', tc: '#000',   style: 'solid' },
+      { t: 'MIDNIGHTS', title: 'Midnights',     artist: 'Taylor Swift',     a: '#0d2540', b: '#1b4f7a', tc: '#e8d08c', style: 'gradient' },
+      { t: 'GUTS',      title: 'GUTS',          artist: 'Olivia Rodrigo',   a: '#7b3ff2', b: '#c471ed', tc: '#fff',   style: 'gradient' },
+      { t: 'SOS',       title: 'SOS',           artist: 'SZA',              a: '#0e3f4c', b: '#2a7a8a', tc: '#fff',   style: 'gradient' },
+      { t: 'UTOPIA',    title: 'UTOPIA',        artist: 'Travis Scott',     a: '#2c2c2c', b: '#f05a28', tc: '#fff',   style: 'split' },
+      { t: 'REN',       title: 'Renaissance',   artist: 'Beyoncé',          a: '#c8c8d0', b: '#e8e8ef', tc: '#111',   style: 'gradient' },
+      { t: 'COWBOY',    title: 'Cowboy Carter', artist: 'Beyoncé',          a: '#a11c1c', b: '#f0b400', tc: '#fff',   style: 'gradient' },
+      { t: '1989',      title: '1989 (TV)',     artist: 'Taylor Swift',     a: '#a8c6d8', b: '#dfe9ef', tc: '#2a3644', style: 'gradient' },
+      { t: 'LEMONADE',  title: 'Lemonade',      artist: 'Beyoncé',          a: '#f0c740', b: '#d99a2b', tc: '#1a1a1a', style: 'gradient' },
+      { t: 'HIT ME',    title: 'Hit Me Hard',   artist: 'Billie Eilish',    a: '#4a1520', b: '#a02030', tc: '#fff',   style: 'gradient' },
+      { t: 'EVERMORE',  title: 'evermore',      artist: 'Taylor Swift',     a: '#6b5038', b: '#b18a66', tc: '#fff',   style: 'gradient' },
+      { t: 'CTRL',      title: 'Ctrl',          artist: 'SZA',              a: '#8a7a5a', b: '#d4c09a', tc: '#1a1a1a', style: 'gradient' },
+      { t: 'FOLKLORE',  title: 'folklore',      artist: 'Taylor Swift',     a: '#b8b8b8', b: '#e0e0e0', tc: '#2a2a2a', style: 'gradient' },
+      { t: 'ATWT',      title: 'Astroworld',    artist: 'Travis Scott',     a: '#d4443f', b: '#f08a4a', tc: '#fff',   style: 'gradient' },
+      { t: 'HARRY',     title: "Harry's House", artist: 'Harry Styles',     a: '#8fcadf', b: '#cfe8f0', tc: '#1a1a1a', style: 'gradient' },
+      { t: 'DAWN',      title: 'Dawn FM',       artist: 'The Weeknd',       a: '#1e1e2e', b: '#4a3a6a', tc: '#fff',   style: 'gradient' },
+      { t: 'PLANET',    title: 'Planet Her',    artist: 'Doja Cat',         a: '#e85a6a', b: '#ffb07a', tc: '#fff',   style: 'gradient' },
+      { t: 'UNREAL',    title: 'Chromakopia',   artist: 'Tyler, The Creator', a: '#2a2a2a', b: '#2a2a2a', tc: '#fff',   style: 'solid' },
+      { t: 'TPAB',      title: 'To Pimp a Butterfly', artist: 'Kendrick Lamar', a: '#1a1a1a', b: '#4a4a4a', tc: '#fff',   style: 'gradient' },
+      { t: 'DS4',       title: 'DS2',           artist: 'Future',           a: '#ff6f3c', b: '#ffd43c', tc: '#1a1a1a', style: 'gradient' },
+      { t: 'NECTAR',    title: 'Nectar',        artist: 'Joji',             a: '#f4c2b8', b: '#f8d7a0', tc: '#2a2a2a', style: 'gradient' },
+      { t: 'DONDA',     title: 'Donda',         artist: 'Kanye West',       a: '#111111', b: '#111111', tc: '#fff',   style: 'solid' },
+      { t: 'BLOND',     title: 'Blonde',        artist: 'Frank Ocean',      a: '#ffcf4a', b: '#ffd96a', tc: '#1a1a1a', style: 'solid' },
+      { t: 'IGOR',      title: 'IGOR',          artist: 'Tyler, The Creator', a: '#f4c2d0', b: '#f7c6a4', tc: '#1a1a1a', style: 'gradient' },
+      { t: 'LOVER',     title: 'Lover',         artist: 'Taylor Swift',     a: '#f4aed0', b: '#c6e4f2', tc: '#fff',   style: 'gradient' },
+      { t: 'SOUR',      title: 'SOUR',          artist: 'Olivia Rodrigo',   a: '#d4b6cc', b: '#e8c9d9', tc: '#2a2a2a', style: 'gradient' },
+    ];
+
+    // fake identities for the live feed
+    const NAMES = ['Maya','Rin','Léa','Kai','Zara','Theo','Emi','Noah','Luna','Jin','Aria','Felix','Nova','Kaito','Mira','Dev','Sofia','Luca','Elle','Ezra','Yuki','Jules','Mila','Arlo','Indi','Reese','Nia','Otto','Ines','Arjun','Lila','Beckett','Elif','Mateo','Aya','Santi','Zoë','Ravi','Nell','Kenzo','Remi','Sol','Ari','Juno','Tomo','Etta','Bodhi','Harper','Rio','Samir','Yara','Eliot','Isla','Tomás','Anya','Kira'];
+    const pickName = () => NAMES[Math.floor(Math.random() * NAMES.length)];
+    const pickAge = () => 14 + Math.floor(Math.random() * 14);
+    // pick two friend ages: within ±2 years AND never crossing the 18 boundary
+    function pickFriendAges() {
+      const ageA = pickAge();
+      const isMinor = ageA < 18;
+      const candidates = [];
+      for (let a = ageA - 2; a <= ageA + 2; a++) {
+        if (a < 14 || a > 27) continue;
+        if ((a < 18) !== isMinor) continue; // both must be on same side of 18
+        candidates.push(a);
+      }
+      const ageB = candidates[Math.floor(Math.random() * candidates.length)];
+      return [ageA, ageB];
+    }
+    const pickAlbum = () => ALBUMS[Math.floor(Math.random() * ALBUMS.length)];
+
+    // ---------- dashed arc connections (high curvature, single continuous curve) ----------
+    const arcGroup = new THREE.Group();
+    world.add(arcGroup);
+
+    // adapter so our custom curve object (with .getPoint) can be used by THREE.TubeGeometry
+    class CurveAdapter extends THREE.Curve {
+      constructor() { super(); this.inner = null; }
+      getPoint(t, target = new THREE.Vector3()) {
+        if (this.inner) return this.inner.getPoint(t, target);
+        return target.set(0, 0, 0);
+      }
+    }
+    const TUBE_RADIUS = 0.0042;    // 30% of previous size — slim glow tube
+    const TUBE_SEGMENTS = 64;       // tubular segments along the curve
+    const TUBE_RADIAL = 6;          // segments around the tube circumference
+
+    function makeArc(a, b) {
+      // great-circle slerp + sin-shaped bulge (peaks at midpoint, scales with arc length)
+      const aN = a.clone().normalize();
+      const bN = b.clone().normalize();
+      const ang = aN.angleTo(bN);
+      const sinAng = Math.sin(ang);
+      const baseR = R * 1.012;
+      const bulge = 0.09 + 0.4 * (ang / Math.PI); // ~9% short hops, ~49% antipodal — more dramatic arc
+      const curve = {
+        angle: ang,
+        getPoint(t, target) {
+          const out = target || new THREE.Vector3();
+          if (sinAng < 1e-6) return out.copy(aN).multiplyScalar(baseR);
+          const k1 = Math.sin((1 - t) * ang) / sinAng;
+          const k2 = Math.sin(t * ang) / sinAng;
+          out.copy(aN).multiplyScalar(k1).addScaledVector(bN, k2);
+          const lift = 1 + bulge * Math.sin(t * Math.PI);
+          return out.multiplyScalar(baseR * lift);
+        },
+        getPoints(divisions = 50) {
+          const pts = [];
+          for (let i = 0; i <= divisions; i++) pts.push(this.getPoint(i / divisions));
+          return pts;
+        },
+      };
+      return { curve };
+    }
+
+    // ---------- ribbon geometry that hugs an arc (flattened tube) ----------
+    function makeRibbonGeometry(segments = 14) {
+      const positions = new Float32Array((segments + 1) * 2 * 3);
+      const uvs = new Float32Array((segments + 1) * 2 * 2);
+      const indices = [];
+      for (let i = 0; i < segments; i++) {
+        const a = i * 2, b = i * 2 + 1, c = (i + 1) * 2, d = (i + 1) * 2 + 1;
+        // wind triangles so the front face is on the +radial side (camera-facing)
+        // — original (a,b,c)/(b,d,c) put the front face on -radial since arcDir × cross = -radial
+        indices.push(a, c, b, b, c, d);
+      }
+      for (let i = 0; i <= segments; i++) {
+        const u = 1 - i / segments; // run U from 1 → 0 along +arcDir so the artist name reads in the right direction
+        uvs[i * 4]     = u; uvs[i * 4 + 1] = 1;
+        uvs[i * 4 + 2] = u; uvs[i * 4 + 3] = 0;
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+      geo.setIndex(indices);
+      geo.userData = { segments };
+      return geo;
+    }
+
+    const _tmpA = new THREE.Vector3();
+    const _tmpB = new THREE.Vector3();
+    const _tmpC = new THREE.Vector3();
+    const _tmpRad = new THREE.Vector3();
+    const _tmpDir = new THREE.Vector3();
+    const _tmpCross = new THREE.Vector3();
+
+    const _camRight = new THREE.Vector3();
+    const _camUp = new THREE.Vector3();
+    const _camFwd = new THREE.Vector3();
+    const _worldArcDir = new THREE.Vector3();
+    const _worldCross = new THREE.Vector3();
+
+    function reshapeRibbon(geo, curve, centerT, tLength, aspectRatio, camera, worldGroup) {
+      const segments = geo.userData.segments;
+      const tStart = Math.max(0.001, centerT - tLength / 2);
+      const tEnd = Math.min(0.999, centerT + tLength / 2);
+      // estimate pill world-length for cross-width
+      curve.getPoint(tStart, _tmpA);
+      curve.getPoint(tEnd, _tmpB);
+      const pillLength = _tmpA.distanceTo(_tmpB);
+      const halfWidth = pillLength / aspectRatio / 2;
+
+      // fixed cross direction at midpoint (no negation — UVs handle orientation)
+      curve.getPoint(centerT, _tmpA);
+      curve.getPoint(Math.min(1, centerT + 0.005), _tmpB);
+      _tmpDir.copy(_tmpB).sub(_tmpA).normalize();
+      _tmpRad.copy(_tmpA).normalize();
+      _tmpCross.copy(_tmpDir).cross(_tmpRad).normalize();
+      const cx = _tmpCross.x, cy = _tmpCross.y, cz = _tmpCross.z;
+
+      const positions = geo.attributes.position;
+      for (let i = 0; i <= segments; i++) {
+        const t = tStart + (tEnd - tStart) * (i / segments);
+        curve.getPoint(t, _tmpA);
+        positions.setXYZ(
+          i * 2,
+          _tmpA.x + cx * halfWidth,
+          _tmpA.y + cy * halfWidth,
+          _tmpA.z + cz * halfWidth,
+        );
+        positions.setXYZ(
+          i * 2 + 1,
+          _tmpA.x - cx * halfWidth,
+          _tmpA.y - cy * halfWidth,
+          _tmpA.z - cz * halfWidth,
+        );
+      }
+      positions.needsUpdate = true;
+
+      // ----- camera-aware UV mapping -----
+      // The ribbon's "right" direction (along arcDir) and "up" direction (along cross)
+      // need to map to camera-right and camera-up respectively, otherwise the artist
+      // name reads upside-down / mirrored / rotated on certain camera angles.
+      if (camera) {
+        // transform local arcDir + cross into world space (the world group is rotated)
+        _worldArcDir.copy(_tmpDir);
+        _worldCross.copy(_tmpCross);
+        if (worldGroup && worldGroup.matrixWorld) {
+          _worldArcDir.transformDirection(worldGroup.matrixWorld);
+          _worldCross.transformDirection(worldGroup.matrixWorld);
+        }
+        camera.matrixWorld.extractBasis(_camRight, _camUp, _camFwd);
+        const reverseU = _worldArcDir.dot(_camRight) < 0;
+        const flipV = _worldCross.dot(_camUp) < 0;
+        const uvs = geo.attributes.uv;
+        for (let s = 0; s <= segments; s++) {
+          const u = reverseU ? (1 - s / segments) : (s / segments);
+          if (flipV) {
+            uvs.setXY(s * 2,     u, 0);
+            uvs.setXY(s * 2 + 1, u, 1);
+          } else {
+            uvs.setXY(s * 2,     u, 1);
+            uvs.setXY(s * 2 + 1, u, 0);
+          }
+        }
+        uvs.needsUpdate = true;
+      }
+    }
+
+    function makeDashedCurve(points, opacity = 0.55) {
+      const geo = new THREE.BufferGeometry().setFromPoints(points);
+      const mat = new THREE.LineDashedMaterial({
+        color: 0xffffff,
+        dashSize: 0.08,
+        gapSize: 0.08,
+        transparent: true,
+        opacity,
+        depthWrite: false,
+      });
+      const line = new THREE.Line(geo, mat);
+      line.computeLineDistances();
+      return line;
+    }
+
+    // ---------- live feed cards ----------
+    const feedListEl = document.getElementById('feed-list');
+    const MAX_FEED_CARDS = 8; // cards persist past their arc and cycle out as new ones arrive
+
+    // lighten a hex color toward white for a pastel pill background
+    function lightenHex(hex, amount = 0.72) {
+      const c = hex.replace('#', '');
+      const r = parseInt(c.slice(0, 2), 16);
+      const g = parseInt(c.slice(2, 4), 16);
+      const b = parseInt(c.slice(4, 6), 16);
+      const nr = Math.round(r + (255 - r) * amount);
+      const ng = Math.round(g + (255 - g) * amount);
+      const nb = Math.round(b + (255 - b) * amount);
+      return `rgb(${nr}, ${ng}, ${nb})`;
+    }
+
+    function addFeedCard(arc, now) {
+      if (!feedListEl) return;
+      const albumIdx = Math.floor(Math.random() * ARTIST_BUBBLES.length);
+      const album = ARTIST_BUBBLES[albumIdx];
+      const thumb = album.thumb;
+      const cityA = CITIES[arc.cityA];
+      const cityB = CITIES[arc.cityB];
+      const nameA = pickName();
+      let nameB = pickName();
+      while (nameB === nameA) nameB = pickName();
+      const [ageA, ageB] = pickFriendAges();
+
+      const el = document.createElement('div');
+      el.className = 'conn-card';
+      el.innerHTML = `
+        <div class="conn-user">
+          <img class="user-thumb" src="${pickAvatarUrl()}" alt="">
+          <div class="user-info">
+            <span class="conn-name">${nameA}, ${ageA}</span>
+            <span class="conn-loc"><span class="flag">${cityA.flag}</span>${cityA.country}</span>
+          </div>
+        </div>
+        <div class="conn-artist" style="background:${lightenHex(album.color, 0.68)};">
+          <img class="thumb" src="${thumb}" alt="">
+          <span class="artist-name">${album.artist}</span>
+        </div>
+        <div class="conn-user right">
+          <img class="user-thumb" src="${pickAvatarUrl()}" alt="">
+          <div class="user-info">
+            <span class="conn-name">${nameB}, ${ageB}</span>
+            <span class="conn-loc"><span class="flag">${cityB.flag}</span>${cityB.country}</span>
+          </div>
+        </div>
+      `;
+      feedListEl.prepend(el);
+      arc.feedEl = el;
+      arc.feed = { album, bornAt: now };
+
+      // trim the oldest cards gracefully so the feed stays bounded
+      let visibleCount = 0;
+      for (const child of feedListEl.children) {
+        if (!child.classList.contains('exit')) visibleCount++;
+      }
+      let i = feedListEl.children.length - 1;
+      while (visibleCount > MAX_FEED_CARDS && i >= 0) {
+        const c = feedListEl.children[i];
+        if (!c.classList.contains('exit')) {
+          c.classList.add('exit');
+          setTimeout(() => c.remove(), 340);
+          visibleCount--;
+        }
+        i--;
+      }
+    }
+
+    function removeFeedCard(arc) {
+      if (!arc.feedEl) return;
+      const el = arc.feedEl;
+      el.classList.add('exit');
+      setTimeout(() => el.remove(), 340);
+      arc.feedEl = null;
+      arc.feed = null;
+    }
+
+    // ---------- live arc pool: connections appear, hold, fade, respawn ----------
+    // album group has to exist before the arc loop because each arc adds its bubble mesh to it
+    const albumGroup = new THREE.Group();
+    world.add(albumGroup);
+
+    const ARC_COUNT = 55;
+    // index of cities by region for biased same-region pairing (more local connections)
+    const REGION_OF = (() => {
+      const map = {
+        'New York': 'NA', 'Los Angeles': 'NA', 'Mexico City': 'NA', 'Chicago': 'NA',
+        'Miami': 'NA', 'Toronto': 'NA', 'Vancouver': 'NA',
+        'São Paulo': 'SA', 'Buenos Aires': 'SA', 'Rio': 'SA',
+        'London': 'EU', 'Paris': 'EU', 'Berlin': 'EU', 'Stockholm': 'EU',
+        'Madrid': 'EU', 'Rome': 'EU', 'Amsterdam': 'EU', 'Istanbul': 'EU',
+        'Cairo': 'AF', 'Lagos': 'AF', 'Nairobi': 'AF', 'Johannesburg': 'AF', 'Cape Town': 'AF',
+        'Dubai': 'ME',
+        'Mumbai': 'AS', 'Seoul': 'AS', 'Tokyo': 'AS', 'Bangkok': 'AS', 'Singapore': 'AS',
+        'Jakarta': 'AS', 'Manila': 'AS', 'Shanghai': 'AS', 'Taipei': 'AS',
+        'Sydney': 'OC', 'Melbourne': 'OC', 'Auckland': 'OC',
+      };
+      return CITIES.map((c) => map[c.name] || 'XX');
+    })();
+    const CITIES_BY_REGION = REGION_OF.reduce((acc, r, i) => {
+      (acc[r] = acc[r] || []).push(i);
+      return acc;
+    }, {});
+    const N_POINTS = 80;
+    const ARC_BASE_OPACITY = 0.02;
+
+    const arcs = [];
+
+    for (let i = 0; i < ARC_COUNT; i++) {
+      // preallocate vertex buffer so we can update positions in place
+      const positions = new Float32Array((N_POINTS + 1) * 3);
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const lineDistances = new Float32Array(N_POINTS + 1);
+      geo.setAttribute('lineDistance', new THREE.BufferAttribute(lineDistances, 1));
+      // per-vertex color attribute used by the glow line below
+      const colorBuf = new Float32Array((N_POINTS + 1) * 3);
+      geo.setAttribute('color', new THREE.BufferAttribute(colorBuf, 3));
+      const mat = new THREE.LineBasicMaterial({
+        color: 0x0066FF,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+      });
+      const line = new THREE.Line(geo, mat);
+      line.visible = false; // core line is hidden — the glow overlay is what you see
+      geo.setDrawRange(0, 0);
+      arcGroup.add(line);
+
+      // glow overlay — actual thick tube (Mesh + TubeGeometry) so we get real width, not 1px lines.
+      // Geometry is rebuilt in spawnArc against the new curve; vertex colors update per frame.
+      const tubeMat = new THREE.MeshBasicMaterial({
+        vertexColors: true,
+        transparent: true,
+        opacity: 0,
+        blending: THREE.NormalBlending,
+        depthWrite: false,
+      });
+      // placeholder geometry (zero-length) — replaced on first spawn
+      const placeholderCurve = new THREE.LineCurve3(new THREE.Vector3(), new THREE.Vector3(0.001, 0, 0));
+      const placeholderTubeGeo = new THREE.TubeGeometry(placeholderCurve, 1, 0.01, 4, false);
+      const glowLine = new THREE.Mesh(placeholderTubeGeo, tubeMat);
+      glowLine.visible = false;
+      arcGroup.add(glowLine);
+
+      // every arc owns its own artist bubble (camera-facing sprite) — lifecycle synced with the arc
+      const bubbleMat = new THREE.SpriteMaterial({
+        map: null,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+      });
+      const bubbleMesh = new THREE.Sprite(bubbleMat);
+      bubbleMesh.visible = false;
+      albumGroup.add(bubbleMesh);
+
+      arcs.push({
+        line,
+        glowLine,
+        curveAdapter: new CurveAdapter(),
+        bubbleMesh,
+        bubbleArtistIdx: 0,
+        bubbleT: 0.5,
+        bubbleAspect: 3.0,
+        bubbleSize: 0.10,
+        pulseOffset: Math.random() * 1.5,
+        pulsePeriod: 0.95 + Math.random() * 0.45, // each arc pulses at its own rate
+        curve: null,
+        state: 'waiting',
+        bornAt: i * 0.18, // tighter stagger so the scene fills in faster with 55 arcs
+      });
+    }
+
+    function spawnArc(arc, now) {
+      // pick from currently-available avatars (idle or alive with room)
+      const pool = [];
+      for (let k = 0; k < CITIES.length; k++) if (availableForNewArc(k, now)) pool.push(k);
+      if (pool.length < 2) {
+        // not enough available — defer and try again shortly
+        arc.state = 'waiting';
+        arc.bornAt = now + 0.08 + Math.random() * 0.2;
+        arc.line.material.opacity = 0;
+        arc.line.geometry.setDrawRange(0, 0);
+        return;
+      }
+      const i = pool[Math.floor(Math.random() * pool.length)];
+      // ~45% of arcs prefer a partner in the same region (more local/national connections);
+      // the rest pick globally for cross-continent variety
+      let j;
+      const sameRegion = Math.random() < 0.45;
+      if (sameRegion) {
+        const region = REGION_OF[i];
+        const regionMates = (CITIES_BY_REGION[region] || []).filter(k => k !== i && pool.includes(k));
+        if (regionMates.length > 0) {
+          j = regionMates[Math.floor(Math.random() * regionMates.length)];
+        }
+      }
+      if (j == null) {
+        do { j = pool[Math.floor(Math.random() * pool.length)]; } while (j === i);
+      }
+      const a = latLngToVec3(CITIES[i].lat, CITIES[i].lng, R * 1.005);
+      const b = latLngToVec3(CITIES[j].lat, CITIES[j].lng, R * 1.005);
+      const { curve } = makeArc(a, b);
+      arc.curve = curve;
+      arc.cityA = i;
+      arc.cityB = j;
+      incEndpoint(i, now);
+      incEndpoint(j, now);
+
+      // each new live friendship visible on the globe bumps the Friends counter
+      bumpFriends();
+
+      const pos = arc.line.geometry.attributes.position;
+      for (let k = 0; k <= N_POINTS; k++) {
+        const p = curve.getPoint(k / N_POINTS);
+        pos.setXYZ(k, p.x, p.y, p.z);
+      }
+      pos.needsUpdate = true;
+
+      // rebuild the glow tube along the new curve (handles the actual thickness)
+      arc.curveAdapter.inner = curve;
+      arc.glowLine.geometry.dispose();
+      const newTubeGeo = new THREE.TubeGeometry(arc.curveAdapter, TUBE_SEGMENTS, TUBE_RADIUS, TUBE_RADIAL, false);
+      const tubeColors = new Float32Array(newTubeGeo.attributes.position.count * 3);
+      newTubeGeo.setAttribute('color', new THREE.BufferAttribute(tubeColors, 3));
+      arc.glowLine.geometry = newTubeGeo;
+      arc.glowLine.visible = true;
+
+      arc.state = 'drawing';
+      arc.drawStartedAt = now;
+      arc.drawDuration = 0.42 + Math.random() * 0.28;
+      arc.holdDuration = 0.637 + Math.random() * 0.637; // 30% longer hold so the bubble lingers
+      arc.fadeDuration = 0.35 + Math.random() * 0.28;
+
+      // ----- bubble setup for this arc (camera-facing sprite) -----
+      const bubbleIdx = Math.floor(Math.random() * albumTextures.length);
+      arc.bubbleArtistIdx = bubbleIdx;
+      arc.bubbleMesh.material.map = albumTextures[bubbleIdx];
+      arc.bubbleMesh.material.needsUpdate = true;
+      arc.bubbleAspect = albumAspects[bubbleIdx] || 3.0;
+      arc.bubbleT = 0.4 + Math.random() * 0.2;
+      // varied bubble sizes — most stay small, some up to 50% larger
+      arc.bubbleSize = 0.10 + Math.pow(Math.random(), 1.6) * 0.05; // 0.10 → 0.15 range, skewed small
+      // start at zero scale; updateBubble grows it with opacity each frame
+      arc.bubbleMesh.scale.set(0.001, 0.001, 1);
+      arc.bubbleMesh.visible = true;
+      arc.bubbleMesh.material.opacity = 0;
+      arc.bubbleAppearStartedAt = null; // set once the line draws past the bubble's t
+
+      // live-feed card — throttled to the same real-velocity cadence as the Friends counter
+      // (≈ 1 card every ~25 arc spawns ≈ 1.48 cards/sec, matching Amplitude data)
+      if (shouldPostFeedCard()) addFeedCard(arc, now);
+      arc.line.material.opacity = 0;
+      arc.line.geometry.setDrawRange(0, 2);
+    }
+
+    function updateArc(arc, now) {
+      if (arc.state === 'waiting') {
+        if (now >= arc.bornAt) spawnArc(arc, now);
+        return;
+      }
+
+      // shared bubble update for any "live" state — sprite auto-billboards to camera
+      const updateBubble = () => {
+        if (!arc.curve || !arc.bubbleMesh.visible) return;
+        arc.curve.getPoint(arc.bubbleT, _tmpA);
+        arc.bubbleMesh.position.copy(_tmpA);
+        // scale tracks opacity so the bubble pops in/out (matches avatar pfp behaviour)
+        const op = Math.max(0.001, arc.bubbleMesh.material.opacity);
+        arc.bubbleMesh.scale.set(arc.bubbleSize * arc.bubbleAspect * op, arc.bubbleSize * op, 1);
+      };
+      // smooth in/out easing for the artist bubble
+      const easeInOut = (x) => (x < 0.5
+        ? 4 * x * x * x
+        : 1 - Math.pow(-2 * x + 2, 3) / 2);
+
+      // smooth glowing pulses sweeping along the tube into the bubble. Using a cos^k wave
+      // (instead of an exp tail with a hard wrap discontinuity) so brightness rises and falls
+      // continuously — no jolt when one pulse reaches the bubble and the next starts.
+      const updateLinePulse = (alpha) => {
+        if (!arc.curve) return;
+        const colors = arc.glowLine.geometry.attributes.color;
+        if (!colors) return;
+        const ringVerts = TUBE_RADIAL + 1;
+        const numStreaks = 2;
+        const speed = 0.85;
+        const phase = (now + arc.pulseOffset) * speed;
+        const sharpness = 5;            // higher = tighter, sharper-looking pulse
+        for (let i = 0; i <= TUBE_SEGMENTS; i++) {
+          const t = i / TUBE_SEGMENTS;
+          const local = t < arc.bubbleT
+            ? (t / arc.bubbleT) * numStreaks - phase
+            : ((1 - t) / (1 - arc.bubbleT)) * numStreaks - phase;
+          const wrapped = local - Math.floor(local);  // [0, 1)
+          // cos-squared wave: peak at wrapped=0/1 (head), valley at 0.5 — smooth across wrap
+          const wave = (Math.cos(2 * Math.PI * wrapped) + 1) * 0.5;
+          const streak = Math.pow(wave, sharpness) * 3.0;
+          const ambient = 0.03;
+          const c = Math.min(3.5, ambient + streak);
+          for (let r = 0; r < ringVerts; r++) {
+            colors.setXYZ(i * ringVerts + r, 0, c * 0.4, c);
+          }
+        }
+        colors.needsUpdate = true;
+        const GLOW_OPACITY = 0.7;
+        arc.glowLine.material.opacity = (alpha != null ? alpha : 1) * GLOW_OPACITY;
+      };
+
+      const flatLineColor = () => {
+        const colors = arc.glowLine.geometry.attributes.color;
+        if (!colors) return;
+        for (let v = 0; v < colors.count; v++) colors.setXYZ(v, 0, 0, 0);
+        colors.needsUpdate = true;
+      };
+
+      if (arc.state === 'drawing') {
+        const t = (now - arc.drawStartedAt) / arc.drawDuration;
+        const p = Math.min(1, t);
+        // ease-out for a nice draw feel
+        const eased = 1 - Math.pow(1 - p, 3);
+        const count = Math.max(2, Math.floor(eased * N_POINTS) + 1);
+        arc.line.geometry.setDrawRange(0, count);
+        arc.line.material.opacity = ARC_BASE_OPACITY * Math.min(1, p * 2);
+        // bubble fades in once the line has drawn past its t — start the timer
+        if (arc.bubbleAppearStartedAt == null && eased >= arc.bubbleT) {
+          arc.bubbleAppearStartedAt = now;
+        }
+        // time-based fade-in over ~0.5s, eased
+        const appearP = arc.bubbleAppearStartedAt
+          ? Math.min(1, (now - arc.bubbleAppearStartedAt) / 0.5)
+          : 0;
+        arc.bubbleMesh.material.opacity = easeInOut(appearP);
+        updateBubble();
+        // continuous colored glow pulse runs the whole time the line is visible
+        updateLinePulse(arc.line.material.opacity / ARC_BASE_OPACITY);
+        if (p >= 1) {
+          arc.state = 'alive';
+          arc.aliveUntil = now + arc.holdDuration;
+        }
+        return;
+      }
+      if (arc.state === 'alive') {
+        arc.line.geometry.setDrawRange(0, N_POINTS + 1);
+        arc.line.material.opacity = ARC_BASE_OPACITY;
+        // continue the timed fade-in if it was still ramping when drawing ended
+        if (arc.bubbleAppearStartedAt == null) arc.bubbleAppearStartedAt = now;
+        const appearP = Math.min(1, (now - arc.bubbleAppearStartedAt) / 0.5);
+        arc.bubbleMesh.material.opacity = easeInOut(appearP);
+        updateBubble();
+        updateLinePulse(1);
+        if (now >= arc.aliveUntil) {
+          arc.state = 'fading';
+          arc.fadeStartedAt = now;
+        }
+        return;
+      }
+      if (arc.state === 'fading') {
+        const t = (now - arc.fadeStartedAt) / arc.fadeDuration;
+        const k = Math.max(0, 1 - t);
+        arc.line.material.opacity = ARC_BASE_OPACITY * k;
+        // ease the bubble fade-out (smoother than the linear line fade)
+        arc.bubbleMesh.material.opacity = easeInOut(k);
+        updateBubble();
+        updateLinePulse(k);
+        if (t >= 1) {
+          decEndpoint(arc.cityA);
+          decEndpoint(arc.cityB);
+          // keep the feed card in the list — feed spills downward, no decay
+          arc.feedEl = null;
+          arc.feed = null;
+          arc.state = 'waiting';
+          arc.bornAt = now + 0.14 + Math.random() * 0.7;
+          arc.line.material.opacity = 0;
+          arc.line.geometry.setDrawRange(0, 0);
+          arc.bubbleMesh.visible = false;
+          arc.bubbleMesh.material.opacity = 0;
+          arc.glowLine.material.opacity = 0;
+          arc.glowLine.visible = false;
+          flatLineColor();
+        }
+      }
+    }
+
+    // ---------- artist bubbles ----------
+    // (albumGroup was created earlier so the arc loop could attach its bubbles to it)
+
+    // real album cover PNGs from ./albums/
+    // ---------- artist bubbles (EQUALS pill style: cream pill + circular thumb + name) ----------
+    // Sourced from V3 Dark Master Figma file (artist bubble component)
+    // EQUALS artist-bubble palette — each artist gets a distinct background color
+    const ARTIST_BUBBLES = [
+      { artist: '2hollis', thumb: './music/artists/2hollis.jpeg', color: '#faecb5' },
+      { artist: 'Addison Rae', thumb: './music/artists/Addison_Rae.jpeg', color: '#f8a89e' },
+      { artist: 'Ariana Grande', thumb: './music/artists/Ariana_Grande.jpeg', color: '#7d9ec1' },
+      { artist: 'Bad Bunny', thumb: './music/artists/Bad_Bunny.jpeg', color: '#a896c4' },
+      { artist: 'Billie Eilish', thumb: './music/artists/Billie_Eilish.png', color: '#fbd9d4' },
+      { artist: 'Blood Orange', thumb: './music/artists/Blood_Orange.jpeg', color: '#d4a8b8' },
+      { artist: 'Central Cee', thumb: './music/artists/Central_Cee.jpeg', color: '#7e9670' },
+      { artist: 'Charli XCX', thumb: './music/artists/Charli_XCX.jpeg', color: '#e6b1d4' },
+      { artist: 'Clairo', thumb: './music/artists/Clairo.jpeg', color: '#a87cb8' },
+      { artist: 'Daft Punk', thumb: './music/artists/Daft_Punk.jpeg', color: '#8db8c2' },
+      { artist: 'Disclosure', thumb: './music/artists/Disclosure.jpeg', color: '#f0a070' },
+      { artist: 'Doja Cat', thumb: './music/artists/Doja_Cat.jpeg', color: '#f8e090' },
+      { artist: 'Drake', thumb: './music/artists/Drake.jpeg', color: '#dca0a0' },
+      { artist: 'Dua Lipa', thumb: './music/artists/Dua_Lipa.jpeg', color: '#c9a4d8' },
+      { artist: 'Esdeekid', thumb: './music/artists/Esdeekid.jpeg', color: '#d4c084' },
+      { artist: 'Ethel Cain', thumb: './music/artists/Ethel_Cain.png', color: '#b8d8a8' },
+      { artist: 'FKA twigs', thumb: './music/artists/FKA_twigs.jpeg', color: '#f0c4a0' },
+      { artist: 'Frank Ocean', thumb: './music/artists/Frank_Ocean.jpeg', color: '#a8c8e0' },
+      { artist: 'Fred again...', thumb: './music/artists/Fred_again....jpeg', color: '#9ccc94' },
+      { artist: 'Jane Remover', thumb: './music/artists/Jane_Remover.jpeg', color: '#e89aa8' },
+      { artist: 'Justin Bieber', thumb: './music/artists/Justin_Bieber.jpeg', color: '#9bcfd0' },
+      { artist: 'KATSEYE', thumb: './music/artists/KATSEYE.jpeg', color: '#ddc0a0' },
+      { artist: 'Karol G', thumb: './music/artists/Karol_G.jpeg', color: '#bca8e0' },
+      { artist: 'Kendrick Lamar', thumb: './music/artists/Kendrick_Lamar.jpeg', color: '#f5a8c8' },
+      { artist: 'Lana Del Rey', thumb: './music/artists/Lana_Del_Rey.jpeg', color: '#a0d8a8' },
+      { artist: 'Laufey', thumb: './music/artists/Laufey.jpg', color: '#e0a890' },
+      { artist: 'NewJeans', thumb: './music/artists/NewJeans.jpeg', color: '#b8c0e8' },
+      { artist: 'Olivia Rodrigo', thumb: './music/artists/Olivia_Rodrigo.jpeg', color: '#d8b890' },
+      { artist: 'Overmono', thumb: './music/artists/Overmono.jpeg', color: '#f0c4dc' },
+      { artist: 'PARTYNEXTDOOR', thumb: './music/artists/PARTYNEXTDOOR.jpeg', color: '#9cd0c0' },
+      { artist: 'Peggy Gou', thumb: './music/artists/Peggy_Gou.jpeg', color: '#cca8c4' },
+      { artist: 'Pink Pantheress', thumb: './music/artists/Pink_Pantheress.jpeg', color: '#e8b890' },
+      { artist: 'Playboi Carti', thumb: './music/artists/Playboi_Carti.jpeg', color: '#a8c8a8' },
+      { artist: 'Rema', thumb: './music/artists/Rema.jpeg', color: '#d0a8b0' },
+      { artist: 'Rosalía', thumb: './music/artists/Rosalía.jpeg', color: '#c8e8d0' },
+      { artist: 'Sabrina Carpenter', thumb: './music/artists/Sabrina_Carpenter.jpeg', color: '#f0d090' },
+      { artist: 'Skrillex', thumb: './music/artists/Skrillex.jpg', color: '#b0c8e0' },
+      { artist: 'Tate McRae', thumb: './music/artists/Tate_McRae.jpg', color: '#e0c4a8' },
+      { artist: 'Taylor Swift', thumb: './music/artists/Taylor_Swift.jpeg', color: '#c8a890' },
+      { artist: 'The Strokes', thumb: './music/artists/The_Strokes.jpeg', color: '#d8b8c8' },
+      { artist: 'The Weeknd', thumb: './music/artists/The_Weeknd.jpeg', color: '#a8d8b8' },
+      { artist: 'Travis Scott', thumb: './music/artists/Travis_Scott.jpeg', color: '#f0a8b8' },
+      { artist: 'Tyler, The Creator', thumb: './music/artists/Tyler%2C_The_Creator.jpeg', color: '#b8d0a8' },
+      { artist: 'Yung Lean', thumb: './music/artists/Yung_Lean.jpeg', color: '#e8c490' },
+      { artist: 'fakemink', thumb: './music/artists/fakemink.jpeg', color: '#a8b8d0' },
+    ];
+
+    function makeArtistBubbleCanvas(name, img, color = '#faecb5') {
+      const PAD = 18;
+      const THUMB = 168;
+      const H = THUMB + PAD * 2;
+      // measure text first to size width
+      const probe = document.createElement('canvas').getContext('2d');
+      probe.font = '900 100px FAIRFavorit, "Helvetica Neue", sans-serif';
+      const textW = probe.measureText(name).width;
+      const W = Math.ceil(PAD + THUMB + 28 + textW + PAD + 18);
+      const c = document.createElement('canvas');
+      c.width = W; c.height = H;
+      const ctx = c.getContext('2d');
+      // pill background (rounded full height) — color varies per artist
+      const r = H / 2;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(r, 0);
+      ctx.lineTo(W - r, 0);
+      ctx.arc(W - r, r, r, -Math.PI / 2, Math.PI / 2);
+      ctx.lineTo(r, H);
+      ctx.arc(r, r, r, Math.PI / 2, -Math.PI / 2);
+      ctx.closePath();
+      ctx.fill();
+      // circular thumbnail
+      const cx = PAD + THUMB / 2;
+      const cy = H / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, THUMB / 2, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+      // cover-fit
+      const ar = img.width / img.height;
+      let sw = img.width, sh = img.height, sx = 0, sy = 0;
+      if (ar > 1) { sw = img.height; sx = (img.width - sw) / 2; }
+      else if (ar < 1) { sh = img.width; sy = (img.height - sh) / 2; }
+      ctx.drawImage(img, sx, sy, sw, sh, PAD, PAD, THUMB, THUMB);
+      ctx.restore();
+      // artist name
+      ctx.fillStyle = '#000';
+      ctx.font = '900 100px FAIRFavorit, "Helvetica Neue", sans-serif';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(name, PAD + THUMB + 28, H / 2 + 4);
+      return c;
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    }
+
+    // Build a placeholder texture per slot now (transparent), then replace with the
+    // generated artist bubble texture once its image has loaded.
+    const albumTextures = ARTIST_BUBBLES.map(() => {
+      // 1x1 transparent texture as placeholder
+      const c = document.createElement('canvas');
+      c.width = c.height = 4;
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = 4;
+      return tex;
+    });
+    // aspect ratios per bubble (W/H) so we can scale planes accordingly
+    const albumAspects = ARTIST_BUBBLES.map(() => 3.0); // sane default until real one is computed
+    // ensure FAIR Favorit is loaded before drawing (otherwise canvas falls back to system font)
+    Promise.all([
+      document.fonts ? document.fonts.load('900 100px FAIRFavorit') : Promise.resolve(),
+    ]).then(async () => {
+      for (let i = 0; i < ARTIST_BUBBLES.length; i++) {
+        const def = ARTIST_BUBBLES[i];
+        try {
+          const img = await loadImage(def.thumb);
+          // random H (0-359) + random S (60-90%), L locked to 60% — varied vibrancy
+          const h = Math.floor(Math.random() * 360);
+          const s = Math.floor(60 + Math.random() * 30);
+          const randomColor = `hsl(${h}, ${s}%, 60%)`;
+          const canvas = makeArtistBubbleCanvas(def.artist, img, randomColor);
+          albumTextures[i].image = canvas;
+          albumTextures[i].needsUpdate = true;
+          albumAspects[i] = canvas.width / canvas.height;
+        } catch (e) {
+          // fall back silently
+        }
+      }
+    });
+
+    // (per-arc bubble system — see arc creation loop above. albums[] retained as no-op
+    // shim so the existing animate-loop reference doesn't crash.)
+    const albums = [];
+    if (false) {
+      const idx = 0;
+      const mat = new THREE.MeshBasicMaterial({});
+      const geo = makeRibbonGeometry(14);
+      const mesh = new THREE.Mesh(geo, mat);
+      albums.push({
+        sprite: mesh, // keeps existing field name for the rest of the code
+        state: 'waiting',
+        bornAt: 0.5 + i * 0.4,
+        arc: null,
+        tOnCurve: 0.5,
+        tLength: 0.18,
+        aspect: albumAspects[idx] || 3.0,
+      });
+    }
+
+    function spawnAlbum(al, now) {
+      const aliveArcs = arcs.filter(a => a.state === 'alive' || a.state === 'drawing');
+      if (aliveArcs.length === 0) { al.bornAt = now + 0.12; return; }
+      const arc = aliveArcs[Math.floor(Math.random() * aliveArcs.length)];
+      al.arc = arc;
+      al.tOnCurve = 0.25 + Math.random() * 0.5;
+      al.state = 'appearing';
+      al.appearStartedAt = now;
+      al.aliveUntil = now + 0.63 + Math.random() * 0.63;
+      al.fadeDuration = 0.31;
+      al.appearDuration = 0.31;
+      // swap to a fresh artist-bubble texture each spawn
+      const idx = Math.floor(Math.random() * albumTextures.length);
+      al.sprite.material.map = albumTextures[idx];
+      al.sprite.material.needsUpdate = true;
+      al.aspect = albumAspects[idx] || 3.0;
+      // ribbon length on the arc — pick a window that yields a roughly constant world size
+      const arcLength = R * (al.arc.curve.angle || 1);
+      const desired = 0.25 + Math.random() * 0.07;
+      al.tLength = Math.min(0.4, desired / Math.max(0.0001, arcLength));
+    }
+
+    function updateAlbum(al, now) {
+      if (al.state === 'waiting') {
+        if (now >= al.bornAt) spawnAlbum(al, now);
+        return;
+      }
+      if (!al.arc || !al.arc.curve) return;
+      // reshape the ribbon to ride this arc, centered on tOnCurve
+      reshapeRibbon(
+        al.sprite.geometry,
+        al.arc.curve,
+        al.tOnCurve,
+        al.tLength || 0.18,
+        al.aspect || 3.0,
+      );
+      al.sprite.position.set(0, 0, 0);
+      al.sprite.rotation.set(0, 0, 0);
+
+      if (al.state === 'appearing') {
+        const t = (now - al.appearStartedAt) / al.appearDuration;
+        al.sprite.material.opacity = Math.min(1, t);
+        // pop-in scale
+        const s = 0.18 + Math.random() * 0.0; // no-op, keep current scale
+        if (t >= 1) al.state = 'alive';
+        return;
+      }
+      if (al.state === 'alive') {
+        al.sprite.material.opacity = 1;
+        // also fade out if the underlying arc is no longer alive
+        if (now >= al.aliveUntil || al.arc.state !== 'alive') {
+          al.state = 'fading';
+          al.fadeStartedAt = now;
+        }
+        return;
+      }
+      if (al.state === 'fading') {
+        const t = (now - al.fadeStartedAt) / al.fadeDuration;
+        al.sprite.material.opacity = Math.max(0, 1 - t);
+        if (t >= 1) {
+          al.state = 'waiting';
+          al.bornAt = now + 0.15 + Math.random() * 0.6;
+          al.arc = null;
+        }
+      }
+    }
+
+    // ---------- starfield ----------
+    const starGeo = new THREE.BufferGeometry();
+    const starCount = 400;
+    const starPos = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      const v = new THREE.Vector3().randomDirection().multiplyScalar(20 + Math.random() * 30);
+      starPos[i * 3] = v.x; starPos[i * 3 + 1] = v.y; starPos[i * 3 + 2] = v.z;
+    }
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    const stars = new THREE.Points(
+      starGeo,
+      new THREE.PointsMaterial({ color: 0xffffff, size: 0.04, transparent: true, opacity: 0.5 })
+    );
+    scene.add(stars);
+
+    // ---------- resize ----------
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // ---------- animate ----------
+    const clock = new THREE.Clock();
+
+    function animate() {
+      const dt = clock.getDelta();
+      const t = clock.getElapsedTime();
+
+      controls.update();
+
+      // avatars: driven by their own life timer + arc endpoint count
+      const fadeK = 1 - Math.pow(0.002, dt);
+      const _tmpWorld = new THREE.Vector3();
+      const _camDir = camera.position.clone().normalize();
+      avatars.forEach((av) => {
+        // force-fade once this avatar has exceeded its max on-screen life
+        if (av.state === 'alive' && t >= av.maxAliveUntil) {
+          av.state = 'fading';
+          // any arcs still drawing/alive that connect here must also fade
+          arcs.forEach((arc) => {
+            if ((arc.cityA === av.idx || arc.cityB === av.idx) &&
+                (arc.state === 'drawing' || arc.state === 'alive')) {
+              arc.state = 'fading';
+              arc.fadeStartedAt = t;
+            }
+          });
+        }
+
+        const target = av.state === 'alive' ? 1 : 0;
+        av.opacity += (target - av.opacity) * fadeK;
+
+        // once fully faded, enter cooldown before this city can be picked again
+        if (av.state === 'fading' && av.opacity < 0.02) {
+          av.state = 'idle';
+          av.liveCount = 0;
+          av.cooldownUntil = t + 0.3 + Math.random() * 1.2;
+          av.opacity = 0;
+        }
+
+        // hide if on the far side of the globe (since depthTest is off)
+        av.sprite.getWorldPosition(_tmpWorld);
+        const facing = _tmpWorld.clone().normalize().dot(_camDir); // >0 near, <0 far
+        const sideFade = THREE.MathUtils.smoothstep(facing, -0.15, 0.2);
+
+        av.sprite.material.opacity = av.opacity * sideFade;
+        av.anchor.material.opacity = av.opacity * sideFade * 0.6;
+        const s = AVATAR_SIZE * Math.max(0.001, av.opacity);
+        av.sprite.scale.set(s, s, s);
+        const k = 1 + Math.sin(t * 1.3 + av.idx) * 0.012;
+        av.sprite.position.copy(av.basePos).multiplyScalar(k);
+      });
+
+      // live arcs: spawn, draw-in, hold, fade, respawn between new cities
+      arcs.forEach((a) => updateArc(a, t));
+
+      // albums hop between currently-alive arcs
+      albums.forEach((a) => updateAlbum(a, t));
+
+      // very subtle globe wobble
+      world.rotation.x = Math.sin(t * 0.15) * 0.03;
+
+      renderer.render(scene, camera);
+      if (!canvas.classList.contains('ready')) canvas.classList.add('ready');
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

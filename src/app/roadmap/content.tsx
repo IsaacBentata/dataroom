@@ -141,6 +141,15 @@ export default function RoadmapPage() {
               </p>
 
               <p>
+                A feature that encompasses both of these is <strong className="text-foreground">DSP friend activity</strong>: a
+                feed showing what your friends are listening to across Spotify and Apple Music, inside Equals. This is a
+                proven k-factor playbook (AirBuds built a business on this alone). Neither DSP wants to surface this
+                natively because it sends users to competitors. Equals is the neutral layer that can. It's referral-gated
+                (invite 3 friends to unlock) and it's best enjoyed with friends (seeing what your IRL friends are
+                listening to is inherently social).
+              </p>
+
+              <p>
                 <strong className="text-foreground">Planting seeds for artist-led growth.</strong> We intentionally
                 built Equals as a horizontal product first, with fan-to-fan interaction as the core network foundation.
                 We didn't want to rely on artist engagement as a top-down mechanic. The product retains without it. That
