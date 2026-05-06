@@ -58,12 +58,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fairFavoritBody.variable} ${fairFavoritHeading.variable} ${fairFavoritBook.variable} ${fairFavoritMono.variable} ${pitchSans.variable} h-full antialiased`}>
       <head>
-        {/* Prefetch heavy /live globe assets so the Realtime preview feels
-            instant when the user navigates to it from the home selector.
-            All same-origin → just warms the HTTP cache; iframe re-uses. */}
+        {/* Lightweight prefetches only — the heavy assets (three.module.js,
+            earth-blue-marble.jpg) stay off the home critical path; LiveContent
+            requests them after the menu transition completes. */}
         <link rel="prefetch" href="/equals-globe/globe.html" as="document" />
-        <link rel="prefetch" href="/equals-globe/vendor/three.module.js" as="script" crossOrigin="anonymous" />
-        <link rel="prefetch" href="/equals-globe/textures/earth-blue-marble.jpg" as="image" />
         <link rel="prefetch" href="https://dataroom-production-ac2b.up.railway.app/api/globe-pairs?limit=100" as="fetch" crossOrigin="anonymous" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
