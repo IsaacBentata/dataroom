@@ -34,6 +34,13 @@ const PICKER_GRID: (Track | null)[] = [
   null,
 ];
 
+// Pool of non-default tracks the player rotates through on each subsequent
+// page load. First-ever visit always shows DEFAULT_TRACK (Daft Punk).
+const ROTATION_TRACKS: Track[] = PICKER_GRID.filter(
+  (t): t is Track => t !== null && t.audio !== DEFAULT_TRACK.audio,
+);
+const VISIT_KEY = "vinyl-visit-count";
+
 export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBottomCenter?: boolean } = {}) {
   const [playing, setPlaying] = useState(false);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
@@ -41,6 +48,24 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   const [snapping, setSnapping] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [track, setTrack] = useState<Track>(DEFAULT_TRACK);
+
+  // First-load: keep Daft Punk. Every refresh after that: rotate to a random
+  // other track in the picker. Stored in localStorage so it persists across
+  // sessions but is purely client-side (no backend round-trip).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let count = 0;
+    try {
+      count = parseInt(window.localStorage.getItem(VISIT_KEY) || "0", 10) || 0;
+    } catch {}
+    try {
+      window.localStorage.setItem(VISIT_KEY, String(count + 1));
+    } catch {}
+    if (count > 0 && ROTATION_TRACKS.length > 0) {
+      const next = ROTATION_TRACKS[Math.floor(Math.random() * ROTATION_TRACKS.length)];
+      setTrack(next);
+    }
+  }, []);
 
   const pickTrack = (t: Track) => {
     setTrack(t);
