@@ -1236,10 +1236,16 @@
         buildInFlight++;
         loadImage(job.url)
           .then(img => {
-            try { pairBubbleCache.set(job.url, buildPairBubble(job.name, img)); }
-            catch { pairBubbleCache.set(job.url, 'failed'); }
-            buildInFlight--;
-            pumpBuildQueue();
+            // Yield to render frames if the page is busy (drag/animation),
+            // but with a tight timeout so we don't stall too long either.
+            const finish = () => {
+              try { pairBubbleCache.set(job.url, buildPairBubble(job.name, img)); }
+              catch { pairBubbleCache.set(job.url, 'failed'); }
+              buildInFlight--;
+              pumpBuildQueue();
+            };
+            if (window.requestIdleCallback) requestIdleCallback(finish, { timeout: 80 });
+            else setTimeout(finish, 0);
           })
           .catch(() => {
             pairBubbleCache.set(job.url, 'failed');
@@ -1300,15 +1306,19 @@
         userPicInFlight++;
         loadImage(url)
           .then(img => {
-            try {
-              const canvas = makeUserPicCanvas(img);
-              const tex = new THREE.CanvasTexture(canvas);
-              tex.colorSpace = THREE.SRGBColorSpace;
-              tex.anisotropy = 4;
-              userPicCache.set(url, tex);
-            } catch { userPicCache.set(url, 'failed'); }
-            userPicInFlight--;
-            pumpUserPicQueue();
+            const finish = () => {
+              try {
+                const canvas = makeUserPicCanvas(img);
+                const tex = new THREE.CanvasTexture(canvas);
+                tex.colorSpace = THREE.SRGBColorSpace;
+                tex.anisotropy = 4;
+                userPicCache.set(url, tex);
+              } catch { userPicCache.set(url, 'failed'); }
+              userPicInFlight--;
+              pumpUserPicQueue();
+            };
+            if (window.requestIdleCallback) requestIdleCallback(finish, { timeout: 80 });
+            else setTimeout(finish, 0);
           })
           .catch(() => {
             userPicCache.set(url, 'failed');
