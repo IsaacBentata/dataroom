@@ -15,7 +15,7 @@ const revenueStreams = [
     color: "text-accent-green",
     description:
       "Content feed with high-impression inventory. Gen Z is the most valuable advertising demographic, and music context is brand-safe and high-intent. Contextual targeting based on music taste, the strongest psychographic signal available. Native ad formats include sponsored vinyls, branded quizzes, and artist-sponsored channels.",
-    justification: "Comps: Snapchat ~$11 ARPU, TikTok ~$8-10, Instagram ~$20+. At $12, Equals sits between TikTok and Snapchat. We think this is reasonable given our average usage time sits well above benchmark for the most popular social apps (35 min/day).",
+    justification: "Comps: Snapchat ~$11 ARPU, TikTok ~$8-10, Instagram ~$20+. At $12, Equals sits between TikTok and Snapchat. We think this is reasonable given our average usage time (35 min/day) sits well above benchmark for the most popular social apps.",
   },
   {
     name: "Subscriptions",
