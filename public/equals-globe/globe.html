@@ -1376,12 +1376,30 @@
         .then(r => r.ok ? r.json() : null)
         .catch(() => null)
         .then(data => {
-          ingestPairs(data);
-          // Only warm the first N pairs to keep the initial main-thread cost
-          // small. The continuous warmer below adds more in the background as
-          // arcs cycle through, keeping the cache ahead of demand without
-          // ever spiking.
-          warmPairs(INITIAL_WARM);
+          const added = ingestPairs(data);
+          // Eagerly enqueue artist + user-pic builds for every newly ingested
+          // pair. Concurrency is now 6 + 8 in flight, so the queue drains fast
+          // without blocking the main thread.
+          if (added > 0) {
+            const seenArtUrls = new Set();
+            const seenUserUrls = new Set();
+            for (const p of PAIRS_POOL) {
+              for (const a of p.arts) {
+                if (a.img && !seenArtUrls.has(a.img)) {
+                  seenArtUrls.add(a.img);
+                  getOrLoadPairBubbleByUrl(a.img, a.name);
+                }
+              }
+              if (p.userA && p.userA.picture && !seenUserUrls.has(p.userA.picture)) {
+                seenUserUrls.add(p.userA.picture);
+                getOrLoadUserPic(p.userA.picture);
+              }
+              if (p.userB && p.userB.picture && !seenUserUrls.has(p.userB.picture)) {
+                seenUserUrls.add(p.userB.picture);
+                getOrLoadUserPic(p.userB.picture);
+              }
+            }
+          }
         })
         .finally(() => { refilling = false; });
     }
