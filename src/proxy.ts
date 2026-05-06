@@ -5,35 +5,43 @@ import { verifyJwt } from "@/lib/jwt";
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow auth API, Next.js internals, static assets, and the globe animation
+  // Allow only the auth API and favicon without auth
   if (
     pathname.startsWith("/api/auth") ||
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/favicon") ||
-    pathname.startsWith("/equals-globe") ||
-    pathname.match(/\.(png|jpg|jpeg|gif|svg|ico|woff|woff2|otf|ttf|css|js)$/)
+    pathname === "/favicon.ico"
   ) {
     return NextResponse.next();
   }
 
+  // For authenticated users, allow everything
   const sessionCookie = request.cookies.get("dr-session");
+  if (sessionCookie?.value) {
+    const payload = verifyJwt(sessionCookie.value);
+    if (payload?.investor) {
+      return NextResponse.next();
+    }
+  }
 
-  if (!sessionCookie?.value) {
+  // Unauthenticated: allow only Next.js framework files needed for the login page to hydrate
+  // Block all app chunks (which contain data) but allow framework/webpack runtime
+  if (
+    pathname.startsWith("/_next/static/css") ||
+    pathname.startsWith("/_next/static/media") ||
+    (pathname.startsWith("/_next/static/chunks/webpack") || pathname.includes("framework"))
+  ) {
+    return NextResponse.next();
+  }
+
+  // Everything else requires auth. Unauthenticated users get the login page.
+  // For non-HTML requests (JS chunks, images, etc), return 401 to block access.
+  const isPageRequest = request.headers.get("accept")?.includes("text/html");
+  if (isPageRequest) {
     return new Response(getLoginPageHtml(), {
       status: 401,
       headers: { "Content-Type": "text/html" },
     });
   }
-
-  const payload = verifyJwt(sessionCookie.value);
-  if (!payload || !payload.investor) {
-    return new Response(getLoginPageHtml(), {
-      status: 401,
-      headers: { "Content-Type": "text/html" },
-    });
-  }
-
-  return NextResponse.next();
+  return new Response("Unauthorized", { status: 401 });
 }
 
 function getLoginPageHtml(): string {
@@ -159,6 +167,6 @@ function getLoginPageHtml(): string {
 
 export const config = {
   matcher: [
-    "/((?!api/auth|_next/static|_next/image|favicon.ico|equals-globe|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.svg$|.*\\.gif$|.*\\.ico$|.*\\.woff$|.*\\.woff2$|.*\\.otf$|.*\\.ttf$).*)",
+    "/((?!api/auth|favicon.ico).*)",
   ],
 };
