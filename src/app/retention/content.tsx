@@ -191,7 +191,7 @@ export default function RetentionPage() {
           { y: 32, label: "Instagram 32 min" },
         ]}
         headerChildren={
-          <div className="text-right" style={{ color: "#FF4D00", fontSize: 11, fontWeight: 500, paddingRight: 2 }}>
+          <div style={{ color: "#FF4D00", fontSize: 11, fontWeight: 500, textAlign: "right", marginRight: 12 }}>
             TikTok 90 min
           </div>
         }
