@@ -23,7 +23,9 @@
     }
     @font-face {
       font-family: 'FAIRFavoritMono';
-      src: url('./Fonts/FAIRFavoritMono-Book.otf') format('opentype');
+      src: url('./Fonts/FAIRFavoritMono-Book.otf') format('opentype'),
+           url('/fonts/FAIRFavoritMono-Book.woff2') format('woff2'),
+           url('/fonts/FAIRFavoritMono-Book.otf') format('opentype');
       font-weight: 400; font-style: normal; font-display: swap;
     }
     @font-face {
@@ -51,14 +53,14 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #ffffff; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }
     body {
       font-family: 'FAIRFavorit', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-      color: #000000;
+      color: #FFFFFF;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-    #canvas { position: fixed; top: -5%; left: -15%; width: 115%; height: 105%; display: block; opacity: 0; transition: opacity 0.8s ease-in; }
+    #canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 0.8s ease-in; }
     #canvas.ready { opacity: 1; }
     .overlay {
       position: fixed;
@@ -79,46 +81,50 @@
     /* topline ticker metrics */
     .topline {
       position: fixed;
-      bottom: 32px;
-      left: 32px;
+      top: 50%;
+      right: 32px;
+      transform: translateY(-50%);
       display: flex;
       flex-direction: column;
       opacity: 0;
       transition: opacity 0.8s ease-in;
-      gap: 16px;
+      gap: 24px;
       pointer-events: none;
       z-index: 3;
     }
     .mission {
-      font-family: 'FAIRFavoritExtended', 'FAIRFavorit', sans-serif;
-      font-weight: 900;
-      font-size: 45px;
-      letter-spacing: -0.02em;
-      line-height: 1.05;
-      color: #000000;
+      font-family: 'FAIRFavoritMono', ui-monospace, Menlo, monospace;
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      line-height: 1.55;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
       max-width: 520px;
     }
     .metrics {
       display: flex;
-      gap: 48px;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 24px;
     }
-    .metric { display: flex; flex-direction: column; gap: 8px; }
+    .metric { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
     .metric-label {
       font-family: 'FAIRFavoritMono', ui-monospace, Menlo, monospace;
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       opacity: 0.5;
-      color: #000000;
+      color: #FFFFFF;
     }
     .metric-num {
-      font-family: 'FAIRFavoritExtended', 'FAIRFavorit', sans-serif;
-      font-size: 38px;
-      font-weight: 900;
-      letter-spacing: -0.015em;
+      font-family: 'FAIRFavoritMono', ui-monospace, Menlo, monospace;
+      font-size: 40px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
       line-height: 1;
       font-variant-numeric: tabular-nums;
-      color: #000000;
+      color: #FFFFFF;
     }
 
     /* live connections feed */
@@ -142,7 +148,7 @@
       font-size: 10px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(0,0,0,0.7);
+      color: rgba(255,255,255,0.7);
       opacity: 1;
       display: flex;
       align-items: center;
@@ -169,10 +175,10 @@
     }
     /* connection card: user → artist pill → user */
     .conn-card {
-      background: rgba(240, 240, 240, 0.9);
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 16px;
-      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px 14px;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       display: flex;
@@ -180,6 +186,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+      color: #FFFFFF;
       animation: card-in 0.45s cubic-bezier(0.25, 1.5, 0.4, 1);
       transition: opacity 0.35s ease, transform 0.35s ease;
       transform-origin: right center;
@@ -207,7 +214,7 @@
       border-radius: 50%;
       flex-shrink: 0;
       object-fit: cover;
-      box-shadow: 0 0 0 1.5px rgba(0,0,0,0.15);
+      box-shadow: 0 0 0 1.5px rgba(255,255,255,0.18);
     }
     .conn-user .user-info {
       display: flex;
@@ -217,20 +224,24 @@
     }
     .conn-user.right .user-info { align-items: flex-end; }
     .conn-name {
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: -0.01em;
+      font-family: 'FAIRFavorit', sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0;
       white-space: nowrap;
     }
     .conn-loc {
-      font-size: 10px;
-      opacity: 0.6;
+      font-family: 'FAIRFavoritMono', ui-monospace, Menlo, monospace;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.5;
       display: inline-flex;
       align-items: center;
       gap: 4px;
       white-space: nowrap;
     }
-    .conn-loc .flag { font-size: 12px; line-height: 1; }
+    .conn-loc .flag { font-size: 11px; line-height: 1; }
     .conn-artist {
       flex: 0 1 auto;
       min-width: 0;
@@ -241,13 +252,12 @@
       border-radius: 999px;
       color: #0f0f10;
       font-family: 'FAIRFavorit', sans-serif;
-      font-weight: 700;
+      font-weight: 500;
       font-size: 11px;
-      letter-spacing: -0.01em;
+      letter-spacing: 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.2) inset;
     }
     .conn-artist .thumb {
       width: 20px;
@@ -266,8 +276,8 @@
 <body>
   <canvas id="canvas"></canvas>
 
-  <aside class="feed">
-    <div class="feed-title">LIVE FRIENDSHIPS</div>
+  <!-- LIVE FRIENDSHIPS panel removed for now -->
+  <aside class="feed" style="display:none">
     <div class="feed-list" id="feed-list"></div>
   </aside>
 
@@ -326,6 +336,17 @@
 
     // ---------- live topline tickers (fed by API) ----------
     const GLOBE_API = new URLSearchParams(window.location.search).get('api') || window.GLOBE_API_URL || '/api/globe-rates';
+    // Base URL for the rest of the API (pairs + artist images).
+    // Defaults: derive from GLOBE_API by stripping the trailing path,
+    // so a single ?api=https://server.up.railway.app/api/globe-rates configures everything.
+    const GLOBE_API_BASE = (() => {
+      try {
+        const u = new URL(GLOBE_API, window.location.href);
+        const idx = u.pathname.lastIndexOf('/api/');
+        if (idx >= 0) return new URL(u.origin + u.pathname.slice(0, idx)).toString().replace(/\/$/, '');
+        return u.origin;
+      } catch { return ''; }
+    })();
 
     // Fallback defaults (used until API responds)
     let tickerState = {
@@ -366,18 +387,37 @@
       })
       .catch(() => {}); // silently fall back to defaults
 
-    // Tick all counters forward
+    // Per-metric smooth-noise phases. Three sine waves at different periods,
+    // random offsets, summed and normalised to a mean-1 multiplier. Slow drift
+    // (5s / 13s / 29s) gives organic ebb/flow without feeling like a heartbeat.
+    const noiseCfg = {
+      users:    { p1: 5300, p2: 13700, p3: 29000, ph1: Math.random() * 1e4, ph2: Math.random() * 1e4, ph3: Math.random() * 1e4, amp: 0.45 },
+      messages: { p1: 4700, p2: 11900, p3: 26500, ph1: Math.random() * 1e4, ph2: Math.random() * 1e4, ph3: Math.random() * 1e4, amp: 0.30 },
+      friends:  { p1: 5800, p2: 14300, p3: 31200, ph1: Math.random() * 1e4, ph2: Math.random() * 1e4, ph3: Math.random() * 1e4, amp: 0.40 },
+    };
+    function rateMultiplier(key, t) {
+      const c = noiseCfg[key];
+      const n = (Math.sin((t + c.ph1) / c.p1) * 0.5
+              +  Math.sin((t + c.ph2) / c.p2) * 0.3
+              +  Math.sin((t + c.ph3) / c.p3) * 0.2);
+      return Math.max(0.25, 1 + c.amp * n);
+    }
+
+    // Tick all counters forward — driven by rAF so numbers move smoothly
+    // and integer rounding naturally produces non-uniform "events".
     function tickCounters() {
       const now = Date.now();
       const dt = now - tickerBaseTime;
       tickerBaseTime = now;
       for (const [key, s] of Object.entries(tickerState)) {
-        s.value += s.ratePerMs * dt;
+        const mult = rateMultiplier(key, now);
+        s.value += s.ratePerMs * dt * mult;
         const el = document.getElementById('m-' + key);
-        if (el) el.textContent = Math.round(s.value).toLocaleString();
+        if (el) el.textContent = Math.floor(s.value).toLocaleString();
       }
+      requestAnimationFrame(tickCounters);
     }
-    setInterval(tickCounters, 1000);
+    requestAnimationFrame(tickCounters);
 
     // Friends bump (called from arc spawns)
     let friendsBumpCounter = 0;
@@ -401,10 +441,10 @@
 
     // ---------- scene basics ----------
     const canvas = document.getElementById('canvas');
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0xffffff, 1);
+    renderer.setClearColor(0x000000, 0);
 
     const scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0x000000, 10, 22);
@@ -989,6 +1029,37 @@
     const feedListEl = document.getElementById('feed-list');
     const MAX_FEED_CARDS = 8; // cards persist past their arc and cycle out as new ones arrive
 
+    // Real friendships loaded from friendships.json (500 most-recent, anonymised
+    // to first-name + country + one common artist). Privacy: no city, no age.
+    let REAL_FRIENDSHIPS = [];
+    let realFriendshipIdx = 0;
+    fetch('friendships.json')
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data) => { if (Array.isArray(data)) REAL_FRIENDSHIPS = data; })
+      .catch(() => {});
+
+    function nextRealFriendship() {
+      if (!REAL_FRIENDSHIPS.length) return null;
+      const f = REAL_FRIENDSHIPS[realFriendshipIdx % REAL_FRIENDSHIPS.length];
+      realFriendshipIdx += 1;
+      return f;
+    }
+
+    // Find an ARTIST_BUBBLE entry by case-insensitive artist name match.
+    // Falls back to a random bubble so the pill always has an album thumb/colour.
+    function albumForArtist(artistName) {
+      if (!artistName) return ARTIST_BUBBLES[Math.floor(Math.random() * ARTIST_BUBBLES.length)];
+      const target = artistName.toLowerCase().trim();
+      const match = ARTIST_BUBBLES.find((b) => (b.artist || '').toLowerCase() === target);
+      if (match) return match;
+      // Best-effort: substring match (e.g. "Tyler the Creator" vs "Tyler, The Creator")
+      const partial = ARTIST_BUBBLES.find((b) => {
+        const n = (b.artist || '').toLowerCase();
+        return n && (n.includes(target) || target.includes(n));
+      });
+      return partial || ARTIST_BUBBLES[Math.floor(Math.random() * ARTIST_BUBBLES.length)];
+    }
+
     // lighten a hex color toward white for a pastel pill background
     function lightenHex(hex, amount = 0.72) {
       const c = hex.replace('#', '');
@@ -1003,35 +1074,48 @@
 
     function addFeedCard(arc, now) {
       if (!feedListEl) return;
-      const albumIdx = Math.floor(Math.random() * ARTIST_BUBBLES.length);
-      const album = ARTIST_BUBBLES[albumIdx];
-      const thumb = album.thumb;
+      // Prefer the data attached to this specific arc (real friendship pair).
+      // Fall back to the legacy nextRealFriendship() pool if absent, and to
+      // synthetic data if neither is available.
+      const pair = arc.realPair || null;
+      const real = pair ? null : nextRealFriendship();
+      const album = pair
+        ? albumForArtist(pair.artist && pair.artist.name)
+        : (real ? albumForArtist(real.artist) : ARTIST_BUBBLES[Math.floor(Math.random() * ARTIST_BUBBLES.length)]);
+      const artistLabel = pair ? pair.artist.name : (real ? real.artist : album.artist);
+      // For artist thumb: prefer real S3 image when we have it; fallback to local
+      const artistThumb = (pair && pair.artist && pair.artist.img) ? pair.artist.img : album.thumb;
       const cityA = CITIES[arc.cityA];
       const cityB = CITIES[arc.cityB];
-      const nameA = pickName();
-      let nameB = pickName();
-      while (nameB === nameA) nameB = pickName();
-      const [ageA, ageB] = pickFriendAges();
+      const nameA = pair ? pair.userA.name : (real ? real.a.name : pickName());
+      let nameB = pair ? pair.userB.name : (real ? real.b.name : pickName());
+      if (!pair && !real) { while (nameB === nameA) nameB = pickName(); }
+      const flagA = pair ? pair.userA.flag : (real ? real.a.flag : cityA.flag);
+      const flagB = pair ? pair.userB.flag : (real ? real.b.flag : cityB.flag);
+      const countryA = pair ? pair.userA.country : (real ? real.a.country : cityA.country);
+      const countryB = pair ? pair.userB.country : (real ? real.b.country : cityB.country);
+      const userPicA = pair ? pair.userA.picture : pickAvatarUrl();
+      const userPicB = pair ? pair.userB.picture : pickAvatarUrl();
 
       const el = document.createElement('div');
       el.className = 'conn-card';
       el.innerHTML = `
         <div class="conn-user">
-          <img class="user-thumb" src="${pickAvatarUrl()}" alt="">
+          <img class="user-thumb" src="${userPicA}" alt="" referrerpolicy="no-referrer">
           <div class="user-info">
-            <span class="conn-name">${nameA}, ${ageA}</span>
-            <span class="conn-loc"><span class="flag">${cityA.flag}</span>${cityA.country}</span>
+            <span class="conn-name">${nameA}</span>
+            <span class="conn-loc"><span class="flag">${flagA}</span>${countryA}</span>
           </div>
         </div>
         <div class="conn-artist" style="background:${lightenHex(album.color, 0.68)};">
-          <img class="thumb" src="${thumb}" alt="">
-          <span class="artist-name">${album.artist}</span>
+          <img class="thumb" src="${artistThumb}" alt="" referrerpolicy="no-referrer">
+          <span class="artist-name">${artistLabel}</span>
         </div>
         <div class="conn-user right">
-          <img class="user-thumb" src="${pickAvatarUrl()}" alt="">
+          <img class="user-thumb" src="${userPicB}" alt="" referrerpolicy="no-referrer">
           <div class="user-info">
-            <span class="conn-name">${nameB}, ${ageB}</span>
-            <span class="conn-loc"><span class="flag">${cityB.flag}</span>${cityB.country}</span>
+            <span class="conn-name">${nameB}</span>
+            <span class="conn-loc"><span class="flag">${flagB}</span>${countryB}</span>
           </div>
         </div>
       `;
@@ -1071,6 +1155,121 @@
     world.add(albumGroup);
 
     const ARC_COUNT = 55;
+
+    // ---------- real friendship pool (powered by pairs.json) ----------
+    // Each entry is one anonymised real friendship: city A/B, both users
+    // (first name + country/flag + S3 picture URL), and one common artist
+    // (name + S3 image URL). Sampled with Tier 1 boosted / Tier 3-4 dampened
+    // from a 3-day production snapshot.
+    let PAIRS_POOL = []; // [{ aIdx, bIdx, userA, userB, artist }]
+    const RECENT_COUNTRY_WINDOW = 5; // last N arcs may not share a country with new pick
+    const recentCountries = [];
+
+    // Cache: artist image URL → { texture, aspect } for that artist's bubble.
+    // Built lazily, with a concurrency-limited queue so we never block the
+    // main thread with multiple decodes / canvas builds at the same time.
+    const pairBubbleCache = new Map(); // url → { texture, aspect } | 'loading' | 'failed'
+    const buildQueue = [];
+    let buildInFlight = 0;
+    const MAX_BUILD_CONCURRENT = 2;
+
+    function buildPairBubble(name, img) {
+      const h = Math.floor(Math.random() * 360);
+      const s = Math.floor(60 + Math.random() * 30);
+      const color = `hsl(${h}, ${s}%, 60%)`;
+      const canvas = makeArtistBubbleCanvas(name, img, color);
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.anisotropy = 4;
+      return { texture, aspect: canvas.width / canvas.height };
+    }
+
+    function pumpBuildQueue() {
+      while (buildInFlight < MAX_BUILD_CONCURRENT && buildQueue.length > 0) {
+        const job = buildQueue.shift();
+        buildInFlight++;
+        loadImage(job.url)
+          .then(img => {
+            // Hand off to idle time so canvas/text rendering doesn't fight
+            // the next animation frame for main-thread time.
+            const finish = () => {
+              try { pairBubbleCache.set(job.url, buildPairBubble(job.name, img)); }
+              catch { pairBubbleCache.set(job.url, 'failed'); }
+              buildInFlight--;
+              pumpBuildQueue();
+            };
+            if (window.requestIdleCallback) requestIdleCallback(finish, { timeout: 200 });
+            else setTimeout(finish, 0);
+          })
+          .catch(() => {
+            pairBubbleCache.set(job.url, 'failed');
+            buildInFlight--;
+            pumpBuildQueue();
+          });
+      }
+    }
+
+    function getOrLoadPairBubble(pair) {
+      if (!pair || !pair.artist || !pair.artist.img || !pair.artist.name) return null;
+      const url = pair.artist.img;
+      const cached = pairBubbleCache.get(url);
+      if (cached && typeof cached === 'object') return cached;
+      if (cached === 'loading' || cached === 'failed') return null;
+      // mark before queuing so we don't enqueue twice
+      pairBubbleCache.set(url, 'loading');
+      buildQueue.push({ url, name: pair.artist.name });
+      pumpBuildQueue();
+      return null;
+    }
+
+    // Pairs come from the Railway API (with same-origin fallback for local dev).
+    const PAIRS_ENDPOINT = (GLOBE_API_BASE || '') + '/api/globe-pairs?limit=80';
+    fetch(PAIRS_ENDPOINT)
+      .then(r => r.ok ? r.json() : null)
+      .catch(() => null)
+      .then(data => {
+        if (!data || !Array.isArray(data.pairs)) return;
+        const idxByName = Object.fromEntries(CITIES.map((c, i) => [c.name, i]));
+        // Server returns artist.img as `/api/globe-artist/<file>` — prefix with
+        // GLOBE_API_BASE so loadImage() points at the Railway origin.
+        const base = GLOBE_API_BASE || '';
+        PAIRS_POOL = data.pairs
+          .map(p => {
+            const artist = p.artist ? { ...p.artist } : null;
+            if (artist && artist.img && artist.img.startsWith('/')) {
+              artist.img = base + artist.img;
+            }
+            return {
+              aIdx: idxByName[p.a], bIdx: idxByName[p.b],
+              userA: p.userA, userB: p.userB, artist,
+            };
+          })
+          .filter(p => p.aIdx != null && p.bIdx != null);
+      });
+
+    function pickPairFromPool(availableSet) {
+      if (!PAIRS_POOL || PAIRS_POOL.length === 0) return null;
+      for (let attempt = 0; attempt < 12; attempt++) {
+        const pick = PAIRS_POOL[Math.floor(Math.random() * PAIRS_POOL.length)];
+        if (!availableSet.has(pick.aIdx) || !availableSet.has(pick.bIdx)) continue;
+        const ca = CITIES[pick.aIdx].country;
+        const cb = CITIES[pick.bIdx].country;
+        if (attempt < 7) {
+          if (recentCountries.includes(ca) || recentCountries.includes(cb)) continue;
+        }
+        return pick;
+      }
+      return null;
+    }
+
+    function noteCountriesUsed(aIdx, bIdx) {
+      recentCountries.push(CITIES[aIdx].country);
+      if (CITIES[bIdx].country !== CITIES[aIdx].country) {
+        recentCountries.push(CITIES[bIdx].country);
+      }
+      while (recentCountries.length > RECENT_COUNTRY_WINDOW * 2) recentCountries.shift();
+    }
+
     // index of cities by region for biased same-region pairing (more local connections)
     const REGION_OF = (() => {
       const map = {
@@ -1173,21 +1372,32 @@
         arc.line.geometry.setDrawRange(0, 0);
         return;
       }
-      const i = pool[Math.floor(Math.random() * pool.length)];
-      // ~45% of arcs prefer a partner in the same region (more local/national connections);
-      // the rest pick globally for cross-continent variety
-      let j;
-      const sameRegion = Math.random() < 0.45;
-      if (sameRegion) {
-        const region = REGION_OF[i];
-        const regionMates = (CITIES_BY_REGION[region] || []).filter(k => k !== i && pool.includes(k));
-        if (regionMates.length > 0) {
-          j = regionMates[Math.floor(Math.random() * regionMates.length)];
+      let i, j;
+      // Pick a real friendship pair (Tier 1-weighted) from the data pool.
+      const poolSet = new Set(pool);
+      const realPair = pickPairFromPool(poolSet);
+      if (realPair) {
+        i = realPair.aIdx;
+        j = realPair.bIdx;
+        arc.realPair = realPair;
+      } else {
+        // Fallback to original random/region logic if data hasn't loaded
+        // or no diverse pair could be found in time.
+        arc.realPair = null;
+        i = pool[Math.floor(Math.random() * pool.length)];
+        const sameRegion = Math.random() < 0.45;
+        if (sameRegion) {
+          const region = REGION_OF[i];
+          const regionMates = (CITIES_BY_REGION[region] || []).filter(k => k !== i && pool.includes(k));
+          if (regionMates.length > 0) {
+            j = regionMates[Math.floor(Math.random() * regionMates.length)];
+          }
+        }
+        if (j == null) {
+          do { j = pool[Math.floor(Math.random() * pool.length)]; } while (j === i);
         }
       }
-      if (j == null) {
-        do { j = pool[Math.floor(Math.random() * pool.length)]; } while (j === i);
-      }
+      noteCountriesUsed(i, j);
       const a = latLngToVec3(CITIES[i].lat, CITIES[i].lng, R * 1.005);
       const b = latLngToVec3(CITIES[j].lat, CITIES[j].lng, R * 1.005);
       const { curve } = makeArc(a, b);
@@ -1223,11 +1433,35 @@
       arc.fadeDuration = 0.35 + Math.random() * 0.28;
 
       // ----- bubble setup for this arc (camera-facing sprite) -----
-      const bubbleIdx = Math.floor(Math.random() * albumTextures.length);
-      arc.bubbleArtistIdx = bubbleIdx;
-      arc.bubbleMesh.material.map = albumTextures[bubbleIdx];
-      arc.bubbleMesh.material.needsUpdate = true;
-      arc.bubbleAspect = albumAspects[bubbleIdx] || 3.0;
+      // 1) prefer the real artist's S3 image for this pair (built on-the-fly)
+      // 2) fall back to a local ARTIST_BUBBLES name match
+      // 3) fall back to a random preset bubble
+      const realBubble = getOrLoadPairBubble(arc.realPair);
+      if (realBubble) {
+        arc.bubbleArtistIdx = -1; // real-pair bubble; no preset index
+        arc.bubbleMesh.material.map = realBubble.texture;
+        arc.bubbleMesh.material.needsUpdate = true;
+        arc.bubbleAspect = realBubble.aspect;
+      } else {
+        let bubbleIdx;
+        if (arc.realPair && arc.realPair.artist && arc.realPair.artist.name) {
+          const realArtist = arc.realPair.artist.name.toLowerCase().trim();
+          let matched = -1;
+          for (let k = 0; k < ARTIST_BUBBLES.length; k++) {
+            const n = (ARTIST_BUBBLES[k].artist || '').toLowerCase();
+            if (n && (n === realArtist || n.includes(realArtist) || realArtist.includes(n))) {
+              matched = k; break;
+            }
+          }
+          bubbleIdx = matched >= 0 ? matched : Math.floor(Math.random() * albumTextures.length);
+        } else {
+          bubbleIdx = Math.floor(Math.random() * albumTextures.length);
+        }
+        arc.bubbleArtistIdx = bubbleIdx;
+        arc.bubbleMesh.material.map = albumTextures[bubbleIdx];
+        arc.bubbleMesh.material.needsUpdate = true;
+        arc.bubbleAspect = albumAspects[bubbleIdx] || 3.0;
+      }
       arc.bubbleT = 0.4 + Math.random() * 0.2;
       // varied bubble sizes — most stay small, some up to 50% larger
       arc.bubbleSize = 0.10 + Math.pow(Math.random(), 1.6) * 0.05; // 0.10 → 0.15 range, skewed small

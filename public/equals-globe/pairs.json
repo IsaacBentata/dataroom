@@ -1,0 +1,1604 @@
+{
+  "pairs": [
+    {
+      "a": "Los Angeles",
+      "b": "Stockholm",
+      "userA": {
+        "name": "dhw",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16474642-1777949134689.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Milian",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16502483-1778015515820.webp",
+        "country": "Sweden",
+        "flag": "\ud83c\uddf8\ud83c\uddea"
+      },
+      "artist": {
+        "name": "SZA",
+        "img": "./data-artists/6f1927cb00716d6b.jpg"
+      }
+    },
+    {
+      "a": "Miami",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Tina",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15486846-1775438701370.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "mia",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16404032-1777762313459.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "CORTIS",
+        "img": "./data-artists/81e5a5987b67ffee.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "Rome",
+      "userA": {
+        "name": "Cecil",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16486355-1777983674379.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Crescenzo",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15247982-1774902816813.webp",
+        "country": "Italy",
+        "flag": "\ud83c\uddee\ud83c\uddf9"
+      },
+      "artist": {
+        "name": "The Weeknd",
+        "img": "./data-artists/4f7421845bf513d5.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "New York",
+      "userA": {
+        "name": "KMR",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16495495-1778002447215.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Janiyah",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16163923-1776963380678.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Deftones",
+        "img": "./data-artists/189522a9c631eb13.jpg"
+      }
+    },
+    {
+      "a": "Toronto",
+      "b": "Vancouver",
+      "userA": {
+        "name": "nicolas",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14221115-1772821568083.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "userB": {
+        "name": "z",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16307074-1777470436165.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "artist": {
+        "name": "Drake",
+        "img": "./data-artists/313f50e69a971d86.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Miami",
+      "userA": {
+        "name": "\u2018",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15780019-1776019118852.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Saydee",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/7108573-1772500923609.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "The Weeknd",
+        "img": "./data-artists/4f7421845bf513d5.jpg"
+      }
+    },
+    {
+      "a": "London",
+      "b": "Stockholm",
+      "userA": {
+        "name": "deano",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16298128-1777431030531.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "userB": {
+        "name": "marc",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/7305474-1772999045888.webp",
+        "country": "Sweden",
+        "flag": "\ud83c\uddf8\ud83c\uddea"
+      },
+      "artist": {
+        "name": "Frank Ocean",
+        "img": "./data-artists/952dbaf773015024.jpg"
+      }
+    },
+    {
+      "a": "Paris",
+      "b": "Mexico City",
+      "userA": {
+        "name": "Nadal",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16506466-1778023795943.webp",
+        "country": "France",
+        "flag": "\ud83c\uddeb\ud83c\uddf7"
+      },
+      "userB": {
+        "name": "vegamcfly",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14358586-1772545690197.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "artist": {
+        "name": "Bad Bunny",
+        "img": "./data-artists/48779966299a5ba4.jpg"
+      }
+    },
+    {
+      "a": "Seoul",
+      "b": "London",
+      "userA": {
+        "name": "Josh",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15397479-1775241913928.webp",
+        "country": "Korea",
+        "flag": "\ud83c\uddf0\ud83c\uddf7"
+      },
+      "userB": {
+        "name": "Georgie",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16485940-1777982525139.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "artist": {
+        "name": "Travis Scott",
+        "img": "./data-artists/e470a353a76ee21e.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Anna",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16346960-1777601141965.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Matt",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16045530-1776579557566.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Tyler the Creator",
+        "img": "./data-artists/67f68305b31511e0.jpg"
+      }
+    },
+    {
+      "a": "Miami",
+      "b": "Vancouver",
+      "userA": {
+        "name": "\ud83d\ude2d\ud83d\ude2d",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16505171-1778020792369.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "justine",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14437721-1772758066451.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "artist": {
+        "name": "The Beatles",
+        "img": "./data-artists/458a9827211b6132.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Michael",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16439561-1777858371753.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Madison",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16446131-1777878141996.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Deftones",
+        "img": "./data-artists/189522a9c631eb13.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "Miami",
+      "userA": {
+        "name": "Cardinal",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16171611-1776989127120.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Adam",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16480884-1777967124110.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Drake",
+        "img": "./data-artists/313f50e69a971d86.jpg"
+      }
+    },
+    {
+      "a": "Miami",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Cooper",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16235881-1777214522575.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Alyssa",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16407844-1777774537154.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "The Smiths",
+        "img": "./data-artists/09855491f0be2040.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "Miami",
+      "userA": {
+        "name": "creme",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16454761-1777911095274.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "ymin",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/7156959-1772524084906.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Sabrina Carpenter",
+        "img": "./data-artists/37e2b28644b1f4bf.jpg"
+      }
+    },
+    {
+      "a": "Paris",
+      "b": "Melbourne",
+      "userA": {
+        "name": "grahbum",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16426238-1777827551996.webp",
+        "country": "France",
+        "flag": "\ud83c\uddeb\ud83c\uddf7"
+      },
+      "userB": {
+        "name": "nem",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16496180-1778003813999.webp",
+        "country": "Australia",
+        "flag": "\ud83c\udde6\ud83c\uddfa"
+      },
+      "artist": {
+        "name": "Dave",
+        "img": "./data-artists/f6d4f53f45767f1b.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "Chicago",
+      "userA": {
+        "name": "keisha",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16335720-1777566553834.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "sam",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16173582-1776997213619.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Drake",
+        "img": "./data-artists/313f50e69a971d86.jpg"
+      }
+    },
+    {
+      "a": "Mexico City",
+      "b": "London",
+      "userA": {
+        "name": "\ud83c\udf4c",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16442318-1777867103570.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "userB": {
+        "name": "Joe",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16469566-1777937244706.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "artist": {
+        "name": "Tyler the Creator",
+        "img": "./data-artists/67f68305b31511e0.jpg"
+      }
+    },
+    {
+      "a": "Mexico City",
+      "b": "Vancouver",
+      "userA": {
+        "name": "Sofia",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16496723-1778004789706.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "userB": {
+        "name": "Zak",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14427513-1772732215931.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "artist": {
+        "name": "Lana Del Rey",
+        "img": "./data-artists/b75a064f2b058b40.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "Miami",
+      "userA": {
+        "name": "Ellie",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/6426359-1772310246629.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "John",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14283743-1772206264990.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Steve Lacy",
+        "img": "./data-artists/fc0be61deef0acba.jpg"
+      }
+    },
+    {
+      "a": "Miami",
+      "b": "Melbourne",
+      "userA": {
+        "name": "annie",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16133690-1776859602948.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Khayden",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16507352-1778025999907.webp",
+        "country": "Australia",
+        "flag": "\ud83c\udde6\ud83c\uddfa"
+      },
+      "artist": {
+        "name": "Travis Scott",
+        "img": "./data-artists/e470a353a76ee21e.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Miami",
+      "userA": {
+        "name": "mason\ud83c\udfa4",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/7071372-1772483886900.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Nekluna",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16453737-1777909237316.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Lana Del Rey",
+        "img": "./data-artists/b75a064f2b058b40.jpg"
+      }
+    },
+    {
+      "a": "S\u00e3o Paulo",
+      "b": "London",
+      "userA": {
+        "name": "pinkcorpsee",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16371662-1777674603125.webp",
+        "country": "Brazil",
+        "flag": "\ud83c\udde7\ud83c\uddf7"
+      },
+      "userB": {
+        "name": "Joe",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16469566-1777937244706.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "artist": {
+        "name": "Radiohead",
+        "img": "./data-artists/a3c2a79e4b4f1e81.jpg"
+      }
+    },
+    {
+      "a": "Toronto",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Ash",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14632950-1773343572027.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "userB": {
+        "name": "Alexandre",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14900289-1774137897010.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Hole",
+        "img": "./data-artists/24a6d88e26fa2d6c.jpg"
+      }
+    },
+    {
+      "a": "New York",
+      "b": "Chicago",
+      "userA": {
+        "name": "lilee\ud83d\ude3d\ud83d\ude3d",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16322883-1777515321948.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Kaylee",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16511416-1778036802315.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Kendrick Lamar",
+        "img": "./data-artists/8a671c6a1ad717bc.jpg"
+      }
+    },
+    {
+      "a": "Toronto",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Isabelle",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16471802-1777941784510.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "userB": {
+        "name": "Fish",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/13762994-1772748127385.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Laufey",
+        "img": "./data-artists/605d63a21f125a6e.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Cairo",
+      "userA": {
+        "name": "catherine",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15930911-1776317745327.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Fnck",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16469625-1777937336420.webp",
+        "country": "Egypt",
+        "flag": "\ud83c\uddea\ud83c\uddec"
+      },
+      "artist": {
+        "name": "BLACKPINK",
+        "img": "./data-artists/e19a3481d05a94ec.jpg"
+      }
+    },
+    {
+      "a": "Miami",
+      "b": "Rio",
+      "userA": {
+        "name": "Gavin",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16481973-1777970498754.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "dani",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16102105-1776731732599.webp",
+        "country": "Brazil",
+        "flag": "\ud83c\udde7\ud83c\uddf7"
+      },
+      "artist": {
+        "name": "Lana Del Rey",
+        "img": "./data-artists/b75a064f2b058b40.jpg"
+      }
+    },
+    {
+      "a": "Mexico City",
+      "b": "Rome",
+      "userA": {
+        "name": "santii",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16380386-1777703639330.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "userB": {
+        "name": "gems\u2b50\ufe0f",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/13933010-1772773567352.webp",
+        "country": "Italy",
+        "flag": "\ud83c\uddee\ud83c\uddf9"
+      },
+      "artist": {
+        "name": "Michael Jackson",
+        "img": "./data-artists/c5a7ec42a18381f4.jpg"
+      }
+    },
+    {
+      "a": "Vancouver",
+      "b": "Toronto",
+      "userA": {
+        "name": "Evangeline",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16153022-1776922458986.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "userB": {
+        "name": "lirio",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16400019-1777752930642.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "artist": {
+        "name": "The Smiths",
+        "img": "./data-artists/09855491f0be2040.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "New York",
+      "userA": {
+        "name": "Delano",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16471798-1777941774931.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Kinsley",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15634051-1775772991919.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Drake",
+        "img": "./data-artists/313f50e69a971d86.jpg"
+      }
+    },
+    {
+      "a": "New York",
+      "b": "London",
+      "userA": {
+        "name": "Haylee",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16389613-1777731473634.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Alfie",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16476941-1777955709873.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "artist": {
+        "name": "Limp Bizkit",
+        "img": "./data-artists/e0c4a5e549fcbe50.jpg"
+      }
+    },
+    {
+      "a": "Melbourne",
+      "b": "Rome",
+      "userA": {
+        "name": "Charlie",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15462114-1775392039081.webp",
+        "country": "Australia",
+        "flag": "\ud83c\udde6\ud83c\uddfa"
+      },
+      "userB": {
+        "name": "Sofia",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16456815-1777914646148.webp",
+        "country": "Italy",
+        "flag": "\ud83c\uddee\ud83c\uddf9"
+      },
+      "artist": {
+        "name": "Arctic Monkeys",
+        "img": "./data-artists/04b8869224bc3c99.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "Chicago",
+      "userA": {
+        "name": "liyah",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16469144-1777936428624.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Delano",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16471798-1777941774931.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Drake",
+        "img": "./data-artists/313f50e69a971d86.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "Mexico City",
+      "userA": {
+        "name": "kyle",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16275583-1777349766042.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Roxi",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16476743-1777955226408.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "artist": {
+        "name": "Mitski",
+        "img": "./data-artists/6bb3dc830a986323.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Vancouver",
+      "userA": {
+        "name": "naia",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14171052-1772802361710.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "11.",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16322158-1777512190271.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "artist": {
+        "name": "SZA",
+        "img": "./data-artists/6f1927cb00716d6b.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "New York",
+      "userA": {
+        "name": "Kitkat",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16439768-1777858944468.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Mo",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16426936-1777829143233.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Frank Ocean",
+        "img": "./data-artists/952dbaf773015024.jpg"
+      }
+    },
+    {
+      "a": "New York",
+      "b": "Rome",
+      "userA": {
+        "name": "lila",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16457401-1777915626688.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Pamela",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16407381-1777772599794.webp",
+        "country": "Italy",
+        "flag": "\ud83c\uddee\ud83c\uddf9"
+      },
+      "artist": {
+        "name": "Tyler the Creator",
+        "img": "./data-artists/67f68305b31511e0.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "Miami",
+      "userA": {
+        "name": "Arlo",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16252018-1777262748522.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "\ud835\udc9f\ud835\udcb6\ud835\udcbe\ud835\udcc1\ud835\udcb6\ud83d\udc8b",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15773792-1776011126712.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Frank Ocean",
+        "img": "./data-artists/952dbaf773015024.jpg"
+      }
+    },
+    {
+      "a": "Miami",
+      "b": "Chicago",
+      "userA": {
+        "name": "Travis",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16479954-1777964316166.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "lilly",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16436056-1777848201041.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Travis Scott",
+        "img": "./data-artists/e470a353a76ee21e.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Kingston",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16511445-1778036882061.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "alina",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16512387-1778039571615.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "A$AP Rocky",
+        "img": "./data-artists/52d56ca2fcaa05bb.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Toronto",
+      "userA": {
+        "name": "Valya",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16478585-1777959935509.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Christian",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16174946-1777003302435.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "artist": {
+        "name": "Lil Tecca",
+        "img": "./data-artists/9658f605a8b83f4b.jpg"
+      }
+    },
+    {
+      "a": "Mumbai",
+      "b": "London",
+      "userA": {
+        "name": "moony",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16306587-1777469012106.webp",
+        "country": "India",
+        "flag": "\ud83c\uddee\ud83c\uddf3"
+      },
+      "userB": {
+        "name": "skymarie\ud83c\udf80",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16461849-1777923006109.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "artist": {
+        "name": "Don Toliver",
+        "img": "./data-artists/a62b20e9567f0a38.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "New York",
+      "userA": {
+        "name": "kit",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16436186-1777848417692.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Dawson",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16469634-1777937351655.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Nirvana",
+        "img": "./data-artists/cb889200464c0f87.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Miami",
+      "userA": {
+        "name": "Delano",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16471798-1777941774931.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Piper",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14415076-1772697140856.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Mac Miller",
+        "img": "./data-artists/6b1421fda9ef111e.jpg"
+      }
+    },
+    {
+      "a": "Sydney",
+      "b": "Melbourne",
+      "userA": {
+        "name": "nem",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16496180-1778003813999.webp",
+        "country": "Australia",
+        "flag": "\ud83c\udde6\ud83c\uddfa"
+      },
+      "userB": {
+        "name": "macmasters",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15118992-1774646151849.webp",
+        "country": "Australia",
+        "flag": "\ud83c\udde6\ud83c\uddfa"
+      },
+      "artist": {
+        "name": "Drake",
+        "img": "./data-artists/313f50e69a971d86.jpg"
+      }
+    },
+    {
+      "a": "Seoul",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Dominique",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16464741-1777927823559.webp",
+        "country": "Korea",
+        "flag": "\ud83c\uddf0\ud83c\uddf7"
+      },
+      "userB": {
+        "name": "Nic66",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16439449-1777857946765.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Nirvana",
+        "img": "./data-artists/cb889200464c0f87.jpg"
+      }
+    },
+    {
+      "a": "New York",
+      "b": "Mexico City",
+      "userA": {
+        "name": "Madiii",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16216207-1777147973870.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Regis",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15533373-1775544296439.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "artist": {
+        "name": "Arctic Monkeys",
+        "img": "./data-artists/04b8869224bc3c99.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "New York",
+      "userA": {
+        "name": "Ellie",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16034738-1776553532817.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "hailey",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16467568-1777933186706.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Tyler the Creator",
+        "img": "./data-artists/67f68305b31511e0.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "F",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16386032-1777722442584.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "claire",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16490555-1777992993494.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Drake",
+        "img": "./data-artists/313f50e69a971d86.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "New York",
+      "userA": {
+        "name": "Ellie",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16444126-1777872050786.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Wil",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14445725-1772784120401.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Tyler the Creator",
+        "img": "./data-artists/67f68305b31511e0.jpg"
+      }
+    },
+    {
+      "a": "Miami",
+      "b": "New York",
+      "userA": {
+        "name": "Fei",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16479836-1777963971710.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "iana",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16227023-1777184258479.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Playboi Carti",
+        "img": "./data-artists/be379f1bddab2ec5.jpg"
+      }
+    },
+    {
+      "a": "Mexico City",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Rogelio",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16478489-1777959641906.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "userB": {
+        "name": "Moana",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16392680-1777737781449.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Kanye West",
+        "img": "./data-artists/30c93313e89cdf16.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "New York",
+      "userA": {
+        "name": "Gabby",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16468301-1777934659272.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Aaliyah",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16157902-1776944118089.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Radiohead",
+        "img": "./data-artists/a3c2a79e4b4f1e81.jpg"
+      }
+    },
+    {
+      "a": "Vancouver",
+      "b": "New York",
+      "userA": {
+        "name": "brook\ud83c\udf1e",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15263762-1774936637402.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "userB": {
+        "name": "liv",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16416383-1777803929247.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Frank Ocean",
+        "img": "./data-artists/952dbaf773015024.jpg"
+      }
+    },
+    {
+      "a": "London",
+      "b": "Madrid",
+      "userA": {
+        "name": "\ud83d\ude36\u200d\ud83c\udf2b\ufe0f",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16224180-1777172299622.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "userB": {
+        "name": "mmatteonl",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16501479-1778013354560.webp",
+        "country": "Spain",
+        "flag": "\ud83c\uddea\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Drake",
+        "img": "./data-artists/313f50e69a971d86.jpg"
+      }
+    },
+    {
+      "a": "Paris",
+      "b": "London",
+      "userA": {
+        "name": "Elon",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16480903-1777967192115.webp",
+        "country": "France",
+        "flag": "\ud83c\uddeb\ud83c\uddf7"
+      },
+      "userB": {
+        "name": "Jack",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16482498-1777972019414.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "artist": {
+        "name": "Lady Gaga",
+        "img": "./data-artists/5c03abb5d42b3678.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "Buenos Aires",
+      "userA": {
+        "name": "lilee\ud83d\ude3d\ud83d\ude3d",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16322883-1777515321948.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Hans",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16411177-1777786860446.webp",
+        "country": "Argentina",
+        "flag": "\ud83c\udde6\ud83c\uddf7"
+      },
+      "artist": {
+        "name": "Korn",
+        "img": "./data-artists/c72293da48405927.jpg"
+      }
+    },
+    {
+      "a": "Miami",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Lia",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16397986-1777748953443.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Nic66",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16439449-1777857946765.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Radiohead",
+        "img": "./data-artists/a3c2a79e4b4f1e81.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "New York",
+      "userA": {
+        "name": "riri",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16392694-1777737813750.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "paige",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16296972-1777425631662.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "beabadoobee",
+        "img": "./data-artists/51e832e9467a94a1.jpg"
+      }
+    },
+    {
+      "a": "Mexico City",
+      "b": "Toronto",
+      "userA": {
+        "name": "Kyara",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/13825508-1772760484390.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "userB": {
+        "name": "Alex",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16500000-1778010329783.webp",
+        "country": "Canada",
+        "flag": "\ud83c\udde8\ud83c\udde6"
+      },
+      "artist": {
+        "name": "Lil Uzi Vert",
+        "img": "./data-artists/8c7aae20c891ee9e.jpg"
+      }
+    },
+    {
+      "a": "New York",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "goofygoober",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15595650-1775685605181.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "samey",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16099163-1776722214250.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Drake",
+        "img": "./data-artists/313f50e69a971d86.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "New York",
+      "userA": {
+        "name": "LeyBee",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16151285-1776915346950.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "lori",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16508019-1778027639256.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Charli XCX",
+        "img": "./data-artists/3267060d236794f8.jpg"
+      }
+    },
+    {
+      "a": "Miami",
+      "b": "New York",
+      "userA": {
+        "name": "Xan",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15145448-1774706680455.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "cami",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16470766-1777939573294.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Bad Bunny",
+        "img": "./data-artists/48779966299a5ba4.jpg"
+      }
+    },
+    {
+      "a": "Paris",
+      "b": "Miami",
+      "userA": {
+        "name": "Ines",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16508287-1778028310847.webp",
+        "country": "France",
+        "flag": "\ud83c\uddeb\ud83c\uddf7"
+      },
+      "userB": {
+        "name": "Eddie",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15199727-1774809848277.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Radiohead",
+        "img": "./data-artists/a3c2a79e4b4f1e81.jpg"
+      }
+    },
+    {
+      "a": "London",
+      "b": "Miami",
+      "userA": {
+        "name": "Jayden",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16502560-1778015648194.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "userB": {
+        "name": "Valerie",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16284944-1777388426625.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Tyler the Creator",
+        "img": "./data-artists/67f68305b31511e0.jpg"
+      }
+    },
+    {
+      "a": "New York",
+      "b": "Miami",
+      "userA": {
+        "name": "Jagger",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15368568-1775171559043.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Candace",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15550339-1775585531998.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Childish Gambino",
+        "img": "./data-artists/f4447e80027e3b91.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "New York",
+      "userA": {
+        "name": "Elena",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16031640-1776547887334.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Nathan",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16274623-1777345186465.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Tyler the Creator",
+        "img": "./data-artists/67f68305b31511e0.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "New York",
+      "userA": {
+        "name": "katy",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16509575-1778032068824.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "ellie",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15848355-1776137445833.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Radiohead",
+        "img": "./data-artists/a3c2a79e4b4f1e81.jpg"
+      }
+    },
+    {
+      "a": "London",
+      "b": "Seoul",
+      "userA": {
+        "name": "Shifa",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15546018-1775576308787.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "userB": {
+        "name": "yura",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/7350870-1772617321570.webp",
+        "country": "Korea",
+        "flag": "\ud83c\uddf0\ud83c\uddf7"
+      },
+      "artist": {
+        "name": "Kendrick Lamar",
+        "img": "./data-artists/8a671c6a1ad717bc.jpg"
+      }
+    },
+    {
+      "a": "New York",
+      "b": "Los Angeles",
+      "userA": {
+        "name": "Channing",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16383858-1777715707318.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "paige",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16296972-1777425631662.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "beabadoobee",
+        "img": "./data-artists/51e832e9467a94a1.jpg"
+      }
+    },
+    {
+      "a": "Los Angeles",
+      "b": "Chicago",
+      "userA": {
+        "name": "jj",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15010251-1774406929770.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Lexi",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15602579-1775701642379.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Mitski",
+        "img": "./data-artists/6bb3dc830a986323.jpg"
+      }
+    },
+    {
+      "a": "Rio",
+      "b": "Buenos Aires",
+      "userA": {
+        "name": "Gabriel",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16311024-1777480823927.webp",
+        "country": "Brazil",
+        "flag": "\ud83c\udde7\ud83c\uddf7"
+      },
+      "userB": {
+        "name": "Julieta",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16466498-1777930933956.webp",
+        "country": "Argentina",
+        "flag": "\ud83c\udde6\ud83c\uddf7"
+      },
+      "artist": {
+        "name": "Billie Eilish",
+        "img": "./data-artists/cce1e1337bcbd6d6.jpg"
+      }
+    },
+    {
+      "a": "Miami",
+      "b": "Mexico City",
+      "userA": {
+        "name": "Dyllan",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14214371-1772819045873.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "luisa",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16472342-1777943150775.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "artist": {
+        "name": "Twenty One Pilots",
+        "img": "./data-artists/b135c2709b3c14b6.jpg"
+      }
+    },
+    {
+      "a": "Mexico City",
+      "b": "Rome",
+      "userA": {
+        "name": "chairvelle",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16443166-1777869061611.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "userB": {
+        "name": "angel",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16217339-1777150902701.webp",
+        "country": "Italy",
+        "flag": "\ud83c\uddee\ud83c\uddf9"
+      },
+      "artist": {
+        "name": "Chappell Roan",
+        "img": "./data-artists/e30f68c70427c4db.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "Miami",
+      "userA": {
+        "name": "xiaraa",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14597191-1773237894959.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "McKayla",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15824008-1776097850553.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "artist": {
+        "name": "Pierce The Veil",
+        "img": "./data-artists/2bf7873a1c402e73.jpg"
+      }
+    },
+    {
+      "a": "Melbourne",
+      "b": "London",
+      "userA": {
+        "name": "kay",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16354588-1777631496601.webp",
+        "country": "Australia",
+        "flag": "\ud83c\udde6\ud83c\uddfa"
+      },
+      "userB": {
+        "name": "\ud83e\udd87\ud83e\udd87",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16467665-1777933376383.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "artist": {
+        "name": "Kanye West",
+        "img": "./data-artists/30c93313e89cdf16.jpg"
+      }
+    },
+    {
+      "a": "Chicago",
+      "b": "London",
+      "userA": {
+        "name": "dhw",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16474642-1777949134689.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Korey",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/14964311-1774299853208.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "artist": {
+        "name": "Frank Ocean",
+        "img": "./data-artists/952dbaf773015024.jpg"
+      }
+    },
+    {
+      "a": "New York",
+      "b": "London",
+      "userA": {
+        "name": "emi",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16320376-1777505995783.webp",
+        "country": "USA",
+        "flag": "\ud83c\uddfa\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "Callum",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16505625-1778021793004.webp",
+        "country": "UK",
+        "flag": "\ud83c\uddec\ud83c\udde7"
+      },
+      "artist": {
+        "name": "21 Savage",
+        "img": "./data-artists/fd439f1cc92aacb8.jpg"
+      }
+    },
+    {
+      "a": "Madrid",
+      "b": "Mexico City",
+      "userA": {
+        "name": "Jorge",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/15787926-1776028410670.webp",
+        "country": "Spain",
+        "flag": "\ud83c\uddea\ud83c\uddf8"
+      },
+      "userB": {
+        "name": "kattoo",
+        "picture": "https://equals-data-prod-public-assets-v2.s3-accelerate.amazonaws.com/optimized-assets/16470297-1777938665199.webp",
+        "country": "Mexico",
+        "flag": "\ud83c\uddf2\ud83c\uddfd"
+      },
+      "artist": {
+        "name": "Bad Bunny",
+        "img": "./data-artists/48779966299a5ba4.jpg"
+      }
+    }
+  ]
+}

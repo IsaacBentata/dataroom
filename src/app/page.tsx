@@ -17,7 +17,7 @@ const items = [
   { href: "/team", label: "Team" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/legal", label: "Legal" },
-  { href: "/live", label: "Equals LIVE" },
+  { href: "/live", label: "Realtime" },
 ];
 
 const INVEST_HREF = `mailto:isaac.k@equa.ls?cc=${encodeURIComponent(
@@ -221,6 +221,7 @@ export default function Home() {
   const PreviewComponent = isPreviewing
     ? pageComponents[items[previewIndex!].href]
     : null;
+  const isLive = isPreviewing && items[previewIndex!].href === "/live";
 
   if (isMobile) {
     return (
@@ -244,7 +245,11 @@ export default function Home() {
   }
 
   return (
-    <section className="fixed inset-0 overflow-hidden bg-background select-none">
+    <section
+      className={`live-mode-root fixed inset-0 overflow-hidden bg-background select-none ${
+        isLive ? "is-live" : ""
+      }`}
+    >
       {/* Persistent hidden feature videos — kept in the React tree so React
           owns the lifecycle. Refs populate window.__primedFeatureVideos so
           PhoneVideo3D's useScreenTexture can attach VideoTextures to these
@@ -340,7 +345,6 @@ export default function Home() {
                       : "text-foreground/15 hover:text-foreground/40"
                   }`}
                 >
-                  {previewing && <span style={{ marginRight: 6 }}>→</span>}
                   <AnimateText
                     text={it.label}
                     triggerOnView={false}

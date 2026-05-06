@@ -794,3 +794,66 @@ img.team-logo.team-logo--nike,
     @apply bg-background text-foreground;
   }
 }
+
+/* Equals LIVE — slow fade to black-on-white when /live is active.
+   Tailwind v4 + @theme inline maps utilities to --color-* vars. Override
+   both the raw --background/--foreground AND the --color-* tokens so every
+   bg-background / text-foreground utility (including alpha variants like
+   text-foreground/15) flips. Transitions on color-related properties pick
+   up the var swap. */
+.live-mode-root,
+.live-mode-root :where(*) {
+  transition:
+    background-color 1200ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 1200ms cubic-bezier(0.4, 0, 0.2, 1),
+    fill 1200ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke 1200ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 1200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.live-mode-root.is-live {
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --color-background: #000000;
+  --color-foreground: #FFFFFF;
+}
+
+/* Drop hardcoded white fill on cards / surfaces inside the live-mode tree
+   so they inherit the parent's transitioning bg instead of snapping white
+   while the parent fades from black. Borders still distinguish them.
+   Higher specificity (chained ancestor classes) to beat `.minimal-preview .bg-card`. */
+.live-mode-root .minimal-preview .bg-card,
+.live-mode-root .minimal-preview .bg-background,
+.live-mode-root .minimal-preview [class*="bg-secondary"],
+.live-mode-root .minimal-preview [data-slot="card"],
+.live-mode-root .minimal-preview .bg-muted,
+.live-mode-root .minimal-preview .bg-popover,
+.live-mode-root .bg-card,
+.live-mode-root [data-slot="card"] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Vinyl player flips with the rest of the chrome when /live is active.
+   Override the hardcoded white pill / black text / black SVG fills via CSS
+   so the player rides the same 1200ms transition as the menu. */
+.live-mode-root.is-live .vinyl-player-enter .bg-white {
+  background-color: #5E2455 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+.live-mode-root.is-live .vinyl-player-enter .text-black {
+  color: #FFFFFF !important;
+}
+.live-mode-root.is-live .vinyl-player-enter p:nth-of-type(2) {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.live-mode-root.is-live .vinyl-player-enter svg rect[fill="#000"],
+.live-mode-root.is-live .vinyl-player-enter svg path[fill="#000"] {
+  fill: #FFFFFF !important;
+}
+.live-mode-root.is-live .vinyl-player-enter svg circle[fill="black"] {
+  fill: #000000 !important;
+}
+.live-mode-root.is-live .vinyl-player-enter svg rect[fill="white"] {
+  fill: #FFFFFF !important;
+}
