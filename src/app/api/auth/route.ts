@@ -28,7 +28,30 @@ const PASSWORD_HASHES: Record<string, string> = {
   "785542cef5129becc6ac827753e37e4bf9ddb1f68c9938ef996d33807a7fd95b": "Google Ventures",
 };
 
+// Rate limiting: track failed attempts per IP
+const failedAttempts = new Map<string, { count: number; lockedUntil: number }>();
+const MAX_ATTEMPTS = 3;
+const LOCKOUT_MS = 60 * 1000; // 1 minute
+
+function getClientIP(request: Request): string {
+  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || request.headers.get("x-real-ip")
+    || "unknown";
+}
+
 export async function POST(request: Request) {
+  const ip = getClientIP(request);
+  const record = failedAttempts.get(ip);
+
+  // Check if locked out
+  if (record && record.count >= MAX_ATTEMPTS && Date.now() < record.lockedUntil) {
+    const remaining = Math.ceil((record.lockedUntil - Date.now()) / 1000);
+    return Response.json(
+      { success: false, locked: true, retryAfter: remaining },
+      { status: 429 }
+    );
+  }
+
   const body = await request.json();
   const { password } = body as { password?: string };
 
@@ -40,8 +63,17 @@ export async function POST(request: Request) {
   const investor = PASSWORD_HASHES[hash];
 
   if (!investor) {
+    const current = failedAttempts.get(ip) || { count: 0, lockedUntil: 0 };
+    current.count += 1;
+    if (current.count >= MAX_ATTEMPTS) {
+      current.lockedUntil = Date.now() + LOCKOUT_MS;
+    }
+    failedAttempts.set(ip, current);
     return Response.json({ success: false }, { status: 401 });
   }
+
+  // Success - clear failed attempts
+  failedAttempts.delete(ip);
 
   const token = signJwt({ investor, iat: Date.now() });
 

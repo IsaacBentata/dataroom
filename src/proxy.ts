@@ -107,23 +107,47 @@ function getLoginPageHtml(): string {
         errorEl.style.display = 'none';
       });
 
+      var locked = false;
+
       form.addEventListener('submit', function(e) {
         e.preventDefault();
+        if (locked) return;
         fetch('/api/auth', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password: real })
         })
-        .then(function(res) { return res.json(); })
+        .then(function(res) { return res.json().then(function(d) { d._status = res.status; return d; }); })
         .then(function(data) {
           if (data.success) {
             localStorage.setItem('equals-data-room-investor', data.investor);
             window.location.reload();
+          } else if (data._status === 429) {
+            locked = true;
+            var secs = data.retryAfter || 60;
+            errorEl.textContent = 'Too many attempts. Try again in ' + secs + 's';
+            errorEl.style.display = 'block';
+            input.disabled = true;
+            var iv = setInterval(function() {
+              secs--;
+              if (secs <= 0) {
+                clearInterval(iv);
+                locked = false;
+                input.disabled = false;
+                errorEl.style.display = 'none';
+                errorEl.textContent = 'Incorrect';
+                input.focus();
+              } else {
+                errorEl.textContent = 'Too many attempts. Try again in ' + secs + 's';
+              }
+            }, 1000);
           } else {
+            errorEl.textContent = 'Incorrect';
             errorEl.style.display = 'block';
           }
         })
         .catch(function() {
+          errorEl.textContent = 'Incorrect';
           errorEl.style.display = 'block';
         });
       });
