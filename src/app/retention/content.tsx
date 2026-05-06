@@ -186,6 +186,11 @@ export default function RetentionPage() {
         type="area"
         height={320}
         showDateFilter={false}
+        referenceLines={[
+          { y: 30, label: "Snapchat 30 min" },
+          { y: 32, label: "Instagram 32 min" },
+          { y: 90, label: "TikTok 90 min" },
+        ]}
       />
 
       {/* ── Sessions + App Opens ── */}
