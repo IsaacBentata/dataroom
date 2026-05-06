@@ -37,7 +37,7 @@ export default function LiveContent() {
             fontSize: 12,
             letterSpacing: "0.06em",
             textTransform: "uppercase",
-            color: "rgba(0,0,0,0.3)",
+            color: "rgba(255,255,255,0.3)",
           }}>
             Loading...
           </span>
