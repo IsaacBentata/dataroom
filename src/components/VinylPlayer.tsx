@@ -17,11 +17,11 @@ const DEFAULT_TRACK: Track = {
 
 // 5×3 grid; `null` = empty "+" slot, Track = playable tile.
 const PICKER_GRID: (Track | null)[] = [
-  { title: "NUEVAYoL", artist: "Bad Bunny", cover: "/player/bad-bunny-debi.png", audio: "/player/bad-bunny-nuevayol.m4a" },
+  { title: "NUEVAYoL", artist: "Bad Bunny", cover: "/player/bad-bunny-debi.jpg", audio: "/player/bad-bunny-nuevayol.m4a" },
   DEFAULT_TRACK,
   null,
   { title: "Dream On", artist: "Aerosmith", cover: "/player/aerosmith.jpeg", audio: "/player/aerosmith-dream-on.m4a" },
-  { title: "Super Shy", artist: "NewJeans", cover: "/player/newjeans-super-shy.png", audio: "/player/newjeans-super-shy.m4a" },
+  { title: "Super Shy", artist: "NewJeans", cover: "/player/newjeans-super-shy.jpg", audio: "/player/newjeans-super-shy.m4a" },
   { title: "Supersonic", artist: "Oasis", cover: "/player/oasis-definitely-maybe.jpeg", audio: "/player/oasis-supersonic.m4a" },
   null,
   { title: "Too Cool To Be Careless", artist: "PAWSA", cover: "/player/pawsa-too-cool.jpeg", audio: "/player/pawsa-too-cool.m4a" },
