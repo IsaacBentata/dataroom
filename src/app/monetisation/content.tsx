@@ -1,13 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
-import DataChart from "@/components/DataChart";
 import StatCallout from "@/components/StatCallout";
 import DownloadAllButton from "@/components/DownloadAllButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { revenueData, parseEngagementExcludingCurrent } from "@/lib/data";
+import { revenueData } from "@/lib/data";
 
 const revenueStreams = [
   {
@@ -75,9 +73,56 @@ const revenueSummary = [
   { stream: "Ticketing", arpu: "$0.06", annual: "$6M", share: "0.3%" },
 ];
 
-export default function MonetisationPage() {
-  const engagement = useMemo(() => parseEngagementExcludingCurrent(), []);
+function PhaseHeader({ label, title }: { label: string; title: string }) {
+  return (
+    <div className="mt-20 mb-8">
+      <p
+        className="text-accent-blue mb-2"
+        style={{
+          fontFamily: "var(--font-fair-favorit-mono), monospace",
+          fontSize: 11,
+          fontWeight: 400,
+          letterSpacing: "0.06em",
+          textTransform: "uppercase",
+        }}
+      >
+        {label}
+      </p>
+      <h2
+        className="text-3xl md:text-5xl font-bold text-foreground"
+        style={{ fontFamily: "var(--font-fair-favorit-heading)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
+      >
+        {title}
+      </h2>
+    </div>
+  );
+}
 
+function MetricRow({
+  label,
+  value,
+  benchmark,
+  benchmarkLabel,
+  color,
+}: {
+  label: string;
+  value: string;
+  benchmark: string;
+  benchmarkLabel: string;
+  color: string;
+}) {
+  return (
+    <div>
+      <div className="text-xs text-muted-foreground mb-1" style={{ fontFamily: "var(--font-fair-favorit-mono), monospace", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+        {label}
+      </div>
+      <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">{value}</div>
+      <div className={`text-xs ${color}`}>{benchmark} {benchmarkLabel}</div>
+    </div>
+  );
+}
+
+export default function MonetisationPage() {
   return (
     <Section>
       <div className="flex items-start justify-between gap-4 mb-12">
@@ -88,136 +133,140 @@ export default function MonetisationPage() {
         <DownloadAllButton
           datasets={[
             { name: "Revenue by Month", data: revenueData },
-            { name: "Engagement per User", data: engagement },
           ]}
           filename="equals-monetisation-data"
         />
       </div>
 
-      {/* ── A/B Test Section ── */}
-      <div className="space-y-4 text-muted-foreground text-sm leading-relaxed mb-10">
-        <Card className="bg-card">
-          <CardHeader>
-            <CardTitle>We proved monetisation</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="mb-3">
-              Between October 2025 and January 2026, Equals ran an extended A/B test on subscription
-              monetisation. At peak, the platform generated $46K in a single month on just
-              90K MAU - an effective ARPU of $0.51/month per MAU, or $6.12 annualised.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
-              <StatCallout value="$46K" label="Peak monthly revenue" color="text-accent-green" />
-              <StatCallout value="90K" label="MAUs at peak" />
-              <StatCallout value="$0.51" label="Monthly ARPU" color="text-accent-purple" />
-              <StatCallout value="4.5-5%" label="Paywall conversion" color="text-accent-blue" />
-            </div>
-          </CardContent>
-        </Card>
+      {/* ═══ EQUALS YESTERDAY ═══ */}
+      <PhaseHeader label="Equals Yesterday" title="We proved we can monetise — at world-class levels" />
 
-        <Card className="bg-card border-accent-green/30">
-          <CardHeader>
-            <CardTitle>Subscription revenue at today's scale</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="mb-4">
-              Applying the proven $0.51/month ARPU to today's 530K MAU base gives ~$270K/month, a
-              $3.2M annual run rate from subscriptions alone. This excludes commerce, label services, and
-              ticketing revenue. The annualised proven ARPU of $6.12 is the basis for our subscription
-              line in the long-term revenue forecast. Demonstrated unit economics, not assumptions.
-            </p>
-            <div className="grid grid-cols-3 gap-4 my-4">
-              <StatCallout value="$270K" label="Projected monthly revenue" color="text-accent-green" />
-              <StatCallout value="$3.2M" label="Projected ARR" color="text-accent-blue" />
-              <StatCallout value="$6.12" label="Proven annualised ARPU" color="text-accent-purple" />
-            </div>
-            <p className="text-xs">
-              This projection is conservative: it assumes no improvement in conversion
-              or pricing despite better product-market fit today, and does not account for
-              retained revenue compounding from prior months. November was the first month with full
-              monetisation. Earlier months had limited paid features, so there was no subscriber base
-              carrying over. A mature subscription base with retained cohorts would produce materially
-              higher numbers.
-            </p>
-          </CardContent>
-        </Card>
-
-        <h3 className="text-lg font-semibold text-foreground">Why we chose growth over revenue</h3>
-        <p>
-          Starting at the end of December 2025, we gradually rolled back paid features
-          where they were hurting network effects. Users hitting paywalls early
-          were less likely to add friends, join chatrooms, and use the core social loops
-          that drive retention and virality. We identified which paid
-          gates were suppressing these behaviours and removed them one by one.
-        </p>
-        <p>
-          The impact was clear. Removing friction from the core experience improved growth,
-          engagement, and retention. The decision to prioritise network effects
-          over near-term revenue is validated by 9x MAU growth since. Revenue can be switched
-          back on at any time. The audience cannot be rebuilt. We plan to turn on full monetisation at
-          ~50M MAU, when network effects are strong enough that paid features add to
-          rather than suppress the social experience.
-        </p>
-      </div>
-
-      {/* ── Revenue Chart ── */}
-      <DataChart
-        data={revenueData}
-        series={[
-          { key: "revenue", name: "Monthly Revenue ($)", color: "rgba(0, 204, 120, 1)" },
-        ]}
-        xKey="month"
-        title="Revenue by Month"
-        subtitle="Revenue peaked at $54K/mo before gradual roll-down from end of December to prioritise growth"
-        type="bar"
-        height={320}
-        yAxisFormatter={(v: number) => `$${(v / 1000).toFixed(0)}K`}
-        tooltipFormatter={(v: number) => `$${v.toLocaleString()}`}
-      />
-
-      {/* ── Engagement Chart ── */}
-      <Card className="bg-card mt-10">
+      <Card className="bg-card mb-6">
         <CardHeader>
-          <CardTitle className="text-base">Engagement spike after pulling back monetisation</CardTitle>
+          <CardTitle>The monetisation experiment</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-xs mb-4">
-            Average engagement per user increased as paid features were rolled back from end of December 2025.
-            Removing friction from the core experience drove deeper product usage.
+          <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+            Between October 2025 and January 2026, Equals ran an extended A/B test on subscription
+            monetisation. At peak, the platform generated $46K in a single month on just 90K MAU - an
+            effective ARPU of $0.51/month per MAU, or $6.12 annualised. Across every benchmark that
+            matters - paid conversion, refunds, ad eCPMs, and ROAS - we landed materially above industry
+            standards.
           </p>
-          <DataChart
-            data={engagement}
-            series={[
-              { key: "Avg Actions", name: "Avg Actions per User", color: "#FF4D00" },
-            ]}
-            xKey="month"
-            title="Engagement per User"
-            subtitle="Average engagement actions per user per month (excluding current month)"
-            type="bar"
-            height={260}
-            showDateFilter={false}
-            className="border-0 px-0 pt-6 pb-2 shadow-none ring-0"
-          />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
+            <StatCallout value="$46K" label="Peak monthly revenue" color="text-accent-green" />
+            <StatCallout value="90K" label="MAUs at peak" />
+            <StatCallout value="$0.51" label="Monthly ARPU" color="text-accent-purple" />
+            <StatCallout value="0.70" label="D0 ROAS (positive)" color="text-accent-blue" />
+          </div>
         </CardContent>
       </Card>
 
-      {/* ── Future Revenue Vision ── */}
-      <div className="mt-16">
-        <h2
-          className="text-3xl md:text-5xl font-bold text-foreground mb-3"
-          style={{ fontFamily: "var(--font-fair-favorit-heading)", letterSpacing: "-0.03em", lineHeight: 1.05 }}
-        >
-          By 2030, Equals will have 100M Monthly Active Users and $2.0B Annual Revenue
-        </h2>
-        <p className="text-muted-foreground text-sm leading-relaxed mb-2">
-          Six diversified revenue streams - weighted toward advertising, supplemented by subscriptions,
-          commerce, and B2B label services. Each stream is benchmarked against public comps.
+      <Card className="bg-card mb-6">
+        <CardHeader>
+          <CardTitle>Subscription Metrics</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <MetricRow
+              label="Paid Conversion Rate"
+              value="4.5%"
+              benchmark="198% above"
+              benchmarkLabel="Benchmark (1.51%)"
+              color="text-accent-green"
+            />
+            <MetricRow
+              label="Refund Rate"
+              value="0.97%"
+              benchmark="70% below"
+              benchmarkLabel="Benchmark (3.16%)"
+              color="text-accent-green"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-card mb-6">
+        <CardHeader>
+          <CardTitle>Ads Metrics</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <MetricRow
+              label="Rewarded eCPM"
+              value="$51"
+              benchmark="132% above"
+              benchmarkLabel="Benchmark ($22)"
+              color="text-accent-green"
+            />
+            <MetricRow
+              label="Interstitial eCPM"
+              value="$27"
+              benchmark="93% above"
+              benchmarkLabel="Benchmark ($14)"
+              color="text-accent-green"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="space-y-4 text-muted-foreground text-sm leading-relaxed">
+        <h3 className="text-lg font-semibold text-foreground">Why we chose growth over revenue</h3>
+        <p>
+          Starting at the end of December 2025, we gradually rolled back paid features where they were
+          hurting network effects. Users hitting paywalls early were less likely to add friends, join
+          chatrooms, and use the core social loops that drive retention and virality. We identified
+          which paid gates were suppressing these behaviours and removed them one by one.
         </p>
-        <div className="grid grid-cols-3 gap-4 my-6">
-          <StatCallout value="100M" label="Monthly Active Users" color="text-accent-green" />
-          <StatCallout value="$2.0B" label="Annual Revenue" color="text-accent-blue" />
-          <StatCallout value="$19.56" label="Blended ARPU" color="text-accent-purple" />
-        </div>
+        <p>
+          The impact was clear. Removing friction from the core experience improved growth, engagement,
+          and retention. The decision to prioritise network effects over near-term revenue is validated
+          by 9x MAU growth since. Revenue can be switched back on at any time. The audience cannot be
+          rebuilt. We plan to turn on full monetisation at ~50M MAU, when network effects are strong
+          enough that paid features add to rather than suppress the social experience.
+        </p>
+      </div>
+
+      {/* ═══ EQUALS TODAY ═══ */}
+      <PhaseHeader label="Equals Today" title="What revenue would look like if we turned it back on" />
+
+      <Card className="bg-card border-accent-green/30 mb-6">
+        <CardHeader>
+          <CardTitle>Subscription revenue at today's scale</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+            Applying the proven $0.51/month ARPU to today's 530K MAU base gives ~$270K/month, a $3.2M
+            annual run rate from subscriptions alone. This excludes commerce, label services, and
+            ticketing revenue. The annualised proven ARPU of $6.12 is the basis for our subscription
+            line in the long-term revenue forecast. Demonstrated unit economics, not assumptions.
+          </p>
+          <div className="grid grid-cols-3 gap-4 my-4">
+            <StatCallout value="$270K" label="Projected monthly revenue" color="text-accent-green" />
+            <StatCallout value="$3.2M" label="Projected ARR" color="text-accent-blue" />
+            <StatCallout value="$6.12" label="Proven annualised ARPU" color="text-accent-purple" />
+          </div>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            This projection is conservative: it assumes no improvement in conversion or pricing despite
+            better product-market fit today, and does not account for retained revenue compounding from
+            prior months. November was the first month with full monetisation. Earlier months had
+            limited paid features, so there was no subscriber base carrying over. A mature subscription
+            base with retained cohorts would produce materially higher numbers.
+          </p>
+        </CardContent>
+      </Card>
+
+      {/* ═══ EQUALS TOMORROW ═══ */}
+      <PhaseHeader label="Equals Tomorrow" title="By 2030: 100M MAU and $2.0B Annual Revenue" />
+
+      <p className="text-muted-foreground text-sm leading-relaxed mb-2">
+        Six diversified revenue streams - weighted toward advertising, supplemented by subscriptions,
+        commerce, and B2B label services. Each stream is benchmarked against public comps.
+      </p>
+      <div className="grid grid-cols-3 gap-4 my-6">
+        <StatCallout value="100M" label="Monthly Active Users" color="text-accent-green" />
+        <StatCallout value="$2.0B" label="Annual Revenue" color="text-accent-blue" />
+        <StatCallout value="$19.56" label="Blended ARPU" color="text-accent-purple" />
       </div>
 
       {/* ── Revenue Stream Cards ── */}

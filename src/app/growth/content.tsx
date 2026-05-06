@@ -12,7 +12,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import {
   parseMAUData,
   parseMAUDataExcludingCurrent,
-  parseDAUData,
 } from "@/lib/data";
 
 // Monthly average eCPI from AppsFlyer (USD, converted from GBP at 1.35).
@@ -61,7 +60,6 @@ const renderInstallLabel = (props: any) => {
 export default function GrowthPage() {
   const mauData = useMemo(() => parseMAUData(), []);
   const mauDataFiltered = useMemo(() => parseMAUDataExcludingCurrent(), []);
-  const dauData = useMemo(() => parseDAUData(), []);
 
   return (
     <Section>
@@ -74,8 +72,6 @@ export default function GrowthPage() {
         <DownloadAllButton
           datasets={[
             { name: "MAU and Install Growth", data: mauData },
-            { name: "DAU Rolling Average", data: dauData },
-
             { name: "Monthly Avg eCPI", data: ecpiMonthly },
             { name: "Monthly Avg CPM", data: cpmMonthly },
             { name: "Install Split (Apr 2026)", data: installSplit },
@@ -98,24 +94,11 @@ export default function GrowthPage() {
         hero
       />
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-10">
         <StatCallout value="532K" label="MAUs (Apr 2026)" />
         <StatCallout value="385K" label="Installs (Apr 2026)" />
         <StatCallout value="8.7x" label="Growth since Nov 2025 start" color="text-accent-purple" />
-        <StatCallout value="70K" label="DAU (Rolling Avg)" color="text-accent-blue" />
       </div>
-
-      <DataChart
-        data={dauData}
-        series={[
-          { key: "DAU", name: "DAU (30-day rolling avg)", color: "#8627FF" },
-        ]}
-        xKey="date"
-        title="Daily Active Users - Rolling Average"
-        subtitle="30-day rolling average of Daily Active Users"
-        type="area"
-        height={320}
-      />
 
       <Card className="bg-card mt-16">
         <CardHeader>
