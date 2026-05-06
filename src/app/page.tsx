@@ -136,9 +136,22 @@ export default function Home() {
   useEffect(() => {
     if (previewIndex !== null) return;
     const max = items.length - 1;
-    const advanceBy = (delta: number) => {
+    // Coalesce wheel-driven step changes into one setState per frame so a
+    // burst of fine-grained wheel events doesn't restart the CSS transition
+    // on every increment (which is what was making fast scroll feel laggy).
+    let pendingDelta = 0;
+    let rafId = 0;
+    const flush = () => {
+      rafId = 0;
+      const delta = pendingDelta;
+      pendingDelta = 0;
       if (!delta) return;
       setIndex((i) => Math.max(0, Math.min(max, i + delta)));
+    };
+    const advanceBy = (delta: number) => {
+      if (!delta) return;
+      pendingDelta += delta;
+      if (!rafId) rafId = requestAnimationFrame(flush);
     };
 
     const WHEEL_STEP = 40;
@@ -189,6 +202,7 @@ export default function Home() {
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, [previewIndex]);
 
@@ -281,8 +295,9 @@ export default function Home() {
           <ul
             className="flex flex-col items-start"
             style={{
-              transform: `translateY(${offset}px)`,
-              transition: "transform 180ms cubic-bezier(0.22, 1, 0.36, 1)",
+              transform: `translate3d(0, ${offset}px, 0)`,
+              transition: "transform 140ms cubic-bezier(0.22, 1, 0.36, 1)",
+              willChange: "transform",
             }}
           >
             {items.map((it, i) => {
