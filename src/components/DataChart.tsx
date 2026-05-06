@@ -48,6 +48,7 @@ interface ReferenceLineConfig {
   y: number;
   label?: string;
   color?: string;
+  icon?: string;
 }
 
 interface DataChartProps {
@@ -217,28 +218,54 @@ export default function DataChart({
       <ChartLegend content={<ChartLegendContent />} />
     ) : null;
 
-    const refLines = referenceLines?.map((r, i) => (
-      <ReferenceLine
-        key={`ref-${i}`}
-        y={r.y}
-        stroke={r.color ?? "#FF4D00"}
-        strokeDasharray="4 4"
-        strokeWidth={1.5}
-        ifOverflow="extendDomain"
-        label={
-          r.label
-            ? {
-                value: r.label,
-                position: "insideTopRight",
-                fill: r.color ?? "#FF4D00",
-                fontSize: 11,
-                fontWeight: 500,
-                offset: 2,
-              }
-            : undefined
-        }
-      />
-    ));
+    const refLines = referenceLines?.map((r, i) => {
+      const lineColor = r.color ?? "#FF4D00";
+      const customLabel = r.icon
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ? (props: any) => {
+            const vb = props?.viewBox ?? {};
+            const x = (vb.x ?? 0) + (vb.width ?? 0) - 8;
+            const y = (vb.y ?? 0) + 4;
+            const iconSize = 16;
+            return (
+              <g>
+                <image
+                  href={r.icon}
+                  x={x - iconSize}
+                  y={y}
+                  width={iconSize}
+                  height={iconSize}
+                />
+              </g>
+            );
+          }
+        : undefined;
+
+      return (
+        <ReferenceLine
+          key={`ref-${i}`}
+          y={r.y}
+          stroke={lineColor}
+          strokeDasharray="4 4"
+          strokeWidth={1.5}
+          ifOverflow="extendDomain"
+          label={
+            customLabel
+              ? customLabel
+              : r.label
+                ? {
+                    value: r.label,
+                    position: "insideTopRight",
+                    fill: lineColor,
+                    fontSize: 11,
+                    fontWeight: 500,
+                    offset: 2,
+                  }
+                : undefined
+          }
+        />
+      );
+    });
 
     if (type === "area") {
       return (

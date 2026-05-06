@@ -186,15 +186,6 @@ export default function RetentionPage() {
         type="area"
         height={320}
         showDateFilter={false}
-        referenceLines={[
-          { y: 30, label: "Snapchat 30 min" },
-          { y: 32, label: "Instagram 32 min" },
-        ]}
-        headerChildren={
-          <div style={{ color: "#FF4D00", fontSize: 11, fontWeight: 500, textAlign: "right", marginRight: 12 }}>
-            TikTok 90 min
-          </div>
-        }
       />
 
       {/* ── Sessions + App Opens ── */}
