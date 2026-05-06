@@ -40,7 +40,7 @@ const pitchSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Equals - Series A Data Room",
+  title: "=DATA",
   description: "Equals Series A investor data room. The music social network uniting the world through music.",
 };
 

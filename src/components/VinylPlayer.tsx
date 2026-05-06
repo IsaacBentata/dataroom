@@ -6,11 +6,32 @@ import { createPortal } from "react-dom";
 const PLAYER_W = 393;
 const PLAYER_H = 60;
 
-// 5×3 grid; `null` = empty "+" slot, string = placeholder color.
-const PICKER_GRID: (string | null)[] = [
-  "#1a1a1a", null,      "#7a3b2e", "#c8a96a", "#3a4d2c",
-  "#1f3a2a", null,      "#2b2b2b", "#8a8f96", null,
-  null,      "#9b1c20", "#a4d83a", "#c98aa6", null,
+type Track = { title: string; artist: string; cover: string; audio: string };
+
+const DEFAULT_TRACK: Track = {
+  title: "One More Time",
+  artist: "Daft Punk",
+  cover: "/player/discovery.jpg",
+  audio: "/player/one-more-time.m4a",
+};
+
+// 5×3 grid; `null` = empty "+" slot, Track = playable tile.
+const PICKER_GRID: (Track | null)[] = [
+  null,
+  DEFAULT_TRACK,
+  null,
+  { title: "Dream On", artist: "Aerosmith", cover: "/player/aerosmith.jpeg", audio: "/player/aerosmith-dream-on.m4a" },
+  null,
+  { title: "Supersonic", artist: "Oasis", cover: "/player/oasis-definitely-maybe.jpeg", audio: "/player/oasis-supersonic.m4a" },
+  null,
+  null,
+  { title: "360", artist: "Charli XCX", cover: "/player/charli-xcx-brat.png", audio: "/player/charli-xcx-360.m4a" },
+  null,
+  { title: "Rottweiler", artist: "EsDeeKid", cover: "/player/rottweiler.jpeg", audio: "/player/rottweiler.m4a" },
+  null,
+  { title: "Rock That Body", artist: "The Black Eyed Peas", cover: "/player/bep-the-end.jpg", audio: "/player/bep-rock-that-body.m4a" },
+  null,
+  null,
 ];
 
 export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBottomCenter?: boolean } = {}) {
@@ -19,6 +40,17 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   const [dragging, setDragging] = useState(false);
   const [snapping, setSnapping] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [track, setTrack] = useState<Track>(DEFAULT_TRACK);
+
+  const pickTrack = (t: Track) => {
+    setTrack(t);
+    setPickerOpen(false);
+    requestAnimationFrame(() => {
+      const a = audioRef.current;
+      if (!a) return;
+      a.play().catch(() => setPlaying(false));
+    });
+  };
   const dragOffset = useRef<{ dx: number; dy: number } | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const pickerRef = useRef<HTMLDivElement | null>(null);
@@ -156,7 +188,8 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
       >
         <audio
           ref={audioRef}
-          src="/player/one-more-time.m4a"
+          key={track.audio}
+          src={track.audio}
           preload="metadata"
           loop
           onPlay={() => setPlaying(true)}
@@ -166,7 +199,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
           <AlbumPicker
             pickerRef={pickerRef}
             anchorRef={pillRef}
-            onPick={() => setPickerOpen(false)}
+            onPick={pickTrack}
           />
         )}
         <div
@@ -201,8 +234,8 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
               style={{ background: "transparent", border: "none" }}
             >
               <img
-                src="/player/discovery.jpg"
-                alt="Daft Punk — Discovery"
+                src={track.cover}
+                alt={`${track.artist} — ${track.title}`}
                 width={44}
                 height={44}
                 draggable={false}
@@ -220,9 +253,9 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
                 letterSpacing: "0.24px",
               }}
             >
-              <p className="text-black truncate">One More Time</p>
+              <p className="text-black truncate">{track.title}</p>
               <p className="truncate" style={{ color: "rgba(0,0,0,0.4)" }}>
-                Daft Punk
+                {track.artist}
               </p>
             </div>
           </div>
@@ -267,7 +300,8 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
     >
       <audio
         ref={audioRef}
-        src="/player/one-more-time.m4a"
+        key={track.audio}
+        src={track.audio}
         preload="metadata"
         loop
         onPlay={() => setPlaying(true)}
@@ -277,7 +311,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
         <AlbumPicker
           pickerRef={pickerRef}
           anchorRef={pillRef}
-          onPick={() => setPickerOpen(false)}
+          onPick={pickTrack}
         />
       )}
       <div
@@ -311,7 +345,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
             </svg>
           </div>
 
-          {/* Album cover — Daft Punk, Discovery */}
+          {/* Album cover */}
           <button
             ref={albumBtnRef}
             type="button"
@@ -323,8 +357,8 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
             style={{ background: "transparent", border: "none" }}
           >
             <img
-              src="/player/discovery.jpg"
-              alt="Daft Punk — Discovery"
+              src={track.cover}
+              alt={`${track.artist} — ${track.title}`}
               width={44}
               height={44}
               draggable={false}
@@ -348,9 +382,9 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
               letterSpacing: "0.24px",
             }}
           >
-            <p className="text-black truncate">One More Time</p>
+            <p className="text-black truncate">{track.title}</p>
             <p className="truncate" style={{ color: "rgba(0,0,0,0.4)" }}>
-              Daft Punk
+              {track.artist}
             </p>
           </div>
         </div>
@@ -388,7 +422,7 @@ function AlbumPicker({
 }: {
   pickerRef: React.RefObject<HTMLDivElement | null>;
   anchorRef: React.RefObject<HTMLDivElement | null>;
-  onPick: () => void;
+  onPick: (track: Track) => void;
 }) {
   const TILE = 42;
   const GAP = 3;
@@ -449,32 +483,32 @@ function AlbumPicker({
           gap: GAP,
         }}
       >
-        {PICKER_GRID.map((color, i) => {
+        {PICKER_GRID.map((entry, i) => {
           const row = Math.floor(i / COLS);
           const col = i % COLS;
           const delayMs = (row + col) * 18;
-          const isEmpty = color === null;
+          const isEmpty = entry === null;
           // Figma: 17.82 / 118.8 = 0.15 of tile size
           const iconSize = Math.round(TILE * 0.15);
           return (
             <button
               key={i}
               type="button"
-              onClick={onPick}
-              aria-label={isEmpty ? "Add album" : "Album option"}
+              onClick={() => { if (entry) onPick(entry); }}
+              aria-label={isEmpty ? "Add album" : `${entry!.artist} — ${entry!.title}`}
               className="relative cursor-pointer p-0 overflow-hidden"
               style={{
                 width: TILE,
                 height: TILE,
                 border: "none",
                 borderRadius: 0,
-                background: isEmpty ? "rgba(223,223,223,0.2)" : color ?? undefined,
+                background: isEmpty ? "rgba(223,223,223,0.2)" : "#000",
                 backdropFilter: isEmpty ? "blur(16.971px)" : undefined,
                 WebkitBackdropFilter: isEmpty ? "blur(16.971px)" : undefined,
                 animation: `album-tile-in 260ms cubic-bezier(0.34, 1.56, 0.64, 1) ${delayMs}ms both`,
               }}
             >
-              {isEmpty && (
+              {isEmpty ? (
                 <svg
                   width={iconSize}
                   height={iconSize}
@@ -494,6 +528,14 @@ function AlbumPicker({
                     strokeLinecap="round"
                   />
                 </svg>
+              ) : (
+                <img
+                  src={entry.cover}
+                  alt=""
+                  draggable={false}
+                  className="block object-cover"
+                  style={{ width: TILE, height: TILE }}
+                />
               )}
             </button>
           );

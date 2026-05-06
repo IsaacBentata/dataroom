@@ -39,8 +39,8 @@ export default function RetentionPage() {
       <div className="flex items-start justify-between gap-4 mb-12">
         <PageHeader
           label="Retention & Engagement"
-          title="Friends drive retention. Retention drives everything."
-          subtitle="Users who add friends retain dramatically better. The social graph creates compounding value."
+          title="World-class retention, stickiness, and engagement"
+          subtitle="The metrics of a mature consumer-social product, in under 1.5 years of iteration."
         />
         <DownloadAllButton
           datasets={[
@@ -61,7 +61,7 @@ export default function RetentionPage() {
       {/* ── Long-term stickiness (weekly retention evolution) - FIRST ── */}
       <Card className="bg-card mb-6">
         <CardHeader>
-          <CardTitle>Long-term stickiness</CardTitle>
+          <CardTitle>Every cohort retains better than the last</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
@@ -77,7 +77,7 @@ export default function RetentionPage() {
               { key: "Week 4", name: "Week 4 Retention", color: "#8627FF" },
             ]}
             xKey="week"
-            title="Weekly Retention Evolution"
+            title="Retention improving every week"
             subtitle="How weekly retention has improved over time for onboarded users"
             type="line"
             height={320}
@@ -181,7 +181,7 @@ export default function RetentionPage() {
           { key: "Minutes / User", name: "Minutes per User per Day", color: "rgba(0, 204, 120, 1)" },
         ]}
         xKey="date"
-        title="Time Spent per User"
+        title="35 minutes a day, beating Instagram and Snapchat"
         subtitle="30-day rolling avg of daily session time per onboarded user (minutes)"
         type="area"
         height={320}
@@ -227,7 +227,7 @@ export default function RetentionPage() {
           { key: "50+ Friends", name: "50+ Friends", color: "#8627FF" },
         ]}
         xKey="days"
-        title="Power Curve / Stickiness"
+        title="The retention smile: a daily habit forming"
         subtitle="% of users active on exactly N days per week. Uptick at 7 days is a retention smile: a cohort of power users returning daily."
         type="bar"
         height={280}
