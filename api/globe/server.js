@@ -197,5 +197,5 @@ const server = http.createServer((req, res) => {
 // ── Start ───────────────────────────────────────────────────────────
 
 pullAndStore();
-cron.schedule("5 * * * *", pullAndStore);
+cron.schedule("5,35 * * * *", pullAndStore);
 server.listen(PORT, () => console.log(`Globe API on port ${PORT}`));
