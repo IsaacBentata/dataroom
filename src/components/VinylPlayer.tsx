@@ -49,9 +49,10 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   const [pickerOpen, setPickerOpen] = useState(false);
   const [track, setTrack] = useState<Track>(DEFAULT_TRACK);
 
-  // First-load: keep Daft Punk. Every refresh after that: rotate to a random
-  // other track in the picker. Stored in localStorage so it persists across
-  // sessions but is purely client-side (no backend round-trip).
+  // First-load: keep Daft Punk and try to autoplay. Every refresh after that:
+  // rotate to a random other track (no autoplay — only the very first session
+  // gets the auto-start treat). Stored in localStorage so it persists across
+  // sessions, purely client-side.
   useEffect(() => {
     if (typeof window === "undefined") return;
     let count = 0;
@@ -61,7 +62,16 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
     try {
       window.localStorage.setItem(VISIT_KEY, String(count + 1));
     } catch {}
-    if (count > 0 && ROTATION_TRACKS.length > 0) {
+    if (count === 0) {
+      // First-ever visit: kick off autoplay. Browsers may still block this
+      // if the user hasn't interacted with the page yet — in that case the
+      // .catch silently leaves the player paused (no console error).
+      requestAnimationFrame(() => {
+        const a = audioRef.current;
+        if (!a) return;
+        a.play().catch(() => {});
+      });
+    } else if (ROTATION_TRACKS.length > 0) {
       const next = ROTATION_TRACKS[Math.floor(Math.random() * ROTATION_TRACKS.length)];
       setTrack(next);
     }
