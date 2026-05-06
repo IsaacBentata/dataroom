@@ -321,8 +321,8 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        "three": "./vendor/three.module.js",
+        "three/addons/": "./vendor/addons/"
       }
     }
   </script>
@@ -538,8 +538,7 @@
     }
 
     const EARTH_URLS = [
-      'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg',
-      'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg',
+      './textures/earth-blue-marble.jpg',
     ];
     (function loadEarth(i = 0) {
       if (i >= EARTH_URLS.length) return;
@@ -559,7 +558,7 @@
     })();
     // specular map → only oceans reflect, land stays matte
     loader.load(
-      'https://threejs.org/examples/textures/planets/earth_specular_2048.jpg',
+      './textures/earth-specular.jpg',
       (tex) => { earthMat.specularMap = tex; earthMat.needsUpdate = true; }
     );
 
