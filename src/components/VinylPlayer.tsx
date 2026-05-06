@@ -51,6 +51,25 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
       a.play().catch(() => setPlaying(false));
     });
   };
+
+  // Warm picker cover images at idle so the grid doesn't flash on first open.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const ric = (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
+      .requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1));
+    const id = ric(() => {
+      for (const entry of PICKER_GRID) {
+        if (!entry || entry.cover === DEFAULT_TRACK.cover) continue;
+        const img = new Image();
+        img.src = entry.cover;
+      }
+    });
+    return () => {
+      const cic = (window as unknown as { cancelIdleCallback?: (id: number) => void })
+        .cancelIdleCallback ?? ((id: number) => window.clearTimeout(id));
+      cic(id);
+    };
+  }, []);
   const dragOffset = useRef<{ dx: number; dy: number } | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const pickerRef = useRef<HTMLDivElement | null>(null);
