@@ -229,11 +229,11 @@ export default function DataChart({
           r.label
             ? {
                 value: r.label,
-                position: "right",
+                position: "insideTopRight",
                 fill: r.color ?? "#FF4D00",
                 fontSize: 11,
                 fontWeight: 500,
-                dy: -8,
+                offset: 2,
               }
             : undefined
         }
