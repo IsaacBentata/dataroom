@@ -270,13 +270,13 @@ export default function GrowthPage() {
 
       <Card className="bg-card mt-16">
         <CardHeader>
-          <CardTitle>Identity Verification</CardTitle>
+          <CardTitle>Verified Humans Only</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-start gap-8">
             <div className="shrink-0">
-              <div className="text-4xl font-bold text-accent-green">52%</div>
-              <div className="text-xs text-black mt-1">Verification rate</div>
+              <div className="text-4xl font-bold text-accent-green">47%</div>
+              <div className="text-xs text-black mt-1">Onboarding rate</div>
               <div
                 className="stat-delta-green font-bold flex items-center gap-1 whitespace-nowrap mt-1"
                 style={{ fontSize: 11, color: "#00CC78" }}
@@ -288,10 +288,13 @@ export default function GrowthPage() {
               </div>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed flex-1">
-              Equals is a human-only social network. Every user must complete identity verification to participate
-              and unlock all social features on the platform. The verification rate has improved from 20% in late 2025
-              to 52% today as the onboarding flow has been refined - meaning more than half of all users who start
-              onboarding now fully complete it. Verification is non-negotiable - it is what keeps Equals a network of real humans.
+              Equals deliberately holds users to a high bar. To send a single message on the platform, you must
+              show your real face and prove that face is yours through a live identity check. No anonymous accounts,
+              no bots, no burner profiles. We could double our top-of-funnel growth tomorrow
+              by softening this gate, but verification is the moat: it is what makes Equals a network of real
+              humans, and it is why every conversation here is between two verified people. The 47% onboarding
+              rate reflects users who have cleared that bar - up from 20% last quarter as the onboarding flow has
+              been refined.
             </p>
           </div>
         </CardContent>

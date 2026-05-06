@@ -50,6 +50,48 @@ export default function LegalPage() {
         </CardContent>
       </Card>
 
+      {/* SAFE Holders */}
+      <Card className="bg-card mb-6">
+        <CardHeader>
+          <CardTitle>SAFE Holders</CardTitle>
+          <CardDescription>
+            Our last round was a SAFE round in November 2024 at a $45M valuation cap. All SAFEs above are
+            non-converted and will convert at the next priced round.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-muted-foreground">Investor</TableHead>
+                <TableHead className="text-right text-muted-foreground">Amount</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {safeHolders.map((h, i) => (
+                <TableRow key={i}>
+                  <TableCell className="align-top whitespace-normal">
+                    <div className="whitespace-normal">{h.investor}</div>
+                    {h.description && (
+                      <div className="text-muted-foreground text-xs mt-1 leading-relaxed font-normal whitespace-normal break-words">
+                        {h.description}
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-right font-mono align-top whitespace-nowrap">{h.amount}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow className="font-semibold">
+                <TableCell>Total SAFE Investment</TableCell>
+                <TableCell className="text-right font-mono text-accent-green">$3,656,090</TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </CardContent>
+      </Card>
+
       {/* Cap Table */}
       <Card className="bg-card mb-6">
         <CardHeader>
@@ -90,40 +132,6 @@ export default function LegalPage() {
                 <TableCell className="text-right font-mono">{capTableTotals.employeeOptionScheme}</TableCell>
                 <TableCell className="text-right font-mono">-</TableCell>
                 <TableCell className="text-right font-mono">-</TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </CardContent>
-      </Card>
-
-      {/* SAFE Holders */}
-      <Card className="bg-card mb-6">
-        <CardHeader>
-          <CardTitle>SAFE Holders</CardTitle>
-          <CardDescription>
-            All SAFEs are non-converted at a $45M valuation cap. They will convert at the next priced round.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-muted-foreground">Investor</TableHead>
-                <TableHead className="text-right text-muted-foreground">Amount</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {safeHolders.map((h, i) => (
-                <TableRow key={i}>
-                  <TableCell>{h.investor}</TableCell>
-                  <TableCell className="text-right font-mono">{h.amount}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow className="font-semibold">
-                <TableCell>Total SAFE Investment</TableCell>
-                <TableCell className="text-right font-mono text-accent-green">$3,656,090</TableCell>
               </TableRow>
             </TableFooter>
           </Table>

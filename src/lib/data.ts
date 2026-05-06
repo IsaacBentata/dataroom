@@ -280,15 +280,15 @@ export const teamMembers = [
     handle: "=isaac",
     role: "Co-Founder & CEO",
     bg: "Ex Instagram/Meta | MSc Machine Learning, UCL | Forbes 30u30",
-    detail: "Built the entire AI stack in-house, cutting per-user inference costs from $0.27 to $0.01. 90%+ of production code written by AI agents.",
+    detail: "First Data Scientist for Instagram LDN. Published AI researcher cited by Nobel laureate Demis Hassabis.",
     bio: [
-      "Published AI researcher. Forbes 30 Under 30.",
-      "MSc Machine Learning and BSc Mathematics from UCL.",
       "Data Scientist at Facebook, then the first Data Scientist in Instagram's London office.",
+      "Published AI researcher, cited by Nobel laureate Demis Hassabis. MSc Machine Learning and BSc Mathematics from UCL.",
       "Co-founded Fair.xyz, which grew into Europe's largest NFT minting platform - processing $45M in NFT sales volume.",
-      "At Equals: co-leads product development, spearheads marketing through a fully agentic acquisition workforce, and drives product analytics and A/B testing.",
+      "At Equals: co-leads product development, spearheads marketing through a fully agentic acquisition workforce, drives product analytics and A/B testing, and architected the recommendation system.",
       "Built the entire AI stack in-house, slashing per-user inference costs from $0.27 to $0.01 - powering recommendations, safety, and personalization at scale.",
-      "Core contributor to the engineering team and architect of the platform's recommendation system across all dimensions.",
+      "Interned at Boiler Room, working on the world's first VR Nightclub.",
+      "Forbes 30 Under 30. 3rd place, World Mind Sports Olympiad (Perudo).",
     ],
     linkedin: "https://www.linkedin.com/in/isaac-kamlish-a0901088/",
     logo: "/team-logos/IG_logo.png",
@@ -299,16 +299,16 @@ export const teamMembers = [
     handle: "=bento",
     role: "Co-Founder & COO",
     bg: "Ex Goldman Sachs | MSc Machine Learning, UCL | Forbes 30u30",
-    detail: "Closed the UMG worldwide deal. Secured $500K+ in grants. Manages a 10+ agentic workforce in production.",
+    detail: "Ran the most profitable algorithmic credit trading desk in Europe at Goldman Sachs as part of a two-person team.",
     bio: [
-      "Published AI researcher (NLP for chess). Forbes 30 Under 30. Le Rossignol Scholar.",
-      "MSc Machine Learning & Data Science and BEng Chemical Engineering, both from UCL.",
-      "Ran the most profitable algorithmic credit trading desk in Europe at Goldman Sachs, as part of a two-person team.",
       "Co-founded Fair.xyz, which grew into Europe's largest NFT minting platform - processing $45M in NFT sales volume.",
       "At Equals: spearheads licensing negotiations with major labels and publishers (including the UMG worldwide deal).",
       "Runs operations and finance. Secured $500K+ in grants.",
       "Manages a fully agentic workforce across content moderation, platform moderation, and support.",
       "Leads the engineering team and co-leads product development alongside Isaac Kamlish.",
+      "Ran the most profitable algorithmic credit trading desk in Europe at Goldman Sachs, as part of a two-person team.",
+      "MSc Machine Learning & Data Science and BEng Chemical Engineering, both from UCL.",
+      "Forbes 30 Under 30. Le Rossignol Scholar. Published AI researcher (NLP for chess).",
     ],
     linkedin: "https://www.linkedin.com/in/isaacbc/",
     logo: "/team-logos/goldman_logo.png",
@@ -319,7 +319,7 @@ export const teamMembers = [
     handle: "=nacoki",
     role: "Head of Product Design",
     bg: "Ex Apple | Ex Nike | Ex AKQA | Ex Wieden+Kennedy",
-    detail: "Product designer and 0-to-1 builder across London, Portland, Hong Kong, and Shanghai.",
+    detail: "Shaped products for Apple, Nike, AKQA, Wieden+Kennedy, and Net-a-Porter - building at the intersection of culture, design, and technology.",
     bio: [
       "Product designer and 0-to-1 builder with experience across London, Portland, Hong Kong, and Shanghai.",
       "Shaped products for Apple, Nike, AKQA, Wieden+Kennedy, and Net-a-Porter - building at the intersection of culture, design, and technology.",
@@ -427,13 +427,41 @@ export const teamMembers = [
 // ── SAFE Holders ────────────────────────────────────────────────────
 
 export const safeHolders = [
-  { investor: "Glaser Investments LLC", amount: "$2,500,000" },
-  { investor: "JamJar Ventures II LP", amount: "$664,000" },
-  { investor: "Firstminute Capital II LP", amount: "$336,000" },
-  { investor: "Phil Hodari", amount: "$67,580" },
-  { investor: "The Next Act Trust", amount: "$50,000" },
-  { investor: "Gaingels Early Stage Fund I LLC", amount: "$25,000" },
-  { investor: "Joseph Cohen", amount: "$13,510" },
+  {
+    investor: "Glaser Investments LLC",
+    amount: "$2,500,000",
+    description: "Rob Glaser, founder of RealNetworks and the “father of music streaming”. Has only led two rounds previously: Affirm (at $35M post, now $20B+) and CTRL Labs (sold to Meta for $1B+). Equals is his third - we're hoping for third time lucky.",
+  },
+  {
+    investor: "JamJar Ventures II LP",
+    amount: "$664,000",
+    description: "The Innocent Smoothies founders. Built one of the most loved consumer brands in the UK and now back consumer founders doing the same.",
+  },
+  {
+    investor: "Firstminute Capital II LP",
+    amount: "$336,000",
+    description: "Incredibly helpful and relentless believers from day one. Have gone above pro-rata in every round.",
+  },
+  {
+    investor: "JJ Hodari",
+    amount: "$67,580",
+    description: "Musician and entrepreneur. Heavy investor in consumer technology and an extremely well-connected operator across the industry.",
+  },
+  {
+    investor: "The Next Act Trust",
+    amount: "$50,000",
+    description: "Brian Fenty, CEO of TodayTix and a board member of MARI (Ari Emanuel's holding company).",
+  },
+  {
+    investor: "Gaingels Early Stage Fund I LLC",
+    amount: "$25,000",
+    description: "One of the most expansive networks in early-stage venture, with 4,000+ LPs.",
+  },
+  {
+    investor: "Joseph Cohen",
+    amount: "$13,510",
+    description: "Ex-COO of Match Group and former C-suite at Ticketmaster.",
+  },
 ];
 
 // ── Cap Table Data ──────────────────────────────────────────────────
