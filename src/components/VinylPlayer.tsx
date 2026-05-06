@@ -34,11 +34,6 @@ const PICKER_GRID: (Track | null)[] = [
   null,
 ];
 
-// Pool of non-default tracks the player rotates through on each subsequent
-// page load. First-ever visit always shows DEFAULT_TRACK (Daft Punk).
-const ROTATION_TRACKS: Track[] = PICKER_GRID.filter(
-  (t): t is Track => t !== null && t.audio !== DEFAULT_TRACK.audio,
-);
 const VISIT_KEY = "vinyl-visit-count";
 
 export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBottomCenter?: boolean } = {}) {
@@ -49,10 +44,9 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   const [pickerOpen, setPickerOpen] = useState(false);
   const [track, setTrack] = useState<Track>(DEFAULT_TRACK);
 
-  // First-load: keep Daft Punk and try to autoplay. Every refresh after that:
-  // rotate to a random other track (no autoplay — only the very first session
-  // gets the auto-start treat). Stored in localStorage so it persists across
-  // sessions, purely client-side.
+  // Always start with Daft Punk. On the very first visit ever (no localStorage
+  // entry yet), also kick off autoplay — browsers may block it if there's been
+  // no user gesture; the .catch silently leaves it paused if so.
   useEffect(() => {
     if (typeof window === "undefined") return;
     let count = 0;
@@ -63,17 +57,11 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
       window.localStorage.setItem(VISIT_KEY, String(count + 1));
     } catch {}
     if (count === 0) {
-      // First-ever visit: kick off autoplay. Browsers may still block this
-      // if the user hasn't interacted with the page yet — in that case the
-      // .catch silently leaves the player paused (no console error).
       requestAnimationFrame(() => {
         const a = audioRef.current;
         if (!a) return;
         a.play().catch(() => {});
       });
-    } else if (ROTATION_TRACKS.length > 0) {
-      const next = ROTATION_TRACKS[Math.floor(Math.random() * ROTATION_TRACKS.length)];
-      setTrack(next);
     }
   }, []);
 
