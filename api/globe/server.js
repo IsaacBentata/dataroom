@@ -7,7 +7,37 @@ const PORT = process.env.PORT || 8080;
 const AMP_API_KEY = process.env.AMPLITUDE_API_KEY;
 const AMP_SECRET_KEY = process.env.AMPLITUDE_SECRET_KEY;
 const DATA_FILE = path.join(process.cwd(), "data.json");
+const PAIRS_FILE = path.join(process.cwd(), "pairs.json");
+const ARTISTS_DIR = path.join(process.cwd(), "data-artists");
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "";
+
+// ── Pairs data: load once on boot, rewrite artist URLs to point at our proxy. ──
+let PAIRS_CACHE = null;
+function rewriteArtistPath(img) {
+  if (!img) return img;
+  const m = img.match(/(?:^|\/)data-artists\/([^\/]+)$/);
+  return m ? `/api/globe-artist/${m[1]}` : img;
+}
+function loadPairs() {
+  try {
+    const raw = JSON.parse(fs.readFileSync(PAIRS_FILE, "utf-8"));
+    if (!raw || !Array.isArray(raw.pairs)) return;
+    const pairs = raw.pairs.map((p) => {
+      const out = { ...p };
+      if (Array.isArray(p.arts)) {
+        out.arts = p.arts.map((a) => ({ ...a, img: rewriteArtistPath(a.img) }));
+      } else if (p.artist) {
+        out.artist = { ...p.artist, img: rewriteArtistPath(p.artist.img) };
+      }
+      return out;
+    });
+    PAIRS_CACHE = { pairs, generatedAt: Date.now() };
+    console.log(`Loaded ${pairs.length} pairs from pairs.json`);
+  } catch (err) {
+    console.error("Failed to load pairs.json:", err.message);
+  }
+}
+loadPairs();
 
 // ── Amplitude ───────────────────────────────────────────────────────
 
@@ -118,7 +148,62 @@ const server = http.createServer((req, res) => {
     let data;
     try { data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8")); } catch {}
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ status: "ok", hasData: !!data, pulledAt: data?.pulledAt }));
+    res.end(JSON.stringify({
+      status: "ok",
+      hasData: !!data,
+      pulledAt: data?.pulledAt,
+      pairsLoaded: !!PAIRS_CACHE,
+      pairCount: PAIRS_CACHE?.pairs?.length || 0,
+    }));
+    return;
+  }
+
+  // GET /api/globe-pairs?limit=N — Tier-weighted friendship pairs for globe arcs
+  if (req.method === "GET" && req.url.startsWith("/api/globe-pairs")) {
+    if (!PAIRS_CACHE) {
+      res.writeHead(503, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "No pairs data" }));
+      return;
+    }
+    const u = new URL(req.url, "http://x");
+    const limit = Math.max(1, Math.min(500, parseInt(u.searchParams.get("limit") || "0", 10) || PAIRS_CACHE.pairs.length));
+    const all = PAIRS_CACHE.pairs;
+    const out = [];
+    const used = new Set();
+    while (out.length < limit && used.size < all.length) {
+      const i = Math.floor(Math.random() * all.length);
+      if (used.has(i)) continue;
+      used.add(i);
+      out.push(all[i]);
+    }
+    res.writeHead(200, {
+      "Content-Type": "application/json",
+      "Cache-Control": "public, max-age=60",
+    });
+    res.end(JSON.stringify({ pairs: out, generatedAt: PAIRS_CACHE.generatedAt }));
+    return;
+  }
+
+  // GET /api/globe-artist/<filename> — artist image with CORS, served from disk
+  if (req.method === "GET" && req.url.startsWith("/api/globe-artist/")) {
+    const fname = req.url.slice("/api/globe-artist/".length).split("?")[0];
+    if (!/^[A-Za-z0-9._-]+$/.test(fname)) {
+      res.writeHead(400); res.end("bad name"); return;
+    }
+    const fp = path.join(ARTISTS_DIR, fname);
+    if (!fp.startsWith(ARTISTS_DIR + path.sep) || !fs.existsSync(fp)) {
+      res.writeHead(404); res.end("not found"); return;
+    }
+    const ext = path.extname(fname).toLowerCase();
+    const ctype = ext === ".png" ? "image/png"
+      : ext === ".webp" ? "image/webp"
+      : ext === ".gif" ? "image/gif"
+      : "image/jpeg";
+    res.writeHead(200, {
+      "Content-Type": ctype,
+      "Cache-Control": "public, max-age=86400, immutable",
+    });
+    fs.createReadStream(fp).pipe(res);
     return;
   }
 

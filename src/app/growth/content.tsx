@@ -87,7 +87,7 @@ export default function GrowthPage() {
           { key: "Installs", name: "App Installs", color: "rgba(0, 204, 120, 1)" },
         ]}
         xKey="date"
-        title="MAU and Install Growth"
+        title="11 straight months of 30% plus growth"
         subtitle="Monthly Active Users and Application Installs (excluding current incomplete month)"
         type="area"
         height={400}
@@ -102,7 +102,7 @@ export default function GrowthPage() {
 
       <Card className="bg-card mt-16">
         <CardHeader>
-          <CardTitle>We are majority organic</CardTitle>
+          <CardTitle>We are majority organic, driven by PLG</CardTitle>
           <CardDescription>
             Install split by channel.
           </CardDescription>
