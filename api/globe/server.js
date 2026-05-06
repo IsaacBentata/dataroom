@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import cron from "node-cron";
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 const AMP_API_KEY = process.env.AMPLITUDE_API_KEY;
 const DATA_FILE = path.join(process.cwd(), "data.json");
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";

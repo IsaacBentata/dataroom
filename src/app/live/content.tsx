@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 
-const GLOBE_API_URL = process.env.NEXT_PUBLIC_GLOBE_API_URL || "";
+const GLOBE_API_URL = process.env.NEXT_PUBLIC_GLOBE_API_URL || "https://dataroom-production-ac2b.up.railway.app/api/globe-rates";
 
 export default function LiveContent() {
   const [loaded, setLoaded] = useState(false);
