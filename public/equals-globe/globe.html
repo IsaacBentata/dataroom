@@ -1217,7 +1217,7 @@
     const pairBubbleCache = new Map(); // url → { texture, aspect } | 'loading' | 'failed'
     const buildQueue = [];
     let buildInFlight = 0;
-    const MAX_BUILD_CONCURRENT = 2;
+    const MAX_BUILD_CONCURRENT = 6;
 
     function buildPairBubble(name, img) {
       const h = Math.floor(Math.random() * 360);
@@ -1236,16 +1236,10 @@
         buildInFlight++;
         loadImage(job.url)
           .then(img => {
-            // Hand off to idle time so canvas/text rendering doesn't fight
-            // the next animation frame for main-thread time.
-            const finish = () => {
-              try { pairBubbleCache.set(job.url, buildPairBubble(job.name, img)); }
-              catch { pairBubbleCache.set(job.url, 'failed'); }
-              buildInFlight--;
-              pumpBuildQueue();
-            };
-            if (window.requestIdleCallback) requestIdleCallback(finish, { timeout: 200 });
-            else setTimeout(finish, 0);
+            try { pairBubbleCache.set(job.url, buildPairBubble(job.name, img)); }
+            catch { pairBubbleCache.set(job.url, 'failed'); }
+            buildInFlight--;
+            pumpBuildQueue();
           })
           .catch(() => {
             pairBubbleCache.set(job.url, 'failed');
@@ -1272,7 +1266,7 @@
     const userPicCache = new Map(); // url → THREE.Texture | 'loading' | 'failed'
     const userPicQueue = [];
     let userPicInFlight = 0;
-    const MAX_USER_PIC_CONCURRENT = 3;
+    const MAX_USER_PIC_CONCURRENT = 8;
 
     function makeUserPicCanvas(img) {
       const SIZE = 128;
@@ -1306,19 +1300,15 @@
         userPicInFlight++;
         loadImage(url)
           .then(img => {
-            const finish = () => {
-              try {
-                const canvas = makeUserPicCanvas(img);
-                const tex = new THREE.CanvasTexture(canvas);
-                tex.colorSpace = THREE.SRGBColorSpace;
-                tex.anisotropy = 4;
-                userPicCache.set(url, tex);
-              } catch { userPicCache.set(url, 'failed'); }
-              userPicInFlight--;
-              pumpUserPicQueue();
-            };
-            if (window.requestIdleCallback) requestIdleCallback(finish, { timeout: 200 });
-            else setTimeout(finish, 0);
+            try {
+              const canvas = makeUserPicCanvas(img);
+              const tex = new THREE.CanvasTexture(canvas);
+              tex.colorSpace = THREE.SRGBColorSpace;
+              tex.anisotropy = 4;
+              userPicCache.set(url, tex);
+            } catch { userPicCache.set(url, 'failed'); }
+            userPicInFlight--;
+            pumpUserPicQueue();
           })
           .catch(() => {
             userPicCache.set(url, 'failed');
