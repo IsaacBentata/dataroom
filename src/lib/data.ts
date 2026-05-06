@@ -14,42 +14,6 @@ export function parseMAUDataExcludingCurrent() {
   return parseMAUData();
 }
 
-export function parseDAUData() {
-  // 30-day rolling average DAU. Apr-Oct 2025 estimated from MAU ratios.
-  // Nov 2025 onward from Amplitude chart 0y7ihf40.
-  const dates = [
-    "2025-04-15","2025-05-15","2025-06-15","2025-07-15","2025-08-15","2025-09-15",
-    "2025-10-15","2025-11-05","2025-11-26","2025-12-10",
-    "2025-12-24","2026-01-07","2026-01-21","2026-02-04","2026-02-18",
-    "2026-03-04","2026-03-18","2026-04-01","2026-04-15","2026-05-03",
-  ];
-  const values = [
-    690, 600, 700, 1900, 4100, 6600,
-    3691, 4515, 5888, 7181,
-    6718, 9698, 12961, 19479, 30153,
-    38363, 43126, 47655, 61851, 72031,
-  ];
-  return dates.map((d, i) => ({
-    date: new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "2-digit" }),
-    DAU: Math.round(values[i]),
-  }));
-}
-
-export function parseRetentionByFriends() {
-  const days = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
-  const allPct = [100,66.36,51.58,43.96,39.13,35.36,32.72,32.49,29.83,27.23,25.76,24.49,23.39,22.71,23.17,21.52,19.89,18.86,18.1,17.7,17.07,16.54,16.04,15.59,14.83,14.67,13.91,13.55,13.25,12.61,13.86];
-  const one = [100,85.91,72.02,62.9,56.67,51.59,47.9,47.51,44.03,40.54,38.4,36.53,34.88,34.06,34.62,32.53,30.29,28.81,27.68,26.81,25.83,24.93,23.91,23.02,21.69,21.23,20.05,19.31,18.78,17.83,19.26];
-  const ten = [100,93.24,84.56,77.04,70.96,65.87,61.75,61.1,57.73,53.76,51.37,48.85,47.04,46.0,46.22,44.06,41.7,39.78,38.33,37.31,36.08,34.53,33.41,32.2,30.54,29.76,28.22,27.59,26.69,25.74,27.05];
-  const fifty = [100,95.13,90.35,85.21,80.81,76.67,72.62,71.42,68.99,65.35,63.08,60.63,58.54,57.55,56.82,54.85,52.69,50.12,48.72,48.41,46.27,44.5,43.14,41.89,40.01,38.98,38.17,36.12,35.73,34.2,35.57];
-  return days.map((d, i) => ({
-    day: `D${d}`,
-    "All Users": allPct[i],
-    "1+ Friends": one[i],
-    "10+ Friends": ten[i],
-    "50+ Friends": fifty[i],
-  }));
-}
-
 export function parseWeeklyRetention() {
   const weeks = [
     "Sep 22", "Oct 13", "Nov 03", "Nov 24", "Dec 15", "Jan 05",
@@ -91,29 +55,6 @@ export function parseEngagement() {
 
 export function parseEngagementExcludingCurrent() {
   return parseEngagement();
-}
-
-export function parseOnboardingFunnel() {
-  const months = ["Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"];
-  const rates = [22.9, 20.2, 37.6, 53.7, 51.5];
-  return months.map((m, i) => ({ month: m, "Verification Rate": rates[i] }));
-}
-
-export function parseOnboardingFunnelExcludingCurrent() {
-  return parseOnboardingFunnel();
-}
-
-export function parseMessagesPerUser() {
-  const dates = [
-    "2025-10-29","2025-11-12","2025-11-26","2025-12-10","2025-12-24",
-    "2026-01-07","2026-01-21","2026-02-04","2026-02-18","2026-03-04",
-    "2026-03-18","2026-04-01","2026-04-15","2026-04-26",
-  ];
-  const values = [35.9, 35.0, 36.7, 38.6, 32.4, 34.1, 36.4, 37.5, 44.7, 42.5, 38.0, 37.1, 36.6, 35.6];
-  return dates.map((d, i) => ({
-    date: new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
-    "Messages / User": values[i],
-  }));
 }
 
 export function parseTimeSpentPerUser() {
@@ -204,23 +145,6 @@ export function parseWeeklyRetentionByFriends() {
   }));
 }
 
-export function parseFriendsMatchMadeMonthly() {
-  // Monthly totals of Friends MatchMade event. Source: Amplitude.
-  const months = [
-    { label: "Oct 2025", value: 186178 },
-    { label: "Nov 2025", value: 104836 },
-    { label: "Dec 2025", value: 140199 },
-    { label: "Jan 2026", value: 1112426 },
-    { label: "Feb 2026", value: 3950778 },
-    { label: "Mar 2026", value: 3987770 },
-    { label: "Apr 2026", value: 4298888 },
-  ];
-  return months.map((m) => ({
-    month: m.label,
-    "Friendships Made": m.value,
-  }));
-}
-
 export function parseChatMessagesSentMonthly() {
   // Monthly totals of Chat MessageSent event. Source: Amplitude.
   const months = [
@@ -237,40 +161,6 @@ export function parseChatMessagesSentMonthly() {
     "Messages Sent": m.value,
   }));
 }
-
-export function parseRetentionOverTime() {
-  const periods = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"];
-  const d1 = [36, 41, 42, 49, 57, 61];
-  const d7 = [12, 14, 17, 23, 31, 34];
-  const d14 = [7, 9, 10, 16, 22, 24];
-  const d30 = [3, 4, 6, 9, 13, 15];
-  return periods.map((p, i) => ({
-    period: p,
-    "D1": d1[i],
-    "D7": d7[i],
-    "D14": d14[i],
-    "D30": d30[i],
-  }));
-}
-
-// ── Revenue Data ────────────────────────────────────────────────────
-
-export const revenueData = [
-  { month: "Mar 2025", revenue: 0 },
-  { month: "Apr 2025", revenue: 0 },
-  { month: "May 2025", revenue: 144 },
-  { month: "Jun 2025", revenue: 353 },
-  { month: "Jul 2025", revenue: 2472 },
-  { month: "Aug 2025", revenue: 7732 },
-  { month: "Sep 2025", revenue: 9126 },
-  { month: "Oct 2025", revenue: 14337 },
-  { month: "Nov 2025", revenue: 46605 },
-  { month: "Dec 2025", revenue: 52173 },
-  { month: "Jan 2026", revenue: 54031 },
-  { month: "Feb 2026", revenue: 35060 },
-  { month: "Mar 2026", revenue: 35831 },
-  { month: "Apr 2026", revenue: 33553 },
-];
 
 // ── Team Data ───────────────────────────────────────────────────────
 
@@ -424,83 +314,8 @@ export const teamMembers = [
   },
 ];
 
-// ── SAFE Holders ────────────────────────────────────────────────────
-
-export const safeHolders = [
-  {
-    investor: "Glaser Investments LLC",
-    amount: "$2,500,000",
-    description: "Rob Glaser, founder of RealNetworks and the “father of music streaming”. Has only led two rounds previously: Affirm (at $35M post, now $20B+) and CTRL Labs (sold to Meta for $1B+). Equals is his third - we're hoping for third time lucky.",
-  },
-  {
-    investor: "JamJar Ventures II LP",
-    amount: "$664,000",
-    description: "The Innocent Smoothies founders. Built one of the most loved consumer brands in the UK and now back consumer founders doing the same.",
-  },
-  {
-    investor: "Firstminute Capital II LP",
-    amount: "$336,000",
-    description: "Incredibly helpful and relentless believers from day one. Have gone above pro-rata in every round.",
-  },
-  {
-    investor: "JJ Hodari",
-    amount: "$67,580",
-    description: "Musician and entrepreneur. Heavy investor in consumer technology and an extremely well-connected operator across the industry.",
-  },
-  {
-    investor: "The Next Act Trust",
-    amount: "$50,000",
-    description: "Brian Fenty, CEO of TodayTix and a board member of MARI (Ari Emanuel's holding company).",
-  },
-  {
-    investor: "Gaingels Early Stage Fund I LLC",
-    amount: "$25,000",
-    description: "One of the most expansive networks in early-stage venture, with 4,000+ LPs.",
-  },
-  {
-    investor: "Joseph Cohen",
-    amount: "$13,510",
-    description: "Ex-COO of Match Group and former C-suite at Ticketmaster.",
-  },
-];
-
-// ── Cap Table Data ──────────────────────────────────────────────────
-
-export const capTableData = [
-  { member: "Isaac Kamlish", ordinaryShares: "400,000", seedPreferred: "0", ownership: "31.79%" },
-  { member: "Isaac Bentata", ordinaryShares: "300,000", seedPreferred: "0", ownership: "23.84%" },
-  { member: "Eden Block Fund I LP", ordinaryShares: "0", seedPreferred: "139,487", ownership: "11.09%" },
-  { member: "Nathan Cohen", ordinaryShares: "100,651", seedPreferred: "0", ownership: "8.00%" },
-  { member: "Talia Jenna Hannuna", ordinaryShares: "100,000", seedPreferred: "0", ownership: "7.95%" },
-  { member: "Firstminute Capital II LP", ordinaryShares: "0", seedPreferred: "90,232", ownership: "7.17%" },
-  { member: "NFX Capital Fund III LP", ordinaryShares: "0", seedPreferred: "49,669", ownership: "3.95%" },
-  { member: "Three Arrows Capital Ltd.", ordinaryShares: "0", seedPreferred: "49,669", ownership: "3.95%" },
-  { member: "Plassa Capital", ordinaryShares: "0", seedPreferred: "8,030", ownership: "0.64%" },
-  { member: "Meyer Bengio", ordinaryShares: "0", seedPreferred: "4,015", ownership: "0.32%" },
-  { member: "Jason Stone", ordinaryShares: "0", seedPreferred: "2,483", ownership: "0.20%" },
-  { member: "Moonshot Ltd", ordinaryShares: "0", seedPreferred: "2,483", ownership: "0.20%" },
-  { member: "Ozone Networks Inc (OpenSea)", ordinaryShares: "0", seedPreferred: "2,483", ownership: "0.20%" },
-  { member: "Camron Miraftab", ordinaryShares: "0", seedPreferred: "993", ownership: "0.08%" },
-  { member: "Christian Bolling", ordinaryShares: "0", seedPreferred: "993", ownership: "0.08%" },
-  { member: "Rohit Bhasin", ordinaryShares: "0", seedPreferred: "745", ownership: "0.06%" },
-  { member: "Raza Jack Rizvi", ordinaryShares: "0", seedPreferred: "745", ownership: "0.06%" },
-  { member: "Powerbook Gestion S.L.", ordinaryShares: "0", seedPreferred: "745", ownership: "0.06%" },
-  { member: "Strategic Partners Consulting, Inc", ordinaryShares: "0", seedPreferred: "745", ownership: "0.06%" },
-  { member: "William Benattar", ordinaryShares: "0", seedPreferred: "497", ownership: "0.04%" },
-  { member: "Michael Sutherland", ordinaryShares: "0", seedPreferred: "497", ownership: "0.04%" },
-  { member: "Mavolta Holdings Pte. Ltd", ordinaryShares: "0", seedPreferred: "497", ownership: "0.04%" },
-  { member: "Alexander James Rankin", ordinaryShares: "0", seedPreferred: "497", ownership: "0.04%" },
-  { member: "Massimiliano Benedetti", ordinaryShares: "0", seedPreferred: "497", ownership: "0.04%" },
-  { member: "Guido Ampollini", ordinaryShares: "0", seedPreferred: "497", ownership: "0.04%" },
-  { member: "Batuhan Dasgin", ordinaryShares: "0", seedPreferred: "497", ownership: "0.04%" },
-  { member: "Diana Lea Anthony 2015 Trust", ordinaryShares: "0", seedPreferred: "497", ownership: "0.04%" },
-];
-
-export const capTableTotals = {
-  ordinaryShares: "900,651",
-  seedPreferred: "357,493",
-  employeeOptionScheme: "213,079",
-};
+// ── Sensitive data (cap table, SAFE holders) moved to src/lib/sensitive-data.ts ──
+// Access via /api/sensitive (authenticated)
 
 // ── Screenshots Config ──────────────────────────────────────────────
 
@@ -508,7 +323,7 @@ export const screenshots = [
   { src: "/screenshots/feed.png", caption: "The Feed - music-first social conversations" },
   { src: "/screenshots/meet-card.png", caption: "Meet - taste-based friend recommendations" },
   { src: "/screenshots/artist-profile-highlight.png", caption: "Artist Profiles - deep fan engagement" },
-  { src: "/screenshots/album-page.png", caption: "Album Pages and Digital Vinyls™" },
+  { src: "/screenshots/album-page.png", caption: "Album Pages and Digital Vinyls\u2122" },
   { src: "/screenshots/music-player.png", caption: "Music Player with social context" },
   { src: "/screenshots/music-quiz.png", caption: "Music Quizzes - competitive superfan tests" },
   { src: "/screenshots/chats-with-rooms.png", caption: "Chat Rooms - real-time fan communities" },
@@ -516,3 +331,6 @@ export const screenshots = [
   { src: "/screenshots/user-profile.png", caption: "User Profile - your music passport" },
   { src: "/screenshots/activity-viewers.png", caption: "Activity - see who viewed your profile" },
 ];
+
+// Legacy exports removed:
+// safeHolders, capTableData, capTableTotals

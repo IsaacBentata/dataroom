@@ -1,0 +1,58 @@
+import { createHash } from "crypto";
+import { cookies } from "next/headers";
+import { signJwt } from "@/lib/jwt";
+
+// SHA-256 hashed passwords mapped to investor names
+const PASSWORD_HASHES: Record<string, string> = {
+  "4076c4659b4be1b942bdf5c05de5cc94afeb740ddd083a94f24c4c350eaad60d": "Internal",
+  "09bb1f76f51c492bab769fb8ac786e631a0a6df495ec2226558960d91a5342cb": "Mercia",
+  "2844689e118b4e4a5cdf124cc9fe0107630daa19463ecf91f0d2e5678d1206bf": "Footwork",
+  "e29731012f842acb291bcfc9a556268145aea2a2b17ca502463d74acb121d750": "JamJar",
+  "08e24b7437db062cfcf09dc450d9e3ec5e1d42acca78378ba3f8a1858b9ec90e": "FMC",
+  "547ec866b74fc8d07002d6005cd0c83d836c47624d3d0bc4b3eeb0ebae732bc3": "Thrive",
+  "8fbc9ed38900a8cfdb88ed2c518bc44311bd59dfc83bdbc07ac9a61c95b1556a": "SoftBank",
+  "1023efe3d4f2e056bbf77909e6b57695bacbe39850094acd9ecdcc46e817125c": "a16z",
+  "257c97330f448883b45b1053e0c4d956d12df58cbb2597314356a2ba3e70ac42": "Sequoia",
+  "26e40af730f137560383a5b63a06c5003440d5aec9de8f6598e5fb6b440bc277": "KP",
+  "33e7c200795309be590fc9b6e2e920636b849189e37963c486f8797cb57eb522": "Bessemer",
+  "1a7a3a4ce56137d3e5ad7392e5763af3f390832cfbdac02714ef89f6049aa08d": "Breyer",
+  "88661da3adf9f4af68314abcafcbb4408cf804a95e9f076574b7f47f41cb3133": "Lightspeed",
+  "6a6f37e50f2952bc807d1e6c7a27591bf6467f82cd96758e623cdd069c6913da": "Tencent",
+  "32b661b351e7a66d43e327fac6b396797ce0e6a5fbf56e65eef95ba2a96348b7": "Sony",
+  "d3e436108bee741c58511ba165b32c1f7203573762eeac297e753c6e5262045e": "UMG",
+  "dc008d0efa5a10ab7b1a67e4a4fc05c6a623ea554fc683b35d427b9198a15d7e": "Warner",
+  "0178f42107bc23827ddaa0c5728f05a8a29da8fce5ed975b9d84a65a3f5300e0": "Goodwater",
+  "869caa73533368243c9f278e481060c56e5cb318dff8b3faebccb92a6f181ab8": "Piton",
+  "15dadc8648ae21c5b18b7eee9778e572937427eb2944a5c0cb1333b16c5e97ea": "Balderton",
+  "3277c5f83454df4a323b92bf15ed767ff83ff8c229bd3b977384576cfbc1c824": "Accel",
+  "785542cef5129becc6ac827753e37e4bf9ddb1f68c9938ef996d33807a7fd95b": "Google Ventures",
+};
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  const { password } = body as { password?: string };
+
+  if (!password) {
+    return Response.json({ success: false }, { status: 400 });
+  }
+
+  const hash = createHash("sha256").update(password).digest("hex");
+  const investor = PASSWORD_HASHES[hash];
+
+  if (!investor) {
+    return Response.json({ success: false }, { status: 401 });
+  }
+
+  const token = signJwt({ investor, iat: Date.now() });
+
+  const cookieStore = await cookies();
+  cookieStore.set("dr-session", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 30, // 30 days
+  });
+
+  return Response.json({ success: true, investor });
+}

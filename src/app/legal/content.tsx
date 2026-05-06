@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -12,9 +13,44 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { safeHolders, capTableData, capTableTotals } from "@/lib/data";
+
+interface SafeHolder {
+  investor: string;
+  amount: string;
+  description?: string;
+}
+
+interface CapTableRow {
+  member: string;
+  ordinaryShares: string;
+  seedPreferred: string;
+  ownership: string;
+}
+
+interface CapTableTotals {
+  ordinaryShares: string;
+  seedPreferred: string;
+  employeeOptionScheme: string;
+}
 
 export default function LegalPage() {
+  const [safeHolders, setSafeHolders] = useState<SafeHolder[]>([]);
+  const [capTableData, setCapTableData] = useState<CapTableRow[]>([]);
+  const [capTableTotals, setCapTableTotals] = useState<CapTableTotals | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/sensitive")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.safeHolders) setSafeHolders(data.safeHolders);
+        if (data.capTableData) setCapTableData(data.capTableData);
+        if (data.capTableTotals) setCapTableTotals(data.capTableTotals);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <Section>
       <div className="mb-12">
@@ -60,35 +96,39 @@ export default function LegalPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-muted-foreground">Investor</TableHead>
-                <TableHead className="text-right text-muted-foreground">Amount</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {safeHolders.map((h, i) => (
-                <TableRow key={i}>
-                  <TableCell className="align-top whitespace-normal">
-                    <div className="whitespace-normal">{h.investor}</div>
-                    {h.description && (
-                      <div className="text-muted-foreground text-xs mt-1 leading-relaxed font-normal whitespace-normal break-words">
-                        {h.description}
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right font-mono align-top whitespace-nowrap">{h.amount}</TableCell>
+          {loading ? (
+            <div className="text-muted-foreground text-sm py-4">Loading...</div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-muted-foreground">Investor</TableHead>
+                  <TableHead className="text-right text-muted-foreground">Amount</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow className="font-semibold">
-                <TableCell>Total SAFE Investment</TableCell>
-                <TableCell className="text-right font-mono text-accent-green">$3,656,090</TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {safeHolders.map((h, i) => (
+                  <TableRow key={i}>
+                    <TableCell className="align-top whitespace-normal">
+                      <div className="whitespace-normal">{h.investor}</div>
+                      {h.description && (
+                        <div className="text-muted-foreground text-xs mt-1 leading-relaxed font-normal whitespace-normal break-words">
+                          {h.description}
+                        </div>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-right font-mono align-top whitespace-nowrap">{h.amount}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+              <TableFooter>
+                <TableRow className="font-semibold">
+                  <TableCell>Total SAFE Investment</TableCell>
+                  <TableCell className="text-right font-mono text-accent-green">$3,656,090</TableCell>
+                </TableRow>
+              </TableFooter>
+            </Table>
+          )}
         </CardContent>
       </Card>
 
@@ -101,40 +141,46 @@ export default function LegalPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-muted-foreground">Member</TableHead>
-                <TableHead className="text-right text-muted-foreground">Ordinary Shares</TableHead>
-                <TableHead className="text-right text-muted-foreground">Seed Preferred</TableHead>
-                <TableHead className="text-right text-muted-foreground">% Ownership</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {capTableData.map((row, i) => (
-                <TableRow key={i}>
-                  <TableCell>{row.member}</TableCell>
-                  <TableCell className="text-right font-mono">{row.ordinaryShares}</TableCell>
-                  <TableCell className="text-right font-mono">{row.seedPreferred}</TableCell>
-                  <TableCell className="text-right font-mono">{row.ownership}</TableCell>
+          {loading ? (
+            <div className="text-muted-foreground text-sm py-4">Loading...</div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-muted-foreground">Member</TableHead>
+                  <TableHead className="text-right text-muted-foreground">Ordinary Shares</TableHead>
+                  <TableHead className="text-right text-muted-foreground">Seed Preferred</TableHead>
+                  <TableHead className="text-right text-muted-foreground">% Ownership</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow className="font-semibold">
-                <TableCell>Total</TableCell>
-                <TableCell className="text-right font-mono">{capTableTotals.ordinaryShares}</TableCell>
-                <TableCell className="text-right font-mono">{capTableTotals.seedPreferred}</TableCell>
-                <TableCell className="text-right font-mono">100.0%</TableCell>
-              </TableRow>
-              <TableRow className="text-muted-foreground">
-                <TableCell>Employee Option Scheme</TableCell>
-                <TableCell className="text-right font-mono">{capTableTotals.employeeOptionScheme}</TableCell>
-                <TableCell className="text-right font-mono">-</TableCell>
-                <TableCell className="text-right font-mono">-</TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {capTableData.map((row, i) => (
+                  <TableRow key={i}>
+                    <TableCell>{row.member}</TableCell>
+                    <TableCell className="text-right font-mono">{row.ordinaryShares}</TableCell>
+                    <TableCell className="text-right font-mono">{row.seedPreferred}</TableCell>
+                    <TableCell className="text-right font-mono">{row.ownership}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+              {capTableTotals && (
+                <TableFooter>
+                  <TableRow className="font-semibold">
+                    <TableCell>Total</TableCell>
+                    <TableCell className="text-right font-mono">{capTableTotals.ordinaryShares}</TableCell>
+                    <TableCell className="text-right font-mono">{capTableTotals.seedPreferred}</TableCell>
+                    <TableCell className="text-right font-mono">100.0%</TableCell>
+                  </TableRow>
+                  <TableRow className="text-muted-foreground">
+                    <TableCell>Employee Option Scheme</TableCell>
+                    <TableCell className="text-right font-mono">{capTableTotals.employeeOptionScheme}</TableCell>
+                    <TableCell className="text-right font-mono">-</TableCell>
+                    <TableCell className="text-right font-mono">-</TableCell>
+                  </TableRow>
+                </TableFooter>
+              )}
+            </Table>
+          )}
         </CardContent>
       </Card>
 

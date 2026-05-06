@@ -3,9 +3,7 @@
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import StatCallout from "@/components/StatCallout";
-import DownloadAllButton from "@/components/DownloadAllButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { revenueData } from "@/lib/data";
 
 const revenueStreams = [
   {
@@ -129,12 +127,6 @@ export default function MonetisationPage() {
         <PageHeader
           label="Monetisation"
           title="The revenue is there when we want it"
-        />
-        <DownloadAllButton
-          datasets={[
-            { name: "Revenue by Month", data: revenueData },
-          ]}
-          filename="equals-monetisation-data"
         />
       </div>
 
