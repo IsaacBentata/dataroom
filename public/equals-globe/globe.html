@@ -342,14 +342,12 @@
         if (!data || !data.metrics) return;
         const now = Date.now();
         const asOf = data.asOf;
-        const elapsed24h = 24 * 3600 * 1000;
-        const timeSinceAsOf = now - asOf - elapsed24h;
         const hourMs = 3600 * 1000;
+        const hoursSinceSnapshot = (now - asOf) / hourMs;
 
         for (const [key, m] of Object.entries(data.metrics)) {
           if (!tickerState[key]) continue;
-          const proRata = m.ratePerHour * Math.max(0, timeSinceAsOf) / hourMs;
-          tickerState[key].value = Math.round(m.base + proRata);
+          tickerState[key].value = m.base + m.ratePerHour * hoursSinceSnapshot;
           tickerState[key].ratePerMs = m.ratePerHour / hourMs;
         }
         tickerBaseTime = now;
