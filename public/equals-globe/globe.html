@@ -1448,13 +1448,14 @@
         return;
       }
       // Only spawn an arc when we have a real pair with a built artist
-      // texture. If nothing's ready yet, defer the arc — we never want to
-      // show a preset/fake bubble.
+      // texture. If nothing's ready yet, defer with a varied delay so arcs
+      // don't all wake up at the same instant once textures finish loading.
       const poolSet = new Set(pool);
       const realPair = pickPairFromPool(poolSet);
       if (!realPair) {
         arc.state = 'waiting';
-        arc.bornAt = now + 0.15 + Math.random() * 0.25;
+        // 0.4s–2.4s spread keeps reborn arcs naturally staggered.
+        arc.bornAt = now + 0.4 + Math.random() * 2.0;
         arc.line.material.opacity = 0;
         arc.line.geometry.setDrawRange(0, 0);
         return;
