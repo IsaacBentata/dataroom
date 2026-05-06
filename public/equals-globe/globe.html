@@ -910,8 +910,8 @@
       }
     }
     const TUBE_RADIUS = 0.0042;    // 30% of previous size — slim glow tube
-    const TUBE_SEGMENTS = 64;       // tubular segments along the curve
-    const TUBE_RADIAL = 6;          // segments around the tube circumference
+    const TUBE_SEGMENTS = 32;       // tubular segments along the curve (was 64)
+    const TUBE_RADIAL = 4;          // segments around the tube circumference (was 6)
 
     function makeArc(a, b) {
       // great-circle slerp + sin-shaped bulge (peaks at midpoint, scales with arc length)
