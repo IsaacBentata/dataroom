@@ -9,14 +9,20 @@ const AMP_SECRET_KEY = process.env.AMPLITUDE_SECRET_KEY;
 const DATA_FILE = path.join(process.cwd(), "data.json");
 const PAIRS_FILE = path.join(process.cwd(), "pairs.json");
 const ARTISTS_DIR = path.join(process.cwd(), "data-artists");
+const USERS_DIR = path.join(process.cwd(), "data-users");
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "";
 
-// ── Pairs data: load once on boot, rewrite artist URLs to point at our proxy. ──
+// ── Pairs data: load once on boot, rewrite local paths to proxy endpoints. ──
 let PAIRS_CACHE = null;
 function rewriteArtistPath(img) {
   if (!img) return img;
   const m = img.match(/(?:^|\/)data-artists\/([^\/]+)$/);
   return m ? `/api/globe-artist/${m[1]}` : img;
+}
+function rewriteUserPicPath(img) {
+  if (!img) return img;
+  const m = img.match(/(?:^|\/)data-users\/([^\/]+)$/);
+  return m ? `/api/globe-user/${m[1]}` : img;
 }
 function loadPairs() {
   try {
@@ -29,6 +35,8 @@ function loadPairs() {
       } else if (p.artist) {
         out.artist = { ...p.artist, img: rewriteArtistPath(p.artist.img) };
       }
+      if (p.userA) out.userA = { ...p.userA, picture: rewriteUserPicPath(p.userA.picture) };
+      if (p.userB) out.userB = { ...p.userB, picture: rewriteUserPicPath(p.userB.picture) };
       return out;
     });
     PAIRS_CACHE = { pairs, generatedAt: Date.now() };
@@ -185,13 +193,14 @@ const server = http.createServer((req, res) => {
   }
 
   // GET /api/globe-artist/<filename> — artist image with CORS, served from disk
-  if (req.method === "GET" && req.url.startsWith("/api/globe-artist/")) {
-    const fname = req.url.slice("/api/globe-artist/".length).split("?")[0];
+  // GET /api/globe-user/<filename>   — user pic image with CORS, served from disk
+  function serveImageFromDir(req, res, prefix, dir) {
+    const fname = req.url.slice(prefix.length).split("?")[0];
     if (!/^[A-Za-z0-9._-]+$/.test(fname)) {
       res.writeHead(400); res.end("bad name"); return;
     }
-    const fp = path.join(ARTISTS_DIR, fname);
-    if (!fp.startsWith(ARTISTS_DIR + path.sep) || !fs.existsSync(fp)) {
+    const fp = path.join(dir, fname);
+    if (!fp.startsWith(dir + path.sep) || !fs.existsSync(fp)) {
       res.writeHead(404); res.end("not found"); return;
     }
     const ext = path.extname(fname).toLowerCase();
@@ -204,7 +213,12 @@ const server = http.createServer((req, res) => {
       "Cache-Control": "public, max-age=86400, immutable",
     });
     fs.createReadStream(fp).pipe(res);
-    return;
+  }
+  if (req.method === "GET" && req.url.startsWith("/api/globe-artist/")) {
+    return serveImageFromDir(req, res, "/api/globe-artist/", ARTISTS_DIR);
+  }
+  if (req.method === "GET" && req.url.startsWith("/api/globe-user/")) {
+    return serveImageFromDir(req, res, "/api/globe-user/", USERS_DIR);
   }
 
   res.writeHead(404); res.end("Not found");
