@@ -5,7 +5,6 @@ import cron from "node-cron";
 
 const PORT = process.env.PORT || 3001;
 const AMP_API_KEY = process.env.AMPLITUDE_API_KEY;
-const AMP_SECRET_KEY = process.env.AMPLITUDE_SECRET_KEY;
 const DATA_FILE = path.join(process.cwd(), "data.json");
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
 
@@ -32,11 +31,10 @@ function cleanOldSnapshots(data) {
 // ── Amplitude queries ───────────────────────────────────────────────
 
 async function queryAmplitude(definition) {
-  const auth = Buffer.from(`${AMP_API_KEY}:${AMP_SECRET_KEY}`).toString("base64");
   const res = await fetch("https://amplitude.com/api/2/chart/query", {
     method: "POST",
     headers: {
-      Authorization: `Basic ${auth}`,
+      Authorization: `Bearer ${AMP_API_KEY}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(definition),
