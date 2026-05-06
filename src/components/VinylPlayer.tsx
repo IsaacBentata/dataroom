@@ -75,6 +75,22 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
     });
   };
 
+  // When a track ends, jump to a random different track and auto-play.
+  // Gives a continuous "radio" feel: Daft Punk first, then random rotation.
+  const advanceToRandomTrack = () => {
+    const playable = PICKER_GRID.filter((x): x is Track => x !== null);
+    const others = playable.filter((x) => x.audio !== track.audio);
+    const next = others.length > 0
+      ? others[Math.floor(Math.random() * others.length)]
+      : playable[0];
+    setTrack(next);
+    requestAnimationFrame(() => {
+      const a = audioRef.current;
+      if (!a) return;
+      a.play().catch(() => setPlaying(false));
+    });
+  };
+
   // Warm picker cover images on mount so the grid renders instantly on first open.
   // Fire HEAD-level <link rel=preload> hints into <head> for browser-priority
   // fetching, and also kick off Image() + decode() so the bitmaps are decoded
@@ -242,9 +258,9 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
           key={track.audio}
           src={track.audio}
           preload="metadata"
-          loop
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
+          onEnded={advanceToRandomTrack}
         />
         {pickerOpen && (
           <AlbumPicker
@@ -354,9 +370,9 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
         key={track.audio}
         src={track.audio}
         preload="metadata"
-        loop
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
+        onEnded={advanceToRandomTrack}
       />
       {pickerOpen && (
         <AlbumPicker
