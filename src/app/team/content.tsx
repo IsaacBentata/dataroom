@@ -78,9 +78,6 @@ export default function TeamPage() {
             self-expression through culture, and eventually realised it didn&apos;t need to span every cultural
             vertical - just the largest. Music had a massive white space.
           </p>
-          <p className="text-muted-foreground text-sm leading-relaxed mt-3">
-            Sometimes in life you get one shot. We&apos;ve been blessed as a team to get another - we won&apos;t waste it.
-          </p>
         </CardContent>
       </Card>
 

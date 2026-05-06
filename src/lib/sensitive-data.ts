@@ -14,7 +14,7 @@ export const safeHolders = [
   {
     investor: "Firstminute Capital II LP",
     amount: "$336,000",
-    description: "Incredibly helpful and relentless believers from day one. Have gone above pro-rata in every round.",
+    description: "First Minute are one of our favourite investors. Incredibly helpful and relentless believers from day one. Have gone above pro-rata in every round.",
   },
   {
     investor: "JJ Hodari",
