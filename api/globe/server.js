@@ -13,17 +13,26 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
 
 // ── Pairs data: load once on boot, rewrite artist URLs to point at our proxy. ──
 let PAIRS_CACHE = null;
+function rewriteArtistPath(img) {
+  if (!img) return img;
+  const m = img.match(/(?:^|\/)data-artists\/([^\/]+)$/);
+  return m ? `/api/globe-artist/${m[1]}` : img;
+}
 function loadPairs() {
   try {
     const raw = JSON.parse(fs.readFileSync(PAIRS_FILE, "utf-8"));
     if (!raw || !Array.isArray(raw.pairs)) return;
-    // Rewrite ./data-artists/<file> → /api/globe-artist/<file> (relative path
-    // so the same payload works against any host the dataroom points at).
+    // Rewrite local data-artists paths to the proxy endpoint so cross-origin
+    // clients can fetch them with CORS headers.
     const pairs = raw.pairs.map((p) => {
-      const out = { ...p, artist: { ...(p.artist || {}) } };
-      const img = out.artist.img || "";
-      const m = img.match(/(?:^|\/)data-artists\/([^\/]+)$/);
-      if (m) out.artist.img = `/api/globe-artist/${m[1]}`;
+      const out = { ...p };
+      // New schema: arts: [{ name, img }] (multiple per pair). Fall back to
+      // legacy single-artist schema if present.
+      if (Array.isArray(p.arts)) {
+        out.arts = p.arts.map((a) => ({ ...a, img: rewriteArtistPath(a.img) }));
+      } else if (p.artist) {
+        out.artist = { ...p.artist, img: rewriteArtistPath(p.artist.img) };
+      }
       return out;
     });
     PAIRS_CACHE = { pairs, generatedAt: Date.now() };

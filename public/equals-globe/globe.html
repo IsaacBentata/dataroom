@@ -1209,55 +1209,92 @@
       }
     }
 
-    function getOrLoadPairBubble(pair) {
-      if (!pair || !pair.artist || !pair.artist.img || !pair.artist.name) return null;
-      const url = pair.artist.img;
+    function getOrLoadPairBubbleByUrl(url, name) {
+      if (!url || !name) return null;
       const cached = pairBubbleCache.get(url);
       if (cached && typeof cached === 'object') return cached;
       if (cached === 'loading' || cached === 'failed') return null;
-      // mark before queuing so we don't enqueue twice
       pairBubbleCache.set(url, 'loading');
-      buildQueue.push({ url, name: pair.artist.name });
+      buildQueue.push({ url, name });
       pumpBuildQueue();
       return null;
     }
 
-    // Pairs come from the Railway API (with same-origin fallback for local dev).
-    const PAIRS_ENDPOINT = (GLOBE_API_BASE || '') + '/api/globe-pairs?limit=80';
-    fetch(PAIRS_ENDPOINT)
-      .then(r => r.ok ? r.json() : null)
-      .catch(() => null)
-      .then(data => {
-        if (!data || !Array.isArray(data.pairs)) return;
-        const idxByName = Object.fromEntries(CITIES.map((c, i) => [c.name, i]));
-        // Server returns artist.img as `/api/globe-artist/<file>` — prefix with
-        // GLOBE_API_BASE so loadImage() points at the Railway origin.
-        const base = GLOBE_API_BASE || '';
-        PAIRS_POOL = data.pairs
-          .map(p => {
-            const artist = p.artist ? { ...p.artist } : null;
-            if (artist && artist.img && artist.img.startsWith('/')) {
-              artist.img = base + artist.img;
-            }
-            return {
-              aIdx: idxByName[p.a], bIdx: idxByName[p.b],
-              userA: p.userA, userB: p.userB, artist,
-            };
-          })
-          .filter(p => p.aIdx != null && p.bIdx != null);
-      });
+    // ---------- pair pool with lazy refill ----------
+    // PAIRS_POOL grows over time. We track which pairs we've shown so each
+    // refill request can de-duplicate. When the unseen pool gets thin, we
+    // fetch another batch from /api/globe-pairs in the background.
+    const seenPairIds = new Set();
+    let refilling = false;
+    const PAIRS_FETCH_BATCH = 100;
+    const REFILL_THRESHOLD = 25; // refill when fewer than this many unseen pairs
+
+    function ingestPairs(data) {
+      if (!data || !Array.isArray(data.pairs)) return 0;
+      const idxByName = Object.fromEntries(CITIES.map((c, i) => [c.name, i]));
+      const base = GLOBE_API_BASE || '';
+      let added = 0;
+      const existing = new Set(PAIRS_POOL.map(p => p.id));
+      for (const p of data.pairs) {
+        if (!p.id || existing.has(p.id)) continue;
+        const aIdx = idxByName[p.a];
+        const bIdx = idxByName[p.b];
+        if (aIdx == null || bIdx == null) continue;
+        // Older payload format had `artist`; new format has `arts` (array).
+        let arts = Array.isArray(p.arts) ? p.arts : (p.artist ? [p.artist] : []);
+        arts = arts
+          .filter(a => a && a.img && a.name)
+          .map(a => ({
+            name: a.name,
+            img: a.img && a.img.startsWith('/') ? base + a.img : a.img,
+          }));
+        if (arts.length === 0) continue;
+        PAIRS_POOL.push({
+          id: p.id, aIdx, bIdx,
+          userA: p.userA, userB: p.userB, arts,
+        });
+        existing.add(p.id);
+        added++;
+      }
+      return added;
+    }
+
+    function fetchMorePairs() {
+      if (refilling) return;
+      refilling = true;
+      const url = (GLOBE_API_BASE || '') + `/api/globe-pairs?limit=${PAIRS_FETCH_BATCH}`;
+      fetch(url)
+        .then(r => r.ok ? r.json() : null)
+        .catch(() => null)
+        .then(data => { ingestPairs(data); })
+        .finally(() => { refilling = false; });
+    }
+
+    fetchMorePairs(); // initial load
 
     function pickPairFromPool(availableSet) {
       if (!PAIRS_POOL || PAIRS_POOL.length === 0) return null;
+      // Build candidate list of unseen pairs; if all seen, allow seen reuse.
+      const unseen = [];
+      for (const p of PAIRS_POOL) {
+        if (!seenPairIds.has(p.id)) unseen.push(p);
+      }
+      const candidates = unseen.length > 0 ? unseen : PAIRS_POOL;
+      // If the unseen pool is getting thin, kick off a refill in the background.
+      if (unseen.length < REFILL_THRESHOLD) fetchMorePairs();
       for (let attempt = 0; attempt < 12; attempt++) {
-        const pick = PAIRS_POOL[Math.floor(Math.random() * PAIRS_POOL.length)];
+        const pick = candidates[Math.floor(Math.random() * candidates.length)];
         if (!availableSet.has(pick.aIdx) || !availableSet.has(pick.bIdx)) continue;
         const ca = CITIES[pick.aIdx].country;
         const cb = CITIES[pick.bIdx].country;
         if (attempt < 7) {
           if (recentCountries.includes(ca) || recentCountries.includes(cb)) continue;
         }
-        return pick;
+        // Each spawn picks a different random artist from the pair's
+        // common-artists list, so even repeat pairs feel fresh.
+        const artist = pick.arts[Math.floor(Math.random() * pick.arts.length)];
+        seenPairIds.add(pick.id);
+        return { ...pick, artist };
       }
       return null;
     }
@@ -1436,7 +1473,9 @@
       // 1) prefer the real artist's S3 image for this pair (built on-the-fly)
       // 2) fall back to a local ARTIST_BUBBLES name match
       // 3) fall back to a random preset bubble
-      const realBubble = getOrLoadPairBubble(arc.realPair);
+      const realBubble = (arc.realPair && arc.realPair.artist)
+        ? getOrLoadPairBubbleByUrl(arc.realPair.artist.img, arc.realPair.artist.name)
+        : null;
       if (realBubble) {
         arc.bubbleArtistIdx = -1; // real-pair bubble; no preset index
         arc.bubbleMesh.material.map = realBubble.texture;
