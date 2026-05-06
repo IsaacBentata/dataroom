@@ -135,9 +135,9 @@ export default function RoadmapPage() {
                 another app you'd use with an IRL friend. We want to change that. The feature we're most excited about
                 is "radio" chatting: you and a friend build a radio station of your shared taste, and it plays while
                 you're both chatting through Equals. The flow is oriented entirely around k-factor: don't just start radio
-                with someone we recommended you meet, start it with someone you already know. This is massively
-                extendable. In-app karaoke with friends has serious viral potential through seeping into other social
-                platforms (think Musical.ly lip syncing). Licensing is the main bottleneck, but solvable.
+                with someone we recommended you meet, start it with someone you already know. This can be extended
+                in future product roadmap. In-app karaoke with friends, for example, has serious viral potential
+                through seeping into other social platforms (think Musical.ly lip syncing).
               </p>
 
               <p>
