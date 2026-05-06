@@ -52,22 +52,31 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
     });
   };
 
-  // Warm picker cover images at idle so the grid doesn't flash on first open.
+  // Warm picker cover images on mount so the grid renders instantly on first open.
+  // Fire HEAD-level <link rel=preload> hints into <head> for browser-priority
+  // fetching, and also kick off Image() + decode() so the bitmaps are decoded
+  // and ready for the picker's <img> tags to render synchronously.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const ric = (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
-      .requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1));
-    const id = ric(() => {
-      for (const entry of PICKER_GRID) {
-        if (!entry || entry.cover === DEFAULT_TRACK.cover) continue;
-        const img = new Image();
-        img.src = entry.cover;
-      }
-    });
+    const links: HTMLLinkElement[] = [];
+    for (const entry of PICKER_GRID) {
+      if (!entry || entry.cover === DEFAULT_TRACK.cover) continue;
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = entry.cover;
+      (link as HTMLLinkElement & { fetchPriority?: string }).fetchPriority = "high";
+      document.head.appendChild(link);
+      links.push(link);
+      const img = new Image();
+      (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = "high";
+      img.src = entry.cover;
+      void img.decode().catch(() => {});
+    }
     return () => {
-      const cic = (window as unknown as { cancelIdleCallback?: (id: number) => void })
-        .cancelIdleCallback ?? ((id: number) => window.clearTimeout(id));
-      cic(id);
+      for (const l of links) {
+        if (l.parentNode) l.parentNode.removeChild(l);
+      }
     };
   }, []);
   const dragOffset = useRef<{ dx: number; dy: number } | null>(null);
@@ -552,6 +561,9 @@ function AlbumPicker({
                   src={entry.cover}
                   alt=""
                   draggable={false}
+                  loading="eager"
+                  decoding="sync"
+                  fetchPriority="high"
                   className="block object-cover"
                   style={{ width: TILE, height: TILE }}
                 />
