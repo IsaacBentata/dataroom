@@ -17,20 +17,20 @@ const DEFAULT_TRACK: Track = {
 
 // 5×3 grid; `null` = empty "+" slot, Track = playable tile.
 const PICKER_GRID: (Track | null)[] = [
-  null,
+  { title: "NUEVAYoL", artist: "Bad Bunny", cover: "/player/bad-bunny-debi.png", audio: "/player/bad-bunny-nuevayol.m4a" },
   DEFAULT_TRACK,
   null,
   { title: "Dream On", artist: "Aerosmith", cover: "/player/aerosmith.jpeg", audio: "/player/aerosmith-dream-on.m4a" },
-  null,
+  { title: "Super Shy", artist: "NewJeans", cover: "/player/newjeans-super-shy.png", audio: "/player/newjeans-super-shy.m4a" },
   { title: "Supersonic", artist: "Oasis", cover: "/player/oasis-definitely-maybe.jpeg", audio: "/player/oasis-supersonic.m4a" },
   null,
-  null,
+  { title: "Too Cool To Be Careless", artist: "PAWSA", cover: "/player/pawsa-too-cool.jpeg", audio: "/player/pawsa-too-cool.m4a" },
   { title: "360", artist: "Charli XCX", cover: "/player/charli-xcx-brat.png", audio: "/player/charli-xcx-360.m4a" },
   null,
   { title: "Rottweiler", artist: "EsDeeKid", cover: "/player/rottweiler.jpeg", audio: "/player/rottweiler.m4a" },
   null,
   { title: "Rock That Body", artist: "The Black Eyed Peas", cover: "/player/bep-the-end.jpg", audio: "/player/bep-rock-that-body.m4a" },
-  null,
+  { title: "The Chain", artist: "Fleetwood Mac", cover: "/player/fleetwood-mac-rumours.jpeg", audio: "/player/fleetwood-mac-the-chain.m4a" },
   null,
 ];
 
