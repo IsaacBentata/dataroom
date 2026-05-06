@@ -79,34 +79,25 @@ async function pullAndStore() {
     const start = fmtDate(twoDaysAgo);
     const end = fmtDate(now);
 
-    // Fetch daily data for last 2 days
-    const [messages, friends, users] = await Promise.all([
-      getHourlyEventCount("Chat MessageSent", start, end),
-      getHourlyEventCount("Friends MatchMade", start, end),
-      getHourlyEventCount("Application Installed", start, end),
-    ]);
+    const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
-    // Calculate daily rate from most recent complete day
-    const msgSeries = messages.series;
-    const frdSeries = friends.series;
-    const usrSeries = users.series;
-
-    // Use second-to-last value as the "yesterday" day, last as "today" (partial)
-    const msgDaily = msgSeries.length >= 2 ? msgSeries[msgSeries.length - 2] : (msgSeries[0] || 0);
-    const frdDaily = frdSeries.length >= 2 ? frdSeries[frdSeries.length - 2] : (frdSeries[0] || 0);
-    const usrDaily = usrSeries.length >= 2 ? usrSeries[usrSeries.length - 2] : (usrSeries[0] || 0);
-
-    // Cumulative totals from Apr 2025
+    // Fetch all-time cumulative totals + recent daily rates sequentially to avoid rate limits
     const allTimeStart = "20250401";
-    const [allMessages, allFriends, allUsers] = await Promise.all([
-      getHourlyEventCount("Chat MessageSent", allTimeStart, end),
-      getHourlyEventCount("Friends MatchMade", allTimeStart, end),
-      getHourlyEventCount("Application Installed", allTimeStart, end),
-    ]);
 
+    const allUsers = await getHourlyEventCount("Application Installed", allTimeStart, end);
+    await delay(2000);
+    const allMessages = await getHourlyEventCount("Chat MessageSent", allTimeStart, end);
+    await delay(2000);
+    const allFriends = await getHourlyEventCount("Friends MatchMade", allTimeStart, end);
+
+    const totalUsers = allUsers.series.reduce((s, v) => s + (v || 0), 0);
     const totalMessages = allMessages.series.reduce((s, v) => s + (v || 0), 0);
     const totalFriends = allFriends.series.reduce((s, v) => s + (v || 0), 0);
-    const totalUsers = allUsers.series.reduce((s, v) => s + (v || 0), 0);
+
+    // Daily rate from yesterday (second-to-last value in each series)
+    const usrDaily = allUsers.series.length >= 2 ? allUsers.series[allUsers.series.length - 2] : (allUsers.series[0] || 0);
+    const msgDaily = allMessages.series.length >= 2 ? allMessages.series[allMessages.series.length - 2] : (allMessages.series[0] || 0);
+    const frdDaily = allFriends.series.length >= 2 ? allFriends.series[allFriends.series.length - 2] : (allFriends.series[0] || 0);
 
     const hourStart = new Date();
     hourStart.setMinutes(0, 0, 0);
