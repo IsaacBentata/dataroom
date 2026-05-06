@@ -187,8 +187,7 @@ export default function RetentionPage() {
         height={320}
         showDateFilter={false}
         referenceLines={[
-          { y: 30, label: "Snapchat 30 min" },
-          { y: 32, label: "Instagram 32 min" },
+          { y: 31, label: "Instagram 32 min / Snapchat 30 min" },
         ]}
         headerChildren={
           <div className="text-xs text-muted-foreground text-right" style={{ fontFamily: "var(--font-fair-favorit-mono), monospace", letterSpacing: "0.04em" }}>
