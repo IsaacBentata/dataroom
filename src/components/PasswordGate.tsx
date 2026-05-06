@@ -1,9 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { identifyInvestor, trackEvent } from "@/lib/posthog";
 
-const CORRECT_PASSWORD = "Unitetheworld";
+// Each password maps to an investor name for tracking.
+// Add new investors here.
+const PASSWORDS: Record<string, string> = {
+  Unitetheworld: "Internal",
+  Mercia: "Mercia",
+  Footwork: "Footwork",
+  JamJar: "JamJar",
+  FMC: "FMC",
+};
+
 const STORAGE_KEY = "equals-data-room-auth";
+const INVESTOR_KEY = "equals-data-room-investor";
 
 export default function PasswordGate({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false);
@@ -13,10 +24,16 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setAuthenticated(localStorage.getItem(STORAGE_KEY) === "true");
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    const authed = localStorage.getItem(STORAGE_KEY) === "true";
+    const investor = localStorage.getItem(INVESTOR_KEY);
+    setAuthenticated(authed);
     setChecking(false);
+
+    // Re-identify returning visitors
+    if (authed && investor) {
+      identifyInvestor(investor);
+      trackEvent("data_room_session_resumed", { investor });
+    }
   }, []);
 
   useEffect(() => {
@@ -25,12 +42,17 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === CORRECT_PASSWORD) {
+    const investor = PASSWORDS[password];
+    if (investor) {
       localStorage.setItem(STORAGE_KEY, "true");
+      localStorage.setItem(INVESTOR_KEY, investor);
       setAuthenticated(true);
       setError(false);
+      identifyInvestor(investor);
+      trackEvent("data_room_login", { investor });
     } else {
       setError(true);
+      trackEvent("data_room_login_failed", { attempted_password: password });
     }
   };
 

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
+import { trackEvent } from "@/lib/posthog";
 
 interface DataSet {
   name: string;
@@ -28,6 +29,8 @@ function datasetToCSV(data: Record<string, string | number>[]): string {
 
 export default function DownloadAllButton({ datasets, filename = "data-export" }: DownloadAllButtonProps) {
   const handleDownload = () => {
+    const investor = typeof window !== "undefined" ? localStorage.getItem("equals-data-room-investor") : null;
+    trackEvent("data_room_csv_download", { filename, datasets: datasets.map(d => d.name), investor });
     const sections = datasets.map((ds) => {
       return `# ${ds.name}\n${datasetToCSV(ds.data)}`;
     });
