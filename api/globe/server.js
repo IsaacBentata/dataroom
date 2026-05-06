@@ -64,23 +64,6 @@ async function getHourlyEventCount(eventType, start, end) {
   return { series: [], xValues: [] };
 }
 
-async function getActiveUsers(start, end) {
-  const data = await ampQuery("events/segmentation", {
-    e: { event_type: "_active" },
-    start,
-    end,
-    m: "uniques",
-    i: 1,
-  });
-  if (data.data && data.data.series && data.data.series.length > 0) {
-    return {
-      series: data.data.series[0],
-      xValues: data.data.xValues || [],
-    };
-  }
-  return { series: [], xValues: [] };
-}
-
 // ── Pull and store ──────────────────────────────────────────────────
 
 function fmtDate(d) {
@@ -100,7 +83,7 @@ async function pullAndStore() {
     const [messages, friends, users] = await Promise.all([
       getHourlyEventCount("Chat MessageSent", start, end),
       getHourlyEventCount("Friends MatchMade", start, end),
-      getActiveUsers(start, end),
+      getHourlyEventCount("Application Installed", start, end),
     ]);
 
     // Calculate daily rate from most recent complete day
@@ -113,18 +96,17 @@ async function pullAndStore() {
     const frdDaily = frdSeries.length >= 2 ? frdSeries[frdSeries.length - 2] : (frdSeries[0] || 0);
     const usrDaily = usrSeries.length >= 2 ? usrSeries[usrSeries.length - 2] : (usrSeries[0] || 0);
 
-    // Cumulative totals: sum all daily values we have + estimate base from known data
-    // For messages and friends we need all-time totals. Query a wider range.
-    const allTimeStart = "20250401"; // Apr 2025
-    const [allMessages, allFriends] = await Promise.all([
+    // Cumulative totals from Apr 2025
+    const allTimeStart = "20250401";
+    const [allMessages, allFriends, allUsers] = await Promise.all([
       getHourlyEventCount("Chat MessageSent", allTimeStart, end),
       getHourlyEventCount("Friends MatchMade", allTimeStart, end),
+      getHourlyEventCount("Application Installed", allTimeStart, end),
     ]);
 
     const totalMessages = allMessages.series.reduce((s, v) => s + (v || 0), 0);
     const totalFriends = allFriends.series.reduce((s, v) => s + (v || 0), 0);
-    // Users: use latest daily unique as approximate total onboarded
-    const totalUsers = usrSeries.length > 0 ? usrSeries[usrSeries.length - 1] : 0;
+    const totalUsers = allUsers.series.reduce((s, v) => s + (v || 0), 0);
 
     const hourStart = new Date();
     hourStart.setMinutes(0, 0, 0);
