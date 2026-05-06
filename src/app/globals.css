@@ -822,14 +822,14 @@ img.team-logo.team-logo--nike,
    so they inherit the parent's transitioning bg instead of snapping white
    while the parent fades from black. Borders still distinguish them.
    Higher specificity (chained ancestor classes) to beat `.minimal-preview .bg-card`. */
-.live-mode-root .minimal-preview .bg-card,
-.live-mode-root .minimal-preview .bg-background,
-.live-mode-root .minimal-preview [class*="bg-secondary"],
-.live-mode-root .minimal-preview [data-slot="card"],
-.live-mode-root .minimal-preview .bg-muted,
-.live-mode-root .minimal-preview .bg-popover,
-.live-mode-root .bg-card,
-.live-mode-root [data-slot="card"] {
+.live-mode-root.is-live .minimal-preview .bg-card,
+.live-mode-root.is-live .minimal-preview .bg-background,
+.live-mode-root.is-live .minimal-preview [class*="bg-secondary"],
+.live-mode-root.is-live .minimal-preview [data-slot="card"],
+.live-mode-root.is-live .minimal-preview .bg-muted,
+.live-mode-root.is-live .minimal-preview .bg-popover,
+.live-mode-root.is-live .bg-card,
+.live-mode-root.is-live [data-slot="card"] {
   background: transparent !important;
   background-color: transparent !important;
 }
