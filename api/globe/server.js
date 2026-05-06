@@ -8,39 +8,17 @@ const AMP_API_KEY = process.env.AMPLITUDE_API_KEY;
 const AMP_SECRET_KEY = process.env.AMPLITUDE_SECRET_KEY;
 const DATA_FILE = path.join(process.cwd(), "data.json");
 const PAIRS_FILE = path.join(process.cwd(), "pairs.json");
-const ARTISTS_DIR = path.join(process.cwd(), "data-artists");
-const USERS_DIR = path.join(process.cwd(), "data-users");
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "";
 
-// ── Pairs data: load once on boot, rewrite local paths to proxy endpoints. ──
+// ── Pairs data: load once on boot. URLs are passed through to S3 directly. ──
+// (S3 bucket has CORS configured for https://data.equa.ls — see AWS console.)
 let PAIRS_CACHE = null;
-function rewriteArtistPath(img) {
-  if (!img) return img;
-  const m = img.match(/(?:^|\/)data-artists\/([^\/]+)$/);
-  return m ? `/api/globe-artist/${m[1]}` : img;
-}
-function rewriteUserPicPath(img) {
-  if (!img) return img;
-  const m = img.match(/(?:^|\/)data-users\/([^\/]+)$/);
-  return m ? `/api/globe-user/${m[1]}` : img;
-}
 function loadPairs() {
   try {
     const raw = JSON.parse(fs.readFileSync(PAIRS_FILE, "utf-8"));
     if (!raw || !Array.isArray(raw.pairs)) return;
-    const pairs = raw.pairs.map((p) => {
-      const out = { ...p };
-      if (Array.isArray(p.arts)) {
-        out.arts = p.arts.map((a) => ({ ...a, img: rewriteArtistPath(a.img) }));
-      } else if (p.artist) {
-        out.artist = { ...p.artist, img: rewriteArtistPath(p.artist.img) };
-      }
-      if (p.userA) out.userA = { ...p.userA, picture: rewriteUserPicPath(p.userA.picture) };
-      if (p.userB) out.userB = { ...p.userB, picture: rewriteUserPicPath(p.userB.picture) };
-      return out;
-    });
-    PAIRS_CACHE = { pairs, generatedAt: Date.now() };
-    console.log(`Loaded ${pairs.length} pairs from pairs.json`);
+    PAIRS_CACHE = { pairs: raw.pairs, generatedAt: Date.now() };
+    console.log(`Loaded ${raw.pairs.length} pairs from pairs.json`);
   } catch (err) {
     console.error("Failed to load pairs.json:", err.message);
   }
@@ -190,35 +168,6 @@ const server = http.createServer((req, res) => {
     });
     res.end(JSON.stringify({ pairs: out, generatedAt: PAIRS_CACHE.generatedAt }));
     return;
-  }
-
-  // GET /api/globe-artist/<filename> — artist image with CORS, served from disk
-  // GET /api/globe-user/<filename>   — user pic image with CORS, served from disk
-  function serveImageFromDir(req, res, prefix, dir) {
-    const fname = req.url.slice(prefix.length).split("?")[0];
-    if (!/^[A-Za-z0-9._-]+$/.test(fname)) {
-      res.writeHead(400); res.end("bad name"); return;
-    }
-    const fp = path.join(dir, fname);
-    if (!fp.startsWith(dir + path.sep) || !fs.existsSync(fp)) {
-      res.writeHead(404); res.end("not found"); return;
-    }
-    const ext = path.extname(fname).toLowerCase();
-    const ctype = ext === ".png" ? "image/png"
-      : ext === ".webp" ? "image/webp"
-      : ext === ".gif" ? "image/gif"
-      : "image/jpeg";
-    res.writeHead(200, {
-      "Content-Type": ctype,
-      "Cache-Control": "public, max-age=86400, immutable",
-    });
-    fs.createReadStream(fp).pipe(res);
-  }
-  if (req.method === "GET" && req.url.startsWith("/api/globe-artist/")) {
-    return serveImageFromDir(req, res, "/api/globe-artist/", ARTISTS_DIR);
-  }
-  if (req.method === "GET" && req.url.startsWith("/api/globe-user/")) {
-    return serveImageFromDir(req, res, "/api/globe-user/", USERS_DIR);
   }
 
   res.writeHead(404); res.end("Not found");
