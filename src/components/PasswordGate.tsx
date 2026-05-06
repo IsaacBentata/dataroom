@@ -11,6 +11,23 @@ const PASSWORDS: Record<string, string> = {
   Footwork: "Footwork",
   JamJar: "JamJar",
   FMC: "FMC",
+  Thrive: "Thrive",
+  SoftBank: "SoftBank",
+  a16z: "a16z",
+  Sequoia: "Sequoia",
+  KP: "KP",
+  Bessemer: "Bessemer",
+  Breyer: "Breyer",
+  Lightspeed: "Lightspeed",
+  Tencent: "Tencent",
+  Sony: "Sony",
+  UMG: "UMG",
+  Warner: "Warner",
+  Goodwater: "Goodwater",
+  Piton: "Piton",
+  Balderton: "Balderton",
+  Accel: "Accel",
+  GoogleVentures: "Google Ventures",
 };
 
 const STORAGE_KEY = "equals-data-room-auth";
