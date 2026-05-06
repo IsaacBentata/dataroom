@@ -23,7 +23,26 @@ export default function LiveContent() {
     : "/equals-globe/globe.html";
 
   return (
-    <div style={{ width: "calc(100% + 200px)", height: "100vh", marginLeft: "-200px", padding: 0, background: "transparent" }}>
+    <div style={{ width: "calc(100% + 200px)", height: "100vh", marginLeft: "-200px", padding: 0, background: "transparent", position: "relative" }}>
+      {!loaded && (
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+          <span style={{
+            fontFamily: "var(--font-fair-favorit-mono), monospace",
+            fontSize: 12,
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            color: "rgba(0,0,0,0.3)",
+          }}>
+            Loading...
+          </span>
+        </div>
+      )}
       <iframe
         src={src}
         className="border-0"
