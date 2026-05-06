@@ -23,7 +23,7 @@ export default function LiveContent() {
     : "/equals-globe/globe.html";
 
   return (
-    <div style={{ width: "100%", height: "100vh", margin: 0, padding: 0, background: "#ffffff" }}>
+    <div style={{ width: "calc(100% + 200px)", height: "100vh", marginLeft: "-200px", padding: 0, background: "transparent" }}>
       <iframe
         src={src}
         className="border-0"
@@ -32,8 +32,9 @@ export default function LiveContent() {
           width: "100%",
           height: "100%",
           display: "block",
+          background: "transparent",
           opacity: loaded ? 1 : 0,
-          transition: "opacity 0.5s ease-in",
+          transition: "opacity 1200ms cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       />
     </div>

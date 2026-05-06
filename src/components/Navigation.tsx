@@ -19,7 +19,7 @@ const sections = [
   { href: "/team", label: "Team" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/legal", label: "Legal" },
-  { href: "/live", label: "Equals LIVE" },
+  { href: "/live", label: "Realtime" },
 ];
 
 const investHref = `mailto:isaac.k@equa.ls?cc=${encodeURIComponent(
