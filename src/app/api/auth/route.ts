@@ -28,6 +28,11 @@ const PASSWORD_HASHES: Record<string, string> = {
   "785542cef5129becc6ac827753e37e4bf9ddb1f68c9938ef996d33807a7fd95b": "Google Ventures",
   "f46ba23038e05f8adadeab13f11215f843dee64f8885723548a2e2a90dc38a1a": "Edenblock",
   "2fcfc12b7967033cc613c5a397081421cc8976006fa7b5c9ec541316c927f5af": "SciFi",
+  "28dce60aa823a713d077c33784e00500d1902daf306b4ee2140ff46d591fbb11": "LeftLane",
+  "ddb02f53592c4f07a2875dae5545d22d29b898a04b0186d1ad6b32f76a6ab392": "MarketOne",
+  "d3bdfc83072c77d6294724bafa7993de779f6b89db0a7ebf87c91887ba308c59": "Iconiq",
+  "aed14ef92b4a28422b32b9c5488f63b8d6e99fa35b0c1c1598bccf71aa8cec4a": "Joe Cohen",
+  "a81b270545fc403bbb1849002654fe4b279111dd5afc8338dc68dd2391dcf189": "MARI",
 };
 
 // Rate limiting: track failed attempts per IP
