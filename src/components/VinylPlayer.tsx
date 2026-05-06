@@ -44,9 +44,9 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   const [pickerOpen, setPickerOpen] = useState(false);
   const [track, setTrack] = useState<Track>(DEFAULT_TRACK);
 
-  // Always start with Daft Punk. On the very first visit ever (no localStorage
-  // entry yet), also kick off autoplay — browsers may block it if there's been
-  // no user gesture; the .catch silently leaves it paused if so.
+  // First-ever visit: keep Daft Punk and try to autoplay (browsers may block
+  // if there's no user gesture). Every refresh after that: open with a random
+  // non-Daft-Punk track from the picker grid.
   useEffect(() => {
     if (typeof window === "undefined") return;
     let count = 0;
@@ -62,6 +62,13 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
         if (!a) return;
         a.play().catch(() => {});
       });
+    } else {
+      const others = PICKER_GRID.filter(
+        (t): t is Track => t !== null && t.audio !== DEFAULT_TRACK.audio,
+      );
+      if (others.length > 0) {
+        setTrack(others[Math.floor(Math.random() * others.length)]);
+      }
     }
   }, []);
 
