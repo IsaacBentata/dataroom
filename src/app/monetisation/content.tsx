@@ -15,7 +15,7 @@ const revenueStreams = [
     color: "text-accent-green",
     description:
       "Content feed with high-impression inventory. Gen Z is the most valuable advertising demographic, and music context is brand-safe and high-intent. Contextual targeting based on music taste, the strongest psychographic signal available. Native ad formats include sponsored vinyls, branded quizzes, and artist-sponsored channels.",
-    justification: "Comps: Snapchat ~$11 ARPU, TikTok ~$8-10, Instagram ~$20+. At $12, Equals sits between TikTok and Snapchat - conservative given 37+ min/day engagement and premium Gen Z audience.",
+    justification: "Comps: Snapchat ~$11 ARPU, TikTok ~$8-10, Instagram ~$20+. At $12, Equals sits between TikTok and Snapchat. We think this is reasonable given our average usage time sits well above benchmark for the most popular social apps (35 min/day).",
   },
   {
     name: "Subscriptions",
@@ -24,16 +24,16 @@ const revenueStreams = [
     color: "text-accent-blue",
     description:
       "Based on proven ARPU of $0.51/month ($6.12 annualised) from the Oct 2025 - Jan 2026 monetisation test at 90K MAU. Pro features include unlimited quiz entries, advanced profile customisation, exclusive community access, early vinyl drops, and an ad-free experience.",
-    justification: "This is an extrapolation of proven unit economics, not a projection. The $0.51/month ARPU was achieved with a 4.5-5% paywall conversion rate on a less mature product with lower engagement than today.",
+    justification: "The $0.51/month ARPU was achieved with a 4.5-5% paywall conversion rate on a less mature product with lower engagement than today.",
   },
   {
     name: "Commerce",
-    arpu: "$0.78",
-    total: "$78M",
+    arpu: "$0.42",
+    total: "$42M",
     color: "text-accent-purple",
     description:
-      "Digital Vinyls™ and merch marketplace. Today, ~2% of users buy at least one Digital Vinyl™ per quarter. As Digital Vinyls™ become tied to chart positioning, uptake grows. We model 10% of users purchasing regularly at scale, averaging 4 per year at $5 each with ~30% margins. Merch marketplace adds a 15% take rate on $35 average orders.",
-    justification: "Current baseline: 2% quarterly buyer rate. Platforms where collectibles are core to the experience see much higher uptake - Roblox sees ~25% of users purchasing virtual items. At scale with chart-certified vinyls and gifting mechanics, 10% annual buyer rate is conservative. ~30% margins after licensing costs.",
+      "Digital Vinyls™ and merch marketplace. Today, ~2% of users buy at least one Digital Vinyl™ per quarter. As Digital Vinyls™ become tied to chart positioning, uptake grows. We model 4% of users purchasing regularly at scale, averaging 4 per year at $5 each with ~30% margins. Merch marketplace adds a 15% take rate on $35 average orders.",
+    justification: "Current baseline: 2% quarterly buyer rate. At scale with chart-certified vinyls and gifting mechanics, 4% annual buyer rate is a reasonable uplift. ~30% margins after licensing costs.",
   },
   {
     name: "Label Services",
@@ -50,8 +50,8 @@ const revenueStreams = [
     total: "$20M",
     color: "text-accent-blue",
     description:
-      "Festival partnerships and co-branded live experiences. Equals works with festivals and promoters on exclusive on-platform activations: artist meet-and-greets, listening parties, and community events tied to major festivals. Revenue from sponsorship packages, ticketing referrals, and co-branded content.",
-    justification: "The global live music market is $35B+. Equals partners with existing festivals and promoters, adding a digital layer that drives ticket sales and brand sponsorship value.",
+      "Festival partnerships and co-branded live experiences. This is as much a branding exercise as a revenue line. Embedding Equals into live music culture drives brand awareness and user acquisition that compounds across every other revenue stream. Revenue comes from sponsorship packages, ticketing referrals, and co-branded content.",
+    justification: "We're more excited about this from a brand standpoint than a pure revenue one. Being present at festivals cements Equals in music culture, which feeds acquisition and retention across the board.",
   },
   {
     name: "Ticketing",
@@ -60,14 +60,14 @@ const revenueStreams = [
     color: "text-accent-purple",
     description:
       "4% of MAUs buy tickets through the platform at $55 average ticket price with a 2.5% referral fee. Lightweight revenue built on existing social intent - users discover concerts inside artist profiles.",
-    justification: "Aggregator referral model. Upside: launching primary ticketing pushes take rate to 15-20%+ on owned inventory.",
+    justification: "Aggregator referral model.",
   },
 ];
 
 const revenueSummary = [
-  { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "61.3%" },
-  { stream: "Subscriptions", arpu: "$6.12", annual: "$612M", share: "31.3%" },
-  { stream: "Commerce", arpu: "$0.78", annual: "$78M", share: "4.0%" },
+  { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "62.5%" },
+  { stream: "Subscriptions", arpu: "$6.12", annual: "$612M", share: "31.9%" },
+  { stream: "Commerce", arpu: "$0.42", annual: "$42M", share: "2.2%" },
   { stream: "Label Services", arpu: "$0.40", annual: "$40M", share: "2.1%" },
   { stream: "Live Experiences", arpu: "$0.20", annual: "$20M", share: "1.0%" },
   { stream: "Ticketing", arpu: "$0.06", annual: "$6M", share: "0.3%" },
@@ -139,7 +139,7 @@ export default function MonetisationPage() {
       </div>
 
       {/* ═══ EQUALS YESTERDAY ═══ */}
-      <PhaseHeader label="Equals Yesterday" title="We proved we can monetise — at world-class levels" />
+      <PhaseHeader label="Equals Yesterday" title="We proved we can monetise at world-class levels" />
 
       <Card className="bg-card mb-6">
         <CardHeader>
@@ -150,14 +150,13 @@ export default function MonetisationPage() {
             Between October 2025 and January 2026, Equals ran an extended A/B test on subscription
             monetisation. At peak, the platform generated $46K in a single month on just 90K MAU - an
             effective ARPU of $0.51/month per MAU, or $6.12 annualised. Across every benchmark that
-            matters - paid conversion, refunds, ad eCPMs, and ROAS - we landed materially above industry
-            standards.
+            matters - paid conversion, refunds, and ad eCPMs - we landed materially above industry
+            standards for consumer social.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
+          <div className="grid grid-cols-3 gap-4 my-4">
             <StatCallout value="$46K" label="Peak monthly revenue" color="text-accent-green" />
             <StatCallout value="90K" label="MAUs at peak" />
             <StatCallout value="$0.51" label="Monthly ARPU" color="text-accent-purple" />
-            <StatCallout value="0.70" label="D0 ROAS (positive)" color="text-accent-blue" />
           </div>
         </CardContent>
       </Card>
@@ -177,8 +176,8 @@ export default function MonetisationPage() {
             />
             <MetricRow
               label="Refund Rate"
-              value="0.97%"
-              benchmark="70% below"
+              value="1.7%"
+              benchmark="46% below"
               benchmarkLabel="Benchmark (3.16%)"
               color="text-accent-green"
             />
@@ -210,8 +209,7 @@ export default function MonetisationPage() {
         </CardContent>
       </Card>
 
-      <div className="space-y-4 text-muted-foreground text-sm leading-relaxed">
-        <h3 className="text-lg font-semibold text-foreground">Why we chose growth over revenue</h3>
+      <div className="space-y-4 text-muted-foreground text-sm leading-relaxed mt-8">
         <p>
           Starting at the end of December 2025, we gradually rolled back paid features where they were
           hurting network effects. Users hitting paywalls early were less likely to add friends, join
@@ -220,10 +218,9 @@ export default function MonetisationPage() {
         </p>
         <p>
           The impact was clear. Removing friction from the core experience improved growth, engagement,
-          and retention. The decision to prioritise network effects over near-term revenue is validated
-          by 9x MAU growth since. Revenue can be switched back on at any time. The audience cannot be
-          rebuilt. We plan to turn on full monetisation at ~50M MAU, when network effects are strong
-          enough that paid features add to rather than suppress the social experience.
+          and retention. The decision to prioritise network effects over near-term revenue was validated
+          by an increase of 96% in average engagement per user (where engagement is measured by social
+          interactions such as DMs, likes, and other actions users take on the platform).
         </p>
       </div>
 
@@ -237,9 +234,9 @@ export default function MonetisationPage() {
         <CardContent>
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
             Applying the proven $0.51/month ARPU to today's 530K MAU base gives ~$270K/month, a $3.2M
-            annual run rate from subscriptions alone. This excludes commerce, label services, and
+            annual run rate. This excludes commerce, label services, and
             ticketing revenue. The annualised proven ARPU of $6.12 is the basis for our subscription
-            line in the long-term revenue forecast. Demonstrated unit economics, not assumptions.
+            line in the long-term revenue forecast.
           </p>
           <div className="grid grid-cols-3 gap-4 my-4">
             <StatCallout value="$270K" label="Projected monthly revenue" color="text-accent-green" />
@@ -257,7 +254,7 @@ export default function MonetisationPage() {
       </Card>
 
       {/* ═══ EQUALS TOMORROW ═══ */}
-      <PhaseHeader label="Equals Tomorrow" title="By 2030: 100M MAU and $2.0B Annual Revenue" />
+      <PhaseHeader label="Equals Tomorrow" title="By 2030: 100M MAU and $1.9B Annual Revenue" />
 
       <p className="text-muted-foreground text-sm leading-relaxed mb-2">
         Six diversified revenue streams - weighted toward advertising, supplemented by subscriptions,
@@ -265,8 +262,8 @@ export default function MonetisationPage() {
       </p>
       <div className="grid grid-cols-3 gap-4 my-6">
         <StatCallout value="100M" label="Monthly Active Users" color="text-accent-green" />
-        <StatCallout value="$2.0B" label="Annual Revenue" color="text-accent-blue" />
-        <StatCallout value="$19.56" label="Blended ARPU" color="text-accent-purple" />
+        <StatCallout value="$1.9B" label="Annual Revenue" color="text-accent-blue" />
+        <StatCallout value="$19.20" label="Blended ARPU" color="text-accent-purple" />
       </div>
 
       {/* ── Revenue Stream Cards ── */}
@@ -351,8 +348,8 @@ export default function MonetisationPage() {
                 ))}
                 <tr className="font-bold">
                   <td className="pt-3 text-foreground">Total</td>
-                  <td className="pt-3 text-right text-foreground">$19.56</td>
-                  <td className="pt-3 text-right text-accent-green">$2.0B</td>
+                  <td className="pt-3 text-right text-foreground">$19.20</td>
+                  <td className="pt-3 text-right text-accent-green">$1.9B</td>
                   <td className="pt-3 text-right text-foreground">100%</td>
                 </tr>
               </tbody>
