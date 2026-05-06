@@ -154,7 +154,7 @@ export default function MonetisationPage() {
             standards for consumer social.
           </p>
           <div className="grid grid-cols-3 gap-4 my-4">
-            <StatCallout value="$46K" label="Peak monthly revenue" color="text-accent-green" />
+            <StatCallout value="$46K" label="Peak ARPU month revenue" color="text-accent-green" />
             <StatCallout value="90K" label="MAUs at peak" />
             <StatCallout value="$0.51" label="Monthly ARPU" color="text-accent-purple" />
           </div>
