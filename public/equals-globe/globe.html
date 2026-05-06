@@ -74,35 +74,7 @@
       opacity: 0;
       transition: opacity 0.8s ease-in;
     }
-    #canvas.ready ~ .overlay, #canvas.ready ~ .feed, #canvas.ready ~ .topline, #canvas.ready ~ .live-badge { opacity: 1; }
-
-    /* live indicator (top-left) */
-    .live-badge {
-      position: fixed;
-      top: 32px;
-      left: 32px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'FAIRFavoritMono', ui-monospace, Menlo, monospace;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.85);
-      opacity: 0;
-      transition: opacity 0.8s ease-in;
-      pointer-events: none;
-      z-index: 4;
-    }
-    .live-badge::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background: #FF3B30;
-      border-radius: 50%;
-      box-shadow: 0 0 10px #FF3B30;
-      animation: live-pulse 1.4s infinite ease-in-out;
-    }
+    #canvas.ready ~ .overlay, #canvas.ready ~ .feed, #canvas.ready ~ .topline { opacity: 1; }
     .row { display: flex; justify-content: space-between; align-items: flex-start; }
     .brand { display: none; }
 
@@ -303,8 +275,6 @@
 </head>
 <body>
   <canvas id="canvas"></canvas>
-
-  <div class="live-badge"><span>Live · Near Real Time</span></div>
 
   <!-- LIVE FRIENDSHIPS panel removed for now -->
   <aside class="feed" style="display:none">
