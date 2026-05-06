@@ -1381,7 +1381,7 @@
     function fetchMorePairs() {
       if (refilling) return;
       refilling = true;
-      const url = (GLOBE_API_BASE || '') + `/api/globe-pairs?limit=${PAIRS_FETCH_BATCH}`;
+      const url = (GLOBE_API_BASE || '') + `/api/globe-pairs?limit=${PAIRS_FETCH_BATCH}&t=${Date.now()}`;
       fetch(url)
         .then(r => r.ok ? r.json() : null)
         .catch(() => null)
