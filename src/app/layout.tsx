@@ -42,6 +42,16 @@ const pitchSans = localFont({
 export const metadata: Metadata = {
   title: "=DATA",
   description: "Equals Series A investor data room. The music social network uniting the world through music.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
 };
 
 export const viewport: Viewport = {
