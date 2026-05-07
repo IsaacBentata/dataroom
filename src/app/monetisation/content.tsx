@@ -141,15 +141,10 @@ export default function MonetisationPage() {
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
             Between October 2025 and January 2026, Equals ran an extended A/B test on subscription
             monetisation. When we deployed the majority of our monetisation-gated features at the end
-            of November, we hit $910K ARR at our highest annualised ARPU of $9.30 per user. Across every benchmark
+            of November, we hit $910K ARR with an annualised ARPU of $9.30 per user. Across every benchmark
             that matters - paid conversion, refunds, and ad eCPMs - we landed materially above industry
             standards for consumer social.
           </p>
-          <div className="grid grid-cols-3 gap-4 my-4">
-            <StatCallout value="$910K" label="ARR at highest ARPU" color="text-accent-green" />
-            <StatCallout value="$9.30" label="Annualised ARPU" color="text-accent-purple" />
-            <StatCallout value="4.5%" label="Paywall conversion" color="text-accent-blue" />
-          </div>
         </CardContent>
       </Card>
 
