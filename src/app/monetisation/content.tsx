@@ -17,12 +17,12 @@ const revenueStreams = [
   },
   {
     name: "Subscriptions",
-    arpu: "$6.12",
-    total: "$612M",
+    arpu: "$9.30",
+    total: "$930M",
     color: "text-accent-blue",
     description:
-      "Based on proven ARPU of $0.51/month ($6.12 annualised) from the Oct 2025 - Jan 2026 monetisation test at 90K MAU. Pro features include unlimited quiz entries, advanced profile customisation, exclusive community access, early vinyl drops, and an ad-free experience.",
-    justification: "The $0.51/month ARPU was achieved with a 4.5-5% paywall conversion rate on a less mature product with lower engagement than today.",
+      "Based on proven annualised ARPU of $9.30 from the end of November 2025 when full monetisation features were deployed. Pro features include unlimited quiz entries, advanced profile customisation, exclusive community access, early vinyl drops, and an ad-free experience.",
+    justification: "This ARPU was achieved with a 4.5% paywall conversion rate on a less mature product with lower engagement than today.",
   },
   {
     name: "Commerce",
@@ -63,11 +63,11 @@ const revenueStreams = [
 ];
 
 const revenueSummary = [
-  { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "62.5%" },
-  { stream: "Subscriptions", arpu: "$6.12", annual: "$612M", share: "31.9%" },
-  { stream: "Commerce", arpu: "$0.42", annual: "$42M", share: "2.2%" },
-  { stream: "Label Services", arpu: "$0.40", annual: "$40M", share: "2.1%" },
-  { stream: "Live Experiences", arpu: "$0.20", annual: "$20M", share: "1.0%" },
+  { stream: "Advertising", arpu: "$12.00", annual: "$1.2B", share: "53.6%" },
+  { stream: "Subscriptions", arpu: "$9.30", annual: "$930M", share: "42.3%" },
+  { stream: "Commerce", arpu: "$0.42", annual: "$42M", share: "1.9%" },
+  { stream: "Label Services", arpu: "$0.40", annual: "$40M", share: "1.8%" },
+  { stream: "Live Experiences", arpu: "$0.20", annual: "$20M", share: "0.9%" },
   { stream: "Ticketing", arpu: "$0.06", annual: "$6M", share: "0.3%" },
 ];
 
@@ -140,15 +140,15 @@ export default function MonetisationPage() {
         <CardContent>
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
             Between October 2025 and January 2026, Equals ran an extended A/B test on subscription
-            monetisation. At peak, the platform generated $46K in a single month on just 90K MAU - an
-            effective ARPU of $0.51/month per MAU, or $6.12 annualised. Across every benchmark that
-            matters - paid conversion, refunds, and ad eCPMs - we landed materially above industry
-            standards for consumer social.
+            monetisation. When we deployed the majority of our monetisation-gated features at the end
+            of November, we hit a $910K annualised run rate at an annualised ARPU of $9.30. Across every
+            benchmark that matters - paid conversion, refunds, and ad eCPMs - we landed materially above
+            industry standards for consumer social.
           </p>
           <div className="grid grid-cols-3 gap-4 my-4">
-            <StatCallout value="$46K" label="Peak ARPU month revenue" color="text-accent-green" />
-            <StatCallout value="90K" label="MAUs at peak" />
-            <StatCallout value="$0.51" label="Monthly ARPU" color="text-accent-purple" />
+            <StatCallout value="$910K" label="Peak ARR" color="text-accent-green" />
+            <StatCallout value="$9.30" label="Annualised ARPU" color="text-accent-purple" />
+            <StatCallout value="4.5%" label="Paywall conversion" color="text-accent-blue" />
           </div>
         </CardContent>
       </Card>
@@ -225,15 +225,14 @@ export default function MonetisationPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            Applying the proven $0.51/month ARPU to today's 530K MAU base gives ~$270K/month, a $3.2M
-            annual run rate. This excludes commerce, label services, and
-            ticketing revenue. The annualised proven ARPU of $6.12 is the basis for our subscription
-            line in the long-term revenue forecast.
+            Applying the proven $9.30 annualised ARPU to today's 530K MAU base gives a $4.9M ARR from
+            subscriptions alone. This excludes commerce, label services, and ticketing revenue. The
+            proven ARPU of $9.30 is the basis for our subscription line in the long-term revenue forecast.
           </p>
           <div className="grid grid-cols-3 gap-4 my-4">
-            <StatCallout value="$270K" label="Projected monthly revenue" color="text-accent-green" />
-            <StatCallout value="$3.2M" label="Projected ARR" color="text-accent-blue" />
-            <StatCallout value="$6.12" label="Proven annualised ARPU" color="text-accent-purple" />
+            <StatCallout value="$4.9M" label="Projected ARR" color="text-accent-green" />
+            <StatCallout value="$9.30" label="Proven annualised ARPU" color="text-accent-purple" />
+            <StatCallout value="530K" label="Current MAUs" color="text-accent-blue" />
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed">
             This projection is conservative: it assumes no improvement in conversion or pricing despite
@@ -246,7 +245,7 @@ export default function MonetisationPage() {
       </Card>
 
       {/* ═══ EQUALS TOMORROW ═══ */}
-      <PhaseHeader label="Equals Tomorrow" title="By 2030: 100M MAU and $1.9B Annual Revenue" />
+      <PhaseHeader label="Equals Tomorrow" title="By 2030: 100M MAU and $2.2B Annual Revenue" />
 
       <p className="text-muted-foreground text-sm leading-relaxed mb-2">
         Six diversified revenue streams - weighted toward advertising, supplemented by subscriptions,
@@ -254,8 +253,8 @@ export default function MonetisationPage() {
       </p>
       <div className="grid grid-cols-3 gap-4 my-6">
         <StatCallout value="100M" label="Monthly Active Users" color="text-accent-green" />
-        <StatCallout value="$1.9B" label="Annual Revenue" color="text-accent-blue" />
-        <StatCallout value="$19.20" label="Blended ARPU" color="text-accent-purple" />
+        <StatCallout value="$2.2B" label="Annual Revenue" color="text-accent-blue" />
+        <StatCallout value="$22.38" label="Blended ARPU" color="text-accent-purple" />
       </div>
 
       {/* ── Revenue Stream Cards ── */}
@@ -340,8 +339,8 @@ export default function MonetisationPage() {
                 ))}
                 <tr className="font-bold">
                   <td className="pt-3 text-foreground">Total</td>
-                  <td className="pt-3 text-right text-foreground">$19.20</td>
-                  <td className="pt-3 text-right text-accent-green">$1.9B</td>
+                  <td className="pt-3 text-right text-foreground">$22.38</td>
+                  <td className="pt-3 text-right text-accent-green">$2.2B</td>
                   <td className="pt-3 text-right text-foreground">100%</td>
                 </tr>
               </tbody>
