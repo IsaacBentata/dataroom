@@ -13,11 +13,14 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // For authenticated users, allow everything
+  // For authenticated users, allow everything (with per-investor route blocks)
   const sessionCookie = request.cookies.get("dr-session");
   if (sessionCookie?.value) {
     const payload = verifyJwt(sessionCookie.value);
     if (payload?.investor) {
+      if (payload.investor === "Glaser" && pathname.startsWith("/legal")) {
+        return NextResponse.redirect(new URL("/", request.url));
+      }
       return NextResponse.next();
     }
   }

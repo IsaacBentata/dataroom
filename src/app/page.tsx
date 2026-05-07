@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import VinylPlayer from "@/components/VinylPlayer";
 import AnimateText from "@/components/AnimateText";
 import ScrollReveal from "@/components/ScrollReveal";
 
-const items = [
+const ALL_ITEMS = [
   { href: "/growth", label: "Growth" },
   { href: "/retention", label: "Retention" },
   { href: "/demographics", label: "Demographics" },
@@ -19,6 +19,10 @@ const items = [
   { href: "/legal", label: "Legal" },
   { href: "/live", label: "Realtime" },
 ];
+
+const HIDDEN_FOR_INVESTOR: Record<string, Set<string>> = {
+  Glaser: new Set(["/legal"]),
+};
 
 const INVEST_HREF = `mailto:isaac.k@equa.ls?cc=${encodeURIComponent(
   "isaac@equa.ls"
@@ -124,7 +128,17 @@ export default function Home() {
   const [index, setIndex] = useState(0);
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [investor, setInvestor] = useState<string | null>(null);
   const wheelAccum = useRef(0);
+
+  useEffect(() => {
+    setInvestor(localStorage.getItem("equals-data-room-investor"));
+  }, []);
+
+  const items = useMemo(() => {
+    const hidden = (investor && HIDDEN_FOR_INVESTOR[investor]) || new Set<string>();
+    return ALL_ITEMS.filter((it) => !hidden.has(it.href));
+  }, [investor]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024);

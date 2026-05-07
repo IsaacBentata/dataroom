@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,6 +22,10 @@ const sections = [
   { href: "/live", label: "Realtime" },
 ];
 
+const HIDDEN_FOR_INVESTOR: Record<string, Set<string>> = {
+  Glaser: new Set(["/legal"]),
+};
+
 const investHref = `mailto:isaac.k@equa.ls?cc=${encodeURIComponent(
   "isaac@equa.ls"
 )}&subject=${encodeURIComponent(
@@ -33,6 +37,14 @@ const investHref = `mailto:isaac.k@equa.ls?cc=${encodeURIComponent(
 export default function Navigation() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [investor, setInvestor] = useState<string | null>(null);
+
+  useEffect(() => {
+    setInvestor(localStorage.getItem("equals-data-room-investor"));
+  }, []);
+
+  const hidden = (investor && HIDDEN_FOR_INVESTOR[investor]) || new Set<string>();
+  const visibleSections = sections.filter((s) => !hidden.has(s.href));
 
   return (
     <>
@@ -42,7 +54,7 @@ export default function Navigation() {
           <img src="/equals-icon.svg" alt="Equals" className="h-[20px] w-auto" />
         </Link>
         <div className="flex flex-col gap-0.5 flex-1">
-          {sections.slice(1).map(({ href, label }) => (
+          {visibleSections.slice(1).map(({ href, label }) => (
             <Link
               key={href}
               href={href}
@@ -85,7 +97,7 @@ export default function Navigation() {
         </div>
         {isOpen && (
           <div className="px-4 pb-4 flex flex-col gap-0.5 border-t border-border/50 pt-2">
-            {sections.slice(1).map(({ href, label }) => (
+            {visibleSections.slice(1).map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
