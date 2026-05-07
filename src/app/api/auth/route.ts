@@ -38,6 +38,7 @@ const PASSWORD_HASHES: Record<string, string> = {
   "1d7ecddb3e1f0881349538e8e113796dc2ee5f5140236972f16bb54e4b5025bb": "Insight",
   "e6acb099c9fa46896258ca8bcbddb6d57aed1139e3ee9d0f3c54e1cd990e22ba": "Hodari",
   "c5f5a4c8157584ec42ddc5dfef59ceaef61f841c60e379bbf7ce3c9db577716b": "Headline",
+  "d910b6ca1f58711bcd041fcc662581fe3d8d96226dc241b372bd950ee92e3a5f": "Glaser",
 };
 
 // Rate limiting: track failed attempts per IP
