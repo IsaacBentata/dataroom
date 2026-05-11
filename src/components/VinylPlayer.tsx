@@ -53,18 +53,29 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   const [pickerOpen, setPickerOpen] = useState(false);
   const [track, setTrack] = useState<Track>(DEFAULT_TRACK);
 
-  // First-ever visit: keep the default track and try to autoplay (browsers may
-  // block if there's no user gesture). Every refresh after that: open with a
-  // random non-default track from the picker grid. Per-investor overrides
-  // (e.g. TQ → The National) replace the default first track.
-  useEffect(() => {
+  // Per-investor first-track override (e.g. TQ → The National). Runs in a
+  // layout effect so the swap happens before the browser paints, avoiding a
+  // flash of the default Daft Punk cover.
+  useLayoutEffect(() => {
     if (typeof window === "undefined") return;
-    let investorDefault: Track | null = null;
     try {
       const investor = window.localStorage.getItem("equals-data-room-investor");
       if (investor && INVESTOR_DEFAULT_TRACKS[investor]) {
-        investorDefault = INVESTOR_DEFAULT_TRACKS[investor];
+        setTrack(INVESTOR_DEFAULT_TRACKS[investor]);
       }
+    } catch {}
+  }, []);
+
+  // First-ever visit: keep the default track and try to autoplay (browsers may
+  // block if there's no user gesture). Every refresh after that: open with a
+  // random non-default track from the picker grid (unless an investor override
+  // is already in effect).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let investorOverride = false;
+    try {
+      const investor = window.localStorage.getItem("equals-data-room-investor");
+      investorOverride = !!(investor && INVESTOR_DEFAULT_TRACKS[investor]);
     } catch {}
     let count = 0;
     try {
@@ -74,15 +85,12 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
       window.localStorage.setItem(VISIT_KEY, String(count + 1));
     } catch {}
     if (count === 0) {
-      if (investorDefault) setTrack(investorDefault);
       requestAnimationFrame(() => {
         const a = audioRef.current;
         if (!a) return;
         a.play().catch(() => {});
       });
-    } else if (investorDefault) {
-      setTrack(investorDefault);
-    } else {
+    } else if (!investorOverride) {
       const others = PICKER_GRID.filter(
         (t): t is Track => t !== null && t.audio !== DEFAULT_TRACK.audio,
       );
