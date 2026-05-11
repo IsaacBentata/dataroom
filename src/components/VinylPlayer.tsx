@@ -52,10 +52,11 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   const [snapping, setSnapping] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [track, setTrack] = useState<Track>(DEFAULT_TRACK);
+  // Gate the entire render until the client has resolved the per-investor
+  // override. SSR would otherwise paint Daft Punk's cover (from the HTML and
+  // any cached preload) before React hydrates and useLayoutEffect can swap it.
+  const [trackResolved, setTrackResolved] = useState(false);
 
-  // Per-investor first-track override (e.g. TQ → The National). Runs in a
-  // layout effect so the swap happens before the browser paints, avoiding a
-  // flash of the default Daft Punk cover.
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -64,6 +65,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
         setTrack(INVESTOR_DEFAULT_TRACKS[investor]);
       }
     } catch {}
+    setTrackResolved(true);
   }, []);
 
   // First-ever visit: keep the default track and try to autoplay (browsers may
@@ -275,6 +277,8 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
       window.setTimeout(() => setSnapping(false), 480);
     }
   };
+
+  if (!trackResolved) return null;
 
   if (pinnedBottomCenter) {
     return (
