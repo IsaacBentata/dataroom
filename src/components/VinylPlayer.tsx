@@ -15,6 +15,15 @@ const DEFAULT_TRACK: Track = {
   audio: "/player/one-more-time.m4a",
 };
 
+const INVESTOR_DEFAULT_TRACKS: Record<string, Track> = {
+  TQ: {
+    title: "Don't Swallow the Cap",
+    artist: "The National",
+    cover: "/player/the-national-trouble-will-find-me.webp",
+    audio: "/player/the-national-dont-swallow-the-cap.wav",
+  },
+};
+
 // 5×3 grid; `null` = empty "+" slot, Track = playable tile.
 const PICKER_GRID: (Track | null)[] = [
   { title: "NUEVAYoL", artist: "Bad Bunny", cover: "/player/bad-bunny-debi.jpg", audio: "/player/bad-bunny-nuevayol.m4a" },
@@ -44,11 +53,19 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   const [pickerOpen, setPickerOpen] = useState(false);
   const [track, setTrack] = useState<Track>(DEFAULT_TRACK);
 
-  // First-ever visit: keep Daft Punk and try to autoplay (browsers may block
-  // if there's no user gesture). Every refresh after that: open with a random
-  // non-Daft-Punk track from the picker grid.
+  // First-ever visit: keep the default track and try to autoplay (browsers may
+  // block if there's no user gesture). Every refresh after that: open with a
+  // random non-default track from the picker grid. Per-investor overrides
+  // (e.g. TQ → The National) replace the default first track.
   useEffect(() => {
     if (typeof window === "undefined") return;
+    let investorDefault: Track | null = null;
+    try {
+      const investor = window.localStorage.getItem("equals-data-room-investor");
+      if (investor && INVESTOR_DEFAULT_TRACKS[investor]) {
+        investorDefault = INVESTOR_DEFAULT_TRACKS[investor];
+      }
+    } catch {}
     let count = 0;
     try {
       count = parseInt(window.localStorage.getItem(VISIT_KEY) || "0", 10) || 0;
@@ -57,11 +74,14 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
       window.localStorage.setItem(VISIT_KEY, String(count + 1));
     } catch {}
     if (count === 0) {
+      if (investorDefault) setTrack(investorDefault);
       requestAnimationFrame(() => {
         const a = audioRef.current;
         if (!a) return;
         a.play().catch(() => {});
       });
+    } else if (investorDefault) {
+      setTrack(investorDefault);
     } else {
       const others = PICKER_GRID.filter(
         (t): t is Track => t !== null && t.audio !== DEFAULT_TRACK.audio,
@@ -83,7 +103,7 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
   };
 
   // When a track ends, jump to a random different track and auto-play.
-  // Gives a continuous "radio" feel: Daft Punk first, then random rotation.
+  // Gives a continuous "radio" feel: default first, then random rotation.
   const advanceToRandomTrack = () => {
     const playable = PICKER_GRID.filter((x): x is Track => x !== null);
     const others = playable.filter((x) => x.audio !== track.audio);
