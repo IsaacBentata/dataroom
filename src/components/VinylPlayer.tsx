@@ -22,6 +22,12 @@ const INVESTOR_DEFAULT_TRACKS: Record<string, Track> = {
     cover: "/player/the-national-trouble-will-find-me.webp",
     audio: "/player/the-national-dont-swallow-the-cap.wav",
   },
+  Sony: {
+    title: "iPod Touch",
+    artist: "Ninajirachi",
+    cover: "/player/ninajirachi-ipod-touch.jpg",
+    audio: "/player/ninajirachi-ipod-touch.mp4",
+  },
 };
 
 // 5×3 grid; `null` = empty "+" slot, Track = playable tile.

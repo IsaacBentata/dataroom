@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,6 +24,15 @@ const communityData = [
 ];
 
 export default function MusicIndustryPage() {
+  const [isSony] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      return window.localStorage.getItem("equals-data-room-investor") === "Sony";
+    } catch {
+      return false;
+    }
+  });
+
   return (
     <Section>
       <div className="mb-12">
@@ -35,8 +45,12 @@ export default function MusicIndustryPage() {
       {/* Label Logos */}
       <div className="flex items-center gap-12 mb-6">
         <img src="/umg.png" alt="Universal Music Group" style={{ height: 60, width: 'auto' }} />
-        <img src="/sony-music.png" alt="Sony Music" style={{ height: 70, width: 'auto' }} />
-        <img src="/warner-music.png" alt="Warner Music Group" style={{ height: 40, width: 'auto' }} />
+        {!isSony && (
+          <img src="/sony-music.png" alt="Sony Music" style={{ height: 70, width: 'auto' }} />
+        )}
+        {!isSony && (
+          <img src="/warner-music.png" alt="Warner Music Group" style={{ height: 40, width: 'auto' }} />
+        )}
         <img src="/ninja.jpg" alt="Ninjatune" style={{ height: 70, width: 'auto' }} />
       </div>
 
@@ -54,16 +68,18 @@ export default function MusicIndustryPage() {
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-3 mb-5">
-            <div className="w-2 h-2 rounded-full bg-black mt-2 flex-shrink-0" />
-            <div>
-              <div className="font-semibold text-accent-orange mb-1" style={{ fontSize: 18 }}>Sony Music & Warner Music Group - Term Sheets</div>
-              <p className="text-muted-foreground text-sm">
-                Term sheets from both Sony and Warner on similar terms to UMG.
-                Path to having all three majors on platform.
-              </p>
+          {!isSony && (
+            <div className="flex items-start gap-3 mb-5">
+              <div className="w-2 h-2 rounded-full bg-black mt-2 flex-shrink-0" />
+              <div>
+                <div className="font-semibold text-accent-orange mb-1" style={{ fontSize: 18 }}>Sony Music & Warner Music Group - Term Sheets</div>
+                <p className="text-muted-foreground text-sm">
+                  Term sheets from both Sony and Warner on similar terms to UMG.
+                  Path to having all three majors on platform.
+                </p>
+              </div>
             </div>
-          </div>
+          )}
           <div className="flex items-start gap-3">
             <div className="w-2 h-2 rounded-full bg-black mt-2 flex-shrink-0" />
             <div>
