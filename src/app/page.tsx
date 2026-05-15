@@ -22,6 +22,7 @@ const ALL_ITEMS = [
 
 const HIDDEN_FOR_INVESTOR: Record<string, Set<string>> = {
   Glaser: new Set(["/legal"]),
+  InternalEquals: new Set(["/team", "/legal"]),
 };
 
 const INVEST_HREF = `mailto:isaac.k@equa.ls?cc=${encodeURIComponent(
