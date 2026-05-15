@@ -108,14 +108,16 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
     }
   }, []);
 
+  // Audio element is keyed on track.audio, so swapping tracks unmounts and
+  // remounts a fresh <audio>. The new element won't be ready for play() in the
+  // same tick — flag the intent and let the effect below play once the ref and
+  // src are in place.
+  const autoplayPending = useRef(false);
+
   const pickTrack = (t: Track) => {
+    autoplayPending.current = true;
     setTrack(t);
     setPickerOpen(false);
-    requestAnimationFrame(() => {
-      const a = audioRef.current;
-      if (!a) return;
-      a.play().catch(() => setPlaying(false));
-    });
   };
 
   // When a track ends, jump to a random different track and auto-play.
@@ -126,13 +128,27 @@ export default function VinylPlayer({ pinnedBottomCenter = false }: { pinnedBott
     const next = others.length > 0
       ? others[Math.floor(Math.random() * others.length)]
       : playable[0];
+    autoplayPending.current = true;
     setTrack(next);
-    requestAnimationFrame(() => {
-      const a = audioRef.current;
-      if (!a) return;
-      a.play().catch(() => setPlaying(false));
-    });
   };
+
+  useEffect(() => {
+    if (!autoplayPending.current) return;
+    autoplayPending.current = false;
+    const a = audioRef.current;
+    if (!a) return;
+    const tryPlay = () => a.play().catch(() => setPlaying(false));
+    if (a.readyState >= 2) {
+      tryPlay();
+      return;
+    }
+    const onCanPlay = () => {
+      a.removeEventListener("canplay", onCanPlay);
+      tryPlay();
+    };
+    a.addEventListener("canplay", onCanPlay);
+    return () => a.removeEventListener("canplay", onCanPlay);
+  }, [track.audio]);
 
   // Warm picker cover images on mount so the grid renders instantly on first open.
   // Fire HEAD-level <link rel=preload> hints into <head> for browser-priority
