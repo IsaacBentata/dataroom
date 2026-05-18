@@ -477,8 +477,8 @@ export default function ForecastPage() {
             title="Our road to 100M MAU"
           />
           <a
-            href="/equals-forecast-v3.xlsx"
-            download="Equals Forecast v3.xlsx"
+            href="/equals-forecast-2026-2030.xlsx"
+            download="Equals Forecast 2026-2030.xlsx"
             className="shrink-0"
           >
             <Button variant="outline" size="sm" className="gap-2">
@@ -544,8 +544,8 @@ export default function ForecastPage() {
                       style={{ fontSize: 11, padding: 0 }}
                     >
                       <span
-                        className="inline-block"
-                        style={{ position: "sticky", left: 0, padding: "8px 12px", fontFamily: "var(--font-fair-favorit-mono), monospace", textTransform: "uppercase" }}
+                        className="inline-block font-mono uppercase"
+                        style={{ position: "sticky", left: 0, padding: "8px 12px", fontFamily: "var(--font-fair-favorit-mono), ui-monospace, monospace" }}
                       >
                         {sec.title}
                       </span>
