@@ -17,12 +17,20 @@ const ALL_ITEMS = [
   { href: "/team", label: "Team" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/legal", label: "Legal" },
+  { href: "/forecast", label: "Forecast" },
   { href: "/live", label: "Realtime" },
 ];
 
 const HIDDEN_FOR_INVESTOR: Record<string, Set<string>> = {
   Glaser: new Set(["/legal"]),
   InternalEquals: new Set(["/team", "/legal"]),
+};
+
+// Pages visible only to a specific set of investors. Anyone whose name is
+// not in the set (including investors with no entry here) does not see the
+// menu item or the page.
+const VISIBLE_ONLY_FOR: Record<string, Set<string>> = {
+  "/forecast": new Set(["Mercia", "Unitethew0rld", "Internal"]),
 };
 
 const INVEST_HREF = `mailto:isaac.k@equa.ls?cc=${encodeURIComponent(
@@ -40,6 +48,7 @@ const pageLoaders: Record<string, () => Promise<{ default: React.ComponentType }
   "/demographics": () => import("./demographics/content"),
   "/music-industry": () => import("./music-industry/content"),
   "/monetisation": () => import("./monetisation/content"),
+  "/forecast": () => import("./forecast/content"),
   "/ai": () => import("./ai/content"),
   "/team": () => import("./team/content"),
   "/roadmap": () => import("./roadmap/content"),
@@ -138,7 +147,12 @@ export default function Home() {
 
   const items = useMemo(() => {
     const hidden = (investor && HIDDEN_FOR_INVESTOR[investor]) || new Set<string>();
-    return ALL_ITEMS.filter((it) => !hidden.has(it.href));
+    return ALL_ITEMS.filter((it) => {
+      if (hidden.has(it.href)) return false;
+      const allow = VISIBLE_ONLY_FOR[it.href];
+      if (allow && (!investor || !allow.has(investor))) return false;
+      return true;
+    });
   }, [investor]);
 
   useEffect(() => {
