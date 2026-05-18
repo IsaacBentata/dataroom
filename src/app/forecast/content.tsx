@@ -352,6 +352,30 @@ const SECTIONS: SectionSpec[] = [
   },
 ];
 
+// ===== Quarter narratives (sourced from Equals Forecast v3.xlsx, row 70) =====
+
+const QUARTER_COPY: { headline: string; body: string }[] = [
+  { headline: "Baseline quarter", body: "532K starting MAU. Paid spend of $270K/mo back-solved from $1.40 paid CPI (data room growth report). 50% organic share of installs (split 51/30/15/3 across organic, TikTok, Meta, Apple Search Ads). Monthly MAU retention 45% (blended across verified and pre-verification users). Revenue $35K/mo, driven almost entirely by subscriptions at 0.5% paywall conversion. Ends Q2 at ~940K MAU." },
+  { headline: "Fan Layer ships", body: "Fan Layer ships per the product roadmap. K-factor climbs from 0.10 to 0.30 as in-product invite mechanics improve. W4 retention improves from 27% to 32%. Paid CPI structurally compressed at $1.40 because the acquisition footprint is iOS-only and restricted to English-speaking devices. Ends at 1.6M MAU." },
+  { headline: "Artist Layer goes live", body: "Artist Layer goes live. Approximately 30 artist activations per quarter (~10K users per activation per roadmap) drive a step-change in organic acquisition. Digital Vinyls launch at $4.99-6.99 per unit. Commerce ARPU begins inflecting upward from this point as artist fan bases come on-platform with intent to purchase Digital Vinyls and artist merchandise. K-factor peaks at 0.50, the high-water mark for viral mechanics. Ends at 2.8M MAU." },
+  { headline: "First full quarter of artist-led growth", body: "First full quarter of artist-led growth. Chat messages running at 28.4M/mo (13x in 6 months per the retention report). Paid CPI continues declining as creative library matures and early Android + international supply opens. K-factor begins to decline from its peak as the initial viral wave normalises." },
+  { headline: "Label Services kickstart", body: "Label Services revenue line kickstarts at $0.05/MAU/yr, the first revenue from the UMG partnership (signed) and the Sony / Warner term-sheet partners. Paid CPI bottoms at $1.10, reflecting both creative maturity and the early benefits of Android rollout and international expansion opening cheaper incremental supply pools." },
+  { headline: "Ticketing kickstarts", body: "Ticketing revenue line kickstarts at $0.01/MAU/yr via venue affiliate partnerships. Paid CPI remains near the floor at $1.10 as Android and international supply expansion continues to absorb incremental spend efficiently." },
+  { headline: "Culture Layer rollout completes", body: "Culture Layer rollout completes per the product roadmap (W4 and W8 retention both hitting the 45% targets). MAU ends Q4 at 10.1M, matching the roadmap anchor. Paid CPI begins climbing from $1.10 to $1.15 as the cheap-supply gains from Android + internationalisation start to exhaust." },
+  { headline: "Series B raise", body: "Series B raise. Paid spend steps up from $650K/mo to $1.0M/mo as the acquisition budget is materially upweighted with new capital. Monthly retention crosses 68%, the highest of the forecast before the deliberate monetisation drag in subsequent quarters." },
+  { headline: "Subscription upweight", body: "Subscription monetisation is materially upweighted. The paywall stack hardens, additional features move behind paid tiers, and paywall conversion climbs from 1.0% to 1.5%. Monthly retention dips 7 percentage points (68% -> 61%) reflecting the friction introduced by the monetisation push. Subscription ARPU jumps from $1.44 to $2.16/MAU/yr." },
+  { headline: "Live Experiences kickstart", body: "Live Experiences revenue line kickstarts at $0.05/MAU/yr; the delayed launch reflects the need for sufficient artist density on platform to support live listening parties and concert co-watching formats. Retention recovers partially as subscription friction normalises (61% -> 64%)." },
+  { headline: "Advertising introduced", body: "Advertising is introduced into the product as a deliberate monetisation layer. Ads ARPU steps from $0.05 to $3.00/MAU/yr, with eCPMs of $51 rewarded and $27 interstitial per the monetisation data. Monthly retention dips again 4 percentage points (64% -> 60%) as ad load impacts perceived experience. Revenue mix flips: ads jumps from <2% to 42% of total revenue." },
+  { headline: "International expansion", body: "International expansion picks up the growth slack as English-speaking markets begin to saturate. Paid CPI now $1.50 as scale outpaces cheap-supply expansion. Ads ARPU doubles to $6.00/MAU/yr as inventory and demand mature. Baseline organic share steps up from 70% to 75% reflecting brand maturity at scale." },
+  { headline: "Six-stream monetisation stack matures", body: "Mature six-stream monetisation stack: Ads $8 / Subs $4.65 / Commerce $0.40 / Label Services $0.25 / Live $0.14 / Ticketing $0.04, summing to $13.48/MAU/yr blended. 29M MAU." },
+  { headline: "K-factor saturates", body: "K-factor declines to 0.10 as social graph density saturates. The structural reason: each user has a finite local network and most of it is now on-platform, so each new install generates fewer net-new viral invites. Brand-led organic acquisition compensates for the K-factor decay." },
+  { headline: "ARR crosses $800M", body: "ARR reaches $812M at 47M MAU. Paid CPI now $1.85, cheap supply largely exhausted across iOS, Android, and international markets. LTV/CAC peaks at ~10x earlier in the year and begins declining as paid scales into less efficient supply." },
+  { headline: "Series C/D raise", body: "Series C/D raise. Paid spend nearly doubles from $6.5M/mo to $12.0M/mo as growth capital is deployed aggressively into the saturation phase. Paid CPI climbs to $2.10 as the marginal install becomes more expensive at this scale." },
+  { headline: "Paid spend at $15M/mo", body: "Paid spend reaches $15M/mo. 81M MAU. Subscription paywall conversion 4.3%. Ads ARPU at $11/MAU/yr, approaching the 2030 target of $12." },
+  { headline: "96M MAU", body: "96M MAU. Blended ARPU $21.29/MAU/yr. ARR $2.05B. Final saturation push underway with paid spend at $20M/mo and CPI at $2.70." },
+  { headline: "Target reached", body: "Target reached. 102M MAU. 5.0% paywall conversion. Blended ARPU $22.38/MAU/yr matches the data room target exactly. ARR $2.28B against the $2.2B data room target. Paid spend at $25M/mo (~$300M annualised), in line with mature consumer social comparables (Bumble ~$200M/yr)." },
+];
+
 // ===== Palette (sheet convention: cream = drivers, blue = formulas) =====
 const CREAM_BG = "#FEF3C7";          // amber-100 — warm, soft driver-cell bg
 const CREAM_BG_HOVER = "#FDE68A";    // amber-200 — interactive on hover/focus
@@ -433,26 +457,15 @@ export default function ForecastPage() {
     setTooltip((prev) => ({ x, y, title: note.title, body: note.body, key: (prev?.key ?? 0) + 1 }));
   };
 
-  // Snapshot card on Q header hover — shows the headline numbers for that quarter.
+  // Quarter narrative on Q header hover. Copy sourced from the Equals Forecast v3
+  // sheet (row 70 "QUARTERLY DRIVERS"), one per quarter.
   const handleQuarterHover = (e: React.MouseEvent, i: number) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-    const lines = [
-      `Paid spend          ${fmt(drivers.paidSpend[i], "moneyKmo")}/mo`,
-      `Paid CPI            ${fmt(drivers.paidCPI[i], "usd2")}`,
-      `Paid installs       ${fmt(computed.paidInstalls[i], "K")}`,
-      `Organic share       ${fmt(computed.organicShare[i], "pct")}`,
-      `Total installs      ${fmt(computed.totalInstalls[i], "K")}`,
-      `Blended eCPI        ${fmt(computed.blendedECPI[i], "usd2")}`,
-      `MAU (end of qtr)    ${fmt(computed.mauEnd[i], "K")}`,
-      `Q/Q growth          ${fmt(computed.qqGrowth[i], "pct")}`,
-      `Total revenue       ${fmt(computed.revTotal[i], "moneyKq")}`,
-      `ARR                 ${fmt(computed.arr[i], "moneyKyr")}`,
-    ].join("\n");
-    // Anchor below the header, clamped to viewport. Q headers sit near the right
-    // edge once scrolled, so clamp width to keep the card on-screen.
-    const x = Math.min(rect.right + 12, window.innerWidth - 320);
+    const copy = QUARTER_COPY[i];
+    if (!copy) return;
+    const x = Math.min(rect.right + 12, window.innerWidth - 420);
     const y = Math.min(rect.bottom + 6, window.innerHeight - 280);
-    setTooltip((prev) => ({ x, y, title: QUARTERS[i], body: lines, key: (prev?.key ?? 0) + 1 }));
+    setTooltip((prev) => ({ x, y, title: `${QUARTERS[i]} - ${copy.headline}`, body: copy.body, key: (prev?.key ?? 0) + 1 }));
   };
 
   return (
@@ -663,9 +676,7 @@ export default function ForecastPage() {
               lineHeight: 1.55,
               color: "rgba(255,255,255,0.82)",
               fontWeight: 400,
-              whiteSpace: "pre-line",
-              fontFamily: "var(--font-fair-favorit-mono), var(--font-fair-favorit-book), sans-serif",
-              fontVariantNumeric: "tabular-nums",
+              fontFamily: "var(--font-fair-favorit-book), sans-serif",
             }}
           >
             {tooltip.body}
