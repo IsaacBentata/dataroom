@@ -136,6 +136,7 @@ type Computed = {
   mauAdded: number[];
   mauEnd: number[];
   mauAvg: number[];
+  netMauAdds: number[];
   qqGrowth: number[];
   arpuTotal: number[];      // $/yr
   payingSubs: number[];     // K
@@ -147,7 +148,20 @@ type Computed = {
   revTick: number[];
   revTotal: number[];
   monthlyRev: number[];     // $K (at quarter end)
-  arr: number[];            // $K
+  arr: number[];            // $K (annualised revenue)
+  // Revenue mix (% of total) — section 4b in the sheet
+  mixAds: number[];
+  mixSubs: number[];
+  mixComm: number[];
+  mixLabel: number[];
+  mixLive: number[];
+  mixTick: number[];
+  // Unit Economics — section 5 in the sheet
+  paidSpendQ: number[];     // $K per quarter
+  revPerMauMo: number[];    // $ per MAU per month
+  ltv: number[];            // $ per MAU
+  cac: number[];            // $ (blended CAC)
+  ltvCac: number[];         // ratio (x)
 };
 
 function compute(d: DriversState): Computed {
@@ -169,6 +183,7 @@ function compute(d: DriversState): Computed {
   const mauAdded: number[] = new Array(N);
   const mauEnd: number[] = new Array(N);
   const mauAvg: number[] = new Array(N);
+  const netMauAdds: number[] = new Array(N);
   const qqGrowth: number[] = new Array(N);
   for (let i = 0; i < N; i++) {
     mauStart[i] = i === 0 ? d.initialMAU : mauEnd[i - 1];
@@ -176,6 +191,7 @@ function compute(d: DriversState): Computed {
     mauAdded[i] = totalInstalls[i] * instToMau[i];
     mauEnd[i] = mauRetained[i] + mauAdded[i];
     mauAvg[i] = (mauStart[i] + mauEnd[i]) / 2;
+    netMauAdds[i] = mauEnd[i] - mauStart[i];
     qqGrowth[i] = mauStart[i] === 0 ? 0 : (mauEnd[i] - mauStart[i]) / mauStart[i];
   }
 
@@ -194,11 +210,33 @@ function compute(d: DriversState): Computed {
   const monthlyRev = revTotal.map((r) => r / 3);
   const arr = mauEnd.map((m, i) => m * arpuTotal[i]);
 
+  // Revenue mix (% of total)
+  const safeDiv = (n: number, dv: number) => (dv > 0 ? n / dv : 0);
+  const mixAds   = revAds.map((v, i) => safeDiv(v, revTotal[i]));
+  const mixSubs  = revSubs.map((v, i) => safeDiv(v, revTotal[i]));
+  const mixComm  = revComm.map((v, i) => safeDiv(v, revTotal[i]));
+  const mixLabel = revLabel.map((v, i) => safeDiv(v, revTotal[i]));
+  const mixLive  = revLive.map((v, i) => safeDiv(v, revTotal[i]));
+  const mixTick  = revTick.map((v, i) => safeDiv(v, revTotal[i]));
+
+  // Unit economics (section 5)
+  const paidSpendQ = d.paidSpend.map((s) => s * 3);                    // $K per quarter
+  const revPerMauMo = arpuTotal.map((a) => a / 12);                    // $ per MAU per month
+  const ltv = d.monthlyRet.map((m, i) => {                              // $ per MAU
+    const churn = 1 - m;
+    if (churn <= 0) return Infinity;
+    return revPerMauMo[i] / churn;
+  });
+  const cac = blendedECPI.slice();                                      // $ — blended CAC == blended eCPI
+  const ltvCac = ltv.map((l, i) => (cac[i] > 0 ? l / cac[i] : 0));
+
   return {
     paidInstalls, organicShare, totalInstalls, organicInstalls, monthlyRunRate, blendedECPI,
-    qRet, instToMau, mauStart, mauRetained, mauAdded, mauEnd, mauAvg, qqGrowth,
+    qRet, instToMau, mauStart, mauRetained, mauAdded, mauEnd, mauAvg, netMauAdds, qqGrowth,
     arpuTotal, payingSubs,
     revAds, revSubs, revComm, revLabel, revLive, revTick, revTotal, monthlyRev, arr,
+    mixAds, mixSubs, mixComm, mixLabel, mixLive, mixTick,
+    paidSpendQ, revPerMauMo, ltv, cac, ltvCac,
   };
 }
 
@@ -259,6 +297,7 @@ const SECTIONS: SectionSpec[] = [
       { kind: "formula", label: "MAU added",                                        pick: (c) => c.mauAdded,    format: "K", indent: true },
       { kind: "formula", label: "MAU - end of quarter",                             pick: (c) => c.mauEnd,      format: "K" },
       { kind: "formula", label: "MAU - average",                                    pick: (c) => c.mauAvg,      format: "K", indent: true },
+      { kind: "formula", label: "Net MAU adds",                                     pick: (c) => c.netMauAdds,  format: "K", indent: true },
       { kind: "formula", label: "Q/Q growth rate",                                  pick: (c) => c.qqGrowth,    format: "pct", indent: true },
     ],
   },
@@ -287,7 +326,28 @@ const SECTIONS: SectionSpec[] = [
       { kind: "formula", label: "Revenue - Ticketing",            pick: (c) => c.revTick,    format: "moneyKq", indent: true },
       { kind: "formula", label: "Total revenue (quarterly)",      pick: (c) => c.revTotal,   format: "moneyKq" },
       { kind: "formula", label: "Monthly revenue (run-rate)",     pick: (c) => c.monthlyRev, format: "moneyKq", indent: true },
-      { kind: "formula", label: "ARR",                            pick: (c) => c.arr,        format: "moneyKyr" },
+      { kind: "formula", label: "Annualised revenue",             pick: (c) => c.arr,        format: "moneyKyr" },
+    ],
+  },
+  {
+    title: "Revenue mix (% of total)",
+    rows: [
+      { kind: "formula", label: "Ads mix",              pick: (c) => c.mixAds,   format: "pct", indent: true },
+      { kind: "formula", label: "Subscriptions mix",    pick: (c) => c.mixSubs,  format: "pct", indent: true },
+      { kind: "formula", label: "Commerce mix",         pick: (c) => c.mixComm,  format: "pct", indent: true },
+      { kind: "formula", label: "Label Services mix",   pick: (c) => c.mixLabel, format: "pct", indent: true },
+      { kind: "formula", label: "Live Experiences mix", pick: (c) => c.mixLive,  format: "pct", indent: true },
+      { kind: "formula", label: "Ticketing mix",        pick: (c) => c.mixTick,  format: "pct", indent: true },
+    ],
+  },
+  {
+    title: "Unit Economics",
+    rows: [
+      { kind: "formula", label: "Paid spend (quarterly)",   pick: (c) => c.paidSpendQ,  format: "moneyKq", indent: true },
+      { kind: "formula", label: "Blended CAC",              pick: (c) => c.cac,         format: "usd2", indent: true },
+      { kind: "formula", label: "Revenue per MAU (monthly)",pick: (c) => c.revPerMauMo, format: "usd2", indent: true },
+      { kind: "formula", label: "LTV proxy ($ per MAU)",    pick: (c) => c.ltv,         format: "usd2" },
+      { kind: "formula", label: "LTV / CAC ratio",          pick: (c) => c.ltvCac,      format: "ratio" },
     ],
   },
 ];
@@ -373,6 +433,28 @@ export default function ForecastPage() {
     setTooltip((prev) => ({ x, y, title: note.title, body: note.body, key: (prev?.key ?? 0) + 1 }));
   };
 
+  // Snapshot card on Q header hover — shows the headline numbers for that quarter.
+  const handleQuarterHover = (e: React.MouseEvent, i: number) => {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const lines = [
+      `Paid spend          ${fmt(drivers.paidSpend[i], "moneyKmo")}/mo`,
+      `Paid CPI            ${fmt(drivers.paidCPI[i], "usd2")}`,
+      `Paid installs       ${fmt(computed.paidInstalls[i], "K")}`,
+      `Organic share       ${fmt(computed.organicShare[i], "pct")}`,
+      `Total installs      ${fmt(computed.totalInstalls[i], "K")}`,
+      `Blended eCPI        ${fmt(computed.blendedECPI[i], "usd2")}`,
+      `MAU (end of qtr)    ${fmt(computed.mauEnd[i], "K")}`,
+      `Q/Q growth          ${fmt(computed.qqGrowth[i], "pct")}`,
+      `Total revenue       ${fmt(computed.revTotal[i], "moneyKq")}`,
+      `ARR                 ${fmt(computed.arr[i], "moneyKyr")}`,
+    ].join("\n");
+    // Anchor below the header, clamped to viewport. Q headers sit near the right
+    // edge once scrolled, so clamp width to keep the card on-screen.
+    const x = Math.min(rect.right + 12, window.innerWidth - 320);
+    const y = Math.min(rect.bottom + 6, window.innerHeight - 280);
+    setTooltip((prev) => ({ x, y, title: QUARTERS[i], body: lines, key: (prev?.key ?? 0) + 1 }));
+  };
+
   return (
     <>
       <Section>
@@ -421,13 +503,19 @@ export default function ForecastPage() {
                   className="sticky left-0 z-20 bg-background"
                   style={{ minWidth: LABEL_COL_PX, width: LABEL_COL_PX }}
                 />
-                {QUARTERS.map((q) => (
+                {QUARTERS.map((q, i) => (
                   <th
                     key={q}
                     className="text-right px-3 py-2 text-muted-foreground font-normal uppercase tracking-[0.06em] whitespace-nowrap bg-background"
                     style={{ fontSize: 10, minWidth: 84 }}
                   >
-                    {q}
+                    <span
+                      className="cursor-help underline decoration-dotted decoration-foreground/40 underline-offset-4"
+                      onMouseEnter={(e) => handleQuarterHover(e, i)}
+                      onMouseLeave={() => setTooltip(null)}
+                    >
+                      {q}
+                    </span>
                   </th>
                 ))}
               </tr>
@@ -575,6 +663,9 @@ export default function ForecastPage() {
               lineHeight: 1.55,
               color: "rgba(255,255,255,0.82)",
               fontWeight: 400,
+              whiteSpace: "pre-line",
+              fontFamily: "var(--font-fair-favorit-mono), var(--font-fair-favorit-book), sans-serif",
+              fontVariantNumeric: "tabular-nums",
             }}
           >
             {tooltip.body}
