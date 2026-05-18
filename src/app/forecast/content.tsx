@@ -373,6 +373,28 @@ export default function ForecastPage() {
     setTooltip((prev) => ({ x, y, title: note.title, body: note.body, key: (prev?.key ?? 0) + 1 }));
   };
 
+  // Snapshot card on Q header hover — shows the headline numbers for that quarter.
+  const handleQuarterHover = (e: React.MouseEvent, i: number) => {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const lines = [
+      `Paid spend          ${fmt(drivers.paidSpend[i], "moneyKmo")}/mo`,
+      `Paid CPI            ${fmt(drivers.paidCPI[i], "usd2")}`,
+      `Paid installs       ${fmt(computed.paidInstalls[i], "K")}`,
+      `Organic share       ${fmt(computed.organicShare[i], "pct")}`,
+      `Total installs      ${fmt(computed.totalInstalls[i], "K")}`,
+      `Blended eCPI        ${fmt(computed.blendedECPI[i], "usd2")}`,
+      `MAU (end of qtr)    ${fmt(computed.mauEnd[i], "K")}`,
+      `Q/Q growth          ${fmt(computed.qqGrowth[i], "pct")}`,
+      `Total revenue       ${fmt(computed.revTotal[i], "moneyKq")}`,
+      `ARR                 ${fmt(computed.arr[i], "moneyKyr")}`,
+    ].join("\n");
+    // Anchor below the header, clamped to viewport. Q headers sit near the right
+    // edge once scrolled, so clamp width to keep the card on-screen.
+    const x = Math.min(rect.right + 12, window.innerWidth - 320);
+    const y = Math.min(rect.bottom + 6, window.innerHeight - 280);
+    setTooltip((prev) => ({ x, y, title: QUARTERS[i], body: lines, key: (prev?.key ?? 0) + 1 }));
+  };
+
   return (
     <>
       <Section>
@@ -421,13 +443,19 @@ export default function ForecastPage() {
                   className="sticky left-0 z-20 bg-background"
                   style={{ minWidth: LABEL_COL_PX, width: LABEL_COL_PX }}
                 />
-                {QUARTERS.map((q) => (
+                {QUARTERS.map((q, i) => (
                   <th
                     key={q}
                     className="text-right px-3 py-2 text-muted-foreground font-normal uppercase tracking-[0.06em] whitespace-nowrap bg-background"
                     style={{ fontSize: 10, minWidth: 84 }}
                   >
-                    {q}
+                    <span
+                      className="cursor-help underline decoration-dotted decoration-foreground/40 underline-offset-4"
+                      onMouseEnter={(e) => handleQuarterHover(e, i)}
+                      onMouseLeave={() => setTooltip(null)}
+                    >
+                      {q}
+                    </span>
                   </th>
                 ))}
               </tr>
@@ -575,6 +603,9 @@ export default function ForecastPage() {
               lineHeight: 1.55,
               color: "rgba(255,255,255,0.82)",
               fontWeight: 400,
+              whiteSpace: "pre-line",
+              fontFamily: "var(--font-fair-favorit-mono), var(--font-fair-favorit-book), sans-serif",
+              fontVariantNumeric: "tabular-nums",
             }}
           >
             {tooltip.body}
