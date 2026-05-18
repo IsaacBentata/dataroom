@@ -292,7 +292,7 @@ const SECTIONS: SectionSpec[] = [
       { kind: "driver",  key: "resurrect",  label: "Resurrected users",             format: "pct" },
       { kind: "formula", label: "Quarterly retention",                              pick: (c) => c.qRet,      format: "pct", indent: true },
       { kind: "formula", label: "EOQ install-to-MAU conversion",                    pick: (c) => c.instToMau, format: "pct" },
-      { kind: "scalar-driver", key: "initialMAU", label: "MAU - start of quarter (Q2 2026 input)", format: "K" },
+      { kind: "scalar-driver", key: "initialMAU", label: "MAU - start of quarter", format: "K" },
       { kind: "formula", label: "MAU retained",                                     pick: (c) => c.mauRetained, format: "K", indent: true },
       { kind: "formula", label: "MAU added",                                        pick: (c) => c.mauAdded,    format: "K", indent: true },
       { kind: "formula", label: "MAU - end of quarter",                             pick: (c) => c.mauEnd,      format: "K" },
@@ -326,7 +326,7 @@ const SECTIONS: SectionSpec[] = [
       { kind: "formula", label: "Revenue - Ticketing",            pick: (c) => c.revTick,    format: "moneyKq", indent: true },
       { kind: "formula", label: "Total revenue (quarterly)",      pick: (c) => c.revTotal,   format: "moneyKq" },
       { kind: "formula", label: "Monthly revenue (run-rate)",     pick: (c) => c.monthlyRev, format: "moneyKq", indent: true },
-      { kind: "formula", label: "Annualised revenue",             pick: (c) => c.arr,        format: "moneyKyr" },
+      { kind: "formula", label: "Annualised Revenue",             pick: (c) => c.arr,        format: "moneyKyr" },
     ],
   },
   {
@@ -369,11 +369,11 @@ const QUARTER_COPY: { headline: string; body: string }[] = [
   { headline: "International expansion", body: "International expansion picks up the growth slack as English-speaking markets begin to saturate. Paid CPI now $1.50 as scale outpaces cheap-supply expansion. Ads ARPU doubles to $6.00/MAU/yr as inventory and demand mature. Baseline organic share steps up from 70% to 75% reflecting brand maturity at scale." },
   { headline: "Six-stream monetisation stack matures", body: "Mature six-stream monetisation stack: Ads $8 / Subs $4.65 / Commerce $0.40 / Label Services $0.25 / Live $0.14 / Ticketing $0.04, summing to $13.48/MAU/yr blended. 29M MAU." },
   { headline: "K-factor saturates", body: "K-factor declines to 0.10 as social graph density saturates. The structural reason: each user has a finite local network and most of it is now on-platform, so each new install generates fewer net-new viral invites. Brand-led organic acquisition compensates for the K-factor decay." },
-  { headline: "ARR crosses $800M", body: "ARR reaches $812M at 47M MAU. Paid CPI now $1.85, cheap supply largely exhausted across iOS, Android, and international markets. LTV/CAC peaks at ~10x earlier in the year and begins declining as paid scales into less efficient supply." },
+  { headline: "Annualised Revenue crosses $800M", body: "Annualised Revenue reaches $812M at 47M MAU. Paid CPI now $1.85, cheap supply largely exhausted across iOS, Android, and international markets. LTV/CAC peaks at ~10x earlier in the year and begins declining as paid scales into less efficient supply." },
   { headline: "Series C/D raise", body: "Series C/D raise. Paid spend nearly doubles from $6.5M/mo to $12.0M/mo as growth capital is deployed aggressively into the saturation phase. Paid CPI climbs to $2.10 as the marginal install becomes more expensive at this scale." },
   { headline: "Paid spend at $15M/mo", body: "Paid spend reaches $15M/mo. 81M MAU. Subscription paywall conversion 4.3%. Ads ARPU at $11/MAU/yr, approaching the 2030 target of $12." },
-  { headline: "96M MAU", body: "96M MAU. Blended ARPU $21.29/MAU/yr. ARR $2.05B. Final saturation push underway with paid spend at $20M/mo and CPI at $2.70." },
-  { headline: "Target reached", body: "Target reached. 102M MAU. 5.0% paywall conversion. Blended ARPU $22.38/MAU/yr matches the data room target exactly. ARR $2.28B against the $2.2B data room target. Paid spend at $25M/mo (~$300M annualised), in line with mature consumer social comparables (Bumble ~$200M/yr)." },
+  { headline: "96M MAU", body: "96M MAU. Blended ARPU $21.29/MAU/yr. Annualised Revenue $2.05B. Final saturation push underway with paid spend at $20M/mo and CPI at $2.70." },
+  { headline: "Target reached", body: "Target reached. 102M MAU. 5.0% paywall conversion. Blended ARPU $22.38/MAU/yr matches the data room target exactly. Annualised Revenue $2.28B against the $2.2B data room target. Paid spend at $25M/mo (~$300M annualised), in line with mature consumer social comparables (Bumble ~$200M/yr)." },
 ];
 
 // ===== Palette (sheet convention: cream = drivers, blue = formulas) =====
@@ -488,7 +488,8 @@ export default function ForecastPage() {
           </a>
         </div>
         <p className="text-foreground text-base mt-4 leading-relaxed" style={{ fontFamily: "var(--font-fair-favorit-book), sans-serif", maxWidth: 760 }}>
-          By 2030, Equals will be at 102M MAU, $2.3B ARR, and 5M paying subscribers.{" "}
+          By 2030, Equals will be at 102M MAU, $2.3B Annualised Revenue, and 5M paying subscribers.{" "}
+          <span className="underline decoration-dotted decoration-foreground/40 underline-offset-4">Hover</span> over row and column titles for information and assumptions.{" "}
           <span style={{ backgroundColor: CREAM_BG, padding: "1px 6px", borderRadius: 3, color: "var(--foreground)", fontWeight: 500 }}>
             Cream
           </span>{" "}
@@ -544,7 +545,7 @@ export default function ForecastPage() {
                     >
                       <span
                         className="inline-block"
-                        style={{ position: "sticky", left: 0, padding: "8px 12px" }}
+                        style={{ position: "sticky", left: 0, padding: "8px 12px", fontFamily: "var(--font-fair-favorit-mono), monospace", textTransform: "uppercase" }}
                       >
                         {sec.title}
                       </span>
