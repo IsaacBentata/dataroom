@@ -21,6 +21,12 @@ export function proxy(request: NextRequest) {
       if (payload.investor === "Glaser" && pathname.startsWith("/legal")) {
         return NextResponse.redirect(new URL("/", request.url));
       }
+      if (
+        payload.investor === "InternalEquals" &&
+        (pathname.startsWith("/team") || pathname.startsWith("/legal"))
+      ) {
+        return NextResponse.redirect(new URL("/", request.url));
+      }
       return NextResponse.next();
     }
   }

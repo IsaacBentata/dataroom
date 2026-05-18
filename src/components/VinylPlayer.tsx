@@ -22,6 +22,12 @@ const INVESTOR_DEFAULT_TRACKS: Record<string, Track> = {
     cover: "/player/the-national-trouble-will-find-me.webp",
     audio: "/player/the-national-dont-swallow-the-cap.wav",
   },
+  Sony: {
+    title: "iPod Touch",
+    artist: "Ninajirachi",
+    cover: "/player/ninajirachi-ipod-touch.jpg",
+    audio: "/player/ninajirachi-ipod-touch.mp4",
+  },
 };
 
 // 5×3 grid; `null` = empty "+" slot, Track = playable tile.
@@ -40,7 +46,7 @@ const PICKER_GRID: (Track | null)[] = [
   null,
   { title: "Rock That Body", artist: "The Black Eyed Peas", cover: "/player/bep-the-end.jpg", audio: "/player/bep-rock-that-body.m4a" },
   { title: "The Chain", artist: "Fleetwood Mac", cover: "/player/fleetwood-mac-rumours.jpeg", audio: "/player/fleetwood-mac-the-chain.m4a" },
-  null,
+  { title: "iPod Touch", artist: "Ninajirachi", cover: "/player/ninajirachi-ipod-touch.jpg", audio: "/player/ninajirachi-ipod-touch.mp4" },
 ];
 
 const VISIT_KEY = "vinyl-visit-count";
