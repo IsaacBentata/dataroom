@@ -540,12 +540,12 @@ export default function ForecastPage() {
                   <tr>
                     <td
                       colSpan={1 + N}
-                      className="bg-secondary uppercase tracking-[0.08em] text-foreground"
-                      style={{ fontSize: 11, padding: 0 }}
+                      className="uppercase tracking-[0.08em] text-foreground"
+                      style={{ fontSize: 11, padding: 0, backgroundColor: "#F5F5F5" }}
                     >
                       <span
                         className="inline-block font-mono uppercase"
-                        style={{ position: "sticky", left: 0, padding: "8px 12px", fontFamily: "var(--font-fair-favorit-mono), ui-monospace, monospace" }}
+                        style={{ position: "sticky", left: 0, padding: "8px 12px", fontFamily: "var(--font-fair-favorit-mono), ui-monospace, monospace", color: "rgba(0, 0, 0, 0.5)" }}
                       >
                         {sec.title}
                       </span>
